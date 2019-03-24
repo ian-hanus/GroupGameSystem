@@ -1,42 +1,47 @@
 package Player;
 
+import Player.Regions.DescriptionRegion;
+import Player.Regions.GamesRegion;
+import Player.Regions.TitleRegion;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class PlayerStage {
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
     public final double ST_WIDTH = 1200;
     public final double ST_HEIGHT = 600;
-    public final Paint ST_COLOR = Color.DARKSLATEGRAY;
+    public final Paint ST_COLOR = Color.web("284376");
+    public final Paint PANE_COLOR = Color.web("677DA5");
     public final double ST_SPACING = 20;
     public final double ST_PADDING = 15;
 
     public final double GAMES_WIDTH = 380; // games width has priority
     public final double GAMES_HEIGHT = ST_HEIGHT - (2 * ST_PADDING);
     public final double TITLE_WIDTH = ST_WIDTH - GAMES_WIDTH - (2 * ST_PADDING) - ST_SPACING;
-    public final double TITLE_HEIGHT = 100; // title ht has priority
+    public final double TITLE_HEIGHT = 75; // title ht has priority
     public final double DESC_WIDTH = TITLE_WIDTH;
     public final double DESC_HEIGHT = ST_HEIGHT - TITLE_HEIGHT - (2 * ST_PADDING) - ST_SPACING;
 
-//    private double myWidth = ST_WIDTH;
-//    private double myHeight = ST_HEIGHT;
-//    private Paint myColor = ST_COLOR;
     private Scene myScene;
     private GridPane myVisualRoot;
+    private ArrayList<String> myGames;
+    private ArrayList<String> myImageFiles;
 
     public PlayerStage() {
 
         myVisualRoot = buildRoot();
-//        myScene = new Scene(myVisualRoot, myWidth, myHeight, myColor);
         myScene = new Scene(myVisualRoot, ST_WIDTH, ST_HEIGHT, ST_COLOR);
 
     }
@@ -50,21 +55,13 @@ public class PlayerStage {
         base.setVgap(ST_SPACING);
         base.setHgap(ST_SPACING);
 
-        // gamesPane will be a scroll pane
-        ScrollPane gamesPane = new ScrollPane();
-        GamesRegion gamesRegion = new GamesRegion();
-        gamesPane.setContent(gamesRegion.getNode());
+        GamesRegion gamesRegion = new GamesRegion(GAMES_WIDTH, GAMES_HEIGHT, PANE_COLOR);
+        DescriptionRegion descRegion = new DescriptionRegion(DESC_WIDTH, DESC_HEIGHT, PANE_COLOR);
+        TitleRegion titleRegion = new TitleRegion(TITLE_WIDTH, TITLE_HEIGHT, ST_COLOR);
 
-        // descPane will be a scroll pane
-        ScrollPane descPane = new ScrollPane();
-        DescriptionRegion descRegion = new DescriptionRegion();
-        descPane.setContent(descRegion.getNode());
-
-        // titlePane will be a regular pane
-        GridPane titlePane = new GridPane();
-        TitleRegion titleRegion = new TitleRegion();
-        titlePane.setAlignment(Pos.CENTER);
-        titlePane.add(titleRegion.getNode(), 0, 0);
+        ScrollPane gamesPane = gamesRegion.getPane();
+        ScrollPane descPane = descRegion.getPane();
+        GridPane titlePane = titleRegion.getPane();
 
         base.add(titlePane, 0, 0, 1, 1);
         base.add(descPane, 0, 1, 1, 1);

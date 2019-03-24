@@ -1,31 +1,36 @@
-package Player;
+package Player.Regions;
 
-import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 
 public abstract class Region {
 
-//    private double myWidth;
-//    private double myHeight;
+    double myWidth;
+    double myHeight;
+    Paint myColor;
     Group myGroup;
     protected ArrayList<Region> myComponents;
 
-    public Region() {
-        myGroup = new Group();
+    public Region(double wd, double ht, Paint color) {
         myComponents = new ArrayList<>();
+        myWidth = wd;
+        myHeight = ht;
+        myColor = color;
 
-        buildRegion();
+        myGroup = new Group();
+        buildGroup();
     }
 
-    protected Group getNode() {
-        return myGroup;
-    }
+//    public Group getNode() {
+//        return myGroup;
+//    }
 
-    abstract void buildRegion();
+    abstract void buildGroup();
+
+//    public abstract Pane getPane();
 
 //    protected void setBackground(Paint bg, CornerRadii cr, Insets in) {
 //        myHBox.setBackground(new Background(new BackgroundFill(bg, cr, in)));
