@@ -1,6 +1,7 @@
 package Player.Regions;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -24,14 +25,20 @@ public class DescriptionRegion extends Region {
         myDescPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         myDescPane.setBackground(new Background(new BackgroundFill(
                 myColor, new CornerRadii(5, 5, 5, 5, false), Insets.EMPTY)));
+        // TODO: un-hardcode this
+        myDescPane.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue");
 
         myDescPane.setContent(myGroup);
+
+        buildGroup();
 
     }
 
     protected void buildGroup() {
         Rectangle x = new Rectangle(20, 20, myColor);
+        Label t = new Label("yeet");
         myGroup.getChildren().add(x);
+        myGroup.getChildren().add(t);
 
 
 

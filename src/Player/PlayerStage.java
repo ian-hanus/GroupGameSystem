@@ -67,38 +67,6 @@ public class PlayerStage {
         base.add(descPane, 0, 1, 1, 1);
         base.add(gamesPane, 1, 0, 1, 2);
 
-//        HBox x = new HBox();
-//        x.setPrefHeight(TITLE_HEIGHT);
-//        x.setPrefWidth(TITLE_WIDTH);
-//        x.getChildren().add(new Rectangle(TITLE_WIDTH, TITLE_HEIGHT, Color.GREEN));
-////        x.setSpacing(ST_SPACING);
-////        x.setPadding(new Insets(ST_PADDING));
-//
-//        base.add(x,0, 0, 1, 1);
-//
-//        HBox y = new HBox();
-//        y.setPrefHeight(DESC_HEIGHT);
-//        y.setPrefWidth(DESC_WIDTH);
-//        y.getChildren().add(new Rectangle(DESC_WIDTH, DESC_HEIGHT, Color.BLUE));
-////        y.setSpacing(ST_SPACING);
-////        y.setPadding(new Insets(ST_PADDING));
-//
-//        base.add(y, 0, 1, 1, 1);
-//
-//        HBox z = new HBox();
-//        z.setPrefHeight(GAMES_HEIGHT);
-//        z.setPrefWidth(GAMES_WIDTH);
-//        z.setMinWidth(GAMES_WIDTH);
-//        z.getChildren().add(new Rectangle(GAMES_WIDTH, GAMES_HEIGHT, Color.RED));
-////        z.setSpacing(ST_SPACING);
-////        z.setPadding(new Insets(ST_PADDING));
-//
-//        base.add(z, 1, 0, 1, 2);
-
-
-
-
-
 //        Region left = new Region();
 //        HBox.setHgrow(left, Priority.ALWAYS);
 //        left.setBackground(new Background(new BackgroundFill(myBGColor, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -109,51 +77,6 @@ public class PlayerStage {
 
         return base;
     }
-
-//    private VBox buildTitleDescRegion() {
-//        VBox base = new VBox();
-//
-//        base.getChildren().addAll(
-//                buildTitleRegion(),
-//                buildDescRegion());
-//
-//        return base;
-//    }
-//
-//    private HBox buildTitleRegion() {
-//        HBox base = new HBox();
-//
-//        base.setPrefHeight(TITLE_HEIGHT);
-//        base.setPrefWidth(TITLE_WIDTH);
-//
-//        base.getChildren().add(new Rectangle(TITLE_WIDTH, TITLE_HEIGHT, Color.GREEN));
-//
-//        return base;
-//    }
-//
-//    private HBox buildDescRegion() {
-//        HBox base = new HBox();
-//
-//        base.setPrefHeight(DESC_HEIGHT);
-//        base.setPrefWidth(DESC_WIDTH);
-//
-//        base.getChildren().add(new Rectangle(DESC_WIDTH, DESC_HEIGHT, Color.BLUE));
-//
-//        return base;
-//    }
-//
-//    private ScrollPane buildGamesRegion() {
-//        ScrollPane base = new ScrollPane();
-//
-//        base.setPrefHeight(GAMES_HEIGHT);
-//        base.setPrefWidth(GAMES_WIDTH);
-//
-//        Group inside = new Group();
-//        inside.getChildren().add(new Rectangle(20, 20, Color.RED));
-//        base.setContent(inside);
-//
-//        return base;
-//    }
 
     protected Stage makeStage() {
         Stage ret = new Stage();

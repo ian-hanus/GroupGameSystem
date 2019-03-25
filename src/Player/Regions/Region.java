@@ -21,7 +21,6 @@ public abstract class Region {
         myColor = color;
 
         myGroup = new Group();
-        buildGroup();
     }
 
 //    public Group getNode() {

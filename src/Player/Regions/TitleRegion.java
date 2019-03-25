@@ -14,7 +14,7 @@ public class TitleRegion extends Region {
 
     public static final String TEXT_STR = "Cracking Open a Scrolled One";
     public static final String TEXT_FONT = "Trebuchet MS";
-    public static final double TEXT_HEIGHT = 55;
+    public static final double TEXT_HEIGHT = 50;
     public static final String TEXT_COLOR = "white";
     public static final String TEXT_STYLE =
             "-fx-font-family: '" + TEXT_FONT + "'; " +
@@ -35,6 +35,7 @@ public class TitleRegion extends Region {
 
         myTitlePane.add(myGroup, 0, 0);
 
+        buildGroup();
     }
 
     protected void buildGroup() {
