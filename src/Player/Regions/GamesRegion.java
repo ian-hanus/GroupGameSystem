@@ -82,10 +82,10 @@ public class GamesRegion extends Region {
         myNames.add("Flappy Bird 3");
         myNames.add("Flappy Bird 4");
         myFiles = new ArrayList<>();
-        myFiles.add("lib/images/flappy-bird.png");
-        myFiles.add("lib/images/flappy-bird.png");
-        myFiles.add("lib/images/flappy-bird.png");
-        myFiles.add("lib/images/flappy-bird.png");
+        myFiles.add("res/images/flappy-bird.png");
+        myFiles.add("res/images/flappy-bird.png");
+        myFiles.add("res/images/flappy-bird.png");
+        myFiles.add("res/images/flappy-bird.png");
     }
 
 }
