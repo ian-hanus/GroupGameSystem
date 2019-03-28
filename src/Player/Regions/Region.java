@@ -19,8 +19,6 @@ public abstract class Region {
         myWidth = wd;
         myHeight = ht;
         myColor = color;
-
-        myGroup = new Group();
     }
 
 //    public Group getNode() {

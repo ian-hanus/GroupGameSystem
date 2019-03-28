@@ -1,6 +1,7 @@
 package Player.Regions;
 
 import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -28,9 +29,10 @@ public class DescriptionRegion extends Region {
         // TODO: un-hardcode this
         myDescPane.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue");
 
-        myDescPane.setContent(myGroup);
-
+        myGroup = new Group();
         buildGroup();
+
+        myDescPane.setContent(myGroup);
 
     }
 

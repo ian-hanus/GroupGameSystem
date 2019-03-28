@@ -67,14 +67,6 @@ public class PlayerStage {
         base.add(descPane, 0, 1, 1, 1);
         base.add(gamesPane, 1, 0, 1, 2);
 
-//        Region left = new Region();
-//        HBox.setHgrow(left, Priority.ALWAYS);
-//        left.setBackground(new Background(new BackgroundFill(myBGColor, CornerRadii.EMPTY, Insets.EMPTY)));
-//        Region right = new Region();
-//        HBox.setHgrow(right, Priority.ALWAYS);
-//        right.setBackground(new Background(new BackgroundFill(myBGColor, CornerRadii.EMPTY, Insets.EMPTY)));
-
-
         return base;
     }
 
