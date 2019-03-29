@@ -2,20 +2,21 @@ package Player;
 
 import Player.Regions.DescriptionRegion;
 import Player.Regions.GamesRegion;
+import Player.Regions.Thumbnail;
 import Player.Regions.TitleRegion;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class PlayerStage {
 
@@ -60,6 +61,7 @@ public class PlayerStage {
         TitleRegion titleRegion = new TitleRegion(TITLE_WIDTH, TITLE_HEIGHT, ST_COLOR);
 
         ScrollPane gamesPane = gamesRegion.getPane();
+        setLambdas(gamesRegion.getThumbnails(), descRegion);
         ScrollPane descPane = descRegion.getPane();
         GridPane titlePane = titleRegion.getPane();
 
@@ -68,6 +70,13 @@ public class PlayerStage {
         base.add(gamesPane, 1, 0, 1, 2);
 
         return base;
+    }
+
+    private void setLambdas(ArrayList<Thumbnail> thumbnails, DescriptionRegion descRegion) {
+        for (Thumbnail thumb : thumbnails) {
+            StackPane thumbPane = thumb.getPane();
+            thumbPane.setOnMouseClicked(e -> descRegion.updateRegion(thumb.getName()));
+        }
     }
 
     protected Stage makeStage() {

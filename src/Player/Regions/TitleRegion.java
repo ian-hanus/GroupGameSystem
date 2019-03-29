@@ -37,8 +37,8 @@ public class TitleRegion extends Region {
 
         myGroup = new Group();
         buildGroup();
-
         myTitlePane.add(myGroup, 0, 0);
+
     }
 
     protected void buildGroup() {

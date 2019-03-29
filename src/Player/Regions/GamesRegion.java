@@ -1,6 +1,6 @@
 package Player.Regions;
 
-import Player.Thumbnail;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -13,10 +13,12 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class GamesRegion extends Region {
 
@@ -24,7 +26,9 @@ public class GamesRegion extends Region {
 //    public static final double THUMB_HT = 150;
     public static final double OFFSET = 10;
     public static final double HEADER_HEIGHT = 15;
+    public static final double SCROLLBAR_WIDTH = 20;
 
+    private ArrayList<Thumbnail> myThumbnails;
     private ScrollPane myGamesPane;
     private double myThumbnailWidth;
     private double myThumbnailHeight;
@@ -43,11 +47,11 @@ public class GamesRegion extends Region {
                 myColor, new CornerRadii(5, 5, 5, 5,  false),
                 new Insets(20, 20, 20, 20))));
         // TODO: un-hardcode this
-        myGamesPane.setStyle("-fx-background: lightsteelblue; " +
-                "-fx-background-radius: 5; " +
-                "-fx-background-color: lightsteelblue; ");
+        myGamesPane.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue;");
 
-        myThumbnailWidth = myWidth - (2 * OFFSET) - 15; // -15 to account for the scrollbar which is 15
+        // TODO: and this
+
+        myThumbnailWidth = myWidth - (2 * OFFSET) - SCROLLBAR_WIDTH; // -15 to account for the scrollbar which is 15
         myThumbnailHeight = myThumbnailWidth / 2;
 
 //        buildLists();
@@ -59,7 +63,6 @@ public class GamesRegion extends Region {
 
         myGroup = new Group();
         buildGroup();
-
         // initial setting of content
         myGamesPane.setContent(myGroup);
 
@@ -117,7 +120,7 @@ public class GamesRegion extends Region {
             }
         }
 
-        label.setStyle("-fx-font-family: 'Trebuchet MS'; -fx-font-size: " + HEADER_HEIGHT + "; -fx-text-fill: 'white';");
+        label.setStyle("-fx-font-family: 'Trebuchet MS'; -fx-font-size: 20; -fx-text-fill: 'white';");
         label.setLayoutX(OFFSET);
         header.getChildren().add(label);
 
@@ -134,16 +137,22 @@ public class GamesRegion extends Region {
             games.addAll(myMap.keySet());
         }
 
+        myThumbnails = new ArrayList<>();
+
         for (int i = 0; i < games.size(); i ++) {
             String gamename = games.get(i);
             String filename = myMap.get(gamename);
-            Thumbnail thumbnail = new Thumbnail(filename, myThumbnailWidth, myThumbnailHeight);
+            Thumbnail thumbnail = new Thumbnail(gamename, filename, myThumbnailWidth, myThumbnailHeight);
+            myThumbnails.add(thumbnail);
             StackPane thumbPane = thumbnail.getPane();
-            thumbPane.setOnMouseClicked(e -> System.out.println("clicked " + gamename + "!"));
             thumbnails.add(thumbPane);
         }
 
         return thumbnails;
+    }
+
+    public ArrayList<Thumbnail> getThumbnails() {
+        return myThumbnails;
     }
 
     public ScrollPane getPane() {
