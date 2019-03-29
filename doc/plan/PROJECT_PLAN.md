@@ -55,11 +55,11 @@ Features/Goals
         * Second sprint: Allow for multiplayer games to be played using networking.
 * Hunter Gregory (hlg16)
     * Responsibilities:
-        * Primary:
-        * Secondary: 
+        * Primary: Engine - Controller and Collisions 
+        * Secondary: AI and More Interactions
     * Features:
-        * First sprint:
-        * Second sprint:
+        * First sprint: Designing Engine Controller, using Engine models to update Scene, Collision Mapping
+        * Second sprint: Creating Action classes to regulate AI behavior according to local conditions
 * Ian Hanus (ih52)
     * Responsibilities:
         * Primary: Authoring environment, saving and loading
