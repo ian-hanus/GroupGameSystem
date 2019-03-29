@@ -63,8 +63,8 @@ the feature priorities and set a goal for what to show at the midpoint demo.
         * Second sprint:
 * Pavel Pivarshev (pap27)
     * Responsibilities:
-        * Primary:
-        * Secondary: 
+        * Primary: Player front end
+        * Secondary: Player back end
     * Use Cases:
         * First sprint:
         * Second sprint:
