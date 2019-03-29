@@ -1,4 +1,7 @@
+public class Block extends GameObject{
 
-public interface Block{
+    public Block(int x, int y, int res, String filePath){
+
+    }
 
 }
