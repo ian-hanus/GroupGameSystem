@@ -3,14 +3,23 @@ VOOGASalad : Design Plan
 
 ### Members
 Januario Carreiro (jjc70)
+
 Anshu Dwibhashi (ad353)
+
 Carter Gay (cag65)
+
 Hunter Gregory (hlg16)
+
 Ian Hanus (ih52)
+
 Daniel Kingsbury (dpk14)
+
 David Liu (dwl23)
+
 Pavel Pivarshev (pap27)
+
 Duc Tran (dt135)
+
 Jonathan Yu (jy178)
 
 ### Introduction
@@ -117,8 +126,6 @@ The data manager will be fairly straightforward: using Gson, the game informatio
 5. Launcher
 The launcher allows the user to choose whether they will be creating a game or playing an existing game. This will act as the main class, and will be able to create new authoring environments and players. The creation of this module will allow us to keep the player and the authoring environment separate, while still allowing them both to be easily accessible by the user. 
 
-
-
 ### Example games
 
 1. Mario
@@ -148,3 +155,4 @@ First, we decided on a file format to manage our data. While members of the grou
 
 5. Launcher
 There is not much consideration for this class. We will use JavaFX to present two buttons and once we select one, the launcher will close and the corresponding program selected will open.
+
