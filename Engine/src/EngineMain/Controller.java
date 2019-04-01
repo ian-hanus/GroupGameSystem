@@ -9,17 +9,18 @@ import java.util.Map;
 import java.util.Set;
 
 public class Controller {
-    private Map myHotKeys;
+    private Map<String, Response> myHotKeys;
     private Map<GameObject[], Set<Response>[]> myCollisionResponses;
-    private List myActiveObjects;
+    private List<GameObject> myActiveObjects;
     private GameObject myHero;
     private CollisionHandler myCollisionHandler;
 
-    public Controller(List activeObjects){
+    public Controller(List activeObjects, GameObject hero){
         makeHotKeyMap();
-        makeCollisionResponseMap();
+        myCollisionResponses = makeCollisionResponseMap();
         myActiveObjects = activeObjects;
-        myCollisionHandler = new CollisionHandler();
+        myCollisionHandler = new CollisionHandler(myCollisionResponses);
+        myHero = hero;
     }
 
     public void processKey(String key){
@@ -45,7 +46,8 @@ public class Controller {
     private void makeHotKeyMap() {
     }
 
-    private void makeCollisionResponseMap() {
+    private Map<GameObject[], Set<Response>[]> makeCollisionResponseMap() {
+        return null;
     }
 
 }
