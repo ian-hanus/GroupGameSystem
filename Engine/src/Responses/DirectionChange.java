@@ -2,11 +2,11 @@ package Responses;
 
 import GameObjects.GameObject;
 
-public class DirectionChange extends Response{
+public class DirectionChange implements Response{
     private double myAdjustmentAngle;
 
     public DirectionChange(double angle){
-        myAdjustmentAngle=angle;
+        myAdjustmentAngle = angle;
     }
 
     @Override

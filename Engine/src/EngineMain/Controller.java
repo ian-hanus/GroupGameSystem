@@ -25,7 +25,7 @@ public class Controller {
 
     public void processKey(String key){
         if (myHotKeys.containsKey(key)){
-            Response response=myHotKeys.get(key);
+            Response response = myHotKeys.get(key);
             response.respond(myHero);
         }
         else; //TODO:error

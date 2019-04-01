@@ -9,16 +9,17 @@ import java.util.Set;
 
 public class CollisionHandler {
 
-    private Map<GameObject[], Set<Response>[]> myCollisionResponses;
+    private Map<Class[], Set<Response>[]> myCollisionResponses;
 
     public CollisionHandler(Map collisionResponses){
         myCollisionResponses = collisionResponses;
     }
 
     public void checkCollision(GameObject obj1, GameObject obj2){
-        GameObject[] collisionPair={obj1, obj2};
-        if (obj1 != obj2 && collides(obj1, obj2) && myCollisionResponses.containsKey(collisionPair)){
-            Set<Response>[] responseSetPair = myCollisionResponses.get(collisionPair);
+        Class[] collisionClassPair = {obj1.getClass(), obj2.getClass()};
+        GameObject[] collisionPair = {obj1, obj2};
+        if (obj1 != obj2 && collides(obj1, obj2) && myCollisionResponses.containsKey(collisionClassPair)){
+            Set<Response>[] responseSetPair = myCollisionResponses.get(collisionClassPair);
             for (int k = 0; k < responseSetPair.length; k++){
                 Set<Response> responseSet = responseSetPair[k];
                 for (Response response: responseSet){
