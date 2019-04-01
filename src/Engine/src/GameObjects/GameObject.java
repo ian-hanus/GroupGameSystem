@@ -1,4 +1,4 @@
-package GameObjects;
+package Engine.src.GameObjects;
 
 import java.util.List;
 public abstract class GameObject {

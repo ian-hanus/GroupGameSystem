@@ -1,6 +1,6 @@
-package EngineMain;
+package Engine.src.EngineMain;
 
-import GameObjects.GameObject;
+import Engine.src.GameObjects.GameObject;
 import Physics.CollisionHandler;
 import Responses.Response;
 

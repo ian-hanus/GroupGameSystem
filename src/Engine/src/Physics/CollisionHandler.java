@@ -1,7 +1,7 @@
-package Physics;
+package Engine.src.Physics;
 
-import GameObjects.GameObject;
-import Responses.Response;
+import Engine.src.GameObjects.GameObject;
+import Engine.src.Responses.Response;
 
 import java.util.HashSet;
 import java.util.Map;

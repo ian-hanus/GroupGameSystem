@@ -1,6 +1,6 @@
-package Responses;
+package Engine.src.Responses;
 
-import GameObjects.GameObject;
+import Engine.src.GameObjects.GameObject;
 
 public class Die implements Response{
     @Override
