@@ -8,7 +8,7 @@ public class Deflect extends DirectionChange{
 
     public Deflect(double angle){
         super(angle);
-        myAdjustmentAngle=180;
+        myAdjustmentAngle = 180;
     }
 
     @Override
