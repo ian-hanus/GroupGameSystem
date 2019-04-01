@@ -1,5 +1,7 @@
 package Responses;
 
+import GameObjects.GameObject;
+
 public class Deflect extends DirectionChange{
 
     private double myAdjustmentAngle;
@@ -9,6 +11,7 @@ public class Deflect extends DirectionChange{
         myAdjustmentAngle=180;
     }
 
+    @Override
     public void respond(GameObject obj){
         obj.adjustDirection(myAdjustmentAngle);
     }

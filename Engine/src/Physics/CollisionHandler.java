@@ -1,15 +1,26 @@
 package Physics;
 
+import GameObjects.GameObject;
+import Responses.Response;
+
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class CollisionHandler {
 
+    private Map<GameObject[], Set<Response>[]> myCollisionResponses;
+
+    public CollisionHandler(Map collisionResponses){
+        myCollisionResponses = collisionResponses;
+    }
+
     public void checkCollision(GameObject obj1, GameObject obj2){
         GameObject[] collisionPair={obj1, obj2};
         if (obj1 != obj2 && collides(obj1, obj2) && myCollisionResponses.containsKey(collisionPair)){
-            HashSet<Response>[] responseSetPair = myCollisionResponses.get(collisionPair);
+            Set<Response>[] responseSetPair = myCollisionResponses.get(collisionPair);
             for (int k = 0; k < responseSetPair.length; k++){
-                Set<GameObject> responseSet = responseSetPair[k];
+                Set<Response> responseSet = responseSetPair[k];
                 for (Response response: responseSet){
                     response.respond(collisionPair[k]);
                 }
