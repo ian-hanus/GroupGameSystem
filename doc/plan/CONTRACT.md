@@ -1,4 +1,6 @@
-Team Name: Cracking Open A Scrolled One With The Boys
+# Team Contract
+
+## Team Name: Cracking Open A Scrolled One With The Boys
 
 We all promise to listen to each other?s ideas with respect.
 We all promise to do our work as best as we can.
