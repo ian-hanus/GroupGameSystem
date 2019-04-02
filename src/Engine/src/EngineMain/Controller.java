@@ -1,6 +1,7 @@
 package EngineMain;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 import Responses.Response;
 
@@ -16,20 +17,22 @@ public class Controller {
     private GameObject myHero;
     private CollisionHandler myCollisionHandler;
     private EngineParser myEngineParser;
+    private ObjectManager myObjectManager;
 
     public Controller(List activeObjects, GameObject hero){
         myEngineParser = new EngineParser();
-        initializeEngineVariables();
+        initializeDataVariables();
+        myObjectManager = new ObjectManager(myActiveObjects);
         myCollisionHandler = new CollisionHandler(myCollisionResponses);
     }
 
-    public void initializeEngineVariables(){
+    public void initializeDataVariables(){
         myObjectBank = myEngineParser.parseDefaultObjects();
         myHotKeys = myEngineParser.makeHotKeyMap();
         myCollisionResponses = myEngineParser.makeCollisionResponseMap();
         myActiveObjects = myEngineParser.initializeActiveObjects();
         for(GameObject obj : myActiveObjects){
-            if (obj.getType.equals("HERO")){
+            if (obj instanceof User){
                 myHero = obj;
             }
         }
