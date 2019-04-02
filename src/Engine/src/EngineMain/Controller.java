@@ -56,10 +56,6 @@ public class Controller {
         }
     }
 
-    private Map makeHotKeyMap() {
-        return null;
-    }
-
     private Map<GameObject[], Set<Response>[]> makeCollisionResponseMap() {
         return null;
     }
