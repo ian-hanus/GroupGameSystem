@@ -1,13 +1,19 @@
 package DataManager;
 
-public class Level {
-    List<GameObject> myGameObjects;
-    Integer myLevelNumber;
-    List<GameObject> myObjectBank;
+import javafx.scene.image.Image;
 
-    public Level(Integer levelNumber, List<GameObject> gameObjects, List<GameObject> objectBank){
+import java.util.List;
+
+public class Level {
+    private List<Object> myGameObjects;
+    private Integer myLevelNumber;
+    private List<Object> myObjectBank;
+    private Image myBackground;
+
+    public Level(Integer levelNumber, List<Object> gameObjects, List<Object> objectBank, Image background){
         myLevelNumber = levelNumber;
         myGameObjects = gameObjects;
         myObjectBank = objectBank;
+        myBackground = background;
     }
 }
