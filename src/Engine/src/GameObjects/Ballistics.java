@@ -1,19 +1,18 @@
-package Engine.src.GameObjects;
+package GameObjects;
 
-import javafx.scene.image.ImageView;
 import java.util.List;
 
 public class Ballistics extends GameObject {
 
-    public Ballistics(double myXPos, double myYPos, double myHealth, List activeObjects, ImageView myImage) {
-        super(myXPos, myYPos, myHealth, activeObjects, myImage);
+    public Ballistics(double myXPos, double myYPos, double myHealth, double myHeight, double myWidth, String objectName) {
+        super(myXPos, myYPos, myHealth, myHeight, myWidth, objectName);
     }
 
-    protected void updatePosition() {
+    public void updatePosition() {
 
     }
 
-    protected void updateStats() {
+    public void updateStats() {
 
     }
 
