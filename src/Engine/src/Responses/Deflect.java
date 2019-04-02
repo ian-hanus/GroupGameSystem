@@ -13,6 +13,6 @@ public class Deflect extends DirectionChange{
 
     @Override
     public void respond(GameObject obj){
-        obj.adjustDirection(myAdjustmentAngle);
+        //obj.adjustDirection(myAdjustmentAngle);
     }
 }

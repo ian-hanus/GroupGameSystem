@@ -31,7 +31,7 @@ public class CollisionHandler {
     }
 
     private boolean collides(GameObject obj1, GameObject obj2){
-        int height1 = obj1.getHeight();
+        /*int height1 = obj1.getHeight();
         int height2 = obj2.getHeight();
         int width1 = obj1.getWidth();
         int width2 = obj2.getWidth();
@@ -42,7 +42,7 @@ public class CollisionHandler {
 
         if(x1 + width1 >= x2 || y1 + height1>= y2 || x2 + width2 >= x1 || y2 + height2>= y1){
             return true;
-        }
+        }*/
         return false;
     }
 

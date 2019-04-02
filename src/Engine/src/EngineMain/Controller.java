@@ -1,8 +1,8 @@
 package Engine.src.EngineMain;
 
 import Engine.src.GameObjects.GameObject;
-import Physics.CollisionHandler;
-import Responses.Response;
+import Engine.src.Physics.CollisionHandler;
+import Engine.src.Responses.Response;
 
 import java.util.List;
 import java.util.Map;
@@ -38,12 +38,13 @@ public class Controller {
             }
         }
         for (GameObject obj : myActiveObjects){
-            obj.updatePosition();
-            obj.updateStats();
+            //obj.updatePosition();
+            //obj.updateStats();
         }
     }
 
     private void makeHotKeyMap() {
+
     }
 
     private Map<GameObject[], Set<Response>[]> makeCollisionResponseMap() {
