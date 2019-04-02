@@ -4,6 +4,7 @@ import GameObjects.GameObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import Engine.src.Powerups.Powerup;
 
 public class ObjectManager {
     List<GameObject> myActiveObjects;
@@ -15,25 +16,23 @@ public class ObjectManager {
     public void adjustDirection(GameObject obj, double delta){
         double angle = obj.getAngle();
         angle += delta;
-        obj.setAngle(angle);
-        double[] directionVec = new double[2];
-        directionVec[0] = Math.cos(Math.toRadians(angle));
-        directionVec[1] = Math.sin(Math.toRadians(angle));
-        obj.setDirection(directionVec);
-    }
-
-    public void adjustDirection(GameObject obj, double angle){
+        double[] directionVec = calculateDirection(angle);
         obj.setAngle(angle);
         obj.setDirection(directionVec);
     }
 
-    private double[] calculateDirection(GameObject obj, double Angle){
+    public void setDirection(GameObject obj, double angle){
+        double[] directionVec = calculateDirection(angle);
+        obj.setAngle(angle);
+        obj.setDirection(directionVec);
+    }
+
+    private double[] calculateDirection(double angle){
         double[] directionVec = new double[2];
         directionVec[0] = Math.cos(Math.toRadians(angle));
         directionVec[1] = Math.sin(Math.toRadians(angle));
         return directionVec;
     }
-
 
     public void kill(GameObject obj) {
         myActiveObjects.remove(obj);
@@ -43,7 +42,24 @@ public class ObjectManager {
         myActiveObjects.add(obj);
     }
 
+    public void addPowerup(Powerup powerup, GameObject target){
+        target.addPowerup(powerup);
+
+    }
+
     int getNumObjects() {
         return myActiveObjects.size();
+    }
+
+    public void move(GameObject obj) {
+        obj.move();
+    }
+
+    public void updateStats(GameObject obj) {
+        obj.updateStats();
+    }
+
+    public void increaseScore(GameObject obj, double myGain) {
+        obj.setScore(obj.getScore() + myGain);
     }
 }

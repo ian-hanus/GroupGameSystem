@@ -14,16 +14,16 @@ public class Controller {
     private Map<String, Response> myHotKeys;
     private Map<GameObject[], Set<Response>[]> myCollisionResponses;
     private List<GameObject> myActiveObjects;
-    private GameObject myHero;
+    private GameObject myUser;
     private CollisionHandler myCollisionHandler;
     private EngineParser myEngineParser;
     private ObjectManager myObjectManager;
 
-    public Controller(List activeObjects, GameObject hero){
+    public Controller(){
         myEngineParser = new EngineParser();
         initializeDataVariables();
         myObjectManager = new ObjectManager(myActiveObjects);
-        myCollisionHandler = new CollisionHandler(myCollisionResponses);
+        myCollisionHandler = new CollisionHandler(myCollisionResponses, myObjectManager);
     }
 
     public void initializeDataVariables(){
@@ -33,16 +33,16 @@ public class Controller {
         myActiveObjects = myEngineParser.initializeActiveObjects();
         for(GameObject obj : myActiveObjects){
             if (obj instanceof User){
-                myHero = obj;
+                myUser = obj;
             }
         }
-        if (myHero == null); //TODO: throw error
+        if (myUser == null); //TODO: throw error
     }
 
     public void processKey(String key){
         if (myHotKeys.containsKey(key)){
             Response response = myHotKeys.get(key);
-            response.respond(myHero);
+            response.respond(myUser, myObjectManager);
         }
         else; //TODO:error
     }
@@ -54,8 +54,8 @@ public class Controller {
             }
         }
         for (GameObject obj : myActiveObjects){
-            obj.updatePosition();
-            obj.updateStats();
+            myObjectManager.move(obj);
+            myObjectManager.updateStats(obj);
         }
     }
 
