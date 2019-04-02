@@ -1,56 +1,37 @@
 package GameObjects;
 
-import javafx.scene.image.ImageView;
+import Powerups.Powerup;
 
 import java.util.List;
-public abstract class GameObject {
-    private double xPos;
-    private double yPos;
-    private double health;
-    //Please change it to be part of a different package (ObjectManager)
-    private List myActiveObjects;
-    private ImageView image;
+public class GameObject {
+    private double myXPos;
+    private double myYPos;
+    private double myHealth;
+    private double myHeight;
+    private double myWidth;
+    private double myAngle;
+    private String myName;
+    private int myZIndex;
+    private double[] myDirection;
+    private String myFilename;
+    private double myScore;
 
-    public GameObject(double myXPos, double myYPos, double myHealth, List activeObjects, ImageView myImage) {
-        xPos = myXPos;
-        yPos = myYPos;
-        health = myHealth;
-        myActiveObjects = activeObjects;
-        image = myImage;
+
+    public GameObject(double xPos, double yPos, double health, double height, double width,
+                      double angle, String objectName, int zIndex, double[] direction, String filename) {
+        myXPos = xPos;
+        myYPos = yPos;
+        myHealth = health;
+        myHeight = height;
+        myWidth = width;
+        myAngle = angle;
+        myName = objectName;
+        myZIndex = zIndex;
+        myDirection = direction;
+        myFilename = filename;
+        myScore = 0;
     }
 
-    //Please change it to be part of a different package (ObjectManager)
-    public void die() {
-        myActiveObjects.remove(this);
-    }
-
-    public abstract void updatePosition();
-
-    public abstract void updateStats();
-
-    public double getX() {
-        return xPos;
-    }
-
-    public double getY() {
-        return yPos;
-    }
-
-    public double getHealth() {
-        return health;
-    }
-
-    protected void setX(double xPos1) {
-        xPos = xPos1;
-    }
-
-    protected void setY(double yPos1) {
-        yPos = yPos1;
-    }
-
-    protected void setHealth(double health1) {
-        health = health1;
-    }
 
     //Implement basic physics somewhere else?
     //protected double getVel() {
@@ -58,15 +39,106 @@ public abstract class GameObject {
     //}
 
     //Implement basic physics somewhere else?
-    //protected void move() {
+    //protected abstract void move() {
 
     //}
+    /*
+    public String getFilename() {
+
+    }
+    */
+
+
+    public void addPowerup(GameObject powerup) {
+
+    }
+
+    public void updatePosition(){
+
+    };
+
+    public void updateStats(){
+
+    };
+
+    /*
+    Getters:
+     */
+
 
     public double getHeight() {
-        return image.getFitHeight();
+        return myHeight;
     }
 
     public double getWidth() {
-        return image.getFitWidth();
+        return myWidth;
     }
+
+    public String getName() {
+        return myName;
+    }
+
+    public double getAngle(){
+        return myAngle;
+    }
+
+
+    public double getScore() {
+        return myScore;
+    }
+
+    public double getX() {
+        return myXPos;
+    }
+
+    public double getY() {
+        return myYPos;
+    }
+
+    public double getHealth() {
+        return myHealth;
+    }
+
+
+    /*
+    Setters:
+     */
+
+    protected void setScore(double score){
+        myScore = score;
+    }
+
+    protected void setAngle(double angle) {
+        myAngle = angle;
+    }
+
+    protected void setDirection(double[] directionVec) {
+        myDirection = directionVec;
+    }
+
+    protected void setHeight(double height) {
+        myHeight = height;
+    }
+
+    protected void setWidth(double width) {
+        myWidth = width;
+    }
+
+    protected void setName(String name) {
+        myName = name;
+    }
+
+    protected void setX(double xPos) {
+        myXPos = xPos;
+    }
+
+    protected void setY(double yPos) {
+        myYPos = yPos;
+    }
+
+    protected void setHealth(double health) {
+        myHealth = health;
+    }
+
+    //gameobject.apply(powerup);
 }
