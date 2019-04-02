@@ -44,6 +44,7 @@ public class Controller {
     }
 
     private void makeHotKeyMap() {
+
     }
 
     private Map<GameObject[], Set<Response>[]> makeCollisionResponseMap() {
