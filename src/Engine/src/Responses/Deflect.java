@@ -1,6 +1,6 @@
-package Engine.src.Responses;
+package Responses;
 
-import Engine.src.GameObjects.GameObject;
+import GameObjects.GameObject;
 
 public class Deflect extends DirectionChange{
 

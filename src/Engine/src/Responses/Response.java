@@ -1,6 +1,6 @@
-package Engine.src.Responses;
+package Responses;
 
-import Engine.src.GameObjects.GameObject;
+import GameObjects.GameObject;
 
 public interface Response {
     void respond(GameObject obj);

@@ -1,8 +1,8 @@
-package Engine.src.EngineMain;
+package EngineMain;
 
-import Engine.src.GameObjects.GameObject;
-import Engine.src.Physics.CollisionHandler;
-import Engine.src.Responses.Response;
+import GameObjects.GameObject;
+import Physics.CollisionHandler;
+import Responses.Response;
 
 import java.util.List;
 import java.util.Map;
@@ -38,8 +38,8 @@ public class Controller {
             }
         }
         for (GameObject obj : myActiveObjects){
-            //obj.updatePosition();
-            //obj.updateStats();
+            obj.updatePosition();
+            obj.updateStats();
         }
     }
 

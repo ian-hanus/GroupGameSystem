@@ -1,4 +1,4 @@
-package Engine.src.GameObjects;
+package GameObjects;
 
 import javafx.scene.image.ImageView;
 
@@ -24,9 +24,9 @@ public abstract class GameObject {
         myActiveObjects.remove(this);
     }
 
-    protected abstract void updatePosition();
+    public abstract void updatePosition();
 
-    protected abstract void updateStats();
+    public abstract void updateStats();
 
     public double getX() {
         return xPos;

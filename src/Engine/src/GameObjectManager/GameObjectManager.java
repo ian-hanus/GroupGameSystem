@@ -1,6 +1,6 @@
-package Engine.src.GameObjectManager;
+package GameObjectManager;
 
-import Engine.src.GameObjects.GameObject;
+import GameObjects.GameObject;
 
 import java.util.ArrayList;
 
