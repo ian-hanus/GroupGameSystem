@@ -2,6 +2,7 @@ package EngineMain;
 
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
+import GameObjects.User;
 import Physics.CollisionHandler;
 import Responses.Response;
 

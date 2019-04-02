@@ -7,9 +7,9 @@ import java.util.List;
 public class PowerupItem extends GameObject{
     Powerup powerup;
 
-    public PowerupItem(double myXPos, double myYPos, double myHealth, double myHeight, double myWidth,
-                       String objectName, Powerup myPowerup) {
-        super(myXPos, myYPos, myHealth, myHeight, myWidth, objectName);
+    public PowerupItem(double xPos, double yPos, double health, double height, double width,
+                       double angle, String objectName, int zIndex, double[] direction, String filename, Powerup myPowerup) {
+        super(xPos, yPos, health, height, width, angle, objectName, zIndex, direction, filename);
         powerup = myPowerup;
     }
 

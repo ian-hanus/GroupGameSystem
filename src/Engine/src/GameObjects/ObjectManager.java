@@ -2,9 +2,8 @@ package GameObjects;
 
 import GameObjects.GameObject;
 
-import java.util.ArrayList;
 import java.util.List;
-import Engine.src.Powerups.Powerup;
+import Powerups.Powerup;
 
 public class ObjectManager {
     List<GameObject> myActiveObjects;
@@ -42,7 +41,7 @@ public class ObjectManager {
         myActiveObjects.add(obj);
     }
 
-    public void addPowerup(Powerup powerup, GameObject target){
+    public void addPowerup(GameObject powerup, GameObject target){
         target.addPowerup(powerup);
 
     }
@@ -52,7 +51,7 @@ public class ObjectManager {
     }
 
     public void move(GameObject obj) {
-        obj.move();
+        obj.updatePosition();
     }
 
     public void updateStats(GameObject obj) {
