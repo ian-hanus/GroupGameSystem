@@ -1,6 +1,7 @@
 package EngineMain;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 import Responses.Response;
 
@@ -9,18 +10,33 @@ import java.util.Map;
 import java.util.Set;
 
 public class Controller {
+    private Map<String, GameObject> myObjectBank;
     private Map<String, Response> myHotKeys;
     private Map<GameObject[], Set<Response>[]> myCollisionResponses;
     private List<GameObject> myActiveObjects;
     private GameObject myHero;
     private CollisionHandler myCollisionHandler;
+    private EngineParser myEngineParser;
+    private ObjectManager myObjectManager;
 
     public Controller(List activeObjects, GameObject hero){
-        makeHotKeyMap();
-        myCollisionResponses = makeCollisionResponseMap();
-        myActiveObjects = activeObjects;
+        myEngineParser = new EngineParser();
+        initializeDataVariables();
+        myObjectManager = new ObjectManager(myActiveObjects);
         myCollisionHandler = new CollisionHandler(myCollisionResponses);
-        myHero = hero;
+    }
+
+    public void initializeDataVariables(){
+        myObjectBank = myEngineParser.parseDefaultObjects();
+        myHotKeys = myEngineParser.makeHotKeyMap();
+        myCollisionResponses = myEngineParser.makeCollisionResponseMap();
+        myActiveObjects = myEngineParser.initializeActiveObjects();
+        for(GameObject obj : myActiveObjects){
+            if (obj instanceof User){
+                myHero = obj;
+            }
+        }
+        if (myHero == null); //TODO: throw error
     }
 
     public void processKey(String key){
@@ -41,10 +57,6 @@ public class Controller {
             obj.updatePosition();
             obj.updateStats();
         }
-    }
-
-    private void makeHotKeyMap() {
-
     }
 
     private Map<GameObject[], Set<Response>[]> makeCollisionResponseMap() {
