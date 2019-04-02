@@ -3,22 +3,21 @@ package Responses;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
-public class Deflect extends DirectionChange{
+public class GainScore implements Response{
 
-    double myAdjustmentAngle;
+    double myGain;
 
-    public Deflect(double angle){
-        super(180);
+    public GainScore(double scoreGain){
+        myGain = scoreGain;
     }
 
     @Override
     public void respond(GameObject obj, ObjectManager objectManager){
-        objectManager.adjustDirection(obj, myAdjustmentAngle);
+        objectManager.increaseScore(obj, myGain);
     }
 
     @Override
     public void respond(GameObject obj, GameObject other, ObjectManager objectManager){
-        objectManager.adjustDirection(obj, myAdjustmentAngle);
+        objectManager.increaseScore(obj, myGain);
     }
-
 }

@@ -1,6 +1,7 @@
 package Physics;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 import Responses.Response;
 
 import java.util.HashSet;
@@ -10,9 +11,11 @@ import java.util.Set;
 public class CollisionHandler {
 
     private Map<Class[], Set<Response>[]> myCollisionResponses;
+    private ObjectManager myObjectManager;
 
-    public CollisionHandler(Map collisionResponses){
+    public CollisionHandler(Map collisionResponses, ObjectManager objectManager){
         myCollisionResponses = collisionResponses;
+        myObjectManager = objectManager;
     }
 
     public void checkCollision(GameObject obj1, GameObject obj2){
@@ -23,7 +26,9 @@ public class CollisionHandler {
             for (int k = 0; k < responseSetPair.length; k++){
                 Set<Response> responseSet = responseSetPair[k];
                 for (Response response: responseSet){
-                    response.respond(collisionPair[k]);
+                    int other = 1;
+                    if (k == 1) other = 0;
+                    response.respond(collisionPair[k], collisionPair[other], myObjectManager);
                 }
             }
         }
