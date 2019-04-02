@@ -1,15 +1,20 @@
 package GameObjects;
 
 import java.util.List;
+public abstract class GameObject {
+    private double xPos;
+    private double yPos;
+    private double health;
+    private List myActiveObjects;
 
-public class GameObject {
-    List myActiveObjects;
-
-    public GameObject(List activeObjects){
+    public GameObject(double myXPos, double myYPos, double myHealth, List activeObjects) {
+        xPos = myXPos;
+        yPos = myYPos;
+        health = myHealth;
         myActiveObjects = activeObjects;
     }
 
-    public void die(){
+    public void die() {
         myActiveObjects.remove(this);
     }
 }
