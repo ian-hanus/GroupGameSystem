@@ -1,19 +1,31 @@
-package Engine.src.GameObjects;
+package GameObjects;
 
-import javafx.scene.image.ImageView;
+import Powerups.Powerup;
+
 import java.util.List;
 
 public class PowerupItem extends GameObject{
+    Powerup powerup;
 
-    public PowerupItem(double myXPos, double myYPos, double myHealth, List activeObjects, ImageView myImage) {
-        super(myXPos, myYPos, myHealth, activeObjects, myImage);
+    public PowerupItem(double myXPos, double myYPos, double myHealth, double myHeight, double myWidth,
+                       String objectName, Powerup myPowerup) {
+        super(myXPos, myYPos, myHealth, myHeight, myWidth, objectName);
+        powerup = myPowerup;
     }
 
-    protected void updatePosition() {
+    public void updatePosition() {
 
     }
 
-    protected void updateStats() {
+    public void updateStats() {
 
+    }
+
+    protected void setPowerup(Powerup powerup1) {
+        powerup = powerup1;
+    }
+
+    public Powerup getPowerup() {
+        return powerup;
     }
 }

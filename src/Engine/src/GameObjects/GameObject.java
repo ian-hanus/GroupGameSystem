@@ -1,27 +1,25 @@
 package GameObjects;
 
-import javafx.scene.image.ImageView;
+import Powerups.Powerup;
 
 import java.util.List;
 public abstract class GameObject {
     private double xPos;
     private double yPos;
     private double health;
-    //Please change it to be part of a different package (ObjectManager)
-    private List myActiveObjects;
-    private ImageView image;
+    private double height;
+    private double width;
+    private String name;
+    private int zindex;
 
-    public GameObject(double myXPos, double myYPos, double myHealth, List activeObjects, ImageView myImage) {
+    public GameObject(double myXPos, double myYPos, double myHealth, double myHeight, double myWidth, String objectName, int myZIndex) {
         xPos = myXPos;
         yPos = myYPos;
         health = myHealth;
-        myActiveObjects = activeObjects;
-        image = myImage;
-    }
-
-    //Please change it to be part of a different package (ObjectManager)
-    public void die() {
-        myActiveObjects.remove(this);
+        name = objectName;
+        height = myHeight;
+        width = myWidth;
+        zindex = myZIndex;
     }
 
     public abstract void updatePosition();
@@ -58,15 +56,42 @@ public abstract class GameObject {
     //}
 
     //Implement basic physics somewhere else?
-    //protected void move() {
+    //protected abstract void move() {
 
     //}
+    /*
+    public String getFilename() {
+
+    }
+    */
 
     public double getHeight() {
-        return image.getFitHeight();
+        return height;
     }
 
     public double getWidth() {
-        return image.getFitWidth();
+        return width;
     }
+
+    protected void setHeight(double height1) {
+        height = height1;
+    }
+
+    protected void setWidth(double width1) {
+        width = width1;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    protected void setName(String name1) {
+        name = name1;
+    }
+
+    public void apply(Powerup powerup) {
+
+    }
+
+    //gameobject.apply(powerup);
 }
