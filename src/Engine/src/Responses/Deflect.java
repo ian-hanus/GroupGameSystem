@@ -1,6 +1,7 @@
 package Responses;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 
 public class Deflect extends DirectionChange{
 
@@ -12,7 +13,7 @@ public class Deflect extends DirectionChange{
     }
 
     @Override
-    public void respond(GameObject obj){
-        obj.adjustDirection(myAdjustmentAngle);
+    public void respond(GameObject obj, ObjectManager objectManager){
+        objectManager.adjustDirection(obj, myAdjustmentAngle);
     }
 }
