@@ -13,6 +13,13 @@ public abstract class Response {
         myConditionals = conditionals;
     }
 
+    public boolean conditionsSatisfied(GameObject obj1, GameObject obj2){
+        for (Conditional conditional : myConditionals){
+            if (!conditional.satisfied(obj1, obj2)) return false;
+        }
+        return true;
+    }
+
     public boolean conditionsSatisfied(){
         for (Conditional conditional : myConditionals){
             if (!conditional.satisfied()) return false;
