@@ -43,7 +43,7 @@ public class Controller {
     public void processKey(String key){
         if (myHotKeys.containsKey(key)){
             Response response = myHotKeys.get(key);
-            response.respond(myUser, myObjectManager);
+            if (response.conditionsSatisfied()) response.respond(myUser, myObjectManager);
         }
         else; //TODO:error
     }

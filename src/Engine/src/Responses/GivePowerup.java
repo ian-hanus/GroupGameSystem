@@ -1,11 +1,18 @@
 package Responses;
 
+import Conditionals.Conditional;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 import GameObjects.PowerupItem;
 import Powerups.Powerup;
 
-public class GivePowerup implements Response{
+import java.util.List;
+
+public class GivePowerup extends Response{
+
+    public GivePowerup(List<Conditional> conditionals){
+        super(conditionals);
+    }
 
     @Override
     public void respond(GameObject giver, GameObject other, ObjectManager objectManager){

@@ -28,7 +28,7 @@ public class CollisionHandler {
                 for (Response response: responseSet){
                     int other = 1;
                     if (k == 1) other = 0;
-                    response.respond(collisionPair[k], collisionPair[other], myObjectManager);
+                    if (response.conditionsSatisfied()) response.respond(collisionPair[k], collisionPair[other], myObjectManager);
                 }
             }
         }

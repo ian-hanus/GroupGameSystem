@@ -1,13 +1,17 @@
 package Responses;
 
+import Conditionals.Conditional;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
-public class GainScore implements Response{
+import java.util.List;
+
+public class GainScore extends Response{
 
     double myGain;
 
-    public GainScore(double scoreGain){
+    public GainScore(List<Conditional> conditionals, double scoreGain){
+        super(conditionals);
         myGain = scoreGain;
     }
 
