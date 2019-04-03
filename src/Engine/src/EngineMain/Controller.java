@@ -13,7 +13,7 @@ import java.util.Set;
 public class Controller {
     private Map<String, GameObject> myObjectBank;
     private Map<String, Response> myHotKeys;
-    private Map<GameObject[], Set<Response>[]> myCollisionResponses;
+    private Map<Class[], Set<Response>[]> myCollisionResponses;
     private List<GameObject> myActiveObjects;
     private GameObject myUser;
     private CollisionHandler myCollisionHandler;
@@ -24,7 +24,7 @@ public class Controller {
         myEngineParser = new EngineParser();
         initializeDataVariables();
         myObjectManager = new ObjectManager(myActiveObjects);
-        myCollisionHandler = new CollisionHandler(myCollisionResponses, myObjectManager);
+        myCollisionHandler = new CollisionHandler();
     }
 
     public void initializeDataVariables(){
@@ -51,7 +51,7 @@ public class Controller {
     public void updateScene(){
         for(GameObject obj1: myActiveObjects){
             for(GameObject obj2: myActiveObjects){
-                myCollisionHandler.checkCollision(obj1, obj2);
+                myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myObjectManager);
             }
         }
         for (GameObject obj : myActiveObjects){
