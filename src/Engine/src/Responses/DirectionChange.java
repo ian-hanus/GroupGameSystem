@@ -1,12 +1,16 @@
 package Responses;
 
+import Conditionals.Conditional;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
-public class DirectionChange implements Response{
+import java.util.List;
+
+public class DirectionChange extends Response{
     private double myAdjustmentAngle;
 
-    public DirectionChange(double angle){
+    public DirectionChange(List<Conditional> conditionals, double angle){
+        super(conditionals);
         myAdjustmentAngle = angle;
     }
 

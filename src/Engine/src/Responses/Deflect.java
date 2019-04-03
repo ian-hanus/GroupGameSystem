@@ -1,14 +1,17 @@
 package Responses;
 
+import Conditionals.Conditional;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
+
+import java.util.List;
 
 public class Deflect extends DirectionChange{
 
     double myAdjustmentAngle;
 
-    public Deflect(double angle){
-        super(180);
+    public Deflect(List<Conditional> conditionals, double angle){
+        super(conditionals,180);
     }
 
     @Override
