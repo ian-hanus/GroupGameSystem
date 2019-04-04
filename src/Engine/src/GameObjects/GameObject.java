@@ -18,8 +18,8 @@ public class GameObject {
     private double myScore;
 
 
-    public GameObject(double xPos, double yPos, double health, double height, double width,
-                      double angle, String objectName, int zIndex, double[] direction, String filename) {
+    public GameObject(double xPos, double yPos, double health, double height, double width, double angle,
+                      String objectName, int zIndex, double[] direction, String filename) {
         myXPos = xPos;
         myYPos = yPos;
         myHealth = health;
@@ -51,16 +51,15 @@ public class GameObject {
 
     public void updatePosition(){
 
-    };
+    }
 
     public void updateStats(){
 
-    };
+    }
 
     /*
     Getters:
      */
-
 
     public double getHeight() {
         return myHeight;
@@ -78,7 +77,6 @@ public class GameObject {
         return myAngle;
     }
 
-
     public double getScore() {
         return myScore;
     }
@@ -93,6 +91,10 @@ public class GameObject {
 
     public double getHealth() {
         return myHealth;
+    }
+
+    public double[] getDirection() {
+        return myDirection;
     }
 
 
