@@ -15,11 +15,10 @@ public class GameObject {
     private double[] myDirection;
     private String myFilename;
     private double myScore;
-    private double myVelocity;
 
 
     public GameObject(double xPos, double yPos, double health, double height, double width,
-                      double angle, double velocity, String objectName, int zIndex, double[] direction, String filename) {
+                      double angle, String objectName, int zIndex, double[] direction, String filename) {
         myXPos = xPos;
         myYPos = yPos;
         myHealth = health;
@@ -31,7 +30,6 @@ public class GameObject {
         myDirection = direction;
         myFilename = filename;
         myScore = 0;
-        myVelocity = velocity;
     }
 
 
@@ -140,10 +138,6 @@ public class GameObject {
 
     protected void setHealth(double health) {
         myHealth = health;
-    }
-
-    protected void setVelocity(double vel) {
-        myVelocity = vel;
     }
 
     //gameobject.apply(powerup);
