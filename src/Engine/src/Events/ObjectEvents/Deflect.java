@@ -1,4 +1,4 @@
-package Responses;
+package Events.ObjectEvents;
 
 import Conditionals.Conditional;
 import GameObjects.GameObject;
@@ -15,12 +15,12 @@ public class Deflect extends DirectionChange{
     }
 
     @Override
-    public void respond(GameObject obj, ObjectManager objectManager){
+    public void activate(GameObject obj, ObjectManager objectManager){
         objectManager.adjustDirection(obj, myAdjustmentAngle);
     }
 
     @Override
-    public void respond(GameObject obj, GameObject other, ObjectManager objectManager){
+    public void activate(GameObject obj, GameObject other, ObjectManager objectManager){
         objectManager.adjustDirection(obj, myAdjustmentAngle);
     }
 

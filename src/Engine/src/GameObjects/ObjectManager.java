@@ -37,6 +37,8 @@ public class ObjectManager {
         myActiveObjects.remove(obj);
     }
 
+    public void stop(GameObject obj) {obj.setVelocity(0);}
+
     public void create(GameObject obj) {
         myActiveObjects.add(obj);
     }
