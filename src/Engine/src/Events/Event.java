@@ -1,4 +1,4 @@
-package Responses;
+package Events;
 
 import Conditionals.Conditional;
 import GameObjects.GameObject;
@@ -6,10 +6,10 @@ import GameObjects.ObjectManager;
 
 import java.util.List;
 
-public abstract class Response {
+public class Event {
     private List<Conditional> myConditionals;
 
-    public Response(List<Conditional> conditionals){
+    public Event(List<Conditional> conditionals){
         myConditionals = conditionals;
     }
 
@@ -26,7 +26,4 @@ public abstract class Response {
         }
         return true;
     }
-
-    public abstract void respond(GameObject main, ObjectManager objectManager);
-    public abstract void respond(GameObject main, GameObject other, ObjectManager objectManager);
 }

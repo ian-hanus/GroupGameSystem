@@ -1,12 +1,13 @@
-package Responses;
+package Events.ObjectEvents;
 
 import Conditionals.Conditional;
+import Events.Event;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
 import java.util.List;
 
-public class GainScore extends Response{
+public class GainScore extends ObjectEvent {
 
     double myGain;
 
@@ -16,12 +17,12 @@ public class GainScore extends Response{
     }
 
     @Override
-    public void respond(GameObject obj, ObjectManager objectManager){
+    public void activate(GameObject obj, ObjectManager objectManager){
         objectManager.increaseScore(obj, myGain);
     }
 
     @Override
-    public void respond(GameObject obj, GameObject other, ObjectManager objectManager){
+    public void activate(GameObject obj, GameObject other, ObjectManager objectManager){
         objectManager.increaseScore(obj, myGain);
     }
 }

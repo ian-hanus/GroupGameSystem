@@ -1,12 +1,13 @@
-package Responses;
+package Events.ObjectEvents;
 
 import Conditionals.Conditional;
+import Events.Event;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
 import java.util.List;
 
-public class DirectionChange extends Response{
+public class DirectionChange extends ObjectEvent {
     private double myAdjustmentAngle;
 
     public DirectionChange(List<Conditional> conditionals, double angle){
@@ -15,12 +16,12 @@ public class DirectionChange extends Response{
     }
 
     @Override
-    public void respond(GameObject obj, ObjectManager objectManager){
+    public void activate(GameObject obj, ObjectManager objectManager){
         objectManager.adjustDirection(obj, myAdjustmentAngle);
     }
 
     @Override
-    public void respond(GameObject obj, GameObject other, ObjectManager objectManager){
+    public void activate(GameObject obj, GameObject other, ObjectManager objectManager){
         objectManager.adjustDirection(obj, myAdjustmentAngle);
     }
 }
