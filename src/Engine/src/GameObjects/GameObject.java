@@ -1,8 +1,9 @@
-package GameObjects;
+package Engine.src.GameObjects;
 
 import Powerups.Powerup;
 
 import java.util.List;
+
 public class GameObject {
     private double myXPos;
     private double myYPos;
@@ -47,11 +48,6 @@ public class GameObject {
 
     }
     */
-
-
-    public void addPowerup(GameObject powerup) {
-
-    }
 
     public void updatePosition(){
 
