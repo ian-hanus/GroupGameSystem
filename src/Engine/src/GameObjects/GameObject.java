@@ -49,8 +49,13 @@ public class GameObject {
     }
     */
 
-    public void updatePosition(){
+    public void updatePosition() {
+        double currXPos = getX();
+        double currYPos = getY();
+        double[] direction = getDirection();
 
+        setX(currXPos + direction[0]);
+        setY(currYPos + direction[1]);
     }
 
     public void updateStats(){
