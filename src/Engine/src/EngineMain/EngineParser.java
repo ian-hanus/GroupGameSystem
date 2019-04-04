@@ -1,4 +1,4 @@
-package EngineMain;
+package Engine.src.EngineMain;
 
 import GameObjects.GameObject;
 import Physics.CollisionHandler;

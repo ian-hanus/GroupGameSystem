@@ -1,4 +1,4 @@
-package Physics;
+package Engine.src.Physics;
 
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
