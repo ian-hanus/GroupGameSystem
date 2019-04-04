@@ -1,7 +1,7 @@
-package Engine.src.Powerups;
+package Powerups;
 
 public class ModifiedState extends Powerup {
     public ModifiedState() {
-        
+
     }
 }

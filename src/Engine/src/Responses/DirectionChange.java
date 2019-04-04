@@ -14,4 +14,9 @@ public class DirectionChange implements Response{
     public void respond(GameObject obj, ObjectManager objectManager){
         objectManager.adjustDirection(obj, myAdjustmentAngle);
     }
+
+    @Override
+    public void respond(GameObject obj, GameObject other, ObjectManager objectManager){
+        objectManager.adjustDirection(obj, myAdjustmentAngle);
+    }
 }
