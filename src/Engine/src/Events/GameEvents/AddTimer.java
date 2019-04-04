@@ -18,7 +18,7 @@ public class AddTimer extends GameEvent {
     }
 
     @Override
-    void activate(LevelManager gameManager) {
+    public void activate(LevelManager gameManager) {
         gameManager.addTimer(myDuration + System.currentTimeMillis(), myEvents);
     }
 }
