@@ -11,9 +11,12 @@ import java.util.Set;
 public class LevelManager {
     private boolean levelPassed;
     private Map<Double, Set<Event>> myTimerMap;
+    private ObjectManager myObjectManager;
 
-    public LevelManager(Map<Double[], Set<Event>> myTimerMap){
+    public LevelManager(Map<Double, Set<Event>> timerMap, ObjectManager objectManager){
         levelPassed = false;
+        myObjectManager = objectManager;
+        myTimerMap = timerMap;
     }
 
     public void addTimer(double timer, Set<Event> events) {
@@ -34,4 +37,7 @@ public class LevelManager {
     }
 
 
+    public void setLevelPass() {
+        levelPassed = true;
+    }
 }

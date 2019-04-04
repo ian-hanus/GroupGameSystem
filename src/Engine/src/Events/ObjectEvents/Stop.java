@@ -7,17 +7,17 @@ import GameObjects.ObjectManager;
 
 import java.util.List;
 
-public class Stop extends Event {
+public class Stop extends ObjectEvent {
 
     public Stop(List<Conditional> conditionals){
         super(conditionals);
     }
 
     @Override
-    public void activate(GameObject obj, ObjectManager objectManager) { objectManager.stop(obj);}
+    public void activate(ObjectManager objectManager) { objectManager.stop(myObject);}
 
     @Override
-    public void activate(GameObject obj, GameObject other, ObjectManager objectManager) {
-        objectManager.kill(other);
+    public void activate(GameObject other, ObjectManager objectManager) {
+        objectManager.stop(myObject);
     }
 }

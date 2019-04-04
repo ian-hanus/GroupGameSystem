@@ -14,11 +14,11 @@ import java.util.List;
         }
 
         @Override
-        public void activate(GameObject obj, ObjectManager objectManager) { objectManager.kill(obj);}
+        public void activate(ObjectManager objectManager) { objectManager.kill(myObject);}
 
         @Override
-        public void activate(GameObject obj, GameObject other, ObjectManager objectManager) {
-            objectManager.kill(obj);
+        public void activate(GameObject other, ObjectManager objectManager) {
+            objectManager.kill(myObject);
         }
     }
 

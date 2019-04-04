@@ -14,12 +14,12 @@ public class GivePowerup extends ObjectEvent {
     }
 
     @Override
-    public void activate(GameObject giver, GameObject other, ObjectManager objectManager){
-        objectManager.addPowerup(giver, other);
+    public void activate(ObjectManager objectManager){
+        //TODO: throw error
     }
 
     @Override
-    public void activate(GameObject giver, ObjectManager objectManager){
-        // TODO: throw error
+    public void activate(GameObject other, ObjectManager objectManager){
+        objectManager.addPowerup(myObject, other);
     }
 }

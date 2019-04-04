@@ -14,10 +14,10 @@ public class Kill extends ObjectEvent {
     }
 
     @Override
-    public void activate(GameObject obj, ObjectManager objectManager) { }
+    public void activate(ObjectManager objectManager) { }
 
     @Override
-    public void activate(GameObject obj, GameObject other, ObjectManager objectManager) {
+    public void activate(GameObject other, ObjectManager objectManager) {
         objectManager.kill(other);
     }
 }

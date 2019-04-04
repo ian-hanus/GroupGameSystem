@@ -27,7 +27,7 @@ public class Controller {
         myEngineParser = new EngineParser();
         initializeDataVariables();
         myObjectManager = new ObjectManager(myActiveObjects);
-        myLevelManager = new LevelManager(myTimerMap);
+        myLevelManager = new LevelManager(myTimerMap, myObjectManager);
         myCollisionHandler = new CollisionHandler();
     }
 
@@ -51,7 +51,7 @@ public class Controller {
             if (event.conditionsSatisfied()){
                 if(event instanceof ObjectEvent){
                     ((ObjectEvent) event).setMyObject(myUser);
-                    event.activate(myUser, myObjectManager);
+                    ((ObjectEvent) event).activate(myUser, myObjectManager);
                 }
             }
         }

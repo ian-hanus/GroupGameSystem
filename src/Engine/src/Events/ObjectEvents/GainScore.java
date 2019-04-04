@@ -17,12 +17,12 @@ public class GainScore extends ObjectEvent {
     }
 
     @Override
-    public void activate(GameObject obj, ObjectManager objectManager){
-        objectManager.increaseScore(obj, myGain);
+    public void activate(ObjectManager objectManager){
+        objectManager.increaseScore(myObject, myGain);
     }
 
     @Override
-    public void activate(GameObject obj, GameObject other, ObjectManager objectManager){
-        objectManager.increaseScore(obj, myGain);
+    public void activate(GameObject other, ObjectManager objectManager){
+        objectManager.increaseScore(myObject, myGain);
     }
 }
