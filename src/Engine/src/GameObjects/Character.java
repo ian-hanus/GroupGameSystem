@@ -2,7 +2,7 @@ package Engine.src.GameObjects;
 
 public class Character extends GameObject {
 
-    double myJumpSpeed;
+    private double myJumpSpeed;
 
     public Character(double xPos, double yPos, double health, double height, double width,
                 double angle, String objectName, int zIndex, double[] direction, String filename, double jumpSpeed) {
