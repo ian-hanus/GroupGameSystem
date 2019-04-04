@@ -1,5 +1,8 @@
 package Engine.src.GameObjects;
 
+/**
+ * @author Jonathan Yu
+ */
 public class Character extends GameObject {
 
     private double myJumpSpeed;

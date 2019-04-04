@@ -1,9 +1,10 @@
 package Engine.src.GameObjects;
 
+/**
+ * @author Jonathan Yu
+ */
 public class NonPlayerCharacter extends Character {
 
-    private boolean jumps;
-    private boolean changesDirection;
     private int numTicksToJump;
     private int numTicksToChangeDir;
     private int numTicksSinceJump = 0;

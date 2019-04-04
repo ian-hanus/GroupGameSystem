@@ -1,9 +1,12 @@
 package Engine.src.GameObjects;
 
-import Powerups.Powerup;
+import Engine.src.Powerups.Powerup;
 
 import java.util.List;
 
+/**
+ * @author David Liu and Jonathan Yu
+ */
 public class GameObject {
     private double myXPos;
     private double myYPos;
