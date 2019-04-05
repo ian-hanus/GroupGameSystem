@@ -15,13 +15,13 @@ public class Deflect extends DirectionChange{
     }
 
     @Override
-    public void activate(GameObject obj, ObjectManager objectManager){
-        objectManager.adjustDirection(obj, myAdjustmentAngle);
+    public void activate(ObjectManager objectManager){
+        objectManager.adjustDirection(myObject, myAdjustmentAngle);
     }
 
     @Override
-    public void activate(GameObject obj, GameObject other, ObjectManager objectManager){
-        objectManager.adjustDirection(obj, myAdjustmentAngle);
+    public void activate(GameObject other, ObjectManager objectManager){
+        objectManager.adjustDirection(myObject, myAdjustmentAngle);
     }
 
 }
