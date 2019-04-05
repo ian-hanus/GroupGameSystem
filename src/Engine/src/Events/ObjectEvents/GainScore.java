@@ -1,7 +1,6 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
-import Events.Event;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 

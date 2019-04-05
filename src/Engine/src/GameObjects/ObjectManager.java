@@ -1,9 +1,8 @@
-package Engine.src.GameObjects;
+package GameObjects;
 
 import GameObjects.GameObject;
 
 import java.util.List;
-import Powerups.Powerup;
 
 public class ObjectManager {
     List<GameObject> myActiveObjects;
@@ -37,12 +36,14 @@ public class ObjectManager {
         myActiveObjects.remove(obj);
     }
 
+    public void stop(GameObject obj) {obj.setVelocity(0);}
+
     public void create(GameObject obj) {
         myActiveObjects.add(obj);
     }
 
     public void addPowerup(GameObject powerup, GameObject target){
-        target.addPowerup(powerup);
+        //target.addPowerup(powerup);
 
     }
 

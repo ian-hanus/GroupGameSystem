@@ -1,6 +1,5 @@
 package Events.GameEvents;
 
-import Conditionals.Comparison;
 import Conditionals.Conditional;
 import EngineMain.LevelManager;
 
