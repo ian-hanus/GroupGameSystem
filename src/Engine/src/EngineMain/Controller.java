@@ -69,6 +69,8 @@ public class Controller {
         }
         for (GameObject obj : myActiveObjects){
             myObjectManager.move(obj);
+            if(!obj.colliding()) myObjectManager.restoreMovementDefaults(obj);
+            myObjectManager.setCollide(obj, false);
             myObjectManager.updateStats(obj);
         }
     }

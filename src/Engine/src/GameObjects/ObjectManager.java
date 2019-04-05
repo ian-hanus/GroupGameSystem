@@ -63,4 +63,17 @@ public class ObjectManager {
     public void increaseScore(GameObject obj, double myGain) {
         obj.setScore(obj.getScore() + myGain);
     }
+
+    public void setCollide(GameObject obj, boolean collides){
+        obj.setCollide(collides);
+    }
+
+    public void setXVel(GameObject obj, double newXVel) {
+        double[] direction = obj.getDirection();
+        double xDirec = direction[0];
+        double yDirec = direction[1];
+        double vel = obj.getVelocity();
+
+
+    }
 }

@@ -1,9 +1,11 @@
 package EngineMain;
 
+import Events.Event;
 import GameObjects.GameObject;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class EngineParser {
 
@@ -27,4 +29,7 @@ public class EngineParser {
         return null;
     }
 
+    public Map<Double, Set<Event>> makeTimerMap() {
+        return null;
+    }
 }

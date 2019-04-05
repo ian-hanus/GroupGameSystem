@@ -16,7 +16,7 @@ public class GameObject {
     private String myFilename;
     private double myScore;
     private double myVelocity;
-
+    private boolean Collides;
 
     public GameObject(double xPos, double yPos, double health, double height, double width,
                       double angle, double velocity, String objectName, int zIndex, double[] direction, String filename) {
@@ -32,6 +32,7 @@ public class GameObject {
         myFilename = filename;
         myScore = 0;
         myVelocity = velocity;
+        Collides = false;
     }
 
 
@@ -144,6 +145,14 @@ public class GameObject {
 
     protected void setVelocity(double vel) {
         myVelocity = vel;
+    }
+
+    public void setCollide(boolean collides) {
+        Collides = collides;
+    }
+
+    public boolean colliding() {
+        return Collides;
     }
 
     //gameobject.apply(powerup);

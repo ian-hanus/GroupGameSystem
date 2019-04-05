@@ -17,6 +17,9 @@ public class CollisionHandler {
         Class[] collisionClassPair = {obj1.getClass(), obj2.getClass()};
         GameObject[] collisionPair = {obj1, obj2};
         if (obj1 != obj2 && collides(obj1, obj2) && collisionResponses.containsKey(collisionClassPair)) {
+            objectManager.setCollide(obj1, true);
+            objectManager.setCollide(obj2, true);
+            modifyMovement(obj1, obj2, objectManager);
             Set<Event>[] responseSetPair = collisionResponses.get(collisionClassPair);
             for (int k = 0; k < responseSetPair.length; k++) {
                 Set<Event> responseSet = responseSetPair[k];
@@ -55,6 +58,28 @@ public class CollisionHandler {
         double y2 = target.getY();
         if(y1 + height1>= y2) return true;
         return false;
+    }
+
+    public void modifyMovement(GameObject obj1, GameObject obj2, ObjectManager objectManager) {
+        GameObject block;
+        GameObject other;
+        if (obj1 instanceof Block) {
+            block = obj1;
+            other = obj2;
+        }
+        else if (obj2 instanceof Block) {
+            block = obj2;
+            other = obj1;
+        }
+        else return;
+
+        if (((Block) block).impassible()){
+            if(collideFromLeft(block, other) || collideFromLeft(other, block)) objectManager.setXVel(other, 0);
+            if(collideFromTop(block, other) || collideFromTop(other, block))objectManager.setYVel(other, 0);
+        }
+        else{
+            objectManager.downScaleVelocity(other, ((Block) block).getVelocityScalar());
+        }
     }
 
 }
