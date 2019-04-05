@@ -1,4 +1,4 @@
-package GameObjects;
+package Engine.src.GameObjects;
 
 import GameObjects.GameObject;
 
@@ -36,8 +36,6 @@ public class ObjectManager {
     public void kill(GameObject obj) {
         myActiveObjects.remove(obj);
     }
-
-    public void stop(GameObject obj) {obj.setVelocity(0);}
 
     public void create(GameObject obj) {
         myActiveObjects.add(obj);

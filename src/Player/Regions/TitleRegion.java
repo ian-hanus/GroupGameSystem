@@ -2,6 +2,7 @@ package Player.Regions;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
@@ -12,6 +13,7 @@ import javafx.scene.text.Font;
 
 public class TitleRegion extends Region {
 
+    // TODO: unhardcode these
     public static final String TEXT_STR = "Cracking Open a Scrolled One";
     public static final String TEXT_FONT = "Trebuchet MS";
     public static final double TEXT_HEIGHT = 50;
@@ -33,9 +35,10 @@ public class TitleRegion extends Region {
         myTitlePane.setBackground(new Background(new BackgroundFill(
                 myColor, new CornerRadii(5, 5, 5, 5, false), Insets.EMPTY)));
 
+        myGroup = new Group();
+        buildGroup();
         myTitlePane.add(myGroup, 0, 0);
 
-        buildGroup();
     }
 
     protected void buildGroup() {

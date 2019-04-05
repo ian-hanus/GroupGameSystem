@@ -1,8 +1,12 @@
-package GameObjects;
+package Engine.src.GameObjects;
 
-import Powerups.Powerup;
+import Engine.src.Powerups.Powerup;
 
 import java.util.List;
+
+/**
+ * @author David Liu and Jonathan Yu
+ */
 public class GameObject {
     private double myXPos;
     private double myYPos;
@@ -18,8 +22,8 @@ public class GameObject {
     private double myVelocity;
     private boolean Collides;
 
-    public GameObject(double xPos, double yPos, double health, double height, double width,
-                      double angle, double velocity, String objectName, int zIndex, double[] direction, String filename) {
+    public GameObject(double xPos, double yPos, double health, double height, double width, double angle,
+                      String objectName, int zIndex, double[] direction, String filename) {
         myXPos = xPos;
         myYPos = yPos;
         myHealth = health;
@@ -51,23 +55,22 @@ public class GameObject {
     }
     */
 
+    public void updatePosition() {
+        double currXPos = getX();
+        double currYPos = getY();
+        double[] direction = getDirection();
 
-    public void addPowerup(GameObject powerup) {
-
+        setX(currXPos + direction[0]);
+        setY(currYPos + direction[1]);
     }
-
-    public void updatePosition(){
-
-    };
 
     public void updateStats(){
 
-    };
+    }
 
     /*
     Getters:
      */
-
 
     public double getHeight() {
         return myHeight;
@@ -85,7 +88,6 @@ public class GameObject {
         return myAngle;
     }
 
-
     public double getScore() {
         return myScore;
     }
@@ -100,6 +102,10 @@ public class GameObject {
 
     public double getHealth() {
         return myHealth;
+    }
+
+    public double[] getDirection() {
+        return myDirection;
     }
 
 

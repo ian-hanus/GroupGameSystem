@@ -1,4 +1,4 @@
-package Powerups;
+package Engine.src.Powerups;
 
 public class Weapon extends Powerup {
 

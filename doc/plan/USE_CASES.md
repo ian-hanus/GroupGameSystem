@@ -20,7 +20,7 @@
 18. Set images associated with health levels of hero
 19. Allow user in author to set gravity constant which affects physics in engine
 20. Reflectively create map of key inputs mapped to hero direction vector changes and hero specialty actions (such as shooting a missile)
-21. Reflectively create map of object tuples with associated collision Events
+21. Reflectively create map of object tuples with associated collision Responses
 22. Create a doubly nested loop that uses the object tuple key to get the collision Response subclass, then perform .respond
 23. Design direction vector for GameObjects, and update this in the main Controller method according to either the key input or counter
 24. Create and regulate list of actively displayable objects in Controller, updating it with every newly created element (such as a powerup or missile)
