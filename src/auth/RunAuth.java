@@ -3,8 +3,6 @@ package auth;
 
 import auth.screens.CanvasScreen;
 import javafx.application.Application;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -12,10 +10,6 @@ import javafx.stage.Stage;
  *
  */
 public class RunAuth extends Application {
-    // Global constants
-    public static final String WINDOW_TITLE = "Untitled.game";
-    public static final Paint BACKGROUND = Color.GHOSTWHITE;
-
     public static  Font sofiaPro, sofiaProSmall, bebasKai, bebasKaiMedium;
 
 

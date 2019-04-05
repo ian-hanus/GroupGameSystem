@@ -2,10 +2,12 @@ package auth.helpers;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.text.Text;
+
+import static auth.Styles.*;
 
 public class ScreenHelpers {
     public static void initScene(Scene scene, Group root) {
-        root.getChildren().add(new Text("yolo"));
+        scene.setRoot(root);
+        root.setStyle(BG_STYLE);
     }
 }

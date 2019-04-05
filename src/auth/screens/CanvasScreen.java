@@ -3,9 +3,11 @@ package auth.screens;
 import auth.RunAuth;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import static auth.Colors.*;
 import static auth.Dimensions.*;
+import static auth.Strings.*;
 import static auth.helpers.ScreenHelpers.initScene;
 
 public class CanvasScreen extends Screen {
@@ -29,8 +31,8 @@ public class CanvasScreen extends Screen {
         initScene(scene, root);
 
         this.context = context;
-        stage.setResizable(false);
-
+        stage.setScene(scene);
+        stage.setTitle(DEFAULT_TITLE);
         return stage;
     }
 }
