@@ -78,7 +78,7 @@ public class CollisionHandler {
             if(collideFromTop(block, other) || collideFromTop(other, block))objectManager.setYVel(other, 0);
         }
         else{
-            objectManager.downScaleVelocity(other, ((Block) block).getVelocityScalar());
+            objectManager.downscaleVelocity(other, ((Block) block).getVelocityScalar());
         }
     }
 

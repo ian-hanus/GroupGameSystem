@@ -70,10 +70,24 @@ public class ObjectManager {
 
     public void setXVel(GameObject obj, double newXVel) {
         double[] direction = obj.getDirection();
-        double xDirec = direction[0];
         double yDirec = direction[1];
         double vel = obj.getVelocity();
+        double yvel = yDirec*vel;
+        double newVel = Math.sqrt(newXVel*newXVel + yvel*yvel);
+        direction = new double[]{newXVel/newVel, yvel/newVel};
+        obj.setVelocity(newVel);
+        obj.setDirection(direction);
+    }
 
+    public void setYVel(GameObject obj, double newYVel) {
+        double[] direction = obj.getDirection();
+        double xDirec = direction[0];
+        double vel = obj.getVelocity();
+        double xvel = xDirec*vel;
+        double newVel = Math.sqrt(newYVel*newYVel + xvel*xvel);
+        direction = new double[]{xvel/newVel, newYVel/newVel};
+        obj.setVelocity(newVel);
+        obj.setDirection(direction);
 
     }
 }
