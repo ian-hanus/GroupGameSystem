@@ -1,7 +1,7 @@
 package auth.panes;
 
-import static auth.Styles.RIGHT_PANE_STYLE;
-import static auth.helpers.DimensionCalculator.*;
+        import static auth.Styles.RIGHT_PANE_STYLE;
+        import static auth.helpers.DimensionCalculator.*;
 
 public class RightPane extends Pane {
     public RightPane(double y, double width, double height) {

@@ -10,4 +10,10 @@ public class Dimensions {
     public static double RIGHT_PANE_HEIGHT = 300;
     public static double RIGHT_PANE_WIDTH = 300;
     public static double RIGHT_PANE_MARGIN = 25;
+    public static double CONSOLE_PANE_WIDTH = 775;
+    public static double CONSOLE_PANE_HEIGHT = 175;
+    public static double CONSOLE_HORIZONTAL_OFFSET = 125;
+    public static double CANVAS_VERTICAL_OFFSET = 75;
+    public static double CANVAS_HEIGHT = 475;
+    public static double CANVAS_WIDTH = 775;
 }

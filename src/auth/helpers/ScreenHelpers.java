@@ -1,5 +1,6 @@
 package auth.helpers;
 
+import auth.panes.BottomPane;
 import auth.panes.LeftPane;
 import auth.panes.RightPane;
 import javafx.scene.Group;
@@ -8,12 +9,20 @@ import javafx.scene.Scene;
 import static auth.Dimensions.*;
 import static auth.Styles.*;
 import static auth.helpers.DimensionCalculator.*;
+import static auth.helpers.RectangleHelpers.createStyledRectangle;
 
 public class ScreenHelpers {
     public static void initScene(Scene scene, Group root) {
         scene.setRoot(root);
         root.setStyle(BG_STYLE);
         placePanes(root);
+        placeCanvas(root);
+    }
+
+    private static void placeCanvas(Group root) {
+        var canvas = createStyledRectangle(CONSOLE_HORIZONTAL_OFFSET, CANVAS_VERTICAL_OFFSET,
+                CANVAS_WIDTH, CANVAS_HEIGHT, CANVAS_STYLE);
+        root.getChildren().add(canvas);
     }
 
     private static void placePanes(Group root) {
@@ -24,12 +33,9 @@ public class ScreenHelpers {
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
 
-        //var consolePane = new ConsolePane();
-        //var canvasPane = new CanvasPane();
+        var consolePane = new BottomPane(CONSOLE_HORIZONTAL_OFFSET, CONSOLE_PANE_WIDTH, CONSOLE_PANE_HEIGHT);
         root.getChildren().addAll(toolsPane.getView(),
-                rightPanesGroup);
-                //consolePane.getView(),
-                //canvasPane.getView());
+                rightPanesGroup,
+                consolePane.getView());
     }
-
 }
