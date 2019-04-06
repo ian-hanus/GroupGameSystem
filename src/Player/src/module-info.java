@@ -1,5 +1,6 @@
 module player {
-    requires javafx.base;
+    requires voogasalad.crackingopen;
+
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.media;

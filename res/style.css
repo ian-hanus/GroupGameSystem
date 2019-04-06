@@ -1,1 +1,7 @@
 /* Styles will gradually be moved here as needed */
+
+.gridPane {
+    -fx-padding: 15 15 15 15;
+    -fx-background-color: #284376;
+    -fx-alignment: "center";
+}
