@@ -2,8 +2,9 @@ package auth.PropertyChangers;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.util.*;
@@ -54,8 +55,8 @@ public abstract class ObjectProperties {
         return objectRows;
     }
 
-    public FlowPane getVisualization(){
-        FlowPane visual = new FlowPane();
+    public VBox getVisualization(){
+        VBox visual = new VBox();
         Label titleLabel = new Label(title);
         visual.getChildren().add(titleLabel);
         List<HBox> propertyRows = getTextBoxes();

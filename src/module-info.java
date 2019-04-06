@@ -5,8 +5,7 @@ module voogasalad.crackingopen {
     requires javafx.graphics;
     requires javafx.media;
     requires javafx.web;
-    requires json.simple;
-    exports Player;
+//    exports player;
     exports auth;
 
 }
