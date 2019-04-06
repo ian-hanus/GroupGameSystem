@@ -1,4 +1,4 @@
-package DataManager;
+package Data;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package DataManager;
+package Data;
 
 import javafx.scene.image.Image;
 

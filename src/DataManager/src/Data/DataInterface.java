@@ -1,4 +1,4 @@
-package DataManager;
+package Data;
 
 public interface DataInterface {
     void saveGame(String fileName, GameInformation gameInformation);
