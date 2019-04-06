@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Use Cases
 
 1. Place a block that the player is not able to go through, but must go over or below instead.
@@ -116,4 +115,3 @@ Scrolly Doodle
 * user clicks "Play" button in the gameOptions bar
 * the Player opens a new window that is running Scrolly Doodle. the user can now play
 their level by loading it in.
->>>>>>> 62c2f81a7a151ca3cf164ced2bd90c44ca09c009
