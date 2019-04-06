@@ -1,9 +1,9 @@
-package Player;
+package PlayerMain;
 
-import Player.Regions.DescriptionRegion;
-import Player.Regions.GamesRegion;
-import Player.Regions.Thumbnail;
-import Player.Regions.TitleRegion;
+import Regions.DescriptionRegion;
+import Regions.GamesRegion;
+import Regions.Thumbnail;
+import Regions.TitleRegion;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,10 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class PlayerStage {
 
