@@ -50,7 +50,7 @@
 48. The user wants to play a game -> they click on the thumbnail of the game -> the image, description, and gameOptions box appear in the descriptionRegion -> they click "Play" and a new window appears that is running the engine
 49. The user wants to build a game level -> they click on the thumbnail of the game -> they click "Build" in the gameOptions box and a new window appears that is running the game authoring environment
 50. The user wants to play 2 games at once -> they click the thumbnail of the first game, and then click "Play" in the gameOptions box -> they go back to the game choosing screen and click the thumbnail of the second tame, and then click "Play" in that gameOptions box.
-=======
+
 use cases for player:
 
 1. User wants to rate the game Scrolly Bird 4/5 stars.
