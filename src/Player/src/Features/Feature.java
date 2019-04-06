@@ -1,4 +1,4 @@
-package Player.Features;
+package Features;
 
 import javafx.scene.Node;
 

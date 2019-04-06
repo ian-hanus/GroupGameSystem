@@ -1,5 +1,4 @@
-module voogasalad.crackingopen {
-
+module player {
     requires javafx.base;
     requires javafx.controls;
     requires javafx.graphics;
@@ -7,5 +6,7 @@ module voogasalad.crackingopen {
     requires javafx.web;
     requires java.datatransfer;
 
+    exports PlayerMain;
+    exports Features;
+    exports Regions;
 }
-
