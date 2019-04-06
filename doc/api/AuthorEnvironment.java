@@ -1,4 +1,4 @@
-package Player.Regions;
+package Player.src.Regions;
 
 public interface AuthorEnvironment {
     /**
