@@ -1,4 +1,4 @@
-package Player.Regions;
+package Regions;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,13 +8,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Map;
 import java.util.Properties;
 
 public class DescriptionRegion extends Region {

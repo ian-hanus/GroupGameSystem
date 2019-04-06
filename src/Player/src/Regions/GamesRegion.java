@@ -1,6 +1,5 @@
-package Player.Regions;
+package Regions;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -11,14 +10,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class GamesRegion extends Region {
 

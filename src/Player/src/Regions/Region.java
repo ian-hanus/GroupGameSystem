@@ -1,7 +1,6 @@
-package Player.Regions;
+package Regions;
 
 import javafx.scene.Group;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
