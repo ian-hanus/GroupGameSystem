@@ -35,16 +35,14 @@ public class GamesRegion extends Region {
         super(wd, ht, color);
 
         myGamesPane = new ScrollPane();
+
+        // should not be hardcoded if we want the size of our window to be the same, otherwise can be. We can do this in
+        // css if myWidth and myHeight are not to be changed
+
         myGamesPane.setPrefWidth(myWidth);
         myGamesPane.setPrefHeight(myHeight);
-        myGamesPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        myGamesPane.setBackground(new Background(new BackgroundFill(
-                myColor, new CornerRadii(5, 5, 5, 5,  false),
-                new Insets(20, 20, 20, 20))));
-        // TODO: un-hardcode this
-        myGamesPane.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue;");
 
-        // TODO: and this
+        // TODO: Do not hardcode this
 
         myThumbnailWidth = myWidth - (2 * OFFSET) - SCROLLBAR_WIDTH; // -15 to account for the scrollbar which is 15
         myThumbnailHeight = myThumbnailWidth / 2;
@@ -115,7 +113,6 @@ public class GamesRegion extends Region {
             }
         }
 
-        label.setStyle("-fx-font-family: 'Trebuchet MS'; -fx-font-size: 20; -fx-text-fill: 'white';");
         label.setLayoutX(OFFSET);
         header.getChildren().add(label);
 

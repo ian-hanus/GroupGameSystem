@@ -27,10 +27,6 @@ public class DescriptionRegion extends Region {
         myDescPane = new ScrollPane();
         myDescPane.setPrefWidth(wd);
         myDescPane.setPrefHeight(ht);
-        myDescPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        myDescPane.setBackground(new Background(new BackgroundFill(
-                myColor, new CornerRadii(5, 5, 5, 5, false), Insets.EMPTY)));
-        myDescPane.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue;");
 
         myGroup = new Group();
         buildGroup();
@@ -55,7 +51,7 @@ public class DescriptionRegion extends Region {
 
         GridPane grid = new GridPane();
         Label invitation = new Label("Click on a game from the Games menu!");
-        invitation.setStyle("-fx-font-family: 'Trebuchet MS'; -fx-font-size: 20; -fx-text-fill: 'white';");
+
         grid.setPadding(new Insets(OFFSET, OFFSET, OFFSET, OFFSET));
         grid.setAlignment(Pos.CENTER);
         grid.add(invitation, 0, 0, 1, 1);

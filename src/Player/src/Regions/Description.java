@@ -13,12 +13,11 @@ import java.util.Map;
 
 public class Description {
 
+    private final String VBOX_STYLE = "vbox";
     public final static double IMAGE_WIDTH = 350;
     public final static double IMAGE_HEIGHT = 125;
     public final static double DESC_WIDTH = IMAGE_WIDTH;
     public final static double DESC_HEIGHT = 200;
-    public final static double GO_WIDTH = 100;
-    public final static double GO_HEIGHT = 350;
 
     private Map<String, String> myImageMap;
     private Map<String, String> myDescMap;
@@ -75,9 +74,7 @@ public class Description {
     private void placeGameOptions() {
 
         myGameOptions = new VBox();
-        myGameOptions.setPrefWidth(GO_WIDTH);
-        myGameOptions.setPrefHeight(GO_HEIGHT);
-        myGameOptions.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue;");
+        myGameOptions.getStyleClass().add(VBOX_STYLE);
         myPane.add(myGameOptions, 1, 0, 1, 2);
 
     }
