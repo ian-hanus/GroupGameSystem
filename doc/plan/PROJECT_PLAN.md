@@ -88,9 +88,6 @@ Features/Goals
     * Features:
         * First sprint: Building the game choosing state and being able to run the game engine and authoring environment
         * Second sprint: Adding to the graphical components of the Engine and Authoring environment
-    * Use Cases:
-        * First sprint:
-        * Second sprint:
 * Duc Tran (dt135)
     * Responsibilities:
         * Primary: Authoring Environment Backend
