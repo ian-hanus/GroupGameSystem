@@ -1,9 +1,8 @@
-package Engine.src.GameObjects;
+package GameObjects;
 
 import GameObjects.GameObject;
 
 import java.util.List;
-import Powerups.Powerup;
 
 public class ObjectManager {
     List<GameObject> myActiveObjects;
@@ -37,12 +36,14 @@ public class ObjectManager {
         myActiveObjects.remove(obj);
     }
 
+    public void stop(GameObject obj) {obj.setVelocity(0);}
+
     public void create(GameObject obj) {
         myActiveObjects.add(obj);
     }
 
     public void addPowerup(GameObject powerup, GameObject target){
-        target.addPowerup(powerup);
+        //target.addPowerup(powerup);
 
     }
 
@@ -60,5 +61,32 @@ public class ObjectManager {
 
     public void increaseScore(GameObject obj, double myGain) {
         obj.setScore(obj.getScore() + myGain);
+    }
+
+    public void setCollide(GameObject obj, boolean collides){
+        obj.setCollide(collides);
+    }
+
+    public void setXVel(GameObject obj, double newXVel) {
+        double[] direction = obj.getDirection();
+        double yDirec = direction[1];
+        double vel = obj.getVelocity();
+        double yvel = yDirec*vel;
+        double newVel = Math.sqrt(newXVel*newXVel + yvel*yvel);
+        direction = new double[]{newXVel/newVel, yvel/newVel};
+        obj.setVelocity(newVel);
+        obj.setDirection(direction);
+    }
+
+    public void setYVel(GameObject obj, double newYVel) {
+        double[] direction = obj.getDirection();
+        double xDirec = direction[0];
+        double vel = obj.getVelocity();
+        double xvel = xDirec*vel;
+        double newVel = Math.sqrt(newYVel*newYVel + xvel*xvel);
+        direction = new double[]{xvel/newVel, newYVel/newVel};
+        obj.setVelocity(newVel);
+        obj.setDirection(direction);
+
     }
 }

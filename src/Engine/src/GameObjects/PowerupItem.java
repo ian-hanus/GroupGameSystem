@@ -1,6 +1,6 @@
-package Engine.src.GameObjects;
+package GameObjects;
 
-import Powerups.Powerup;
+import Engine.src.Powerups.Powerup;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ public class PowerupItem extends GameObject{
     Powerup powerup;
 
     public PowerupItem(double xPos, double yPos, double health, double height, double width,
-                       double angle, String objectName, int zIndex, double[] direction, String filename, Powerup myPowerup) {
-        super(xPos, yPos, health, height, width, angle, objectName, zIndex, direction, filename);
+                       double angle, double velocity, String objectName, int zIndex, double[] direction, String filename, Powerup myPowerup) {
+        super(xPos, yPos, health, height, width, angle, velocity, objectName, zIndex, direction, filename);
         powerup = myPowerup;
     }
 
