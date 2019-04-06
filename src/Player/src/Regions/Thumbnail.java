@@ -1,29 +1,26 @@
-package Player;
+package Regions;
 
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Thumbnail {
 
     public static final Paint DEFAULT_COLOR = Color.RED;
 
+    private String myName;
     private StackPane myPaneRoot;
     private ImageView myImage;
     private double myWidth;
     private double myHeight;
     private double myOffset;
 
-    public Thumbnail(String filename, double wd, double ht) {
+    public Thumbnail(String gamename, String filename, double wd, double ht) {
 
+        myName = gamename;
         File file = new File(filename);
         myImage = new ImageView();
         try {
@@ -40,12 +37,15 @@ public class Thumbnail {
         makeThumbnail();
     }
 
+    public String getName() {
+        return myName;
+    }
+
     private void makeThumbnail() {
 //        myPaneRoot.getChildren().add(new Rectangle(myWidth, myHeight, DEFAULT_COLOR));
         myImage.setFitWidth(myWidth);
         myImage.setFitHeight(myHeight);
         myPaneRoot.getChildren().add(myImage);
-        myPaneRoot.setOnMouseClicked(e -> System.out.println("clicked thumbnail!"));
     }
 
     public StackPane getPane() {

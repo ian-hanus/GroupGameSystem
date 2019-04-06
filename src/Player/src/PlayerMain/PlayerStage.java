@@ -1,16 +1,14 @@
-package Player;
+package PlayerMain;
 
-import Player.Regions.DescriptionRegion;
-import Player.Regions.GamesRegion;
-import Player.Regions.TitleRegion;
+import Regions.DescriptionRegion;
+import Regions.GamesRegion;
+import Regions.Thumbnail;
+import Regions.TitleRegion;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -60,6 +58,7 @@ public class PlayerStage {
         TitleRegion titleRegion = new TitleRegion(TITLE_WIDTH, TITLE_HEIGHT, ST_COLOR);
 
         ScrollPane gamesPane = gamesRegion.getPane();
+        setLambdas(gamesRegion.getThumbnails(), descRegion);
         ScrollPane descPane = descRegion.getPane();
         GridPane titlePane = titleRegion.getPane();
 
@@ -67,15 +66,14 @@ public class PlayerStage {
         base.add(descPane, 0, 1, 1, 1);
         base.add(gamesPane, 1, 0, 1, 2);
 
-//        Region left = new Region();
-//        HBox.setHgrow(left, Priority.ALWAYS);
-//        left.setBackground(new Background(new BackgroundFill(myBGColor, CornerRadii.EMPTY, Insets.EMPTY)));
-//        Region right = new Region();
-//        HBox.setHgrow(right, Priority.ALWAYS);
-//        right.setBackground(new Background(new BackgroundFill(myBGColor, CornerRadii.EMPTY, Insets.EMPTY)));
-
-
         return base;
+    }
+
+    private void setLambdas(ArrayList<Thumbnail> thumbnails, DescriptionRegion descRegion) {
+        for (Thumbnail thumb : thumbnails) {
+            StackPane thumbPane = thumb.getPane();
+            thumbPane.setOnMouseClicked(e -> descRegion.updateRegion(thumb.getName()));
+        }
     }
 
     protected Stage makeStage() {

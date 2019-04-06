@@ -1,12 +1,12 @@
-module voogasalad.crackingopen {
-
+module player {
     requires javafx.base;
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.media;
     requires javafx.web;
-    exports Player;
-    exports auth;
+    requires java.datatransfer;
 
+    exports PlayerMain;
+    exports Features;
+    exports Regions;
 }
-

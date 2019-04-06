@@ -1,7 +1,6 @@
-package Player.Regions;
+package Regions;
 
 import javafx.scene.Group;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
@@ -19,8 +18,6 @@ public abstract class Region {
         myWidth = wd;
         myHeight = ht;
         myColor = color;
-
-        myGroup = new Group();
     }
 
 //    public Group getNode() {
