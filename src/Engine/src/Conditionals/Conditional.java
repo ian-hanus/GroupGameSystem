@@ -10,8 +10,8 @@ public abstract class Conditional {
         Required = required;
     }
 
-    abstract boolean satisfied(ObjectManager objectManager);
-    abstract boolean satisfied(double obj, ObjectManager objectManager);
+    public abstract boolean satisfied(ObjectManager objectManager);
+    public abstract boolean satisfied(double obj, ObjectManager objectManager);
 
     public boolean required(){
         return Required;
