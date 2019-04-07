@@ -1,4 +1,4 @@
-package Engine.src.GameObjects;
+package GameObjects;
 
 import Engine.src.Powerups.Powerup;
 
@@ -19,9 +19,10 @@ public class GameObject {
     private double[] myDirection;
     private String myFilename;
     private double myScore;
+    private double myVelocity;
+    private boolean Collides;
 
-
-    public GameObject(double xPos, double yPos, double health, double height, double width, double angle,
+    public GameObject(double xPos, double yPos, double health, double height, double width, double angle, double velocity,
                       String objectName, int zIndex, double[] direction, String filename) {
         myXPos = xPos;
         myYPos = yPos;
@@ -34,6 +35,8 @@ public class GameObject {
         myDirection = direction;
         myFilename = filename;
         myScore = 0;
+        myVelocity = velocity;
+        Collides = false;
     }
 
 
@@ -144,6 +147,22 @@ public class GameObject {
 
     protected void setHealth(double health) {
         myHealth = health;
+    }
+
+    protected void setVelocity(double vel) {
+        myVelocity = vel;
+    }
+
+    public void setCollide(boolean collides) {
+        Collides = collides;
+    }
+
+    public boolean colliding() {
+        return Collides;
+    }
+
+    public double getVelocity() {
+        return myVelocity;
     }
 
     //gameobject.apply(powerup);

@@ -1,4 +1,5 @@
-package Engine.src.GameObjects;
+package GameObjects;
+import GameObjects.GameObject;
 
 public class Block extends GameObject {
 
@@ -6,9 +7,9 @@ public class Block extends GameObject {
     private int numTicksSinceChangeDir = 0;
 
     public Block(double xPos, double yPos, double health, double height, double width,
-                     double angle, String objectName, int zIndex, double[] direction, String filename,
+                     double angle, double velocity, String objectName, int zIndex, double[] direction, String filename,
                  int numTicksToChangeDir) {
-        super(xPos, yPos, health, height, width, angle, objectName, zIndex, direction, filename);
+        super(xPos, yPos, health, height, width, angle, velocity, objectName, zIndex, direction, filename);
         this.numTicksToChangeDir = numTicksToChangeDir;
     }
 
