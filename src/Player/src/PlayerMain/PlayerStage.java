@@ -1,11 +1,9 @@
-package Player;
+package PlayerMain;
 
-import Player.Regions.DescriptionRegion;
-import Player.Regions.GamesRegion;
-import Player.Regions.Thumbnail;
-import Player.Regions.TitleRegion;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import Regions.DescriptionRegion;
+import Regions.GamesRegion;
+import Regions.Thumbnail;
+import Regions.TitleRegion;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
@@ -13,13 +11,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class PlayerStage {
-
+    public final String STYLESHEET = "style.css";
+    public final String GRIDPANE_STYLESHEET = "gridPane";
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
     public final double ST_WIDTH = 1200;
     public final double ST_HEIGHT = 600;
@@ -44,15 +40,14 @@ public class PlayerStage {
 
         myVisualRoot = buildRoot();
         myScene = new Scene(myVisualRoot, ST_WIDTH, ST_HEIGHT, ST_COLOR);
+        myScene.getStylesheets().add(STYLESHEET);
 
     }
 
     public GridPane buildRoot() {
 
         GridPane base = new GridPane();
-        base.setBackground(new Background(new BackgroundFill(ST_COLOR, CornerRadii.EMPTY, Insets.EMPTY)));
-        base.setAlignment(Pos.CENTER);
-        base.setPadding(new Insets(ST_PADDING, ST_PADDING, ST_PADDING, ST_PADDING));
+        base.getStyleClass().add(GRIDPANE_STYLESHEET);
         base.setVgap(ST_SPACING);
         base.setHgap(ST_SPACING);
 
