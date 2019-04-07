@@ -2,13 +2,17 @@ package Conditionals;
 
 import GameObjects.ObjectManager;
 
-public abstract class ObjectConditional implements Conditional{
+public abstract class ObjectConditional extends Conditional{
 
-    double myObject;
+    protected double myObject;
 
-    public ObjectConditional(){myObject = -1;}
+    public ObjectConditional(boolean required){
+        super(required);
+        myObject = -1;
+    }
 
-    public ObjectConditional(double obj){
+    public ObjectConditional(boolean required, double obj){
+        super(required);
         myObject = obj;
     }
 

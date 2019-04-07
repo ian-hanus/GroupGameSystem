@@ -4,9 +4,14 @@ import Conditionals.Conditional;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Create extends ObjectEvent{
+
+    public Create(double obj){
+        super(obj);
+    }
     public Create(List<Conditional> conditionals, double obj){
         super(conditionals, obj);
     }

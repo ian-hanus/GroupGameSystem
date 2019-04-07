@@ -7,6 +7,11 @@ import Events.Event;
 import java.util.List;
 
 public abstract class GameEvent extends Event {
+
+    public GameEvent(){
+        super();
+    }
+
     public GameEvent(List<Conditional> conditionals){
         super(conditionals);
     }

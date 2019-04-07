@@ -8,9 +8,13 @@ import java.util.List;
 
     public class Die extends ObjectEvent {
 
-        public Die(List<Conditional> conditionals){
-            super(conditionals);
+        public Die() {super();}
+        public Die(double obj){super(obj);}
+        public Die(List<Conditional> conditionals){super(conditionals);}
+        public Die(List<Conditional> conditionals, double obj){
+            super(conditionals, obj);
         }
+
 
         @Override
         public void activate(ObjectManager objectManager) { objectManager.kill(myObject);}

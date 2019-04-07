@@ -4,57 +4,77 @@ import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class Comparison extends ObjectConditional{
 
-    private List<String> myComparisonTypes;
+    private String myComparisonOperator;
     private double myObject;
-    private List<Component> myCompareTo;
-    private List<Component> myComponents;
+    private Component myCompareTo;
+    private Component myComponent;
+    private String myComponentName;
 
-    public Comparison(List<String> comparisonTypes, double obj, List<Component> compareTo){
-        super(obj);
-        myComparisonTypes = comparisonTypes;
+    public Comparison(boolean required, String componentName, double obj, String comparisonOperator, Component compareTo){
+        super(required, obj);
+        myComparisonOperator = comparisonOperator;
         myCompareTo = compareTo;
+        myComponentName = componentName;
     }
 
-    public Comparison(List<String> comparisonTypes, List<Component> compareTo){
-        super();
-        myComparisonTypes = comparisonTypes;
+    public Comparison(boolean required, String componentName, double obj, String comparisonOperator){
+        super(required, obj);
+        myComparisonOperator = comparisonOperator;
+        myComponentName = componentName;
+    }
+
+    public Comparison(boolean required, String componentName, String comparisonOperator, Component compareTo){
+        super(required);
+        myComparisonOperator = comparisonOperator;
         myCompareTo = compareTo;
+        myComponentName = componentName;
     }
 
-    public Comparison(List<String> comparisonTypes){
-        super();
-        myComparisonTypes = comparisonTypes;
+    public Comparison(boolean required, String componentName, String comparisonOperator){
+        super(required);
+        myComparisonOperator = comparisonOperator;
+        myComponentName = componentName;
     }
 
-    public Comparison(List<String> comparisonTypes, double obj){
-        super(obj);
-        myComparisonTypes = comparisonTypes;
-    }
-
-    private boolean compare() {
-        boolean equals = false;
-        if (myComparisonType.contains("=") && stat1 == stat2) equals = true;
-        if (myComparisonType.contains(">")) return (stat1 < stat2 || equals);
-        if (myComparisonType.contains("<")) return (stat1 < stat2 || equals);
+    protected boolean checkOperator(String value1, String value2) {
+        if (value1.equals(value2) && myComponentName.contains("=")) return true;
         return false;
     }
+
+    protected boolean checkOperator(double value1, double value2) {
+        boolean equals = false;
+        if (value1 == value2 && myComponentName.contains("=")) equals = true;
+        if (myComponentName.contains(">")) return value1 > value2 || equals;
+        if (myComponentName.contains(">")) return value1 > value2 || equals;
+        return equals;
+    }
+
+    abstract boolean compare();
 
     @Override
     public boolean satisfied(double obj, ObjectManager objectManager) {
         if (myCompareTo == null){
-            myCompareTo = objectManager.getComponents(obj);
+            myCompareTo = objectManager.getComponent(myComponentName);
         }
-        myComponents = objectManager.getComponents(myObject);
+        myComponent = objectManager.getComponent(myComponentName);
         return compare();
     }
 
     @Override
     public boolean satisfied(ObjectManager objectManager) {
-        myComponents = objectManager.getComponents(myObject);
+        myComponent = objectManager.getComponent(myComponentName);
         return compare();
     }
 
+    protected Component getCompareTo(){
+        return myCompareTo;
+    }
+
+    protected Component getComponent(){
+        return myComponent;
+    }
 }
