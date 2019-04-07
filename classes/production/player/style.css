@@ -19,6 +19,10 @@
     -fx-text-fill: 'white';
 }
 
+#titleLabel {
+    -fx-font-size: 50;
+}
+
 .vbox {
     -fx-background: lightsteelblue;
     -fx-background-radius: 5;

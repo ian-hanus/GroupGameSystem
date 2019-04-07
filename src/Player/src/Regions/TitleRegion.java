@@ -8,16 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
 public class TitleRegion extends Region {
-
-    // TODO: unhardcode these
     public static final String TEXT_STR = "Cracking Open a Scrolled One";
-    public static final String TEXT_FONT = "Trebuchet MS";
-    public static final double TEXT_HEIGHT = 50;
-    public static final String TEXT_COLOR = "white";
-    public static final String TEXT_STYLE =
-            "-fx-font-family: '" + TEXT_FONT + "'; " +
-            "-fx-font-size: " + TEXT_HEIGHT + "; " +
-            "-fx-text-fill: '" + TEXT_COLOR + "';" ;
 
     private GridPane myTitlePane;
 
@@ -40,7 +31,7 @@ public class TitleRegion extends Region {
     protected void buildGroup() {
 
         Label titleLabel = new Label(TEXT_STR);
-        titleLabel.setStyle(TEXT_STYLE);
+        titleLabel.setId("titleLabel");
 
         myGroup.getChildren().add(titleLabel);
 
