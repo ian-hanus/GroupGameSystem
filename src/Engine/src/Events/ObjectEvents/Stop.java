@@ -16,7 +16,7 @@ public class Stop extends ObjectEvent {
     public void activate(ObjectManager objectManager) { objectManager.stop(myObject);}
 
     @Override
-    public void activate(GameObject other, ObjectManager objectManager) {
+    public void activate(double other, ObjectManager objectManager) {
         objectManager.stop(myObject);
     }
 }

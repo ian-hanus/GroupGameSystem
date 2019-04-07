@@ -1,5 +1,7 @@
 package Physics;
 
+import Conditionals.Conditional;
+import Conditionals.ObjectConditional;
 import EngineMain.LevelManager;
 import Events.GameEvents.GameEvent;
 import Events.ObjectEvents.ObjectEvent;
@@ -7,29 +9,44 @@ import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 import Events.Event;
 
+import java.awt.*;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class CollisionHandler {
 
-    public void checkCollision(GameObject obj1, GameObject obj2, Map<Class[], Set<Event>[]> collisionResponses,
-                               ObjectManager objectManager, LevelManager levelManager){
-        Class[] collisionClassPair = {obj1.getClass(), obj2.getClass()};
-        GameObject[] collisionPair = {obj1, obj2};
-        if (obj1 != obj2 && collides(obj1, obj2) && collisionResponses.containsKey(collisionClassPair)) {
-            objectManager.setCollide(obj1, true);
-            objectManager.setCollide(obj2, true);
-            modifyMovement(obj1, obj2, objectManager);
-            Set<Event>[] responseSetPair = collisionResponses.get(collisionClassPair);
+    ObjectManager myObjectManager;
+
+    public CollisionHandler(ObjectManager objectManager){
+        myObjectManager = objectManager;
+    }
+
+    public void checkCollision(double obj1, double obj2, Map<String[], Set<Event>[]> collisionResponses,
+                               LevelManager levelManager){
+        String[] collisionTypePair = {myObjectManager.getType(obj1), myObjectManager.getType(obj2)};
+        double[] collisionPair = {obj1, obj2};
+        if (obj1 != obj2 && collides(obj1, obj2) && collisionResponses.containsKey(collisionTypePair)) {
+            myObjectManager.setCollide(obj1, true);
+            myObjectManager.setCollide(obj2, true);
+            modifyMovement(obj1, obj2);
+            Set<Event>[] responseSetPair = collisionResponses.get(collisionTypePair);
             for (int k = 0; k < responseSetPair.length; k++) {
                 Set<Event> responseSet = responseSetPair[k];
                 for (Event event : responseSet) {
+                    event = event.copy();
                     int other = 1;
                     if (k == 1) other = 0;
-                    if (event.conditionsSatisfied(obj1, obj2)) {
+                    if (event instanceof ObjectEvent) ((ObjectEvent) event).setEventObject(collisionPair[k]);
+                    List<Conditional> conditionals = event.getConditionals();
+                    for (Conditional conditional : conditionals) {
+                        if (conditional instanceof ObjectConditional) {
+                            event.setConditionalObject(collisionPair[k]);
+                        }
+                    }
+                    if (event.conditionsSatisfied(collisionPair[other], myObjectManager)) {
                         if (event instanceof ObjectEvent) {
-                            ((ObjectEvent) event).setMyObject(collisionPair[k]);
-                            ((ObjectEvent) event).activate(collisionPair[other], objectManager);
+                            ((ObjectEvent) event).activate(collisionPair[other], myObjectManager);
                         } else ((GameEvent) event).activate(levelManager);
                     }
                 }
@@ -37,25 +54,30 @@ public class CollisionHandler {
         }
     }
 
-    private boolean collides(GameObject obj1, GameObject obj2){
+    private boolean collides(double obj1, double obj2){
         return collideFromLeft(obj1, obj2) ||
-                collideFromLeft(obj2, obj1) ||
-                collideFromTop(obj1, obj2) ||
-                collideFromTop(obj2, obj1);
+               collideFromLeft(obj2, obj1) ||
+               collideFromTop(obj1, obj2) ||
+               collideFromTop(obj2, obj1);
     }
 
-    public boolean collideFromLeft(GameObject collider, GameObject target){
-        double width1 = collider.getWidth();
-        double x1 = collider.getX();
-        double x2 = target.getX();
+    public boolean collideFromLeft(double collider, double target){
+        BasicComponent basicComponent = myObjectManager.getBasicComponent(collider);
+        double width1 = basicComponent.getWidth();
+        double x1 = basicComponent.getX();
+        basicComponent = myObjectManager.getBasicComponent(target);
+        double x2 = basicComponent.getX();
         return x1 + width1 >= x2;
+        return false;
     }
 
-    public boolean collideFromTop(GameObject collider, GameObject target){
-        double height1 = collider.getHeight();
-        double y1 = collider.getY();
-        double y2 = target.getY();
-        return y1 + height1>= y2;
+    public boolean collideFromTop(double collider, double target){
+        BasicComponent basicComponent = myObjectManager.getBasicComponent(collider);
+        double height1 = basicComponent.getHeight();
+        double y1 = basicComponent.getY();
+        basicComponent = myObjectManager.getBasicComponent(target);
+        double y2 = basicComponent.getY();
+        return y1 + height1 >= y2;
     }
 
     public void modifyMovement(GameObject obj1, GameObject obj2, ObjectManager objectManager) {
