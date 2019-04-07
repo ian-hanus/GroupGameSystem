@@ -8,55 +8,73 @@ import java.util.Map;
 
 public abstract class Comparison extends ObjectConditional{
 
-    private Map<String, String> myComparisons;
+    private String myComparisonOperator;
     private double myObject;
-    private Map<String, Component> myCompareTo;
-    private Map<String, Component> myComponents;
+    private Component myCompareTo;
+    private Component myComponent;
+    private String myComponentName;
 
-    public Comparison(boolean required, double obj, Map<String, String> comparisons, Map<String, Component> compareTo){
+    public Comparison(boolean required, String componentName, double obj, String comparisonOperator, Component compareTo){
         super(required, obj);
-        myComparisons = comparisons;
+        myComparisonOperator = comparisonOperator;
         myCompareTo = compareTo;
+        myComponentName = componentName;
     }
 
-    public Comparison(boolean required, double obj, Map<String, String> comparisonTypes){
+    public Comparison(boolean required, String componentName, double obj, String comparisonOperator){
         super(required, obj);
-        myComparisons = comparisonTypes;
+        myComparisonOperator = comparisonOperator;
+        myComponentName = componentName;
     }
 
-    public Comparison(boolean required, Map<String, String> comparisonTypes, Map<String, Component> compareTo){
+    public Comparison(boolean required, String componentName, String comparisonOperator, Component compareTo){
         super(required);
-        myComparisons = comparisonTypes;
+        myComparisonOperator = comparisonOperator;
         myCompareTo = compareTo;
+        myComponentName = componentName;
     }
 
-    public Comparison(boolean required, Map<String, String> comparisonTypes){
+    public Comparison(boolean required, String componentName, String comparisonOperator){
         super(required);
-        myComparisons = comparisonTypes;
+        myComparisonOperator = comparisonOperator;
+        myComponentName = componentName;
     }
 
-
-    private boolean compare() {
-        for (String statToBeCompared : myComparisons.keySet())
-        if (myComparisons.contains("=") && stat1 == stat2) equals = true;
-        if (myComparisonType.contains(">")) return (stat1 < stat2 || equals);
-        if (myComparisonType.contains("<")) return (stat1 < stat2 || equals);
+    protected boolean checkOperator(String value1, String value2) {
+        if (value1.equals(value2) && myComponentName.contains("=")) return true;
         return false;
     }
+
+    protected boolean checkOperator(double value1, double value2) {
+        boolean equals = false;
+        if (value1 == value2 && myComponentName.contains("=")) equals = true;
+        if (myComponentName.contains(">")) return value1 > value2 || equals;
+        if (myComponentName.contains(">")) return value1 > value2 || equals;
+        return equals;
+    }
+
+    abstract boolean compare();
 
     @Override
     public boolean satisfied(double obj, ObjectManager objectManager) {
         if (myCompareTo == null){
-            myCompareTo = objectManager.getComponents(obj);
+            myCompareTo = objectManager.getComponent(myComponentName);
         }
-        myComponents = objectManager.getComponents(myObject);
+        myComponent = objectManager.getComponent(myComponentName);
         return compare();
     }
 
     @Override
     public boolean satisfied(ObjectManager objectManager) {
-        myComponents = objectManager.getComponents(myObject);
+        myComponent = objectManager.getComponent(myComponentName);
         return compare();
     }
 
+    protected Component getCompareTo(){
+        return myCompareTo;
+    }
+
+    protected Component getComponent(){
+        return myComponent;
+    }
 }

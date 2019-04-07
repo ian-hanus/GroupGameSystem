@@ -11,6 +11,10 @@ import java.util.List;
 public class Event {
     protected List<Conditional> myConditionals;
 
+    public Event(){
+        myConditionals = new ArrayList<>();
+    }
+
     public Event(List<Conditional> conditionals){
         myConditionals = conditionals;
     }

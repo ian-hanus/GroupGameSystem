@@ -4,7 +4,7 @@ import GameObjects.ObjectManager;
 
 public abstract class ObjectConditional extends Conditional{
 
-    double myObject;
+    protected double myObject;
 
     public ObjectConditional(boolean required){
         super(required);

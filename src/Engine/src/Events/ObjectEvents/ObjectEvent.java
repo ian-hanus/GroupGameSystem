@@ -6,11 +6,21 @@ import Events.Event;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ObjectEvent extends Event {
 
     double myObject;
+
+    public ObjectEvent(){
+        super();
+    }
+
+    public ObjectEvent(double obj){
+        super();
+        myObject = obj;
+    }
 
     public ObjectEvent(List<Conditional> conditionals){
         super(conditionals);

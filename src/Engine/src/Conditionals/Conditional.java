@@ -4,7 +4,7 @@ import GameObjects.ObjectManager;
 
 public abstract class Conditional {
 
-    boolean Required;
+    protected boolean Required;
 
     public Conditional(boolean required){
         Required = required;
