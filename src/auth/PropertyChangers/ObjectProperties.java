@@ -1,5 +1,6 @@
 package auth.PropertyChangers;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -53,7 +54,8 @@ public abstract class ObjectProperties {
             propertyLabel.setFill(Color.WHITE);
             TextField propertyField = new TextField(name);
             textFields.put(name, propertyField);
-            textRow.getChildren().addAll(propertyLabel, propertyField);
+            CheckBox activateComponent = new CheckBox();
+            textRow.getChildren().addAll(activateComponent, propertyLabel, propertyField);
             textRow.getStyleClass().add("properties-row");
             objectRows.add(textRow);
         }

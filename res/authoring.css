@@ -10,7 +10,13 @@
     -fx-padding: 3;
     -fx-spacing: 5;
 }
-    
+
+.properties-scrollpane{
+    -fx-pref-height: 250;
+    -fx-pref-width: 300;
+    -fx-spacing: 5;
+}
+
 .scroll-pane {
     -fx-background-color: transparent;
 }
