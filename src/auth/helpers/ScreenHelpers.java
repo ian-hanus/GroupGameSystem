@@ -33,7 +33,7 @@ public class ScreenHelpers {
         var objLibPane = new RightPane(computeMarginToBottomEdge(propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT);
 
         var objProperties = new BlockProperties("Test Block");
-//        propsPane.getView().getChildren().add(objProperties.getVisualization());
+        propsPane.getView().getChildren().add(objProperties.getVisualization());
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
