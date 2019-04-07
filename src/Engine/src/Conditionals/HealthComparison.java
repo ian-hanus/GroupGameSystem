@@ -8,7 +8,7 @@ public class HealthComparison extends Comparison{
         super(comparisonType, compareTo);
     }
 
-    protected double setStat(GameObject obj){
+    protected double setStat(double obj){
         return obj.getHealth();
     }
 }

@@ -18,7 +18,7 @@ public class GivePowerup extends ObjectEvent {
     }
 
     @Override
-    public void activate(GameObject other, ObjectManager objectManager){
+    public void activate(double other, ObjectManager objectManager){
         objectManager.addPowerup(myObject, other);
     }
 }

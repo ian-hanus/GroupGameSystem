@@ -16,7 +16,7 @@ import java.util.List;
         public void activate(ObjectManager objectManager) { objectManager.kill(myObject);}
 
         @Override
-        public void activate(GameObject other, ObjectManager objectManager) {
+        public void activate(double other, ObjectManager objectManager) {
             objectManager.kill(myObject);
         }
     }

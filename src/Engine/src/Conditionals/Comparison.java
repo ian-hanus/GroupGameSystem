@@ -1,6 +1,7 @@
 package Conditionals;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 
 public abstract class Comparison implements Conditional{
 
@@ -13,7 +14,7 @@ public abstract class Comparison implements Conditional{
         myCompareTo = compareTo;
     }
 
-    abstract double setStat(GameObject obj);
+    abstract double setStat(double obj);
 
     protected boolean compare(double stat1, double stat2) {
         boolean equals = false;
@@ -24,12 +25,12 @@ public abstract class Comparison implements Conditional{
     }
 
     @Override
-    public boolean satisfied() {
+    public boolean satisfied(double obj, ObjectManager objectManager) {
         return false;
     }
 
     @Override
-    public boolean satisfied(GameObject obj1, GameObject obj2) {
+    public boolean satisfied(double obj1, double obj2) {
         myStat = setStat(obj1);
         return compare(myStat, myCompareTo);
     }
