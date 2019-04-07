@@ -9,10 +9,8 @@ import java.util.List;
 
 public class EntityManager {
     private HashMap<Integer, List<Component>> myEntityMap;
-    private int myFramesPerSecond;
 
-    public EntityManager(int framesPerSecond) {
-        myFramesPerSecond = framesPerSecond;
+    public EntityManager() {
         myEntityMap = new HashMap<>();
     }
 
@@ -74,7 +72,7 @@ public class EntityManager {
             motionComponent.setAngle(angle);
             motionComponent.setDirectionVec(directionVec);
         }
-        catch (NoEntityException | NoComponentException e) {
+        catch (NoEntityException) {
 
         }
     }
@@ -84,7 +82,7 @@ public class EntityManager {
             var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
             motionComponent.setVel(0);
         }
-        catch (NoEntityException | NoComponentException e) {
+        catch (NoEntityException) {
 
         }
     }
@@ -99,11 +97,13 @@ public class EntityManager {
     }
 
     //can return null
-    private Component getComponent(int entityID, Class<? extends Component> componentClass) throws NoEntityException, NoComponentException {
+    //if we want this to be O(1) lookup instead of O(M) [M is number of components in entity], then must convert
+    //the List of components for an entity to a map of component classes to components
+    public <T extends Component> T getComponent(int entityID, Class<T> componentClass) throws NoEntityException {
         var components = getAllComponents(entityID);
         for (Component component : components) {
             if (componentClass.isInstance(component))
-                return component;
+                return (T) component;
         }
         return null;
     }
