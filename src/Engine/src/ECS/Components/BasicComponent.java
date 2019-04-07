@@ -32,4 +32,12 @@ public class BasicComponent extends Component {
     public void setHeight(double myHeight) {
         this.myHeight = myHeight;
     }
+
+    public double getX() { return myXPos; }
+
+    public double getY() { return myYPos; }
+
+    public void setX(double xPos) { this.myXPos = xPos; }
+
+    public void setY(double yPos) { this.myYPos = yPos; }
 }

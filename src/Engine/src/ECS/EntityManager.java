@@ -38,10 +38,41 @@ public class EntityManager {
 
     public void move(int entityID) {
         try {
-            var motionComponent = getComponent(entityID, MotionComponent.class);
-            var basicComponent = getComponent(entityID, BasicComponent.class);
-            //TODO get position from basic component
-            //TODO update position based on velocity, velocity based on accel
+            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+            var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
+            double currXPos = basicComponent.getX();
+            double currYPos = basicComponent.getY();
+            double[] direction = motionComponent.getDirectionVec();
+            basicComponent.setX(currXPos + direction[0]);
+            basicComponent.setY(currYPos + direction[1]);
+
+            //TODO update velocity based on accel
+        }
+        catch (NoEntityException | NoComponentException e) {
+
+        }
+    }
+
+    public void adjustDirection(int entityID, double delta) {
+        try {
+            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+            double angle = motionComponent.getAngle();
+            angle += delta;
+            double[] directionVec = calculateDirection(angle);
+            motionComponent.setAngle(angle);
+            motionComponent.setDirectionVec(directionVec);
+        }
+        catch (NoEntityException | NoComponentException e) {
+
+        }
+    }
+
+    public void setDirection(int entityID, double angle){
+        try {
+            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+            double[] directionVec = calculateDirection(angle);
+            motionComponent.setAngle(angle);
+            motionComponent.setDirectionVec(directionVec);
         }
         catch (NoEntityException | NoComponentException e) {
 
@@ -50,19 +81,28 @@ public class EntityManager {
 
     public void stop(int entityID) {
         try {
-            var motionComponent = getComponent(entityID, MotionComponent.class);
-            //TODO update velocity
+            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+            motionComponent.setVel(0);
         }
         catch (NoEntityException | NoComponentException e) {
 
         }
     }
 
+    //public void addPowerup - later
+
+    private double[] calculateDirection(double angle){
+        double[] directionVec = new double[2];
+        directionVec[0] = Math.cos(Math.toRadians(angle));
+        directionVec[1] = Math.sin(Math.toRadians(angle));
+        return directionVec;
+    }
+
     //can return null
     private Component getComponent(int entityID, Class<? extends Component> componentClass) throws NoEntityException, NoComponentException {
         var components = getAllComponents(entityID);
         for (Component component : components) {
-            if (component instanceof componentClass)
+            if (componentClass.isInstance(component))
                 return component;
         }
         return null;
