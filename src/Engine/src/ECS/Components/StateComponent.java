@@ -1,4 +1,6 @@
-package Components;
+package ECS.Components;
+
+import ECS.Components.Component;
 
 import java.util.List;
 

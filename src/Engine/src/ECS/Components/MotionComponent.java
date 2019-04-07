@@ -1,4 +1,6 @@
-package Components;
+package ECS.Components;
+
+import ECS.Components.Component;
 
 public class MotionComponent extends Component {
     private int myVel;
