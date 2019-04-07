@@ -1,10 +1,11 @@
 package ECS.Components;
 
+import Powerups.Powerup;
+
 public class PowerupComponent extends Component {
-    // Create a new powerup class?
-    // private Powerup powerup;
+    private Powerup myPowerup;
 
-    public PowerupComponent() {
-
+    public PowerupComponent(Powerup powerup) {
+        myPowerup = powerup;
     }
 }
