@@ -6,6 +6,10 @@ import Physics.CollisionHandler;
 
     public class CollideFromRight extends ObjectConditional{
 
+        CollideFromRight(double obj){
+            super(obj);
+        }
+
         @Override
         public boolean satisfied(double other, ObjectManager objectManager){
             CollisionHandler collisionHandler = new CollisionHandler(objectManager);
@@ -17,5 +21,9 @@ import Physics.CollisionHandler;
             return false; //TODO:error
         }
 
+        @Override
+        public Conditional copy() {
+            return new CollideFromRight(myObject);
+        }
     }
 

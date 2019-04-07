@@ -7,6 +7,7 @@ import GameObjects.User;
 import Physics.CollisionHandler;
 import Events.Event;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class Controller {
     private Map<String, GameObject> myObjectBank;
     private Map<String, Event> myHotKeys;
     private Map<String[], Set<Event>[]> myCollisionResponses;
-    private Map<Timer, Set<Event>> myTimerMap;
+    private Set<Timer> myTimers;
     private Map<Double, Map<String, Components>> myActiveObjects;
     private double myUserID;
     private CollisionHandler myCollisionHandler;
@@ -24,14 +25,14 @@ public class Controller {
     private ObjectManager myObjectManager;
     private LevelManager myLevelManager;
     private double myStepTime;
-    private int myIterationCounter;
+    private double myIterationCounter;
 
     public Controller(double stepTime){
         myEngineParser = new EngineParser();
         initializeDataVariables();
         myObjectManager = new ObjectManager(myActiveObjects);
-        myLevelManager = new LevelManager(myTimerMap, myObjectManager);
-        myCollisionHandler = new CollisionHandler();
+        myLevelManager = new LevelManager(myTimers, myObjectManager, myIterationCounter);
+        myCollisionHandler = new CollisionHandler(myObjectManager);
         myStepTime = stepTime;
         myIterationCounter = 0;
     }
@@ -41,10 +42,10 @@ public class Controller {
         myHotKeys = myEngineParser.makeHotKeyMap();
         myCollisionResponses = myEngineParser.makeCollisionResponseMap();
         myActiveObjects = myEngineParser.initializeActiveObjects();
-        myTimerMap = myEngineParser.makeTimerMap();
+        myTimers = myEngineParser.makeTimerMap();
         for(Double id : myActiveObjects.keySet()){
             Component type =  myActiveObjects.get(id).get("TYPE");
-            if(((Type) component).getType.equals("USER")) {
+            if(((Type) type).getType.equals("USER")) {
                 myUserID = id;
                 break;
             }
@@ -54,6 +55,7 @@ public class Controller {
     public void processKey(String key){
         if (myHotKeys.containsKey(key)){
             Event event = myHotKeys.get(key);
+            event = event.copy();
             event.setConditionalObject(myUserID);
             if (event.conditionsSatisfied(myObjectManager)){
                 if(event instanceof ObjectEvent){
@@ -71,10 +73,10 @@ public class Controller {
         }
         for(double obj1: myActiveObjects.keySet()){
             for(double obj2: myActiveObjects.keySet()){
-                myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myObjectManager, myLevelManager);
+                myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myLevelManager);
             }
         }
-        for (double obj : myActiveObjects){
+        for (double obj : myActiveObjects.keySet()){
             myObjectManager.move(obj);
             Component state = myActiveObjects.get(obj).get("STATE");
             if(((State) state).colliding()) myObjectManager.restoreMovementDefaults(obj);

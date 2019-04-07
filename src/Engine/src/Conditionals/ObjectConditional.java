@@ -21,4 +21,9 @@ public abstract class ObjectConditional implements Conditional{
 
     @Override
     public abstract boolean satisfied(ObjectManager objectManager); // TODO: ideally throw error here
+
+    public double getMyObj(){
+        return myObject;
+    }
+
 }

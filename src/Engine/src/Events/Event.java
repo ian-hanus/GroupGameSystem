@@ -5,6 +5,7 @@ import Conditionals.ObjectConditional;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
@@ -23,10 +24,20 @@ public class Event {
     }
     */
 
+    public Event copy(){
+        List<Conditional> conditionalsCopy = new ArrayList<>();
+        for(Conditional conditional: myConditionals){
+            conditionalsCopy.add(conditional.copy());
+        }
+        return new Event(conditionalsCopy);
+    }
+
     public void setConditionalObject(double obj){
         for(Conditional conditional: myConditionals){
-            if(conditional instanceof ObjectConditional && conditional.getMyObj() == -1) ((ObjectConditional) conditional).setMyObject(obj);
-        }
+            if (conditional instanceof ObjectConditional){
+                if (((ObjectConditional) conditional).getMyObj() == -1) ((ObjectConditional) conditional).setMyObject(obj);
+            }
+            }
     }
 
     public boolean conditionsSatisfied(double obj, ObjectManager objectManager){

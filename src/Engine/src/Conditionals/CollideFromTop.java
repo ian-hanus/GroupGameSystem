@@ -6,6 +6,10 @@ import Physics.CollisionHandler;
 
 public class CollideFromTop extends ObjectConditional{
 
+    CollideFromTop(double obj){
+        super(obj);
+    }
+
     @Override
     public boolean satisfied(double other, ObjectManager objectManager){
         CollisionHandler collisionHandler = new CollisionHandler(objectManager);
@@ -17,4 +21,8 @@ public class CollideFromTop extends ObjectConditional{
         return false; //TODO:error
     }
 
+    @Override
+    public Conditional copy() {
+        return new CollideFromTop(myObject);
+    }
 }

@@ -18,7 +18,7 @@ public class CollisionHandler {
 
     ObjectManager myObjectManager;
 
-    CollisionHandler(ObjectManager objectManager){
+    public CollisionHandler(ObjectManager objectManager){
         myObjectManager = objectManager;
     }
 
@@ -34,6 +34,7 @@ public class CollisionHandler {
             for (int k = 0; k < responseSetPair.length; k++) {
                 Set<Event> responseSet = responseSetPair[k];
                 for (Event event : responseSet) {
+                    event = event.copy();
                     int other = 1;
                     if (k == 1) other = 0;
                     if (event instanceof ObjectEvent) ((ObjectEvent) event).setEventObject(collisionPair[k]);

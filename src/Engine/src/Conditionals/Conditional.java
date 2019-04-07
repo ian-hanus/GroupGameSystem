@@ -6,5 +6,5 @@ public interface Conditional {
 
     boolean satisfied(ObjectManager objectManager);
     boolean satisfied(double obj, ObjectManager objectManager);
-
+    Conditional copy();
 }
