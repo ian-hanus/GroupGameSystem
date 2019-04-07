@@ -26,10 +26,14 @@ public class EntityManager {
     }
 
     public void addComponent(int entityID, Component component) {
-        //TODO error checking
-        List<Component> components = myEntityMap.get(entityID);
-        components.add(component);
-        myEntityMap.put(entityID, components);
+        try {
+            var components = getAllComponents(entityID);
+            components.add(component);
+            myEntityMap.put(entityID, components);
+        }
+        catch (NoEntityException e) {
+
+        }
     }
 
     public void move(int entityID) {
@@ -44,7 +48,15 @@ public class EntityManager {
         }
     }
 
+    public void stop(int entityID) {
+        try {
+            var motionComponent = getComponent(entityID, MotionComponent.class);
+            //TODO update velocity
+        }
+        catch (NoEntityException | NoComponentException e) {
 
+        }
+    }
 
     //can return null
     private Component getComponent(int entityID, Class<? extends Component> componentClass) throws NoEntityException, NoComponentException {
@@ -59,7 +71,7 @@ public class EntityManager {
     private List<Component> getAllComponents(int entityID) throws NoEntityException {
         List<Component> components = myEntityMap.get(entityID);
         if (components == null)
-            throw new NoEntityException();
+            throw new NoEntityException("Entity " + entityID + " does not exist");
         return components;
     }
 }

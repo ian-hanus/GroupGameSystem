@@ -1,7 +1,5 @@
 package ECS.Components;
 
-import ECS.Components.Component;
-
 import java.util.List;
 
 public class StateComponent extends Component {
