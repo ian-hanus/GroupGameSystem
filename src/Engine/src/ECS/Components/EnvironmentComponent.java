@@ -1,6 +1,6 @@
 package ECS.Components;
 
-public class EnvironmentComponent {
+public class EnvironmentComponent extends Component{
     private double myGravity;
     private double myVelDampener;
     private double myFriction;
