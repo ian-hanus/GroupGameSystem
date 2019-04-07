@@ -1,8 +1,20 @@
-.text-label {
-    -fx-alignment: center;
+.properties-label{
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-padding: 8;
 }
 
-.properties-box{
-    -fx-max-width: 80;
-    -fx-min-width: 80;
+.properties-row {
+    -fx-alignment: CENTER_LEFT;
+    -fx-text-fill: white;
+    -fx-padding: 3;
+    -fx-spacing: 5;
+}
+    
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
 }

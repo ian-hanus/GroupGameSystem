@@ -14,11 +14,14 @@ import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
 
 public class ScreenHelpers {
+    private static final String STYLE_SHEET = "authoring.css";
+
     public static void initScene(Scene scene, Group root) {
         scene.setRoot(root);
         root.setStyle(BG_STYLE);
         placePanes(root);
         placeCanvas(root);
+        scene.getStylesheets().add(STYLE_SHEET);
     }
 
     private static void placeCanvas(Group root) {

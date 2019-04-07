@@ -1,9 +1,11 @@
 package auth.PropertyChangers;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.*;
@@ -48,22 +50,30 @@ public abstract class ObjectProperties {
         for(String name:propertyNames){
             HBox textRow = new HBox();
             Text propertyLabel = new Text(name);
+            propertyLabel.setFill(Color.WHITE);
             TextField propertyField = new TextField(name);
             textFields.put(name, propertyField);
             textRow.getChildren().addAll(propertyLabel, propertyField);
+            textRow.getStyleClass().add("properties-row");
             objectRows.add(textRow);
         }
         return objectRows;
     }
 
     public VBox getVisualization(){
+        VBox totalProperties = new VBox();
         VBox visual = new VBox();
+        ScrollPane properties = new ScrollPane();
+        properties.getStyleClass().add("properties-scrollpane");
+
         Label titleLabel = new Label(title);
-        visual.getChildren().add(titleLabel);
+        titleLabel.getStyleClass().add("properties-label");
         List<HBox> propertyRows = getTextBoxes();
         for(HBox h:propertyRows){
             visual.getChildren().add(h);
         }
-        return visual;
+        properties.setContent(visual);
+        totalProperties.getChildren().addAll(titleLabel, properties);
+        return totalProperties;
     }
 }

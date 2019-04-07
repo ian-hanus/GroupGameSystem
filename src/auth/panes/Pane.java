@@ -1,7 +1,5 @@
 package auth.panes;
 
-import javafx.scene.layout.Region;
-
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
 
 public abstract class Pane {
