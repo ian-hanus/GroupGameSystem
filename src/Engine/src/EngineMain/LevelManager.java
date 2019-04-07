@@ -10,34 +10,47 @@ import java.util.Set;
 
 public class LevelManager {
     private boolean levelPassed;
-    private Map<Double, Set<Event>> myTimerMap;
+    private Set<Timer> myTimers;
     private ObjectManager myObjectManager;
+    double myCount;
 
-    public LevelManager(Map<Double, Set<Event>> timerMap, ObjectManager objectManager){
+    public LevelManager(Set<Timer> timers, ObjectManager objectManager, double count){
         levelPassed = false;
         myObjectManager = objectManager;
-        myTimerMap = timerMap;
+        myTimers = timers;
+        myCount = count;
     }
 
-    public void addTimer(double timer, Set<Event> events) {
-        myTimerMap.put(timer, events);
+    public void addTimer(Set<Event> eventsDuringTimer, Set<Event> eventsAfter, double duration, boolean isLoop) {
+        myTimers.add(new Timer(eventsDuringTimer, eventsAfter, duration, myCount, isLoop));
     }
 
-    public void checkTimer(Double timer){
-        if (System.currentTimeMillis()>= timer){
-            Set<Event> events = myTimerMap.get(timer);
-            for(Event event : events){
-                if(event.conditionsSatisfied()) {
-                    if (event instanceof ObjectEvent) ((ObjectEvent) event).activate(myObjectManager);
-                    else if (event instanceof GameEvent) ((GameEvent) event).activate(this);
-                }
-            }
-            myTimerMap.remove(timer);
+    public void checkTimer(Timer timer){
+        if (timer.getCount() >= timer.getEndTime()){
+            Set<Event> endEvents = timer.getMyEventsAfterTimer();
+            activateEvents(endEvents);
+            if (timer.isLoop()) timer.reset();
+            else myTimers.remove(timer);
+        }
+        else {
+            Set<Event> currentEvents = timer.getEventsWhileOn();
+            activateEvents(currentEvents);
+            timer.increment();
         }
     }
 
+    public void activateEvents(Set<Event> events) {
+        for (Event event : events) {
+            if (event.conditionsSatisfied(myObjectManager)) {
+                if (event instanceof ObjectEvent) ((ObjectEvent) event).activate(myObjectManager);
+                else if (event instanceof GameEvent) ((GameEvent) event).activate(this);
+            }
+
+        }
+    }
 
     public void setLevelPass() {
         levelPassed = true;
     }
+
 }

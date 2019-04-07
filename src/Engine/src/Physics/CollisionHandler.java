@@ -1,10 +1,11 @@
 package Physics;
 
 import ECS.Components.BasicComponent;
-import ECS.Components.Component;
 import ECS.Components.TagsComponent;
 import ECS.EntityManager;
 import ECS.NoEntityException;
+import Conditionals.Conditional;
+import Conditionals.ObjectConditional;
 import EngineMain.LevelManager;
 import Events.GameEvents.GameEvent;
 import Events.ObjectEvents.ObjectEvent;
@@ -14,44 +15,45 @@ import Events.Event;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class CollisionHandler {
-    private Map<TagsComponent[], List<Event>[]> myCollisionResponses;
     private EntityManager myEntityManager;
     private LevelManager myLevelManager;
 
-    public CollisionHandler(Map<TagsComponent[], List<Event>[]> collisionResponses, EntityManager objectManager, LevelManager levelManager) {
-        myCollisionResponses = collisionResponses;
+    public CollisionHandler(EntityManager objectManager, LevelManager levelManager) {
         myEntityManager = objectManager;
         myLevelManager = levelManager;
     }
 
-    public void checkCollision(Integer entity1, Integer entity2) {
+    public void checkCollision(Integer entity1, Integer entity2, Map<TagsComponent[], List<Event>[]> collisionResponses) {
         try {
-            var tagPair = getTagPair(entity1, entity2);
-            if (entity1 == entity2 || !myCollisionResponses.containsKey(tagPair))
+            if (entity1 == entity2 || collides(entity1, entity2) || !myCollisionResponses.containsKey(tagPair))
                 return;
 
-            var basicComponent1 = myEntityManager.getComponent(entity1, BasicComponent.class);
-            var basicComponent2 = myEntityManager.getComponent(entity2, BasicComponent.class);
-            if (collides(basicComponent1, basicComponent2)) {
-                myEntityManager.setCollide(entity1, true);
-                myEntityManager.setCollide(entity2, true);
-                //modifyMovement(obj1, obj2, objectManager); //TODO fix
-                List<Event>[] responseListPair = myCollisionResponses.get(tagPair);
-                for (int k = 0; k < responseListPair.length; k++) {
-                    var responseList = responseListPair[k];
-                    for (Event event : responseList) {
-                        int other = 1;
-                        if (k == 1)
-                            other = 0;
-                        if (event.conditionsSatisfied(obj1, obj2)) {
-                            if (event instanceof ObjectEvent) {
-                                ((ObjectEvent) event).setMyObject(collisionPair[k]);
-                                ((ObjectEvent) event).activate(collisionPair[other], objectManager);
-                            } else ((GameEvent) event).activate(levelManager);
+            myEntityManager.setCollide(entity1, true);
+            myEntityManager.setCollide(entity2, true);
+            //modifyMovement(obj1, obj2, objectManager); //TODO fix
+            List<Event>[] responseListPair = myCollisionResponses.get(tagPair);
+            for (int k = 0; k < responseListPair.length; k++) {
+                var responseList = responseListPair[k];
+                for (Event event : responseList) {
+                    int other = 1;
+                    if (k == 1)
+                        other = 0;
+
+                    ///////TODO break
+                    if (event instanceof ObjectEvent)
+                        ((ObjectEvent) event).setEventObject(collisionPair[k]);
+                    List<Conditional> conditionals = event.getConditionals();
+                    for (Conditional conditional : conditionals) {
+                        if (conditional instanceof ObjectConditional) {
+                            event.setConditionalObject(collisionPair[k]);
                         }
+                    }
+                    if (event.conditionsSatisfied(collisionPair[other], myEntityManager)) {
+                        if (event instanceof ObjectEvent) {
+                            ((ObjectEvent) event).activate(collisionPair[other], myEntityManager);
+                        } else ((GameEvent) event).activate(myLevelManager);
                     }
                 }
             }
@@ -60,18 +62,20 @@ public class CollisionHandler {
         }
     }
 
-    private TagsComponent[] getTagPair(int entity1, int entity2) throws NoEntityException {
-        var tags1 = myEntityManager.getComponent(entity1, TagsComponent.class);
-        var tags2 = myEntityManager.getComponent(entity2, TagsComponent.class);
-        return new TagsComponent[]{tags1, tags2};
-    }
-
-    //FIXME no collide from right or bottom
-    private boolean collides(BasicComponent component1, BasicComponent component2){
+    private boolean collides(Integer entity1, Integer entity2) throws NoEntityException {
+        var basicComponent1 = myEntityManager.getComponent(entity1, BasicComponent.class);
+        var basicComponent2 = myEntityManager.getComponent(entity2, BasicComponent.class);
         return collideFromLeft(component1, component2) ||
                 collideFromLeft(component1, component2) ||
                 collideFromTop(component1, component2) ||
                 collideFromTop(component1, component2);
+        //FIXME no collide from right or bottom
+    }
+
+    private TagsComponent[] getTagPair(int entity1, int entity2) throws NoEntityException {
+        var tags1 = myEntityManager.getComponent(entity1, TagsComponent.class);
+        var tags2 = myEntityManager.getComponent(entity2, TagsComponent.class);
+        return new TagsComponent[]{tags1, tags2};
     }
 
     public boolean collideFromLeft(BasicComponent collider, BasicComponent target){
