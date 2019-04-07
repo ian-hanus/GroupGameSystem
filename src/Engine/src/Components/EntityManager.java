@@ -1,6 +1,5 @@
 package Components;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,6 +17,35 @@ public class EntityManager {
     }
 
     public void create(int entityID, List<Component> components) {
+        //TODO error checking
         myEntityMap.put(entityID, components);
+    }
+
+    public void move(int entityID) {
+        try {
+            var motionComponent = getComponent(entityID, MotionComponent.class);
+            var positionComponent = getComponent(entityID, PositionComponent.class);
+            //TODO update position based on velocity, velocity based on accel
+        }
+        catch (NoEntityException | NoComponentException e) {
+            return;
+        }
+    }
+
+    //can return null
+    private Component getComponent(int entityID, Class<? extends Component> componentClass) throws NoEntityException, NoComponentException {
+        var components = getAllComponents(entityID);
+        for (Component component : components) {
+            if (component instanceof componentClass)
+                return component;
+        }
+        return null;
+    }
+
+    private List<Component> getAllComponents(int entityID) throws NoEntityException {
+        List<Component> components = myEntityMap.get(entityID);
+        if (components == null)
+            throw new NoEntityException();
+        return components;
     }
 }
