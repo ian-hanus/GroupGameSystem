@@ -3,7 +3,6 @@ package auth.PropertyChangers;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -14,6 +13,7 @@ public abstract class ObjectProperties {
     protected Map<String, String> propertyValues;
     protected Map<String, String> responses;
     protected Map<String, TextField> textFields;
+    protected Map<String, String> hotkeyMappings;
     protected String title;
 
     public ObjectProperties(String objectName){
@@ -21,6 +21,7 @@ public abstract class ObjectProperties {
         propertyValues = new HashMap<>();
         responses = new HashMap<>();
         textFields = new HashMap<>();
+        hotkeyMappings = new HashMap<>();
         title = objectName;
     }
 
