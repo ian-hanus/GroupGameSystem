@@ -38,26 +38,24 @@ public class CollisionHandler {
     }
 
     private boolean collides(GameObject obj1, GameObject obj2){
-        if(collideFromLeft(obj1, obj2) || collideFromLeft(obj2, obj1) || collideFromTop(obj1, obj2) || collideFromTop(obj2, obj1)){
-            return true;
-        }
-        return false;
+        return collideFromLeft(obj1, obj2) ||
+                collideFromLeft(obj2, obj1) ||
+                collideFromTop(obj1, obj2) ||
+                collideFromTop(obj2, obj1);
     }
 
     public boolean collideFromLeft(GameObject collider, GameObject target){
         double width1 = collider.getWidth();
         double x1 = collider.getX();
         double x2 = target.getX();
-        if(x1 + width1 >= x2) return true;
-        return false;
+        return x1 + width1 >= x2;
     }
 
     public boolean collideFromTop(GameObject collider, GameObject target){
         double height1 = collider.getHeight();
         double y1 = collider.getY();
         double y2 = target.getY();
-        if(y1 + height1>= y2) return true;
-        return false;
+        return y1 + height1>= y2;
     }
 
     public void modifyMovement(GameObject obj1, GameObject obj2, ObjectManager objectManager) {
