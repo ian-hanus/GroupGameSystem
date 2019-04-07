@@ -1,4 +1,8 @@
-package Components;
+package ECS;
+
+import ECS.Components.BasicComponent;
+import ECS.Components.Component;
+import ECS.Components.MotionComponent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,16 +25,26 @@ public class EntityManager {
         myEntityMap.put(entityID, components);
     }
 
+    public void addComponent(int entityID, Component component) {
+        //TODO error checking
+        List<Component> components = myEntityMap.get(entityID);
+        components.add(component);
+        myEntityMap.put(entityID, components);
+    }
+
     public void move(int entityID) {
         try {
             var motionComponent = getComponent(entityID, MotionComponent.class);
-            var positionComponent = getComponent(entityID, PositionComponent.class);
+            var basicComponent = getComponent(entityID, BasicComponent.class);
+            //TODO get position from basic component
             //TODO update position based on velocity, velocity based on accel
         }
         catch (NoEntityException | NoComponentException e) {
-            return;
+
         }
     }
+
+
 
     //can return null
     private Component getComponent(int entityID, Class<? extends Component> componentClass) throws NoEntityException, NoComponentException {

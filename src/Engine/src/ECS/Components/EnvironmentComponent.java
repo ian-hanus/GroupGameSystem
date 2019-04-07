@@ -1,4 +1,4 @@
-package Components;
+package ECS.Components;
 
 public class EnvironmentComponent {
     private double myGravity;

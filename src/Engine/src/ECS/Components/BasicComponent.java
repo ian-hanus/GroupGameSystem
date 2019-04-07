@@ -1,10 +1,18 @@
-package Components;
+package ECS.Components;
 
-public class DimensionsComponent {
+import java.io.File;
+
+public class BasicComponent extends Component {
     private double myWidth;
     private double myHeight;
+    private double myXPos;
+    private double myYPos;
+    private File myFile;
 
-    public DimensionsComponent(double width, double height) {
+    public BasicComponent(File file, double xPos, double yPos, double width, double height) {
+        myFile = file;
+        myXPos = xPos;
+        myYPos = yPos;
         myWidth = width;
         myHeight = height;
     }
