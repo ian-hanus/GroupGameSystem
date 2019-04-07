@@ -6,8 +6,8 @@ import Physics.CollisionHandler;
 
 public class CollideFromLeft extends ObjectConditional{
 
-    CollideFromLeft(double obj){
-        super(obj);
+    CollideFromLeft(boolean required, double obj){
+        super(required, obj);
     }
 
     @Override
@@ -23,6 +23,6 @@ public class CollideFromLeft extends ObjectConditional{
 
     @Override
     public Conditional copy() {
-        return new CollideFromLeft(myObject);
+        return new CollideFromLeft(Required, myObject);
     }
 }

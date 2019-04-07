@@ -4,39 +4,41 @@ import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class Comparison extends ObjectConditional{
 
-    private List<String> myComparisonTypes;
+    private Map<String, String> myComparisons;
     private double myObject;
-    private List<Component> myCompareTo;
-    private List<Component> myComponents;
+    private Map<String, Component> myCompareTo;
+    private Map<String, Component> myComponents;
 
-    public Comparison(List<String> comparisonTypes, double obj, List<Component> compareTo){
-        super(obj);
-        myComparisonTypes = comparisonTypes;
+    public Comparison(boolean required, double obj, Map<String, String> comparisons, Map<String, Component> compareTo){
+        super(required, obj);
+        myComparisons = comparisons;
         myCompareTo = compareTo;
     }
 
-    public Comparison(List<String> comparisonTypes, List<Component> compareTo){
-        super();
-        myComparisonTypes = comparisonTypes;
+    public Comparison(boolean required, double obj, Map<String, String> comparisonTypes){
+        super(required, obj);
+        myComparisons = comparisonTypes;
+    }
+
+    public Comparison(boolean required, Map<String, String> comparisonTypes, Map<String, Component> compareTo){
+        super(required);
+        myComparisons = comparisonTypes;
         myCompareTo = compareTo;
     }
 
-    public Comparison(List<String> comparisonTypes){
-        super();
-        myComparisonTypes = comparisonTypes;
+    public Comparison(boolean required, Map<String, String> comparisonTypes){
+        super(required);
+        myComparisons = comparisonTypes;
     }
 
-    public Comparison(List<String> comparisonTypes, double obj){
-        super(obj);
-        myComparisonTypes = comparisonTypes;
-    }
 
     private boolean compare() {
-        boolean equals = false;
-        if (myComparisonType.contains("=") && stat1 == stat2) equals = true;
+        for (String statToBeCompared : myComparisons.keySet())
+        if (myComparisons.contains("=") && stat1 == stat2) equals = true;
         if (myComparisonType.contains(">")) return (stat1 < stat2 || equals);
         if (myComparisonType.contains("<")) return (stat1 < stat2 || equals);
         return false;
