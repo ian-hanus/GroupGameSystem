@@ -3,7 +3,6 @@ package EngineMain;
 import Events.ObjectEvents.ObjectEvent;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
-import GameObjects.User;
 import Physics.CollisionHandler;
 import Events.Event;
 
@@ -38,9 +37,9 @@ public class Controller {
         myActiveObjects = myEngineParser.initializeActiveObjects();
         myTimerMap = myEngineParser.makeTimerMap();
         for(GameObject obj : myActiveObjects){
-            if (obj instanceof User){
+            /*if (obj instanceof User){
                 myUser = obj;
-            }
+            }*/
         }
         if (myUser == null); //TODO: throw error
     }
