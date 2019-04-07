@@ -1,9 +1,5 @@
 package GameObjects;
 
-import Engine.src.Powerups.Powerup;
-
-import java.util.List;
-
 public class PowerupItem extends GameObject{
     Powerup powerup;
 

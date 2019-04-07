@@ -38,11 +38,11 @@ abstract class MovableObject {
     }
 
     void setAccelX(double accel) {
-        myAccelX = accel;
+        //myAccelX = accel;
     }
 
     void setAccelY(double accel) {
-        myAccelY = accel;
+        //myAccelY = accel;
     }
 
     boolean getIsImmobile() {

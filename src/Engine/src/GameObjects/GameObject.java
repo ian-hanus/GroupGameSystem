@@ -1,9 +1,5 @@
 package GameObjects;
 
-import Engine.src.Powerups.Powerup;
-
-import java.util.List;
-
 /**
  * @author David Liu and Jonathan Yu
  */

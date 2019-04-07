@@ -61,7 +61,7 @@ public class CollisionHandler {
     }
 
     public void modifyMovement(GameObject obj1, GameObject obj2, ObjectManager objectManager) {
-        GameObject block;
+/*        GameObject block;
         GameObject other;
         if (obj1 instanceof Block) {
             block = obj1;
@@ -79,7 +79,7 @@ public class CollisionHandler {
         }
         else{
             objectManager.downscaleVelocity(other, ((Block) block).getVelocityScalar());
-        }
+        }*/
     }
 
 }

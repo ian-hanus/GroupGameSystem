@@ -1,7 +1,5 @@
 package GameObjects;
 
-import Engine.src.Powerups.Powerup;
-
 import java.util.ArrayList;
 import java.util.List;
 
