@@ -1,21 +1,40 @@
 package Conditionals;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 
-public abstract class Comparison implements Conditional{
+import java.util.List;
 
-    private String myComparisonType;
-    private double myStat;
-    private double myCompareTo;
+public abstract class Comparison extends ObjectConditional{
 
-    public Comparison(String comparisonType, double compareTo){
-        myComparisonType = comparisonType;
+    private List<String> myComparisonTypes;
+    private double myObject;
+    private List<Component> myCompareTo;
+    private List<Component> myComponents;
+
+    public Comparison(List<String> comparisonTypes, double obj, List<Component> compareTo){
+        super(obj);
+        myComparisonTypes = comparisonTypes;
         myCompareTo = compareTo;
     }
 
-    abstract double setStat(GameObject obj);
+    public Comparison(List<String> comparisonTypes, List<Component> compareTo){
+        super();
+        myComparisonTypes = comparisonTypes;
+        myCompareTo = compareTo;
+    }
 
-    protected boolean compare(double stat1, double stat2) {
+    public Comparison(List<String> comparisonTypes){
+        super();
+        myComparisonTypes = comparisonTypes;
+    }
+
+    public Comparison(List<String> comparisonTypes, double obj){
+        super(obj);
+        myComparisonTypes = comparisonTypes;
+    }
+
+    private boolean compare() {
         boolean equals = false;
         if (myComparisonType.contains("=") && stat1 == stat2) equals = true;
         if (myComparisonType.contains(">")) return (stat1 < stat2 || equals);
@@ -24,14 +43,18 @@ public abstract class Comparison implements Conditional{
     }
 
     @Override
-    public boolean satisfied() {
-        return false;
+    public boolean satisfied(double obj, ObjectManager objectManager) {
+        if (myCompareTo == null){
+            myCompareTo = objectManager.getComponents(obj);
+        }
+        myComponents = objectManager.getComponents(myObject);
+        return compare();
     }
 
     @Override
-    public boolean satisfied(GameObject obj1, GameObject obj2) {
-        myStat = setStat(obj1);
-        return compare(myStat, myCompareTo);
+    public boolean satisfied(ObjectManager objectManager) {
+        myComponents = objectManager.getComponents(myObject);
+        return compare();
     }
 
 }

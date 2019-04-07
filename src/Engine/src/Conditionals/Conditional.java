@@ -1,8 +1,10 @@
 package Conditionals;
 
-import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 
 public interface Conditional {
-    boolean satisfied();
-    boolean satisfied(GameObject obj1, GameObject obj2);
+
+    boolean satisfied(ObjectManager objectManager);
+    boolean satisfied(double obj, ObjectManager objectManager);
+    Conditional copy();
 }

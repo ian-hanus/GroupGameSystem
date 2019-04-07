@@ -21,7 +21,7 @@ public class DirectionChange extends ObjectEvent {
     }
 
     @Override
-    public void activate(GameObject other, ObjectManager objectManager){
+    public void activate(double other, ObjectManager objectManager){
         objectManager.adjustDirection(myObject, myAdjustmentAngle);
     }
 }

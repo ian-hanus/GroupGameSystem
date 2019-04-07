@@ -1,19 +1,28 @@
 package Conditionals;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 
-public class CollideFromBottom implements Conditional{
+public class CollideFromBottom extends ObjectConditional {
 
-    @Override
-    public boolean satisfied() {
-        return false;
+    CollideFromBottom(double obj){
+        super(obj);
     }
 
     @Override
-    public boolean satisfied(GameObject obj1, GameObject obj2){
-        CollisionHandler collisionHandler = new CollisionHandler();
-        return collisionHandler.collideFromTop(obj2, obj1);
+    public boolean satisfied(double other, ObjectManager objectManager){
+        CollisionHandler collisionHandler = new CollisionHandler(objectManager);
+        return collisionHandler.collideFromTop(other, myObject);
     }
 
+    @Override
+    public boolean satisfied(ObjectManager objectManager){
+        return false; //TODO:error
+    }
+
+    @Override
+    public Conditional copy() {
+        return new CollideFromBottom(myObject);
+    }
 }

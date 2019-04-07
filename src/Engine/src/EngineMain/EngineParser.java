@@ -1,11 +1,8 @@
 package EngineMain;
 
-import Events.Event;
 import GameObjects.GameObject;
-import Physics.CollisionHandler;
 
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +20,7 @@ public class EngineParser {
         return null;
     }
 
-    public List initializeActiveObjects(){
+    public Map<Double, Map<String, Components>> initializeActiveObjects(){
         return null;
     }
 
@@ -31,7 +28,7 @@ public class EngineParser {
         return null;
     }
 
-    public Map<Double, Set<Event>> makeTimerMap() {
+    public Set<Timer> makeTimerMap() {
         return null;
     }
 }

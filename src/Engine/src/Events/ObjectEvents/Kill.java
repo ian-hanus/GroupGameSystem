@@ -17,7 +17,7 @@ public class Kill extends ObjectEvent {
     public void activate(ObjectManager objectManager) { }
 
     @Override
-    public void activate(GameObject other, ObjectManager objectManager) {
+    public void activate(double other, ObjectManager objectManager) {
         objectManager.kill(other);
     }
 }

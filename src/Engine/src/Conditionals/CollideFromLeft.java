@@ -1,18 +1,28 @@
 package Conditionals;
 
 import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 
-public class CollideFromLeft implements Conditional{
+public class CollideFromLeft extends ObjectConditional{
 
-    @Override
-    public boolean satisfied() {
-        return false;
+    CollideFromLeft(double obj){
+        super(obj);
     }
 
     @Override
-    public boolean satisfied(GameObject obj1, GameObject obj2){
-        CollisionHandler collisionHandler = new CollisionHandler();
-        return collisionHandler.collideFromLeft(obj1, obj2);
+    public boolean satisfied(double other, ObjectManager objectManager){
+        CollisionHandler collisionHandler = new CollisionHandler(objectManager);
+        return collisionHandler.collideFromLeft(myObject, other);
+    }
+
+    @Override
+    public boolean satisfied(ObjectManager objectManager){
+        return false; //TODO:error
+    }
+
+    @Override
+    public Conditional copy() {
+        return new CollideFromLeft(myObject);
     }
 }
