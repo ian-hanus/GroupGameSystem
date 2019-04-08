@@ -68,12 +68,8 @@ public class Controller {
     public void updateScene(){
         myLevelManager.updateTimer();
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
-        for (int obj : myActiveObjects.keySet()){
+        for (int obj : myActiveObjects.keySet()) {
             myEntityManager.move(obj);
-            Component motion = myActiveObjects.get(obj).get("STATE");
-            if(((MotionComponent) motion).colliding()) myEntityManager.restoreMovementDefaults(obj);
-            myEntityManager.setCollide(obj, false);
-            myEntityManager.updateStats(obj);
         }
     }
 }
