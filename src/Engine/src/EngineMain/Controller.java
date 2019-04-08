@@ -1,5 +1,6 @@
 package EngineMain;
 
+import ECS.Components.Component;
 import ECS.Components.MotionComponent;
 import Events.ObjectEvents.ObjectEvent;
 import GameObjects.GameObject;
@@ -7,7 +8,6 @@ import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 import Events.Event;
 
-import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,7 @@ public class Controller {
     private Map<String, GameObject> myObjectBank;
     private Map<String, Event> myHotKeys;
     private Map<String[], Set<Event>[]> myCollisionResponses;
-    private Set<Timer> myTimers;
+    private List<TimerSequence> myTimers;
     private Map<Double, Map<String, Component>> myActiveObjects;
     private double myUserID;
     private CollisionHandler myCollisionHandler;
@@ -67,9 +67,7 @@ public class Controller {
     }
 
     public void updateScene(){
-        for(Timer timer : myTimers) {
-            myLevelManager.checkTimer(timer);
-        }
+        myLevelManager.updateTimer();
         for(double obj1: myActiveObjects.keySet()){
             for(double obj2: myActiveObjects.keySet()){
                 myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myLevelManager);

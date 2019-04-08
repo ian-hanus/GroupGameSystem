@@ -5,16 +5,17 @@ import Events.GameEvents.GameEvent;
 import Events.ObjectEvents.ObjectEvent;
 import GameObjects.ObjectManager;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class LevelManager {
     private boolean levelPassed;
-    private Set<Timer> myTimers;
+    private List<TimerSequence> myTimers;
     private ObjectManager myObjectManager;
     double myCount;
 
-    public LevelManager(Set<Timer> timers, ObjectManager objectManager, double count){
+    public LevelManager(List<TimerSequence> timers, ObjectManager objectManager, double count){
         levelPassed = false;
         myObjectManager = objectManager;
         myTimers = timers;
@@ -25,17 +26,11 @@ public class LevelManager {
         myTimers.add(new Timer(eventsDuringTimer, eventsAfter, duration, myCount, isLoop));
     }
 
-    public void checkTimer(Timer timer){
-        if (timer.getCount() >= timer.getEndTime()){
-            Set<Event> endEvents = timer.getMyEventsAfterTimer();
-            activateEvents(endEvents);
-            if (timer.isLoop()) timer.reset();
-            else myTimers.remove(timer);
-        }
-        else {
-            Set<Event> currentEvents = timer.getEventsWhileOn();
-            activateEvents(currentEvents);
-            timer.increment();
+    public void updateTimer() {
+        for (TimerSequence sequence : myTimers) {
+            sequence.update(myCount);
+            if (sequence.completed() && sequence.isLoop()) sequence.remove();
+            else myTimers.remove(sequence);
         }
     }
 

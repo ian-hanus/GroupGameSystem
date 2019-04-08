@@ -10,20 +10,17 @@ public class Timer {
     double myStartTime;
     Set<Event> myEventsWhileOn;
     Set<Event> myEventsAfterTimer;
-    boolean IsLoop;
 
-    public Timer(Set<Event> eventsWhileOn, Set<Event> eventsAfterTimer, double duration, boolean isLoop){
+    public Timer(Set<Event> eventsWhileOn, Set<Event> eventsAfterTimer, double duration){
         myCount = 0;
         myStartTime = 0;
         myDuration = duration;
-        IsLoop = isLoop;
     }
 
-    public Timer(Set<Event> eventsWhileOn, Set<Event> eventsAfterTimer, double duration, double currentCount, boolean isLoop){
+    public Timer(Set<Event> eventsWhileOn, Set<Event> eventsAfterTimer, double duration, double currentCount){
         myCount = currentCount;
         myStartTime = currentCount;
         myDuration = duration;
-        IsLoop = isLoop;
     }
 
     protected void increment(){
@@ -50,7 +47,4 @@ public class Timer {
         return myEventsAfterTimer;
     }
 
-    public boolean isLoop() {
-        return IsLoop;
-    }
 }
