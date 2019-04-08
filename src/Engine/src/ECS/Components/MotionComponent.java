@@ -71,15 +71,11 @@ public class MotionComponent extends Component {
     public void adjustDirection(double delta) {
         myAngle += delta;
         adjustVelocitiesByAngle(myAngle);
-        //Is this appropriate?
-        adjustAccelerationByAngle(myAngle);
     }
 
     public void setDirection(double angle) {
         myAngle = angle;
         adjustVelocitiesByAngle(myAngle);
-        //Is this appropriate?
-        adjustAccelerationByAngle(myAngle);
     }
 
     private void adjustVelocitiesByAngle(double angle) {

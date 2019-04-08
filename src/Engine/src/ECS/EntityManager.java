@@ -44,9 +44,6 @@ public class EntityManager {
         return components;
     }
 
-
-
-
     public void die(int entityID) {
         myEntityMap.remove(entityID);
     }
