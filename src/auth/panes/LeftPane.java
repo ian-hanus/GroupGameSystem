@@ -7,4 +7,7 @@ public class LeftPane extends Pane {
     public LeftPane(double y, double width, double height) {
         super(LEFT_EDGE, y, width, height, LEFT_PANE_STYLE);
     }
+    public LeftPane(double y, double width, double height, String ID) {
+        super(LEFT_EDGE, y, width, height, LEFT_PANE_STYLE, ID);
+    }
 }
