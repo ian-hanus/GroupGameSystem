@@ -22,8 +22,8 @@ public class LevelManager {
         myCount = count;
     }
 
-    public void addSequence(Set<Event> eventsDuringTimer, Set<Event> eventsAfter, double duration, boolean isLoop) {
-        myTimers.add(new Timer(eventsDuringTimer, eventsAfter, duration, myCount, isLoop));
+    public void addTimerSequence(Set<Event> eventsDuringTimer, Set<Event> eventsAfter, double duration, boolean isLoop) {
+        myTimers.add(new TimerSequence(eventsDuringTimer, eventsAfter, duration, myCount, isLoop));
     }
 
     public void updateTimer() {

@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Controller {
-    private Map<String, GameObject> myObjectBank;
     private Map<String, Event> myHotKeys;
     private Map<String[], Set<Event>[]> myCollisionResponses;
     private List<TimerSequence> myTimers;
@@ -28,7 +27,7 @@ public class Controller {
     private double myIterationCounter;
 
     public Controller(double stepTime){
-        myEngineParser = new EngineParser();
+        myDataManager = new DataManager();
         initializeDataVariables();
         myObjectManager = new ObjectManager(myActiveObjects);
         myLevelManager = new LevelManager(myTimers, myObjectManager, myIterationCounter);
@@ -38,10 +37,10 @@ public class Controller {
     }
 
     public void initializeDataVariables(){
-        myObjectBank = myEngineParser.parseDefaultObjects();
-        myHotKeys = myEngineParser.makeHotKeyMap();
-        myCollisionResponses = myEngineParser.makeCollisionResponseMap();
-        myTimers = myEngineParser.makeTimerMap();
+        myActiveObjects = myDataManager.loadDefaultObjects();
+        myHotKeys = myDataManager.loadHotKeyMap();
+        myCollisionResponses = myDataManager.loadCollisionResponseMap();
+        myTimers = myDataManager.loadTimerMap();
         for(Double id : myActiveObjects.keySet()){
             Component type =  myActiveObjects.get(id).get("TYPE");
             if(((Type) type).getType.equals("USER")) {
