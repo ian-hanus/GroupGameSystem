@@ -7,9 +7,10 @@ import ECS.Components.MotionComponent;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EntityManager {
-    private HashMap<Integer, List<Component>> myEntityMap;
+    private HashMap<Integer, Map<Class<? extends Component>, Component>> myEntityMap;
 
     public EntityManager() {
         myEntityMap = new HashMap<>();
@@ -22,24 +23,29 @@ public class EntityManager {
             myEntityMap.put(entityID, components);
         }
         catch (NoEntityException e) {
-
+            System.out.println("Entity " + entityID + " does not exist");
         }
     }
 
     //can return null
     //if we want this to be O(1) lookup instead of O(M) [M is number of components in entity], then must convert
     //the List of components for an entity to a map of component classes to components
-    public <T extends Component> T getComponent(int entityID, Class<T> componentClass) throws NoEntityException {
-        var components = getAllComponents(entityID);
-        for (Component component : components) {
-            if (componentClass.isInstance(component))
-                return (T) component;
+    public <T extends Component> T getComponent(int entityID, Class<T> componentClass){
+        try {
+            var components = getAllComponents(entityID);
+            for (Component component : components) {
+                if (componentClass.isInstance(component))
+                    return (T) component;
+            }
+            return null;
         }
-        return null;
+        catch(NoEntityException e) {
+            System.out.println("Entity " + entityID + " does not exist");
+        }
     }
 
-    private List<Component> getAllComponents(int entityID) throws NoEntityException {
-        List<Component> components = myEntityMap.get(entityID);
+    private Map<Class<? extends Component>, Component> getAllComponents(int entityID) throws NoEntityException {
+        Map<Class<? extends Component>, Component> components = myEntityMap.get(entityID);
         if (components == null)
             throw new NoEntityException("Entity " + entityID + " does not exist");
         return components;
@@ -55,73 +61,48 @@ public class EntityManager {
     }
 
     public void move(int entityID) {
-        try {
-            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-            var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
+        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
 
-            motionComponent.updateVelocity();
-            double newX = motionComponent.getNewX(basicComponent.getX());
-            double newY = motionComponent.getNewY(basicComponent.getY());
-            basicComponent.setX(newX);
-            basicComponent.setY(newY);
-        }
-        catch (NoEntityException | NoComponentException e) {
-            System.out.println("Can't move an entity without a motion component.");
-        }
+        motionComponent.updateVelocity();
+        double newX = motionComponent.getNewX(basicComponent.getX());
+        double newY = motionComponent.getNewY(basicComponent.getY());
+        basicComponent.setX(newX);
+        basicComponent.setY(newY);
     }
 
     public void adjustDirection(int entityID, double delta) {
-        try {
-            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-            motionComponent.adjustDirection(delta);
-        }
-        catch (NoEntityException | NoComponentException e) {
-            System.out.println("Can't adjust the direction of an entity without a motion component.");
-        }
+        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        motionComponent.adjustDirection(delta);
     }
 
     public void setDirection(int entityID, double angle){
-        try {
-            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-            motionComponent.setDirection(angle);
-        }
-        catch (NoEntityException | NoComponentException e) {
-            System.out.println("Can't set the direction of an entity without a motion component.");
-        }
+        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        motionComponent.setDirection(angle);
     }
 
     public void adjustHealth(int entityID, int delta) {
-        try {
-            var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
-            int currentHealth = healthComponent.getHealth();
-            int maxHealth = healthComponent.getMaxHealth();
-            if (healthComponent.getMaxHealth() == 0) {
-                healthComponent.setHealth(currentHealth + delta);
-            }
-            else {
-                int newHealth = Math.min(currentHealth + delta, maxHealth);
-                healthComponent.setHealth(newHealth);
-            }
+        var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
+        int currentHealth = healthComponent.getHealth();
+        int maxHealth = healthComponent.getMaxHealth();
+        if (healthComponent.getMaxHealth() == 0) {
+            healthComponent.setHealth(currentHealth + delta);
         }
-        catch (NoEntityException e) {
-            System.out.println("Can't adjust the health of an entity without a health component.");
+        else {
+            int newHealth = Math.min(currentHealth + delta, maxHealth);
+            healthComponent.setHealth(newHealth);
         }
     }
 
     public void setHealth(int entityID, int health) {
-        try {
-            var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
-            int maxHealth = healthComponent.getMaxHealth();
-            if (health < maxHealth) {
-                healthComponent.setHealth(health);
-            }
-            //is it necessary to throw an error or just set it to the max health?
-            else {
-                healthComponent.setHealth(maxHealth);
-            }
+        var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
+        int maxHealth = healthComponent.getMaxHealth();
+        if (health < maxHealth) {
+            healthComponent.setHealth(health);
         }
-        catch (NoEntityException e) {
-
+        //is it necessary to throw an error or just set it to the max health?
+        else {
+            healthComponent.setHealth(maxHealth);
         }
     }
 
@@ -130,5 +111,16 @@ public class EntityManager {
 
     }
 
-    //public void addPowerup to other objects? - later
+    public void increaseScore(int entityID, double gain) {
+
+    }
+
+
+    public void addPowerup(int entityID, int otherEntityID) {
+
+    }
+
+    public void stop(int entityID) {
+
+    }
 }

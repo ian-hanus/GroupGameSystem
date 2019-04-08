@@ -14,7 +14,7 @@ public class GivePowerup extends ObjectEvent {
     }
 
     @Override
-    public void activate(ObjectManager objectManager){
+    public void activate(EntityManager objectManager){
         //TODO: throw error
     }
 
