@@ -45,20 +45,24 @@ public class CollisionHandler {
 
         for (Integer entity : entities) {
             if (notInteractingWithEnvironment(entity))
-                setInDefaultEnvironment();
+                setInDefaultEnvironment(entity);
         }
         myPreviousCollisions = myCurrentCollisions;
     }
 
     private boolean notInteractingWithEnvironment(Integer entity) {
-        if (myCurrentCollisions.containsKey(entity)) {
-            Set<Integer> possibleEnvironments = myCurrentCollisions.get(entity);
-            for (Integer possibleEnvironment : possibleEnvironments) {
-                if (possibleEnvironment.containsComponent(EnvironmentComponent.class))
-                    return true;
+        try {
+            if (myCurrentCollisions.containsKey(entity)) {
+                Set<Integer> possibleEnvironments = myCurrentCollisions.get(entity);
+                for (Integer possibleEnvironment : possibleEnvironments) {
+                    if (myEntityManager.getComponent(possibleEnvironment, EnvironmentComponent.class) != null)
+                        return true;
+                }
             }
+            return false;
+        } catch (NoEntityException e) {
+            return false; //should never be reached
         }
-        return false;
     }
 
     private void setInDefaultEnvironment(Integer entity) {
@@ -101,16 +105,14 @@ public class CollisionHandler {
     private void handleEnvironments(Integer current, Integer other) throws NoEntityException {
         myCurrentCollisions.putIfAbsent(current, new HashSet<>());
         myCurrentCollisions.get(current).add(other);
-        try {
-            var currentMotionComponent = myEntityManager.getComponent(current, MotionComponent.class);
-            var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
+        var currentMotionComponent = myEntityManager.getComponent(current, MotionComponent.class);
+        var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
 
-            if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))
-                setInEnvironment(currentMotionComponent, otherEnvironmentComponent);
-        }
-        catch (NoComponentException e) {
-            return; //can't update motion component if entity doesn't have one or if other entity doesn't have an environment component
-        }
+        if (currentMotionComponent == null || otherEnvironmentComponent == null)
+            return;
+
+        if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))
+            setInEnvironment(currentMotionComponent, otherEnvironmentComponent);
     }
 
     private void setInEnvironment(MotionComponent motion, EnvironmentComponent environment) {
