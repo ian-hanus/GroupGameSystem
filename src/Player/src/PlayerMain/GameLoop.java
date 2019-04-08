@@ -3,7 +3,7 @@ package PlayerMain;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class GameLoop extends Application {
 
     public void start(Stage stage) {
 
@@ -12,5 +12,7 @@ public class Main extends Application {
         st.show();
 
     }
+
+    // TODO: Add methods for playing game
 
 }

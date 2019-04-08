@@ -47,7 +47,7 @@ public class PlayerStage {
         base.setHgap(ST_SPACING);
 
         GamesRegion gamesRegion = new GamesRegion(GAMES_STYLESHEET);
-        DescriptionRegion descRegion = new DescriptionRegion(DESC_STYLESHEET);
+        DescriptionRegion descRegion = new DescriptionRegion(DESC_STYLESHEET, this);
         TitleRegion titleRegion = new TitleRegion(TITLE_STYLESHEET);
 
         ScrollPane gamesPane = gamesRegion.getPane();
@@ -67,6 +67,21 @@ public class PlayerStage {
             StackPane thumbPane = thumb.getPane();
             thumbPane.setOnMouseClicked(e -> descRegion.updateRegion(thumb.getName()));
         }
+    }
+
+    /**
+     * Run(), edit(), rate() currently placeholder. Update these methods.
+     */
+    public void run(String gameName) {
+        System.out.println(gameName + " is running!");
+    }
+
+    public void edit(String gameName) {
+        System.out.println(gameName + " is being edited!");
+    }
+
+    public void rate(String gameName) {
+        System.out.println("Rating for " + gameName + " is being changed!");
     }
 
     protected Stage makeStage() {
