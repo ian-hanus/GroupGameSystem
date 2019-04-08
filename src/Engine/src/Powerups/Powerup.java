@@ -1,8 +1,4 @@
-package Engine.src.Powerups;
+package Powerups;
 
 public class Powerup {
-
-    public Powerup() {
-
-    }
 }

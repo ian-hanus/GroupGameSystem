@@ -2,29 +2,33 @@ package EngineMain;
 
 import Events.Event;
 
+import java.util.List;
 import java.util.Set;
 
 public class Timer {
     double myCount;
     double myDuration;
     double myStartTime;
-    Set<Event> myEventsWhileOn;
-    Set<Event> myEventsAfterTimer;
-    boolean IsLoop;
+    List<Event> myEventsWhileOn;
+    List<Event> myEventsAfterTimer;
 
-    public Timer(Set<Event> eventsWhileOn, Set<Event> eventsAfterTimer, double duration, boolean isLoop){
+    public Timer(List<Event> eventsWhileOn, List<Event> eventsAfterTimer, double duration){
         myCount = 0;
         myStartTime = 0;
         myDuration = duration;
-        IsLoop = isLoop;
+        myEventsWhileOn = eventsWhileOn;
+        myEventsAfterTimer = eventsAfterTimer;
     }
 
-    public Timer(Set<Event> eventsWhileOn, Set<Event> eventsAfterTimer, double duration, double currentCount, boolean isLoop){
+    public Timer(List<Event> eventsWhileOn, List<Event> eventsAfterTimer, double duration, double currentCount){
         myCount = currentCount;
         myStartTime = currentCount;
         myDuration = duration;
-        IsLoop = isLoop;
+        myEventsWhileOn = eventsWhileOn;
+        myEventsAfterTimer = eventsAfterTimer;
     }
+
+    protected void setCount(double currentCount){myCount = currentCount;}
 
     protected void increment(){
         myCount++;
@@ -42,15 +46,12 @@ public class Timer {
         return myCount;
     }
 
-    protected Set<Event> getEventsWhileOn(){
+    protected List<Event> getEventsWhileOn(){
         return myEventsWhileOn;
     }
 
-    protected Set<Event> getMyEventsAfterTimer(){
+    protected List<Event> getMyEventsAfterTimer(){
         return myEventsAfterTimer;
     }
 
-    public boolean isLoop() {
-        return IsLoop;
-    }
 }
