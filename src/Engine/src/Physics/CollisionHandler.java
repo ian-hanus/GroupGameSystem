@@ -1,17 +1,18 @@
 package Physics;
 
 import ECS.Components.BasicComponent;
+import ECS.Components.EnvironmentComponent;
+import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
 import ECS.EntityManager;
+import ECS.NoComponentException;
 import ECS.NoEntityException;
 import Conditionals.Conditional;
 import Conditionals.ObjectConditional;
-import ECS.TagPair;
+import ECS.Pair;
 import EngineMain.LevelManager;
 import Events.GameEvents.GameEvent;
 import Events.ObjectEvents.ObjectEvent;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 import Events.Event;
 
 import java.util.*;
@@ -19,108 +20,138 @@ import java.util.*;
 public class CollisionHandler {
     private EntityManager myEntityManager;
     private LevelManager myLevelManager;
-    private HashMap<Integer, Integer> myPreviousCollisions;
+    private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
+    private Map<Integer, Set<Integer>> myPreviousCollisions;
+    private Map<Integer, Set<Integer>> myCurrentCollisions;
 
     public CollisionHandler(EntityManager objectManager, LevelManager levelManager) {
         myEntityManager = objectManager;
         myLevelManager = levelManager;
+        myCollisionResponses = new HashMap<>();
         myPreviousCollisions = new HashMap<>();
+        myCurrentCollisions = new HashMap<>();
     }
 
-    public void dealWithCollisions(Set<Integer> entities, Map<TagPair, List<Event>[]> collisionResponses) {
+    //assumes collisionResponses and entities are nonnull
+    public void dealWithCollisions(Set<Integer> entities, Map<Pair<String>, Pair<List<Event>>> collisionResponses) {
+        myCollisionResponses = collisionResponses;
+        myCurrentCollisions = new HashMap<>();
         for (Integer entity1 : entities) {
             for (Integer entity2 : entities) {
                 if (entity1 == entity2)
                     continue;
-                checkCollision(entity1, entity2, collisionResponses);
+                checkCollision(entity1, entity2);
             }
         }
+        myPreviousCollisions = myCurrentCollisions;
     }
 
-    public void checkCollision(Integer entity1, Integer entity2, Map<TagPair, List<Event>[]> collisionResponses) {
+    private void checkCollision(Integer entity1, Integer entity2) {
         try {
-            if (entity1 == entity2 || !collides(entity1, entity2))
-                return;
-
-            TagPair[] collisionTagPairs = findRelevantTagPairs(entity1, entity2, collisionResponses);
+            Pair<String>[] collisionTagPairs = findRelevantTagPairs(entity1, entity2);
             if (collisionTagPairs.length == 0)
                 return;
 
-            myEntityManager.setCollide(entity1, true);
-            myEntityManager.setCollide(entity2, true);
-            //modifyMovement(obj1, obj2, objectManager); //TODO fix
+            handleEnvironments(entity1, entity2);
+            handleEnvironments(entity2, entity1);
 
-            for (TagPair tagPair : collisionTagPairs) {
-                List<Event>[] responseListPair = collisionResponses.get(tagPair);
-                handleEvents(responseListPair);
+            for (Pair<String> tagPair : collisionTagPairs) {
+                Pair<List<Event>> responseListPair = myCollisionResponses.get(tagPair);
+                activateEvents(entity1, entity2, responseListPair.getItem1());
+                activateEvents(entity2, entity1, responseListPair.getItem2());
             }
         } catch (NoEntityException e) {
             System.out.println("One or more entities do not exist.");
         }
     }
 
-    //TODO fix if Events are changed
-    private void handleEvents(Integer entity1, Integer entity2, List<Event>[] responseListPair) {
-        Integer[] entityPair = {entity1, entity2};
-        for (int k = 0; k < responseListPair.length; k++) {
-            var responseList = responseListPair[k];
-            for (Event event : responseList) {
-                int other = 1;
-                if (k == 1)
-                    other = 0;
-
-                /*
-                if (event instanceof ObjectEvent) {              //only include other if necessary for conditionals
-                    ((ObjectEvent) event).activate(entityPair[k], entityPair[other], myEntityManager);
-                }
-                if (event instanceof GameEvent) {
-                    ((GameEvent) event).activate(entityPair[k], entityPair[other], myLevelManager);
-                }
-                */
-                //FIXME delegate rest of method to ObjectEvent/GameEvent and uncomment code above
-
-                if (event instanceof ObjectEvent)
-                    ((ObjectEvent) event).setEventObject(entityPair[k]);
-                List<Conditional> conditionals = event.getConditionals();
-                for (Conditional conditional : conditionals) {
-                    if (conditional instanceof ObjectConditional) {
-                        event.setConditionalObject(entityPair[k]);
-                    }
-                }
-                if (event.conditionsSatisfied(entityPair[other], myEntityManager)) {
-                    if (event instanceof ObjectEvent) {
-                        ((ObjectEvent) event).activate(entityPair[other], myEntityManager);
-                    } else ((GameEvent) event).activate(myLevelManager);
-                }
-            }
-        }
-    }
-
-    private TagPair[] findRelevantTagPairs(Integer entity1, Integer entity2, Map<TagPair, List<Event>[]> collisionResponses) throws NoEntityException{
+    private Pair<String>[] findRelevantTagPairs(Integer entity1, Integer entity2) throws NoEntityException{
         var tags1 = myEntityManager.getComponent(entity1, TagsComponent.class);
         var tags2 = myEntityManager.getComponent(entity2, TagsComponent.class);
-        ArrayList<TagPair> tagPairs = new ArrayList<>();
+        ArrayList<Pair<String>> tagPairs = new ArrayList<>();
         for (String tag1 : tags1.getTags()) {
             for (String tag2 : tags2.getTags()) {
-                var tagPair = new TagPair(tag1, tag2);
-                if (collisionResponses.containsKey(tagPair))
+                var tagPair = new Pair(tag1, tag2);
+                if (myCollisionResponses.containsKey(tagPair))
                     tagPairs.add(tagPair);
             }
         }
-        return tagPairs.toArray(new TagPair[0]);
+        return tagPairs.toArray(new Pair[0]);
+    }
+
+    private void handleEnvironments(Integer current, Integer other) throws NoEntityException {
+        myCurrentCollisions.putIfAbsent(current, new HashSet<>());
+        myCurrentCollisions.get(current).add(other);
+        try {
+            var currentMotionComponent = myEntityManager.getComponent(current, MotionComponent.class);
+
+            try {
+                var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
+
+                if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))
+                    setInEnvironment(currentMotionComponent, otherEnvironmentComponent);
+
+            } catch (NoComponentException e) {
+                setInDefaultEnvironment(currentMotionComponent);
+            }
+        }
+        catch (NoComponentException e) {
+            return; //can't update motion component if entity doesn't have one
+        }
+    }
+
+    private void setInEnvironment(MotionComponent motion, EnvironmentComponent environment) {
+        //TODO
+    }
+
+    private void setInDefaultEnvironment(MotionComponent motion) {
+        //TODO
+    }
+
+    //TODO fix if Events are changed
+    private void activateEvents(Integer current, Integer other, List<Event> responseList) {
+        for (Event event : responseList) {
+            /*if (event instanceof ObjectEvent) {                 //only include other if necessary for conditionals
+                ((ObjectEvent) event).activate(current, other, myEntityManager);
+            }
+            if (event instanceof GameEvent) {
+                ((GameEvent) event).activate(current, other, myLevelManager);
+            }*/
+            //FIXME delegate rest of method to ObjectEvent/GameEvent and uncomment code above
+
+            if (event instanceof ObjectEvent)
+                ((ObjectEvent) event).setEventObject(current);
+            List<Conditional> conditionals = event.getConditionals();
+            for (Conditional conditional : conditionals) {
+                if (conditional instanceof ObjectConditional) {
+                    event.setConditionalObject(current);
+                }
+            }
+            if (event.conditionsSatisfied(other, myEntityManager)) {
+                if (event instanceof ObjectEvent)
+                    ((ObjectEvent) event).activate(other, myEntityManager);
+                else
+                    ((GameEvent) event).activate(myLevelManager);
+            }
+        }
     }
 
     //FIXME do we need to detect whether the collision is right, top, left, or bottom based on solely the velocity angle?
     private boolean collides(Integer entity1, Integer entity2) throws NoEntityException {
-        var component1 = myEntityManager.getComponent(entity1, BasicComponent.class);
-        var component2 = myEntityManager.getComponent(entity2, BasicComponent.class);
-        return collideFromLeft(component1, component2) ||
-                collideFromLeft(component1, component2) ||
-                collideFromTop(component1, component2) ||
-                collideFromTop(component1, component2);
-        //FIXME no collide from right or bottom
+        try {
+            var component1 = myEntityManager.getComponent(entity1, BasicComponent.class);
+            var component2 = myEntityManager.getComponent(entity2, BasicComponent.class);
+            return collideFromLeft(component1, component2) ||
+                    //collideFromRight(component1, component2) ||
+                    //collideFromBottom(component1, component2) ||
+                    collideFromTop(component1, component2);
+            //FIXME uncomment methods above
+        } catch (NoComponentException e) {
+            return false; //Should never be reached
+        }
     }
 
+    //FIXME no collide from right (CollideFromRight event uses this method)
     public boolean collideFromLeft(BasicComponent collider, BasicComponent target){
         double width1 = collider.getWidth();
         double x1 = collider.getX();
@@ -128,33 +159,11 @@ public class CollisionHandler {
         return x1 + width1 >= x2;
     }
 
+    //FIXME no collide from bottom (CollideFromBottom event uses this method)
     public boolean collideFromTop(BasicComponent collider, BasicComponent target){
         double height1 = collider.getHeight();
         double y1 = collider.getY();
         double y2 = target.getY();
         return y1 + height1>= y2;
     }
-
-    public void modifyMovement(GameObject obj1, GameObject obj2, ObjectManager objectManager) {
-/*        GameObject block;
-        GameObject other;
-        if (obj1 instanceof Block) {
-            block = obj1;
-            other = obj2;
-        }
-        else if (obj2 instanceof Block) {
-            block = obj2;
-            other = obj1;
-        }
-        else return;
-
-        if (((Block) block).impassible()){
-            if(collideFromLeft(block, other) || collideFromLeft(other, block)) objectManager.setXVel(other, 0);
-            if(collideFromTop(block, other) || collideFromTop(other, block))objectManager.setYVel(other, 0);
-        }
-        else{
-            objectManager.downscaleVelocity(other, ((Block) block).getVelocityScalar());
-        }*/
-    }
-
 }
