@@ -1,0 +1,32 @@
+/* Styles will gradually be moved here as needed */
+
+.gridPane {
+    -fx-padding: 15 15 15 15;
+    -fx-background-color: #284376;
+    -fx-alignment: "center";
+}
+
+.scroll-pane {
+    -fx-padding: 5 5 5 5;
+    -fx-background: #B0C4DE;
+    -fx-background-radius: 5;
+    -fx-hbar-policy: "never";
+}
+
+.label {
+    -fx-font-family: 'Trebuchet MS';
+    -fx-font-size: 20;
+    -fx-text-fill: 'white';
+}
+
+#titleLabel {
+    -fx-font-size: 50;
+}
+
+.vbox {
+    -fx-background: lightsteelblue;
+    -fx-background-radius: 5;
+    -fx-background-color: lightsteelblue;
+    -fx-pref-width: 100;
+    -fx-pref-height: 350;
+}
