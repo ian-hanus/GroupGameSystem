@@ -99,13 +99,13 @@ public class EntityManager {
     //can return null
     //if we want this to be O(1) lookup instead of O(M) [M is number of components in entity], then must convert
     //the List of components for an entity to a map of component classes to components
-    public <T extends Component> T getComponent(int entityID, Class<T> componentClass) throws NoEntityException {
+    public <T extends Component> T getComponent(int entityID, Class<T> componentClass) throws NoEntityException, NoComponentException {
         var components = getAllComponents(entityID);
         for (Component component : components) {
             if (componentClass.isInstance(component))
                 return (T) component;
         }
-        return null;
+        throw new NoComponentException("The entity doesn't have this component.");
     }
 
     private List<Component> getAllComponents(int entityID) throws NoEntityException {
