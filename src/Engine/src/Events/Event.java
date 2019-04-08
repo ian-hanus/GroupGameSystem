@@ -2,6 +2,7 @@ package Events;
 
 import Conditionals.Conditional;
 import Conditionals.ObjectConditional;
+import ECS.EntityManager;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
@@ -36,7 +37,7 @@ public class Event {
         return new Event(conditionalsCopy);
     }
 
-    public void setConditionalObject(double obj){
+    public void setConditionalObject(int obj){
         for(Conditional conditional: myConditionals){
             if (conditional instanceof ObjectConditional){
                 if (((ObjectConditional) conditional).getMyObj() == -1) ((ObjectConditional) conditional).setMyObject(obj);
@@ -44,16 +45,16 @@ public class Event {
             }
     }
 
-    public boolean conditionsSatisfied(double obj, ObjectManager objectManager){
+    public boolean conditionsSatisfied(int obj, EntityManager entityManager){
         for (Conditional conditional : myConditionals){
-            if (!conditional.satisfied(obj, objectManager) && conditional.required()) return false;
+            if (!conditional.satisfied(obj, entityManager) && conditional.required()) return false;
         }
         return true;
     }
 
-    public boolean conditionsSatisfied(ObjectManager objectManager){
+    public boolean conditionsSatisfied(EntityManager entityManager){
         for (Conditional conditional : myConditionals){
-            if (!conditional.satisfied(objectManager)) return false;
+            if (!conditional.satisfied(entityManager) && conditional.required()) return false;
         }
         return true;
     }

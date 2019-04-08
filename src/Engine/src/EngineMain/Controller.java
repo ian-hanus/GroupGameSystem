@@ -2,6 +2,7 @@ package EngineMain;
 
 import ECS.Components.Component;
 import ECS.Components.MotionComponent;
+import ECS.Components.TagsComponent;
 import ECS.Pair;
 import Events.ObjectEvents.ObjectEvent;
 import GameObjects.GameObject;
@@ -16,11 +17,12 @@ import java.util.Map;
 import java.util.Set;
 
 public class Controller {
+
     private Map<String, Event> myHotKeys;
     private List<TimerSequence> myTimers;
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
-    private Map<Double, Map<String, Component>> myActiveObjects;
-    private double myUserID;
+    private Map<Integer, Map<Class<? extends Component>, Component>> myActiveObjects;
+    private int myUserID;
     private CollisionHandler myCollisionHandler;
     private EngineParser myEngineParser;
     private ObjectManager myObjectManager;
@@ -43,8 +45,8 @@ public class Controller {
         myHotKeys = myDataManager.loadHotKeyMap();
         myCollisionResponses = myDataManager.loadCollisionResponseMap();
         myTimers = myDataManager.loadTimerMap();
-        for(Double id : myActiveObjects.keySet()){
-            Component type =  myActiveObjects.get(id).get("TYPE");
+        for(int id : myActiveObjects.keySet()){
+            Component type =  myActiveObjects.get(id, new Class<T> TagsComponent);
             if(((Type) type).getType.equals("USER")) {
                 myUserID = id;
                 break;
@@ -69,13 +71,8 @@ public class Controller {
 
     public void updateScene(){
         myLevelManager.updateTimer();
-        for(double obj1: myActiveObjects.keySet()){
-            for(double obj2: myActiveObjects.keySet()){
-                myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myLevelManager);
-            }
-        }
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
-        for (double obj : myActiveObjects.keySet()){
+        for (int obj : myActiveObjects.keySet()){
             myObjectManager.move(obj);
             Component motion = myActiveObjects.get(obj).get("STATE");
             if(((MotionComponent) motion).colliding()) myObjectManager.restoreMovementDefaults(obj);

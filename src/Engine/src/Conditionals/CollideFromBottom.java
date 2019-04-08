@@ -1,23 +1,30 @@
 package Conditionals;
 
+import ECS.CollisionDetector;
+import ECS.EntityManager;
+import ECS.NoEntityException;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 
 public class CollideFromBottom extends ObjectConditional {
 
-    CollideFromBottom(boolean required, double obj){
+    CollideFromBottom(boolean required, int obj){
         super(required, obj);
     }
 
     @Override
-    public boolean satisfied(double other, ObjectManager objectManager){
-        CollisionHandler collisionHandler = new CollisionHandler(objectManager);
-        return collisionHandler.collideFromTop(other, myObject);
-    }
+    public boolean satisfied(int other, EntityManager entityManager){
+        CollisionDetector collisionDetector = new CollisionDetector(entityManager);
+        try {
+            return collisionDetector.collideFromTop(other, myObject);
+        }
+        catch(NoEntityException e){
+            e.getMessage();
+        }
 
     @Override
-    public boolean satisfied(ObjectManager objectManager){
+    public boolean satisfied(EntityManager entityManager){
         return false; //TODO:error
     }
 

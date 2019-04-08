@@ -2,6 +2,7 @@ package Events.ObjectEvents;
 
 import Conditionals.Conditional;
 import Conditionals.ObjectConditional;
+import ECS.EntityManager;
 import Events.Event;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
@@ -11,13 +12,13 @@ import java.util.List;
 
 public abstract class ObjectEvent extends Event {
 
-    double myObject;
+    int myObject;
 
     public ObjectEvent(){
         super();
     }
 
-    public ObjectEvent(double obj){
+    public ObjectEvent(int obj){
         super();
         myObject = obj;
     }
@@ -27,16 +28,16 @@ public abstract class ObjectEvent extends Event {
         myObject = -1;
     }
 
-    public ObjectEvent(List<Conditional> conditionals, double obj){
+    public ObjectEvent(List<Conditional> conditionals, int obj){
         super(conditionals);
         myObject = obj;
     }
 
-    public void setEventObject(double obj){
+    public void setEventObject(int obj){
         if(myObject == -1) myObject = obj;
     }
 
-    public abstract void activate(ObjectManager objectManager);
-    public abstract void activate(double other, ObjectManager objectManager);
+    public abstract void activate(EntityManager entityManager);
+    public abstract void activate(int other, EntityManager entityManager);
 
 }
