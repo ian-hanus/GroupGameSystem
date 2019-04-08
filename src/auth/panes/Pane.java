@@ -8,7 +8,7 @@ import static auth.Strings.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
 
 public abstract class Pane implements UIElement {
-    private Region view;
+    private javafx.scene.layout.Pane view;
     private String ID = DEFAULT_ID;
     public Pane(double x, double y, double width, double height, String style) {
         view = createStyledRectangle(x, y,
@@ -18,7 +18,7 @@ public abstract class Pane implements UIElement {
         this(x, y, width, height, style);
         this.ID = ID;
     }
-    public Node getView() {
+    public javafx.scene.layout.Pane getView() {
         return view;
     }
 

@@ -1,14 +1,19 @@
 package auth.helpers;
 
+import auth.Callback;
+import auth.RunAuth;
 import auth.UIElementWrapper;
-import auth.panes.BottomPane;
-import auth.panes.LeftPane;
-import auth.panes.RightPane;
+import auth.pagination.PaginationUIElement;
+import auth.panes.*;
 import auth.screens.CanvasScreen;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
+import static auth.Colors.DEFAULT_TEXT_COLOR;
 import static auth.Dimensions.*;
 import static auth.Styles.*;
 import static auth.Strings.*;
@@ -21,6 +26,31 @@ public class ScreenHelpers {
         root.setStyle(BG_STYLE);
         placePanes(context);
         placeCanvas(context);
+        placeScenePagination(context);
+    }
+
+    private static void placeScenePagination(CanvasScreen context) {
+        var sceneText = new Text("Scene 1");
+        sceneText.setFont(RunAuth.bebasKaiMedium);
+        sceneText.setFill(DEFAULT_TEXT_COLOR);
+        var pagination = new PaginationUIElement(sceneText, (arg) -> {
+            // TODO
+            var index = arg[0];
+            System.out.println("New index " + index);
+        }, SCENE_PAGINATION);
+        var pane = placeScenePaginationPane();
+        pagination.getView().setLayoutX(12);
+        pagination.getView().setLayoutY(9.5);
+        pane.getView().getChildren().add(pagination.getView());
+        context.registerNewUIElement(pane);
+    }
+
+    private static Pane placeScenePaginationPane() {
+        return new CentrePane(CONSOLE_HORIZONTAL_OFFSET + CANVAS_WIDTH/2 - SCENE_PAGINATION_WIDTH/2,
+                PAGINATION_VERTICAL_OFFSET,
+                SCENE_PAGINATION_WIDTH,
+                SCENE_PAGINATION_HEIGHT,
+                SCENE_PAGINATION_PANE_ID);
     }
 
     private static void placeCanvas(CanvasScreen context) {

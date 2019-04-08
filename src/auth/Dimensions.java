@@ -16,4 +16,9 @@ public class Dimensions {
     public static double CANVAS_VERTICAL_OFFSET = 75;
     public static double CANVAS_HEIGHT = 475;
     public static double CANVAS_WIDTH = 775;
+    public static double PAGINATION_DOT_SIZE = 7;
+    public static double ARROW_SIZE = 32;
+    public static double PAGINATION_VERTICAL_OFFSET = 10;
+    public static double SCENE_PAGINATION_HEIGHT = 55;
+    public static double SCENE_PAGINATION_WIDTH = 150;
 }

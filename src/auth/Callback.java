@@ -1,5 +1,5 @@
 package auth;
 
 public interface Callback {
-    void onCallback();
+    void onCallback(Object... optionalArgs);
 }
