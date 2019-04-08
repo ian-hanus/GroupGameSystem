@@ -14,17 +14,27 @@ import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 import Events.Event;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CollisionHandler {
     private EntityManager myEntityManager;
     private LevelManager myLevelManager;
+    private HashMap<Integer, Integer> myPreviousCollisions;
 
     public CollisionHandler(EntityManager objectManager, LevelManager levelManager) {
         myEntityManager = objectManager;
         myLevelManager = levelManager;
+        myPreviousCollisions = new HashMap<>();
+    }
+
+    public void dealWithCollisions(Set<Integer> entities, Map<TagPair, List<Event>[]> collisionResponses) {
+        for (Integer entity1 : entities) {
+            for (Integer entity2 : entities) {
+                if (entity1 == entity2)
+                    continue;
+                checkCollision(entity1, entity2, collisionResponses);
+            }
+        }
     }
 
     public void checkCollision(Integer entity1, Integer entity2, Map<TagPair, List<Event>[]> collisionResponses) {

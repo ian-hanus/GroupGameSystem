@@ -1,6 +1,7 @@
 package EngineMain;
 
 import ECS.Components.MotionComponent;
+import ECS.TagPair;
 import Events.ObjectEvents.ObjectEvent;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
@@ -16,7 +17,7 @@ import java.util.Set;
 public class Controller {
     private Map<String, GameObject> myObjectBank;
     private Map<String, Event> myHotKeys;
-    private Map<String[], Set<Event>[]> myCollisionResponses;
+    private Map<TagPair, List<Event>[]> myCollisionResponses;
     private Set<Timer> myTimers;
     private Map<Double, Map<String, Component>> myActiveObjects;
     private double myUserID;
@@ -70,11 +71,8 @@ public class Controller {
         for(Timer timer : myTimers) {
             myLevelManager.checkTimer(timer);
         }
-        for(double obj1: myActiveObjects.keySet()){
-            for(double obj2: myActiveObjects.keySet()){
-                myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myLevelManager);
-            }
-        }
+        myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
+
         for (double obj : myActiveObjects.keySet()){
             myObjectManager.move(obj);
             Component motion = myActiveObjects.get(obj).get("STATE");
