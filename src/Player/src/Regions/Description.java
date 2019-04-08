@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Description {
 
-    private final String VBOX_STYLE = "vbox";
+    private final String VBOX_STYLESHEET = "options";
     private final String DESCRIPTION_STYLESHEET = "desc";
     public final static double IMAGE_WIDTH = 330;
     public final static double IMAGE_HEIGHT = 165;
@@ -77,16 +77,13 @@ public class Description {
     // TODO: add Play, Edit, Rate, Rating, High Scores
     private void placeGameOptions() {
         myGameOptions = new VBox();
-        myGameOptions.getStyleClass().add(VBOX_STYLE);
+        myGameOptions.setId(VBOX_STYLESHEET);
 
         Button run = new Run(myContext, myGame).getButton();
         Button edit = new Edit(myContext, myGame).getButton();
         Button rate = new Rate(myContext, myGame).getButton();
 
         myGameOptions.getChildren().addAll(run, edit, rate);
-
-
-
         myPane.add(myGameOptions, 2, 0, 1, 2);
     }
 

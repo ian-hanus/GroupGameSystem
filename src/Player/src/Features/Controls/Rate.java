@@ -14,6 +14,6 @@ public class Rate extends Control {
 
     @Override
     protected EventHandler<MouseEvent> action() {
-        return event -> myContext.edit(myGameName);
+        return event -> myContext.rate(myGameName);
     }
 }
