@@ -2,10 +2,6 @@ package Conditionals;
 
 import ECS.Components.Component;
 import ECS.EntityManager;
-import GameObjects.GameObject;
-
-import java.util.List;
-import java.util.Map;
 
 public abstract class Comparison extends ObjectConditional{
 

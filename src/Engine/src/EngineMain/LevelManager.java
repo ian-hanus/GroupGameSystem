@@ -2,14 +2,10 @@ package EngineMain;
 
 import ECS.EntityManager;
 import Events.Event;
-import Events.GameEvents.GameEvent;
-import Events.ObjectEvents.ObjectEvent;
-import GameObjects.ObjectManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class LevelManager {
     private boolean levelPassed;
