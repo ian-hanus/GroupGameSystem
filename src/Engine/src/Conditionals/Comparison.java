@@ -1,7 +1,8 @@
 package Conditionals;
 
+import ECS.Components.Component;
+import ECS.EntityManager;
 import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 
 import java.util.List;
 import java.util.Map;
@@ -9,65 +10,61 @@ import java.util.Map;
 public abstract class Comparison extends ObjectConditional{
 
     private String myComparisonOperator;
-    private double myObject;
+    private int myObject;
     private Component myCompareTo;
     private Component myComponent;
-    private String myComponentName;
+    protected Class myComponentName;
 
-    public Comparison(boolean required, String componentName, double obj, String comparisonOperator, Component compareTo){
+    public Comparison(boolean required, int obj, String comparisonOperator, Component compareTo){
         super(required, obj);
         myComparisonOperator = comparisonOperator;
         myCompareTo = compareTo;
-        myComponentName = componentName;
     }
 
-    public Comparison(boolean required, String componentName, double obj, String comparisonOperator){
+    public Comparison(boolean required, int obj, String comparisonOperator){
         super(required, obj);
         myComparisonOperator = comparisonOperator;
-        myComponentName = componentName;
     }
 
-    public Comparison(boolean required, String componentName, String comparisonOperator, Component compareTo){
+    public Comparison(boolean required, String comparisonOperator, Component compareTo){
         super(required);
         myComparisonOperator = comparisonOperator;
         myCompareTo = compareTo;
-        myComponentName = componentName;
     }
 
-    public Comparison(boolean required, String componentName, String comparisonOperator){
+    public Comparison(boolean required, String comparisonOperator){
         super(required);
         myComparisonOperator = comparisonOperator;
-        myComponentName = componentName;
     }
 
     protected boolean checkOperator(String value1, String value2) {
-        if (value1.equals(value2) && myComponentName.contains("=")) return true;
+        if (value1.equals(value2) && myComparisonOperator.contains("=")) return true;
         return false;
     }
 
     protected boolean checkOperator(double value1, double value2) {
         boolean equals = false;
-        if (value1 == value2 && myComponentName.contains("=")) equals = true;
-        if (myComponentName.contains(">")) return value1 > value2 || equals;
-        if (myComponentName.contains(">")) return value1 > value2 || equals;
+        if (value1 == value2 && myComparisonOperator.contains("=")) equals = true;
+        if (myComparisonOperator.contains(">")) return value1 > value2 || equals;
+        if (myComparisonOperator.contains(">")) return value1 > value2 || equals;
         return equals;
     }
 
-    abstract boolean compare();
+    abstract boolean compare(EntityManager entityManager);
 
     @Override
-    public boolean satisfied(double obj, ObjectManager objectManager) {
+    public boolean satisfied(int obj, EntityManager entityManager) {
         if (myCompareTo == null){
-            myCompareTo = objectManager.getComponent(myComponentName);
+            myCompareTo = entityManager.getComponent(obj, myComponentName);
         }
-        myComponent = objectManager.getComponent(myComponentName);
-        return compare();
+        myComponent = entityManager.getComponent(myObject, myComponentName);
+        return compare(entityManager);
     }
 
     @Override
-    public boolean satisfied(ObjectManager objectManager) {
-        myComponent = objectManager.getComponent(myComponentName);
-        return compare();
+    public boolean satisfied(EntityManager entityManager) {
+        myComponent = entityManager.getComponent(myObject, myComponentName);
+        return compare(entityManager);
     }
 
     protected Component getCompareTo(){
