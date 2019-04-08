@@ -6,11 +6,29 @@
     -fx-alignment: "center";
 }
 
+#titleRegion {
+    -fx-pref-width: 770;
+    -fx-pref-height: 75;
+    -fx-alignment: "bottom-left";
+    -fx-background: #B0C4DE;
+    -fx-background-radius: 5 5 5 5;
+}
+
 .scroll-pane {
     -fx-padding: 5 5 5 5;
     -fx-background: #B0C4DE;
     -fx-background-radius: 5;
     -fx-hbar-policy: "never";
+}
+
+#gamesRegion {
+    -fx-pref-width: 380;
+    -fx-pref-height: 560;
+}
+
+#descRegion {
+    -fx-pref-width: 770;
+    -fx-pref-height: 475;
 }
 
 .label {
@@ -29,4 +47,9 @@
     -fx-background-color: lightsteelblue;
     -fx-pref-width: 100;
     -fx-pref-height: 350;
+}
+
+#panel {
+    -fx-padding: 10 10 10 10;
+    -fx-spacing: 10;
 }

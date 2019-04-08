@@ -12,15 +12,10 @@ public class TitleRegion extends Region {
 
     private GridPane myTitlePane;
 
-    public TitleRegion(double wd, double ht, Paint color) {
-        super(wd, ht, color); // this calls buildGroup, so anything that needs to be set must be set in Region()
-
+    public TitleRegion(String regionID) {
+        super(); // this calls buildGroup, so anything that needs to be set must be set in Region()
         myTitlePane = new GridPane();
-        myTitlePane.setPrefWidth(myWidth);
-        myTitlePane.setPrefHeight(myHeight);
-        myTitlePane.setAlignment(Pos.BOTTOM_LEFT);
-        myTitlePane.setBackground(new Background(new BackgroundFill(
-                myColor, new CornerRadii(5, 5, 5, 5, false), Insets.EMPTY)));
+        myTitlePane.setId(regionID);
 
         myGroup = new Group();
         buildGroup();

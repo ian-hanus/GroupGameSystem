@@ -23,6 +23,8 @@ public class GamesRegion extends Region {
     public static final double HEADER_HEIGHT = 15;
     public static final double SCROLLBAR_WIDTH = 20;
 
+    private final String PANEL_STYLESHEET = "panel";
+
     private ArrayList<Thumbnail> myThumbnails;
     private ScrollPane myGamesPane;
     private double myThumbnailWidth;
@@ -31,20 +33,15 @@ public class GamesRegion extends Region {
     private HashMap<String, String> myMap;
     private ArrayList<String> myFavorites;
 
-    public GamesRegion(double wd, double ht, Paint color) {
-        super(wd, ht, color);
+    public GamesRegion(String regionID) {
+        super();
 
         myGamesPane = new ScrollPane();
-
-        // should not be hardcoded if we want the size of our window to be the same, otherwise can be. We can do this in
-        // css if myWidth and myHeight are not to be changed
-
-        myGamesPane.setPrefWidth(myWidth);
-        myGamesPane.setPrefHeight(myHeight);
+        myGamesPane.setId(regionID);
 
         // TODO: Do not hardcode this
 
-        myThumbnailWidth = myWidth - (2 * OFFSET) - SCROLLBAR_WIDTH; // -15 to account for the scrollbar which is 15
+        myThumbnailWidth = 380 - (2 * OFFSET) - SCROLLBAR_WIDTH; // -15 to account for the scrollbar which is 15
         myThumbnailHeight = myThumbnailWidth / 2;
 
 //        buildLists();
@@ -76,9 +73,7 @@ public class GamesRegion extends Region {
     protected void buildGroup() {
 
         myPanels = new VBox();
-
-        myPanels.setPadding(new Insets(OFFSET, OFFSET, OFFSET, OFFSET));
-        myPanels.setSpacing(OFFSET);
+        myPanels.setId(PANEL_STYLESHEET);
 
         myPanels.getChildren().add(makeHeader(true));
         myPanels.getChildren().addAll(makeThumbnails(true));

@@ -1,23 +1,15 @@
 package Regions;
 
 import javafx.scene.Group;
-import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 
 public abstract class Region {
-
-    double myWidth;
-    double myHeight;
-    Paint myColor;
     Group myGroup;
     protected ArrayList<Region> myComponents;
 
-    public Region(double wd, double ht, Paint color) {
+    public Region() {
         myComponents = new ArrayList<>();
-        myWidth = wd;
-        myHeight = ht;
-        myColor = color;
     }
 
 //    public Group getNode() {

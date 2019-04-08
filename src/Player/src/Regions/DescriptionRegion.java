@@ -20,13 +20,11 @@ public class DescriptionRegion extends Region {
     private Image myImage;
     private ScrollPane myDescPane;
 
-    // TODO: unhardcode this
-    public DescriptionRegion(double wd, double ht, Paint color) {
-        super(wd, ht, color);
+    public DescriptionRegion(String regionID) {
+        super();
 
         myDescPane = new ScrollPane();
-        myDescPane.setPrefWidth(wd);
-        myDescPane.setPrefHeight(ht);
+        myDescPane.setId(regionID);
 
         myGroup = new Group();
         buildGroup();
