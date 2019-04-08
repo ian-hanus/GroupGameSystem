@@ -7,8 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="voogasalad_CrackingOpen" />
     <orderEntry type="library" name="win" level="project" />
-    <orderEntry type="module" module-name="voogasalad_crackingopen" />
   </component>
 </module>

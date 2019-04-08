@@ -4,10 +4,15 @@ import Conditionals.Conditional;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Create extends ObjectEvent{
-    public Create(List<Conditional> conditionals, GameObject obj){
+
+    public Create(double obj){
+        super(obj);
+    }
+    public Create(List<Conditional> conditionals, double obj){
         super(conditionals, obj);
     }
 
@@ -17,7 +22,7 @@ public class Create extends ObjectEvent{
     }
 
     @Override
-    public void activate(GameObject other, ObjectManager objectManager) {
+    public void activate(double other, ObjectManager objectManager) {
         objectManager.create(myObject);
     }
 }
