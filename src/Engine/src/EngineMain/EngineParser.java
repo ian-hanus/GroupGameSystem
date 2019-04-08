@@ -1,7 +1,5 @@
 package EngineMain;
 
-import GameObjects.GameObject;
-
 
 import java.util.Map;
 import java.util.Set;
@@ -21,10 +19,6 @@ public class EngineParser {
     }
 
     public Map<Double, Map<String, Components>> initializeActiveObjects(){
-        return null;
-    }
-
-    public GameObject makeHero(){
         return null;
     }
 

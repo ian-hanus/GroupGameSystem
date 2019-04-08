@@ -1,13 +1,9 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
-import Conditionals.ObjectConditional;
 import ECS.EntityManager;
 import Events.Event;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ObjectEvent extends Event {
