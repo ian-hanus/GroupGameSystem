@@ -1,14 +1,14 @@
 package ECS;
 
 public abstract class EngineException extends Exception {
-    private String errorType;
+    private String myMessage;
 
-    public EngineException(String errorType, String error){
+    public EngineException(String message, String error){
         super(error);
-        this.errorType = errorType;
+        this.myMessage = message;
     }
 
-    protected String getErrorType(){
-        return errorType;
+    public String getMessage(){
+        return myMessage;
     }
 }
