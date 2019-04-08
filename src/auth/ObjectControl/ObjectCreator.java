@@ -12,12 +12,18 @@ public class ObjectCreator {
     private Map<String, String> myResponses;
     private Map<String, TextField> myTextFields;
     private Map<String, CheckBox> myCheckBoxes;
+    private Map<String, String> myDisplayStrings;
     private ObjectManager myManager;
 
-    private static String[] myComponents = new String[]{"Test1", "Test2", "Test3", "Test4", "Test5", "Test6", "Test7",
-            "Test8", "Test9", "Test10"};
-
     public ObjectCreator(ObjectManager objectManager){
+        myDisplayStrings = new HashMap<>();
+        String[] componentTags = new String[]{"Test1", "Test2", "Test3", "Test4", "Test5", "Test6", "Test7",
+                "Test8", "Test9", "Test10"};
+        String[] componentDisplay = new String[]{"Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6", "Test 7",
+                "Test 8", "Test 9", "Test 10"};
+        for(int k = 0; k < componentDisplay.length; k++){
+            myDisplayStrings.put(componentTags[k], componentDisplay[k]);
+        }
         myResponses = new HashMap<>();
         myTextFields = new HashMap<>();
         myCheckBoxes = new HashMap<>();
@@ -30,17 +36,17 @@ public class ObjectCreator {
 
     private List<HBox> getTextBoxes(){
         List<HBox> objectRows = new ArrayList<>();
-        for(String name:myComponents){
+        for(String key:myDisplayStrings.keySet()){
             HBox textRow = new HBox();
-            Text propertyLabel = new Text(name);
+            Text propertyLabel = new Text(myDisplayStrings.get(key));
             propertyLabel.setFill(Color.WHITE);
-            TextField propertyField = new TextField(name);
-            myTextFields.put(name, propertyField);
+            TextField propertyField = new TextField(key);
+            myTextFields.put(key, propertyField);
             CheckBox activateComponent = new CheckBox();
             textRow.getChildren().addAll(activateComponent, propertyLabel, propertyField);
             textRow.getStyleClass().add("properties-row");
             objectRows.add(textRow);
-            myCheckBoxes.put(name, activateComponent);
+            myCheckBoxes.put(key, activateComponent);
         }
         return objectRows;
     }
