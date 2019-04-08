@@ -53,7 +53,7 @@ public class Event {
 
     public boolean conditionsSatisfied(ObjectManager objectManager){
         for (Conditional conditional : myConditionals){
-            if (!conditional.satisfied(objectManager)) return false;
+            if (!conditional.satisfied(objectManager) && conditional.required()) return false;
         }
         return true;
     }

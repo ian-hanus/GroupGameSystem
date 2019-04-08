@@ -19,7 +19,7 @@ public class Controller {
     private Map<String, Event> myHotKeys;
     private List<TimerSequence> myTimers;
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
-    private Map<Double, Map<String, Component>> myActiveObjects;
+    private Map<Integer, Map<Class, Component>> myActiveObjects;
     private double myUserID;
     private CollisionHandler myCollisionHandler;
     private EngineParser myEngineParser;
@@ -69,11 +69,6 @@ public class Controller {
 
     public void updateScene(){
         myLevelManager.updateTimer();
-        for(double obj1: myActiveObjects.keySet()){
-            for(double obj2: myActiveObjects.keySet()){
-                myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myLevelManager);
-            }
-        }
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
         for (double obj : myActiveObjects.keySet()){
             myObjectManager.move(obj);
