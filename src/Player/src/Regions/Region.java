@@ -26,7 +26,7 @@ public abstract class Region {
 
     abstract void buildGroup();
 
-//    public abstract Pane getPane();
+//    public abstract CustomPane getPane();
 
 //    protected void setBackground(Paint bg, CornerRadii cr, Insets in) {
 //        myHBox.setBackground(new Background(new BackgroundFill(bg, cr, in)));
