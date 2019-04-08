@@ -1,5 +1,6 @@
 package EngineMain;
 
+import ECS.Components.Component;
 import ECS.Components.MotionComponent;
 import ECS.Pair;
 import Events.ObjectEvents.ObjectEvent;
@@ -8,16 +9,16 @@ import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 import Events.Event;
 
-import java.awt.*;
+import java.util.HashSet;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class Controller {
-    private Map<String, GameObject> myObjectBank;
     private Map<String, Event> myHotKeys;
+    private List<TimerSequence> myTimers;
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
-    private Set<Timer> myTimers;
     private Map<Double, Map<String, Component>> myActiveObjects;
     private double myUserID;
     private CollisionHandler myCollisionHandler;
@@ -28,7 +29,7 @@ public class Controller {
     private double myIterationCounter;
 
     public Controller(double stepTime){
-        myEngineParser = new EngineParser();
+        myDataManager = new DataManager();
         initializeDataVariables();
         myObjectManager = new ObjectManager(myActiveObjects);
         myLevelManager = new LevelManager(myTimers, myObjectManager, myIterationCounter);
@@ -38,10 +39,10 @@ public class Controller {
     }
 
     public void initializeDataVariables(){
-        myObjectBank = myEngineParser.parseDefaultObjects();
-        myHotKeys = myEngineParser.makeHotKeyMap();
-        myCollisionResponses = myEngineParser.makeCollisionResponseMap();
-        myTimers = myEngineParser.makeTimerMap();
+        myActiveObjects = myDataManager.loadDefaultObjects();
+        myHotKeys = myDataManager.loadHotKeyMap();
+        myCollisionResponses = myDataManager.loadCollisionResponseMap();
+        myTimers = myDataManager.loadTimerMap();
         for(Double id : myActiveObjects.keySet()){
             Component type =  myActiveObjects.get(id).get("TYPE");
             if(((Type) type).getType.equals("USER")) {
@@ -67,11 +68,13 @@ public class Controller {
     }
 
     public void updateScene(){
-        for(Timer timer : myTimers) {
-            myLevelManager.checkTimer(timer);
+        myLevelManager.updateTimer();
+        for(double obj1: myActiveObjects.keySet()){
+            for(double obj2: myActiveObjects.keySet()){
+                myCollisionHandler.checkCollision(obj1, obj2, myCollisionResponses, myLevelManager);
+            }
         }
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
-
         for (double obj : myActiveObjects.keySet()){
             myObjectManager.move(obj);
             Component motion = myActiveObjects.get(obj).get("STATE");
