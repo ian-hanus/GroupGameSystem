@@ -65,7 +65,7 @@ public class EntityManager {
             basicComponent.setX(newX);
             basicComponent.setY(newY);
         }
-        catch (NoEntityException | NoComponentException e) {
+        catch (NoEntityException e) {
             System.out.println("Can't move an entity without a motion component.");
         }
     }
@@ -75,7 +75,7 @@ public class EntityManager {
             var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
             motionComponent.adjustDirection(delta);
         }
-        catch (NoEntityException | NoComponentException e) {
+        catch (NoEntityException e) {
             System.out.println("Can't adjust the direction of an entity without a motion component.");
         }
     }
@@ -85,7 +85,7 @@ public class EntityManager {
             var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
             motionComponent.setDirection(angle);
         }
-        catch (NoEntityException | NoComponentException e) {
+        catch (NoEntityException e) {
             System.out.println("Can't set the direction of an entity without a motion component.");
         }
     }
