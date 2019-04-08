@@ -1,15 +1,12 @@
 package Physics;
 
+import ECS.*;
 import ECS.Components.BasicComponent;
 import ECS.Components.EnvironmentComponent;
 import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
-import ECS.EntityManager;
-import ECS.NoComponentException;
-import ECS.NoEntityException;
 import Conditionals.Conditional;
 import Conditionals.ObjectConditional;
-import ECS.Pair;
 import EngineMain.LevelManager;
 import Events.GameEvents.GameEvent;
 import Events.ObjectEvents.ObjectEvent;
@@ -20,13 +17,15 @@ import java.util.*;
 public class CollisionHandler {
     private EntityManager myEntityManager;
     private LevelManager myLevelManager;
+    private CollisionDetector myCollisionDetector;
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
     private Map<Integer, Set<Integer>> myPreviousCollisions;
     private Map<Integer, Set<Integer>> myCurrentCollisions;
 
-    public CollisionHandler(EntityManager objectManager, LevelManager levelManager) {
+    public CollisionHandler(EntityManager objectManager, LevelManager levelManager, CollisionDetector collisionDetector) {
         myEntityManager = objectManager;
         myLevelManager = levelManager;
+        myCollisionDetector = collisionDetector;
         myCollisionResponses = new HashMap<>();
         myPreviousCollisions = new HashMap<>();
         myCurrentCollisions = new HashMap<>();
@@ -43,13 +42,33 @@ public class CollisionHandler {
                 checkCollision(entity1, entity2);
             }
         }
+
+        for (Integer entity : entities) {
+            if (notInteractingWithEnvironment(entity))
+                setInDefaultEnvironment();
+        }
         myPreviousCollisions = myCurrentCollisions;
+    }
+
+    private boolean notInteractingWithEnvironment(Integer entity) {
+        if (myCurrentCollisions.containsKey(entity)) {
+            Set<Integer> possibleEnvironments = myCurrentCollisions.get(entity);
+            for (Integer possibleEnvironment : possibleEnvironments) {
+                if (possibleEnvironment.containsComponent(EnvironmentComponent.class))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private void setInDefaultEnvironment(Integer entity) {
+        //TODO update acceleration, and more?
     }
 
     private void checkCollision(Integer entity1, Integer entity2) {
         try {
             Pair<String>[] collisionTagPairs = findRelevantTagPairs(entity1, entity2);
-            if (collisionTagPairs.length == 0)
+            if (collisionTagPairs.length == 0 || !myCollisionDetector.collides(entity1, entity2))
                 return;
 
             handleEnvironments(entity1, entity2);
@@ -84,28 +103,18 @@ public class CollisionHandler {
         myCurrentCollisions.get(current).add(other);
         try {
             var currentMotionComponent = myEntityManager.getComponent(current, MotionComponent.class);
+            var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
 
-            try {
-                var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
-
-                if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))
-                    setInEnvironment(currentMotionComponent, otherEnvironmentComponent);
-
-            } catch (NoComponentException e) {
-                setInDefaultEnvironment(currentMotionComponent);
-            }
+            if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))
+                setInEnvironment(currentMotionComponent, otherEnvironmentComponent);
         }
         catch (NoComponentException e) {
-            return; //can't update motion component if entity doesn't have one
+            return; //can't update motion component if entity doesn't have one or if other entity doesn't have an environment component
         }
     }
 
     private void setInEnvironment(MotionComponent motion, EnvironmentComponent environment) {
         //TODO dampen velocities, update accelerations, handle friction?
-    }
-
-    private void setInDefaultEnvironment(MotionComponent motion) {
-        //TODO update acceleration, and more?
     }
 
     //TODO fix if Events are changed
@@ -134,36 +143,5 @@ public class CollisionHandler {
                     ((GameEvent) event).activate(myLevelManager);
             }
         }
-    }
-
-    //FIXME do we need to detect whether the collision is right, top, left, or bottom based on solely the velocity angle?
-    private boolean collides(Integer entity1, Integer entity2) throws NoEntityException {
-        try {
-            var component1 = myEntityManager.getComponent(entity1, BasicComponent.class);
-            var component2 = myEntityManager.getComponent(entity2, BasicComponent.class);
-            return collideFromLeft(component1, component2) ||
-                    //collideFromRight(component1, component2) ||
-                    //collideFromBottom(component1, component2) ||
-                    collideFromTop(component1, component2);
-            //FIXME uncomment methods above
-        } catch (NoComponentException e) {
-            return false; //Should never be reached
-        }
-    }
-
-    //FIXME no collide from right (CollideFromRight event uses this method)
-    public boolean collideFromLeft(BasicComponent collider, BasicComponent target){
-        double width1 = collider.getWidth();
-        double x1 = collider.getX();
-        double x2 = target.getX();
-        return x1 + width1 >= x2;
-    }
-
-    //FIXME no collide from bottom (CollideFromBottom event uses this method)
-    public boolean collideFromTop(BasicComponent collider, BasicComponent target){
-        double height1 = collider.getHeight();
-        double y1 = collider.getY();
-        double y2 = target.getY();
-        return y1 + height1>= y2;
     }
 }
