@@ -23,6 +23,8 @@ public class Timer {
         myDuration = duration;
     }
 
+    protected void setCount(double currentCount){myCount = currentCount;}
+
     protected void increment(){
         myCount++;
     }

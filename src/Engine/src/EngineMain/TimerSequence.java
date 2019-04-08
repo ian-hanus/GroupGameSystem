@@ -9,52 +9,34 @@ import java.util.Set;
 public class TimerSequence {
     List<Timer> mySequence;
     int TimerIndex;
+    boolean IsLoop;
 
-    TimerSequence(List<Timer> sequence){
+    TimerSequence(List<Timer> sequence, boolean isLoop){
         mySequence = sequence;
         TimerIndex = 0;
+        IsLoop = isLoop;
     }
 
-    protected void increment(){
-        myCount++;
+    protected void reset(double currentCount){
+        TimerIndex = 0;
+        mySequence.get(TimerIndex).setCount(currentCount);
     }
 
-    protected double getEndTime() {
-        return myStartTime + myDuration;
-    }
-
-    protected void reset(){
-        myStartTime = myCount;
-    }
-
-    protected double getCount() {
-        return myCount;
-    }
-
-    protected Set<Event> getEventsWhileOn(){
-        return myEventsWhileOn;
-    }
-
-    protected Set<Event> getMyEventsAfterTimer(){
-        return myEventsAfterTimer;
-    }
-
-    public boolean isLoop() {
+    protected boolean isLoop() {
         return IsLoop;
     }
 
-    public void update(double myCount) {
-        Timer currentTimer = mySequence.get(TimerIndex);
-        if (currentTimer.getCount() >= currentTimer.getEndTime()){
-            Set<Event> endEvents = currentTimer.getMyEventsAfterTimer();
-            activateEvents(endEvents);
-            if (timer.isLoop()) timer.reset();
-            else myTimers.remove(timer);
-        }
-        else {
-            Set<Event> currentEvents = timer.getEventsWhileOn();
-            activateEvents(currentEvents);
-            timer.increment();
-        }
+
+    protected Timer getCurrentTimer() {
+        return mySequence.get(TimerIndex);
+    }
+
+    protected void setNextTimer(double currentCount) {
+        TimerIndex++;
+        mySequence.get(TimerIndex).setCount(currentCount);
+    }
+
+    public boolean completed() {
+        return (TimerIndex == mySequence.size());
     }
 }
