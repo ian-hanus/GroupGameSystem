@@ -2,6 +2,7 @@ package ECS;
 
 import ECS.Components.BasicComponent;
 import ECS.Components.Component;
+import ECS.Components.HealthComponent;
 import ECS.Components.MotionComponent;
 
 import java.util.HashMap;
@@ -43,9 +44,6 @@ public class EntityManager {
             throw new NoEntityException("Entity " + entityID + " does not exist");
         return components;
     }
-
-
-
 
     public void die(int entityID) {
         myEntityMap.remove(entityID);
@@ -92,5 +90,45 @@ public class EntityManager {
         }
     }
 
-    //public void addPowerup - later
+    public void adjustHealth(int entityID, int delta) {
+        try {
+            var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
+            int currentHealth = healthComponent.getHealth();
+            int maxHealth = healthComponent.getMaxHealth();
+            if (healthComponent.getMaxHealth() == 0) {
+                healthComponent.setHealth(currentHealth + delta);
+            }
+            else {
+                int newHealth = Math.min(currentHealth + delta, maxHealth);
+                healthComponent.setHealth(newHealth);
+            }
+        }
+        catch (NoEntityException e) {
+            System.out.println("Can't adjust the health of an entity without a health component.");
+        }
+    }
+
+    public void setHealth(int entityID, int health) {
+        try {
+            var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
+            int maxHealth = healthComponent.getMaxHealth();
+            if (health < maxHealth) {
+                healthComponent.setHealth(health);
+            }
+            //is it necessary to throw an error or just set it to the max health?
+            else {
+                healthComponent.setHealth(maxHealth);
+            }
+        }
+        catch (NoEntityException e) {
+
+        }
+    }
+
+    //Not sure if done here and how states would be referenced non-specifically
+    public void changeState(int entityID, String state) {
+
+    }
+
+    //public void addPowerup to other objects? - later
 }
