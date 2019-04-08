@@ -1,5 +1,6 @@
 package ECS.Components;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TagsComponent extends Component {
@@ -7,5 +8,9 @@ public class TagsComponent extends Component {
 
     public TagsComponent(List<String> tags) {
         myTags = tags;
+    }
+
+    public List<String> getTags() {
+        return Collections.unmodifiableList(myTags);
     }
 }
