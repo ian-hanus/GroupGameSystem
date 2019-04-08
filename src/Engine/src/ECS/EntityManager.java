@@ -19,7 +19,7 @@ public class EntityManager {
     public void addComponent(int entityID, Component component) {
         try {
             var components = getAllComponents(entityID);
-            components.add(component);
+            components.put(component.getClass(), component);
             myEntityMap.put(entityID, components);
         }
         catch (NoEntityException e) {
@@ -33,14 +33,16 @@ public class EntityManager {
     public <T extends Component> T getComponent(int entityID, Class<T> componentClass){
         try {
             var components = getAllComponents(entityID);
-            for (Component component : components) {
-                if (componentClass.isInstance(component))
-                    return (T) component;
+            for (Class<?> componentName: components.keySet()) {
+                if (componentName.equals(componentClass)) {
+                    return (T) components.get(componentName);
+                }
             }
             return null;
         }
         catch(NoEntityException e) {
             System.out.println("Entity " + entityID + " does not exist");
+            return null;
         }
     }
 
@@ -52,10 +54,11 @@ public class EntityManager {
     }
 
     public void die(int entityID) {
+        //TODO error checking, does removing a non-existent entity work
         myEntityMap.remove(entityID);
     }
 
-    public void create(int entityID, List<Component> components) {
+    public void create(int entityID, Map<Class<? extends Component>, Component> components) {
         //TODO error checking
         myEntityMap.put(entityID, components);
     }
@@ -63,46 +66,53 @@ public class EntityManager {
     public void move(int entityID) {
         var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
         var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
-
-        motionComponent.updateVelocity();
-        double newX = motionComponent.getNewX(basicComponent.getX());
-        double newY = motionComponent.getNewY(basicComponent.getY());
-        basicComponent.setX(newX);
-        basicComponent.setY(newY);
+        if (motionComponent != null && basicComponent != null) {
+            motionComponent.updateVelocity();
+            double newX = motionComponent.getNewX(basicComponent.getX());
+            double newY = motionComponent.getNewY(basicComponent.getY());
+            basicComponent.setX(newX);
+            basicComponent.setY(newY);
+        }
     }
 
     public void adjustDirection(int entityID, double delta) {
         var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-        motionComponent.adjustDirection(delta);
+        if (motionComponent != null)
+            motionComponent.adjustDirection(delta);
     }
 
     public void setDirection(int entityID, double angle){
         var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-        motionComponent.setDirection(angle);
+        if (motionComponent != null)
+            motionComponent.setDirection(angle);
     }
 
     public void adjustHealth(int entityID, int delta) {
         var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
-        int currentHealth = healthComponent.getHealth();
-        int maxHealth = healthComponent.getMaxHealth();
-        if (healthComponent.getMaxHealth() == 0) {
-            healthComponent.setHealth(currentHealth + delta);
-        }
-        else {
-            int newHealth = Math.min(currentHealth + delta, maxHealth);
-            healthComponent.setHealth(newHealth);
+        if (healthComponent != null) {
+            int currentHealth = healthComponent.getHealth();
+            int maxHealth = healthComponent.getMaxHealth();
+            if (healthComponent.getMaxHealth() == 0) {
+                healthComponent.setHealth(currentHealth + delta);
+            }
+            else {
+                int newHealth = Math.min(currentHealth + delta, maxHealth);
+                healthComponent.setHealth(newHealth);
+            }
         }
     }
 
     public void setHealth(int entityID, int health) {
         var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
-        int maxHealth = healthComponent.getMaxHealth();
-        if (health < maxHealth) {
-            healthComponent.setHealth(health);
-        }
-        //is it necessary to throw an error or just set it to the max health?
-        else {
-            healthComponent.setHealth(maxHealth);
+        if (healthComponent != null) {
+            int maxHealth = healthComponent.getMaxHealth();
+            if (health < maxHealth) {
+                healthComponent.setHealth(health);
+            }
+            //is it necessary to throw an error or just set it to the max health?
+            else {
+                healthComponent.setHealth(maxHealth);
+            }
         }
     }
 
