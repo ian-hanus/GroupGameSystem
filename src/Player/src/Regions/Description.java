@@ -1,7 +1,8 @@
 package Regions;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import Features.Controls.*;
+import PlayerMain.PlayerStage;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +15,7 @@ import java.util.Map;
 public class Description {
 
     private final String VBOX_STYLE = "vbox";
+    private final String DESCRIPTION_STYLESHEET = "desc";
     public final static double IMAGE_WIDTH = 330;
     public final static double IMAGE_HEIGHT = 165;
     public final static double DESC_WIDTH = IMAGE_WIDTH;
@@ -27,8 +29,10 @@ public class Description {
     private ImageView myImage;
     private Label myDescription;
     private VBox myGameOptions;
+    private PlayerStage myContext;
 
-    public Description(String game) {
+    public Description(String game, PlayerStage context) {
+        this.myContext = context;
 
         // TODO: store this info differently---could be done in ResourceBundle or JSON
         myImageMap = new HashMap<>();
@@ -46,12 +50,11 @@ public class Description {
         myGame = game;
 
         myPane = new GridPane();
-        myPane.setPadding(new Insets(20));
-        myPane.setAlignment(Pos.TOP_LEFT);
+        myPane.setId(DESCRIPTION_STYLESHEET);
 
         placeImage();
         placeDescription();
-//        placeGameOptions();
+        placeGameOptions();
 
     }
 
@@ -71,12 +74,20 @@ public class Description {
 
     }
 
+    // TODO: add Play, Edit, Rate, Rating, High Scores
     private void placeGameOptions() {
-
         myGameOptions = new VBox();
         myGameOptions.getStyleClass().add(VBOX_STYLE);
-        myPane.add(myGameOptions, 1, 0, 1, 2);
 
+        Button run = new Run(myContext, myGame).getButton();
+        Button edit = new Edit(myContext, myGame).getButton();
+        Button rate = new Rate(myContext, myGame).getButton();
+
+        myGameOptions.getChildren().addAll(run, edit, rate);
+
+
+
+        myPane.add(myGameOptions, 2, 0, 1, 2);
     }
 
 

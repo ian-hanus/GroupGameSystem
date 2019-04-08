@@ -3,7 +3,12 @@
 .gridPane {
     -fx-padding: 15 15 15 15;
     -fx-background-color: #284376;
-    -fx-alignment: "center";
+    -fx-alignment: center;
+}
+
+#desc {
+    -fx-padding: 20;
+    -fx-alignment: "top-left";
 }
 
 #titleRegion {
@@ -18,7 +23,7 @@
     -fx-padding: 5 5 5 5;
     -fx-background: #B0C4DE;
     -fx-background-radius: 5;
-    -fx-hbar-policy: "never";
+    -fx-hbar-policy: never;
 }
 
 #gamesRegion {
@@ -32,9 +37,9 @@
 }
 
 .label {
-    -fx-font-family: 'Trebuchet MS';
+    -fx-font-family: "Trebuchet MS";
     -fx-font-size: 20;
-    -fx-text-fill: 'white';
+    -fx-text-fill: white;
 }
 
 #titleLabel {
@@ -42,9 +47,7 @@
 }
 
 .vbox {
-    -fx-background: lightsteelblue;
     -fx-background-radius: 5;
-    -fx-background-color: lightsteelblue;
     -fx-pref-width: 100;
     -fx-pref-height: 350;
 }
@@ -52,4 +55,16 @@
 #panel {
     -fx-padding: 10 10 10 10;
     -fx-spacing: 10;
+}
+
+.button {
+    -fx-pref-width: 100;
+    -fx-pref-height: 50;
+    -fx-background-radius: 10;
+}
+
+/* not sure how to do this for every panel---there must be a better way than copying this several times */
+.button:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-radius: 10;
 }
