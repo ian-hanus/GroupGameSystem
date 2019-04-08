@@ -35,11 +35,10 @@ public class DescriptionRegion extends Region {
     public void updateRegion(String game) {
 
         System.out.println("updating region");
+        myGroup.getChildren().clear();
         Description description = new Description(game);
-//        myGroup.getChildren().removeAll();
-        myGroup = new Group();
-        myGroup.getChildren().add(description.getPane());
-        myDescPane.setContent(myGroup);
+//        myGroup.getChildren().add(description.getPane());
+        myDescPane.setContent(description.getPane());
 
     }
 
@@ -50,8 +49,6 @@ public class DescriptionRegion extends Region {
         GridPane grid = new GridPane();
         Label invitation = new Label("Click on a game from the Games menu!");
 
-        grid.setPadding(new Insets(OFFSET, OFFSET, OFFSET, OFFSET));
-        grid.setAlignment(Pos.CENTER);
         grid.add(invitation, 0, 0, 1, 1);
         myGroup.getChildren().add(grid);
 

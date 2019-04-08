@@ -14,8 +14,8 @@ import java.util.Map;
 public class Description {
 
     private final String VBOX_STYLE = "vbox";
-    public final static double IMAGE_WIDTH = 350;
-    public final static double IMAGE_HEIGHT = 125;
+    public final static double IMAGE_WIDTH = 330;
+    public final static double IMAGE_HEIGHT = 165;
     public final static double DESC_WIDTH = IMAGE_WIDTH;
     public final static double DESC_HEIGHT = 200;
 
@@ -30,7 +30,7 @@ public class Description {
 
     public Description(String game) {
 
-        // TODO: store this info differently
+        // TODO: store this info differently---could be done in ResourceBundle or JSON
         myImageMap = new HashMap<>();
         myImageMap.put("Flappy Bird", "/images/flappy-bird.png");
         myImageMap.put("Mario", "/images/mario.jpg");
@@ -51,15 +51,15 @@ public class Description {
 
         placeImage();
         placeDescription();
-        placeGameOptions();
+//        placeGameOptions();
 
     }
 
     private void placeImage() {
 
         myImage = new ImageView(new Image(this.getClass().getResourceAsStream(myImageMap.get(myGame))));
-//        myImage.setFitHeight(IMAGE_HEIGHT);
-//        myImage.setFitWidth(IMAGE_WIDTH);
+        myImage.setFitHeight(IMAGE_HEIGHT);
+        myImage.setFitWidth(IMAGE_WIDTH);
         myPane.add(myImage, 0, 0, 2, 1);
 
     }
@@ -83,8 +83,4 @@ public class Description {
     protected GridPane getPane() {
         return myPane;
     }
-
-
-
-
 }

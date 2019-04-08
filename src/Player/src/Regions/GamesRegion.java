@@ -62,10 +62,10 @@ public class GamesRegion extends Region {
     // TODO: gamesRegion should update whenever we add to favorites/remove from favorites
 
     private void buildGamesMap() {
-        myMap.put("Flappy Bird", "res/images/flappy-bird.png");
-        myMap.put("Mario", "res/images/mario.jpg");
-        myMap.put("Metroid", "res/images/metroid.png");
-        myMap.put("Doodle Jump", "res/images/doodle-jump.jpg");
+        myMap.put("Flappy Bird", "src/Player/res/images/flappy-bird.png");
+        myMap.put("Mario", "src/Player/res/images/mario.jpg");
+        myMap.put("Metroid", "src/Player/res/images/metroid.png");
+        myMap.put("Doodle Jump", "src/Player/res/images/doodle-jump.jpg");
 
         myFavorites.add("Doodle Jump");
     }
@@ -127,9 +127,9 @@ public class GamesRegion extends Region {
         myThumbnails = new ArrayList<>();
 
         for (int i = 0; i < games.size(); i ++) {
-            String gamename = games.get(i);
-            String filename = myMap.get(gamename);
-            Thumbnail thumbnail = new Thumbnail(gamename, filename, myThumbnailWidth, myThumbnailHeight);
+            String gameName = games.get(i);
+            String filename = myMap.get(gameName);
+            Thumbnail thumbnail = new Thumbnail(gameName, filename, myThumbnailWidth, myThumbnailHeight);
             myThumbnails.add(thumbnail);
             StackPane thumbPane = thumbnail.getPane();
             thumbnails.add(thumbPane);
