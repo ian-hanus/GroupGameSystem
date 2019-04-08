@@ -1,7 +1,7 @@
 package EngineMain;
 
 import ECS.Components.MotionComponent;
-import ECS.TagPair;
+import ECS.Pair;
 import Events.ObjectEvents.ObjectEvent;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
@@ -9,7 +9,6 @@ import Physics.CollisionHandler;
 import Events.Event;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +16,7 @@ import java.util.Set;
 public class Controller {
     private Map<String, GameObject> myObjectBank;
     private Map<String, Event> myHotKeys;
-    private Map<TagPair, List<Event>[]> myCollisionResponses;
+    private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
     private Set<Timer> myTimers;
     private Map<Double, Map<String, Component>> myActiveObjects;
     private double myUserID;
