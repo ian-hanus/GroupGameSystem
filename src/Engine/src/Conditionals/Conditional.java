@@ -1,5 +1,6 @@
 package Conditionals;
 
+import ECS.EntityManager;
 import GameObjects.ObjectManager;
 
 public abstract class Conditional {
@@ -10,12 +11,12 @@ public abstract class Conditional {
         Required = required;
     }
 
-    public abstract boolean satisfied(ObjectManager objectManager);
-    public abstract boolean satisfied(double obj, ObjectManager objectManager);
+    public abstract boolean satisfied(EntityManager objectManager);
+    public abstract boolean satisfied(int obj, EntityManager objectManager);
 
     public boolean required(){
         return Required;
     }
 
-    abstract Conditional copy();
+    public abstract Conditional copy();
 }

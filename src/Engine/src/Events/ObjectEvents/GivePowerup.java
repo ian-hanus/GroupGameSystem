@@ -1,6 +1,7 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
+import ECS.EntityManager;
 import GameObjects.GameObject;
 import GameObjects.ObjectManager;
 
@@ -18,7 +19,7 @@ public class GivePowerup extends ObjectEvent {
     }
 
     @Override
-    public void activate(double other, ObjectManager objectManager){
-        objectManager.addPowerup(myObject, other);
+    public void activate(int other, EntityManager entityManager){
+        entityManager.addPowerup(myObject, other);
     }
 }

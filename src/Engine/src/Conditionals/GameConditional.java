@@ -1,5 +1,6 @@
 package Conditionals;
 
+import ECS.EntityManager;
 import GameObjects.ObjectManager;
 
 public abstract class GameConditional extends Conditional{
@@ -10,8 +11,8 @@ public abstract class GameConditional extends Conditional{
     }
 
     @Override
-    public abstract boolean satisfied(double obj, ObjectManager objectManager);
+    public abstract boolean satisfied(int obj, EntityManager entityManager);
 
     @Override
-    public abstract boolean satisfied(ObjectManager objectManager);
+    public abstract boolean satisfied(EntityManager entityManager);
 }
