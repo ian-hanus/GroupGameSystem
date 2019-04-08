@@ -2,19 +2,14 @@ package EngineMain;
 
 import ECS.Components.Component;
 import ECS.Components.MotionComponent;
-import ECS.Components.TagsComponent;
+import ECS.EntityManager;
 import ECS.Pair;
 import Events.ObjectEvents.ObjectEvent;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 import Events.Event;
 
-import java.util.HashSet;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Controller {
 
@@ -25,7 +20,7 @@ public class Controller {
     private int myUserID;
     private CollisionHandler myCollisionHandler;
     private EngineParser myEngineParser;
-    private ObjectManager myObjectManager;
+    private EntityManager myEntityManager;
     private LevelManager myLevelManager;
     private double myStepTime;
     private double myIterationCounter;
@@ -33,13 +28,14 @@ public class Controller {
     public Controller(double stepTime){
         myDataManager = new DataManager();
         initializeDataVariables();
-        myObjectManager = new ObjectManager(myActiveObjects);
-        myLevelManager = new LevelManager(myTimers, myObjectManager, myIterationCounter);
-        myCollisionHandler = new CollisionHandler(myObjectManager);
+        myEntityManager = new EntityManager(myActiveObjects);
+        myLevelManager = new LevelManager(myTimers, myEntityManager, myIterationCounter);
+        myCollisionHandler = new CollisionHandler(myEntityManager);
         myStepTime = stepTime;
         myIterationCounter = 0;
     }
 
+    //FIXME??
     public void initializeDataVariables(){
         myActiveObjects = myDataManager.loadDefaultObjects();
         myHotKeys = myDataManager.loadHotKeyMap();
@@ -59,10 +55,10 @@ public class Controller {
             Event event = myHotKeys.get(key);
             event = event.copy();
             event.setConditionalObject(myUserID);
-            if (event.conditionsSatisfied(myObjectManager)){
+            if (event.conditionsSatisfied(myEntityManager)){
                 if(event instanceof ObjectEvent){
                     ((ObjectEvent) event).setEventObject(myUserID);
-                    ((ObjectEvent) event).activate(myObjectManager);
+                    ((ObjectEvent) event).activate(myEntityManager);
                 }
             }
         }
@@ -73,16 +69,11 @@ public class Controller {
         myLevelManager.updateTimer();
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
         for (int obj : myActiveObjects.keySet()){
-            myObjectManager.move(obj);
+            myEntityManager.move(obj);
             Component motion = myActiveObjects.get(obj).get("STATE");
-            if(((MotionComponent) motion).colliding()) myObjectManager.restoreMovementDefaults(obj);
-            myObjectManager.setCollide(obj, false);
-            myObjectManager.updateStats(obj);
+            if(((MotionComponent) motion).colliding()) myEntityManager.restoreMovementDefaults(obj);
+            myEntityManager.setCollide(obj, false);
+            myEntityManager.updateStats(obj);
         }
     }
-
-    private Map<GameObject[], Set<Event>[]> makeCollisionResponseMap() {
-        return null;
-    }
-
 }
