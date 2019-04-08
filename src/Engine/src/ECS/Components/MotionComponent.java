@@ -54,6 +54,7 @@ public class MotionComponent extends Component {
         return myAngle;
     }
 
+    //Should put the three methods below into entitymanager?
     public void updateVelocity() {
         myXVelocity += myXAcceleration;
         myYVelocity += myYAcceleration;
@@ -67,7 +68,6 @@ public class MotionComponent extends Component {
         return y + myYVelocity;
     }
 
-    //TODO stuff below needs to be converted to x, y components
     public void adjustDirection(double delta) {
         myAngle += delta;
         adjustVelocitiesByAngle(myAngle);
