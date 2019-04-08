@@ -14,15 +14,6 @@ public class EntityManager {
         myEntityMap = new HashMap<>();
     }
 
-    public void kill(int entityID) {
-        myEntityMap.remove(entityID);
-    }
-
-    public void create(int entityID, List<Component> components) {
-        //TODO error checking
-        myEntityMap.put(entityID, components);
-    }
-
     public void addComponent(int entityID, Component component) {
         try {
             var components = getAllComponents(entityID);
@@ -32,68 +23,6 @@ public class EntityManager {
         catch (NoEntityException e) {
 
         }
-    }
-
-    public void move(int entityID) {
-        try {
-            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-            var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
-            double currXPos = basicComponent.getX();
-            double currYPos = basicComponent.getY();
-            double[] direction = motionComponent.getDirectionVec();
-            basicComponent.setX(currXPos + direction[0]);
-            basicComponent.setY(currYPos + direction[1]);
-
-            //TODO update velocity based on accel
-        }
-        catch (NoEntityException | NoComponentException e) {
-
-        }
-    }
-
-    public void adjustDirection(int entityID, double delta) {
-        try {
-            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-            double angle = motionComponent.getAngle();
-            angle += delta;
-            double[] directionVec = calculateDirection(angle);
-            motionComponent.setAngle(angle);
-            motionComponent.setDirectionVec(directionVec);
-        }
-        catch (NoEntityException | NoComponentException e) {
-
-        }
-    }
-
-    public void setDirection(int entityID, double angle){
-        try {
-            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-            double[] directionVec = calculateDirection(angle);
-            motionComponent.setAngle(angle);
-            motionComponent.setDirectionVec(directionVec);
-        }
-        catch (NoEntityException) {
-
-        }
-    }
-
-    public void stop(int entityID) {
-        try {
-            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-            motionComponent.setVel(0);
-        }
-        catch (NoEntityException) {
-
-        }
-    }
-
-    //public void addPowerup - later
-
-    private double[] calculateDirection(double angle){
-        double[] directionVec = new double[2];
-        directionVec[0] = Math.cos(Math.toRadians(angle));
-        directionVec[1] = Math.sin(Math.toRadians(angle));
-        return directionVec;
     }
 
     //can return null
@@ -114,4 +43,54 @@ public class EntityManager {
             throw new NoEntityException("Entity " + entityID + " does not exist");
         return components;
     }
+
+
+
+
+    public void die(int entityID) {
+        myEntityMap.remove(entityID);
+    }
+
+    public void create(int entityID, List<Component> components) {
+        //TODO error checking
+        myEntityMap.put(entityID, components);
+    }
+
+    public void move(int entityID) {
+        try {
+            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+            var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
+
+            motionComponent.updateVelocity();
+            double newX = motionComponent.getNewX(basicComponent.getX());
+            double newY = motionComponent.getNewY(basicComponent.getY());
+            basicComponent.setX(newX);
+            basicComponent.setY(newY);
+        }
+        catch (NoEntityException | NoComponentException e) {
+            System.out.println("Can't move an entity without a motion component.");
+        }
+    }
+
+    public void adjustDirection(int entityID, double delta) {
+        try {
+            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+            motionComponent.adjustDirection(delta);
+        }
+        catch (NoEntityException | NoComponentException e) {
+            System.out.println("Can't adjust the direction of an entity without a motion component.");
+        }
+    }
+
+    public void setDirection(int entityID, double angle){
+        try {
+            var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+            motionComponent.setDirection(angle);
+        }
+        catch (NoEntityException | NoComponentException e) {
+            System.out.println("Can't set the direction of an entity without a motion component.");
+        }
+    }
+
+    //public void addPowerup - later
 }
