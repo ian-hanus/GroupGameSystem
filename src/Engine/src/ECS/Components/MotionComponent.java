@@ -1,5 +1,8 @@
 package ECS.Components;
 
+/**
+ * Assumes time step is 1 (multiplies velocity by 1 when returning new position or acceleration by 1 when updating velocity)
+ */
 public class MotionComponent extends Component {
     private double myXVelocity;
     private double myYVelocity;
@@ -51,7 +54,37 @@ public class MotionComponent extends Component {
         return myAngle;
     }
 
-    public void setAngle(double angle) {
-        this.myAngle = angle;
+    public void updateVelocity() {
+        myXVelocity += myXAcceleration;
+        myYVelocity += myYAcceleration;
+    }
+
+    public double getNewX(double x) {
+        return x + myXVelocity;
+    }
+
+    public double getNewY(double y) {
+        return y + myYVelocity;
+    }
+
+    //TODO stuff below needs to be converted to x, y components
+    public void adjustDirection(double delta) {
+        myAngle += delta;
+        double[] directionVec = calculateDirection(myAngle);
+        motionComponent.setDirectionVec(directionVec);//FIXME
+    }
+
+    public void setDirection(double angle) {
+        myAngle = angle;
+        double[] directionVec = calculateDirection(angle);
+        motionComponent.setDirectionVec(directionVec);//FIXME
+    }
+
+
+    private double[] calculateDirection(double angle){
+        double[] directionVec = new double[2];
+        directionVec[0] = Math.cos(Math.toRadians(angle));
+        directionVec[1] = Math.sin(Math.toRadians(angle));
+        return directionVec;
     }
 }
