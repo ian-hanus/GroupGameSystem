@@ -1,12 +1,8 @@
-module voogasalad.crackingopen {
+module DataManager {
     requires gson;
     requires javafx.base;
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.media;
     requires javafx.web;
-//    exports player;
-    exports auth;
-
 }
-
