@@ -101,11 +101,11 @@ public class CollisionHandler {
     }
 
     private void setInEnvironment(MotionComponent motion, EnvironmentComponent environment) {
-        //TODO
+        //TODO dampen velocities, update accelerations, handle friction?
     }
 
     private void setInDefaultEnvironment(MotionComponent motion) {
-        //TODO
+        //TODO update acceleration, and more?
     }
 
     //TODO fix if Events are changed
