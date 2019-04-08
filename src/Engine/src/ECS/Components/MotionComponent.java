@@ -70,16 +70,24 @@ public class MotionComponent extends Component {
     //TODO stuff below needs to be converted to x, y components
     public void adjustDirection(double delta) {
         myAngle += delta;
-        double[] directionVec = calculateDirection(myAngle);
-        motionComponent.setDirectionVec(directionVec);//FIXME
+        adjustVelocitiesByAngle(myAngle);
+        //Is this appropriate?
+        adjustAccelerationByAngle(myAngle);
     }
 
     public void setDirection(double angle) {
         myAngle = angle;
-        double[] directionVec = calculateDirection(angle);
-        motionComponent.setDirectionVec(directionVec);//FIXME
+        adjustVelocitiesByAngle(myAngle);
+        //Is this appropriate?
+        adjustAccelerationByAngle(myAngle);
     }
 
+    private void adjustVelocitiesByAngle(double angle) {
+        double[] directionVec = calculateDirection(myAngle);
+        double totalVel = myXVelocity*myXVelocity + myYVelocity*myYVelocity;
+        myXVelocity = totalVel * directionVec[0];
+        myYVelocity = totalVel * directionVec[1];
+    }
 
     private double[] calculateDirection(double angle){
         double[] directionVec = new double[2];
