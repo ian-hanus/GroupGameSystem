@@ -7,7 +7,6 @@ import Events.ObjectEvents.ObjectEvent;
 
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Level;
 
 public class Timer {
     double myCount;
