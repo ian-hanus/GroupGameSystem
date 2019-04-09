@@ -75,6 +75,8 @@ public class GamesRegion extends Region {
         myPanels = new VBox();
         myPanels.setId(PANEL_STYLESHEET);
 
+        myThumbnails = new ArrayList<>();
+
         myPanels.getChildren().add(makeHeader(true));
         myPanels.getChildren().addAll(makeThumbnails(true));
         myPanels.getChildren().add(makeHeader(false));
@@ -124,7 +126,7 @@ public class GamesRegion extends Region {
             games.addAll(myMap.keySet());
         }
 
-        myThumbnails = new ArrayList<>();
+//        myThumbnails = new ArrayList<>();
 
         for (int i = 0; i < games.size(); i ++) {
             String gameName = games.get(i);

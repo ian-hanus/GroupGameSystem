@@ -5,14 +5,19 @@ import Regions.DescriptionRegion;
 import Regions.GamesRegion;
 import Regions.Thumbnail;
 import Regions.TitleRegion;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerStage {
     private final String STYLESHEET = "style.css";
@@ -26,6 +31,11 @@ public class PlayerStage {
     public final double ST_HEIGHT = 600;
     public final Paint ST_COLOR = Color.web("284376");
     public final double ST_SPACING = 20;
+
+    public final double STEP_TIME = 30;
+    public final double GAME_WIDTH = 1400;
+    public final double GAME_HEIGHT = 800;
+    public final Paint GAME_BG = Color.BLACK;
 
     private Scene myScene;
     private GridPane myVisualRoot;
@@ -74,15 +84,60 @@ public class PlayerStage {
      * Run(), edit(), rate() currently placeholder. Update these methods.
      */
     public void run(String gameName) {
-        System.out.println(gameName + " is running!");
+
+        // make an instance of the Stage
+
+        Stage gameStage = new Stage();
+        Group gameRoot = new Group();
+
+        // put everything into gameRoot
+
+        Map<Integer, ImageView> imageViewMap = new HashMap<>();
+
+        Controller gameController = new Controller(STEP_TIME, GAME_WIDTH, GAME_HEIGHT);
+        Map<Integer, Map<Class<? extends Component>, Component>> gameEntities = gameController.getEntities();
+
+        for (Integer id: gameEntities.keySet) {
+            Component ent = gameEntities.get(id).get(BasicComponent.class);
+            double entWd = ent.getWidth();
+            double entHt = ent.getHeight();
+            double entX = ent.getX();
+            double entY = ent.getY();
+            double entZIndex = ent.getZindex();
+            String entFilename = ent.getMyFile();
+
+            File file = new File(entFilename);
+            ImageView iv = new ImageView();
+            try {
+                iv = new ImageView(file.toURI().toString());
+                iv.setX(entX);
+                iv.setY(entY);
+                iv.setFitWidth(entWd);
+                iv.setFitHeight(entHt);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("uh oh");
+            }
+
+            imageViewMap.put(id, iv);
+        }
+
+        gameRoot.getChildren().addAll(imageViewMap.values());
+
+        Scene gameScene = new Scene(gameRoot, GAME_BG);
+        gameStage.setScene(gameScene);
+        gameStage.show();
+
+        // start game loop
+
     }
 
     public void edit(String gameName) {
-        System.out.println(gameName + " is being edited!");
+//        System.out.println(gameName + " is being edited!");
     }
 
     public void rate(String gameName) {
-        System.out.println("Rating for " + gameName + " is being changed!");
+//        System.out.println("Rating for " + gameName + " is being changed!");
     }
 
     protected Stage makeStage() {
