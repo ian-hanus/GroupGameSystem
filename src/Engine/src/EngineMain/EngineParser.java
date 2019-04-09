@@ -25,10 +25,6 @@ public class EngineParser {
         return null;
     }
 
-    public GameObject makeHero(){
-        return null;
-    }
-
     public Set<Timer> makeTimerMap() {
         return null;
     }

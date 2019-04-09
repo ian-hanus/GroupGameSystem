@@ -9,13 +9,36 @@ public class MotionComponent extends Component {
     private double myXAcceleration;
     private double myYAcceleration;
     private double myAngle;
+    private double myMaxXVelocity;
+    private double myMaxYVelocity;
+    private double myMovementXVelocity;
+    private double myMovementYVelocity;
 
-    public MotionComponent(double xVelocity, double yVelocity, double xAcceleration, double yAcceleration, double angle) {
+    public MotionComponent(double xVelocity, double yVelocity, double xAcceleration, double yAcceleration, double angle,
+                           double movementXVelocity, double movementYVelocity) {
         this.myXVelocity = xVelocity;
         this.myYVelocity = yVelocity;
         this.myXAcceleration = xAcceleration;
         this.myYAcceleration = yAcceleration;
         this.myAngle = angle;
+        this.myMovementXVelocity = movementXVelocity;
+        this.myMovementYVelocity = movementYVelocity;
+    }
+
+    public double getMovementXVelocity() {
+        return myMovementXVelocity;
+    }
+
+    public double getMovementYVelocity() {
+        return myMovementYVelocity;
+    }
+
+    public void setMovementXVelocity(double movementXVelocity) {
+        myMovementXVelocity = movementXVelocity;
+    }
+
+    public void setMovementYVelocity(double movementYVelocity) {
+        myMovementYVelocity = movementYVelocity;
     }
 
     public double getXVelocity() {
@@ -56,8 +79,8 @@ public class MotionComponent extends Component {
 
     //Should put the three methods below into entitymanager?
     public void updateVelocity() {
-        myXVelocity += myXAcceleration;
-        myYVelocity += myYAcceleration;
+        myXVelocity = Math.min(myXVelocity += myXAcceleration, myMaxXVelocity);
+        myYVelocity = Math.min(myYVelocity += myYAcceleration, myMaxYVelocity);
     }
 
     public double getNewX(double x) {

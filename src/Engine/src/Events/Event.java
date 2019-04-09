@@ -3,8 +3,6 @@ package Events;
 import Conditionals.Conditional;
 import Conditionals.ObjectConditional;
 import ECS.EntityManager;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +17,6 @@ public class Event {
     public Event(List<Conditional> conditionals){
         myConditionals = conditionals;
     }
-
-    /*
-    public boolean conditionsSatisfied(double obj1, double obj2, ObjectManager objectManager){
-        for (Conditional conditional : myConditionals){
-            if (!conditional.satisfied(obj1, obj2, objectManager)) return false;
-        }
-        return true;
-    }
-    */
 
     public Event copy(){
         List<Conditional> conditionalsCopy = new ArrayList<>();

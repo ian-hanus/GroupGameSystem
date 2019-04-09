@@ -1,7 +1,6 @@
 package Conditionals;
 
 import ECS.EntityManager;
-import GameObjects.ObjectManager;
 
 public abstract class ObjectConditional extends Conditional{
 

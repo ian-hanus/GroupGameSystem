@@ -6,15 +6,14 @@ import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
 import ECS.EntityManager;
 import ECS.Pair;
+import Events.ObjectEvents.MoveLeft;
 import Events.ObjectEvents.ObjectEvent;
 import Physics.CollisionHandler;
 import Events.Event;
 
-import java.util.HashSet;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Controller {
 
@@ -40,9 +39,11 @@ public class Controller {
         myIterationCounter = 0;
     }
 
+    //FIXME??
     public void initializeDataVariables(){
         myActiveObjects = myDataManager.loadDefaultObjects();
-        myHotKeys = myDataManager.loadHotKeyMap();
+        //myHotKeys = myDataManager.loadHotKeyMap();
+        setDefaultKeys();
         myCollisionResponses = myDataManager.loadCollisionResponseMap();
         //myTimers = myDataManager.loadTimerMap();
         for(int id : myActiveObjects.keySet()){
@@ -52,6 +53,13 @@ public class Controller {
                 break;
             }
         }
+    }
+
+    private void setDefaultKeys() {
+        myHotKeys = new HashMap<>();
+        myHotKeys.put("A", new MoveLeft());
+        myHotKeys.put("D", new MoveRight());
+        myHotKeys.put("SPACE", new Jump());
     }
 
     public void processKey(String key){
