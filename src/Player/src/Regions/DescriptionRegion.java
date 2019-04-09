@@ -1,13 +1,11 @@
 package Regions;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import PlayerMain.PlayerStage;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 
 import java.util.Properties;
 
@@ -19,9 +17,11 @@ public class DescriptionRegion extends Region {
     private Properties myStyles;
     private Image myImage;
     private ScrollPane myDescPane;
+    private PlayerStage myContext;
 
-    public DescriptionRegion(String regionID) {
+    public DescriptionRegion(String regionID, PlayerStage context) {
         super();
+        this.myContext = context;
 
         myDescPane = new ScrollPane();
         myDescPane.setId(regionID);
@@ -36,9 +36,10 @@ public class DescriptionRegion extends Region {
 
         System.out.println("updating region");
         myGroup.getChildren().clear();
-        Description description = new Description(game);
-//        myGroup.getChildren().add(description.getPane());
-        myDescPane.setContent(description.getPane());
+        Description description = new Description(game, myContext);
+
+        myGroup.getChildren().add(description.getPane());
+        myDescPane.setContent(myGroup);
 
     }
 
