@@ -1,5 +1,4 @@
-import Data.Level;
-import Data.Splash;
+package DataManager;
 
 import java.util.List;
 import java.util.Map;
