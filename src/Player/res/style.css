@@ -59,14 +59,14 @@
 
 #options {
     -fx-background-radius: 5;
-    -fx-pref-width: 300;
-    -fx-pref-height: 350;
+    -fx-pref-width: 365;
+    -fx-pref-height: 425;
     -fx-alignment: center;
 }
 
 .button {
-    -fx-pref-width: 100;
-    -fx-pref-height: 50;
+    -fx-pref-width: 120;
+    -fx-pref-height: 60;
     -fx-background-radius: 10;
 }
 
