@@ -16,6 +16,18 @@ import java.util.List;
 import java.util.Map;
 
 public class Controller {
+    //FIXME remove eventually
+    private static final boolean SCROLLS_HORIZONTALLY = true;
+    private static final boolean SCROLLS_VERTICALLY = false;
+    private static final boolean IS_AUTO_SCROLLER = false;
+    private static final double SCROLL_SPEED = 10;                        //if auto scroller
+    private static final double CHARACTER_DISTANCE_FROM_SCROLL_WALL = 20; //if auto scroller
+    private static final double START_X = 0;
+    private static final double START_Y = 0;
+    //FIXME remove eventually
+
+    private final double myScreenWidth;
+    private final double myScreenHeight;
 
     private Map<String, Event> myHotKeys;
     private List<TimerSequence> myTimers;
@@ -31,7 +43,10 @@ public class Controller {
     private double myWidth;
     private double myHeight;
 
-    public Controller(double stepTime, double width, double height){
+    public Controller(double stepTime, double screenWidth, double screenHeight){
+        myStepTime = stepTime;
+        myScreenWidth = screenWidth;
+        myScreenHeight = screenHeight;
         myDataManager = new DataManager();
         initializeDataVariables();
         myEntityManager = new EntityManager(myActiveObjects);
@@ -87,6 +102,11 @@ public class Controller {
         for (int obj : myActiveObjects.keySet()){
             myEntityManager.move(obj);
         }
+        updateScroll();
+    }
+
+    public void updateScroll() {
+
     }
 
     public Map<Integer, Map<Class<? extends Component>, Component>> getEntities(){

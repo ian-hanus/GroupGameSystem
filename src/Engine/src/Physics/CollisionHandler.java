@@ -21,6 +21,7 @@ public class CollisionHandler {
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
     private Map<Integer, Set<Integer>> myPreviousCollisions;
     private Map<Integer, Set<Integer>> myCurrentCollisions;
+    private Map<Integer, EnvironmentComponent> myEntityCurrentEnvironments;
 
     public CollisionHandler(EntityManager objectManager, LevelManager levelManager, CollisionDetector collisionDetector) {
         myEntityManager = objectManager;
@@ -29,6 +30,15 @@ public class CollisionHandler {
         myCollisionResponses = new HashMap<>();
         myPreviousCollisions = new HashMap<>();
         myCurrentCollisions = new HashMap<>();
+        myEntityCurrentEnvironments = new HashMap<>();
+    }
+
+    public void moveRight() {
+
+    }
+
+    public void moveLeft() {
+
     }
 
     //assumes collisionResponses and entities are nonnull
@@ -51,46 +61,42 @@ public class CollisionHandler {
     }
 
     private boolean notInteractingWithEnvironment(Integer entity) {
-        try {
-            if (myCurrentCollisions.containsKey(entity)) {
-                Set<Integer> possibleEnvironments = myCurrentCollisions.get(entity);
-                for (Integer possibleEnvironment : possibleEnvironments) {
-                    if (myEntityManager.getComponent(possibleEnvironment, EnvironmentComponent.class) != null)
-                        return true;
-                }
+        if (myCurrentCollisions.containsKey(entity)) {
+            Set<Integer> possibleEnvironments = myCurrentCollisions.get(entity);
+            for (Integer possibleEnvironment : possibleEnvironments) {
+                if (myEntityManager.getComponent(possibleEnvironment, EnvironmentComponent.class) != null)
+                    return true;
             }
-            return false;
-        } catch (NoEntityException e) {
-            return false; //should never be reached
         }
+        return false;
     }
 
     private void setInDefaultEnvironment(Integer entity) {
-        //TODO update acceleration, and more?
+        myEntityCurrentEnvironments.put(entity, null);
     }
 
     private void checkCollision(Integer entity1, Integer entity2) {
-        try {
-            Pair<String>[] collisionTagPairs = findRelevantTagPairs(entity1, entity2);
-            if (collisionTagPairs.length == 0 || !myCollisionDetector.collides(entity1, entity2))
-                return;
+        Pair<String>[] collisionTagPairs = findRelevantTagPairs(entity1, entity2);
+        if (collisionTagPairs.length == 0 || !myCollisionDetector.collides(entity1, entity2))
+            return;
 
-            handleEnvironments(entity1, entity2);
-            handleEnvironments(entity2, entity1);
+        handleEnvironments(entity1, entity2);
+        handleEnvironments(entity2, entity1);
 
-            for (Pair<String> tagPair : collisionTagPairs) {
-                Pair<List<Event>> responseListPair = myCollisionResponses.get(tagPair);
-                activateEvents(entity1, entity2, responseListPair.getItem1());
-                activateEvents(entity2, entity1, responseListPair.getItem2());
-            }
-        } catch (NoEntityException e) {
-            System.out.println("One or more entities do not exist.");
+        for (Pair<String> tagPair : collisionTagPairs) {
+            Pair<List<Event>> responseListPair = myCollisionResponses.get(tagPair);
+            activateEvents(entity1, entity2, responseListPair.getItem1());
+            activateEvents(entity2, entity1, responseListPair.getItem2());
         }
     }
 
-    private Pair<String>[] findRelevantTagPairs(Integer entity1, Integer entity2) throws NoEntityException{
+    private Pair<String>[] findRelevantTagPairs(Integer entity1, Integer entity2) {
         var tags1 = myEntityManager.getComponent(entity1, TagsComponent.class);
         var tags2 = myEntityManager.getComponent(entity2, TagsComponent.class);
+
+        if (tags1 == null || tags2 == null)
+            return new Pair[]{new Pair("",""), new Pair("", "")};
+
         ArrayList<Pair<String>> tagPairs = new ArrayList<>();
         for (String tag1 : tags1.getTags()) {
             for (String tag2 : tags2.getTags()) {
@@ -102,21 +108,25 @@ public class CollisionHandler {
         return tagPairs.toArray(new Pair[0]);
     }
 
-    private void handleEnvironments(Integer current, Integer other) throws NoEntityException {
+    private void handleEnvironments(Integer current, Integer other) {
         myCurrentCollisions.putIfAbsent(current, new HashSet<>());
         myCurrentCollisions.get(current).add(other);
         var currentMotionComponent = myEntityManager.getComponent(current, MotionComponent.class);
         var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
 
-        if (currentMotionComponent == null || otherEnvironmentComponent == null)
+        if (currentMotionComponent == null)
             return;
 
         if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))
-            setInEnvironment(currentMotionComponent, otherEnvironmentComponent);
+            setInEnvironment(current, currentMotionComponent, otherEnvironmentComponent);
     }
 
-    private void setInEnvironment(MotionComponent motion, EnvironmentComponent environment) {
-        //TODO dampen velocities, update accelerations, handle friction?
+    private void setInEnvironment(Integer entity, MotionComponent motion, EnvironmentComponent environment) {
+        myEntityCurrentEnvironments.put(entity, environment);
+
+        double scaleFactor = environment.getVelDamper();
+        motion.setXVelocity(scaleFactor * motion.getXVelocity());
+        motion.setYVelocity(scaleFactor * motion.getYVelocity());
     }
 
     //TODO fix if Events are changed

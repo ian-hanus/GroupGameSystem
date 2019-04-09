@@ -10,7 +10,7 @@ public class CollisionDetector {
     }
 
     //FIXME do we need to detect whether the collision is right, top, left, or bottom based on solely the velocity angle?
-    public boolean collides(Integer collider, Integer target) throws NoEntityException {
+    public boolean collides(Integer collider, Integer target) {
             return collideFromLeft(collider, target) ||
                     //collideFromRight(component1, component2) ||
                     //collideFromBottom(component1, component2) ||
@@ -19,7 +19,7 @@ public class CollisionDetector {
     }
 
     //FIXME no collide from right (CollideFromRight event uses this method)
-    public boolean collideFromLeft(Integer collider, Integer target) throws NoEntityException {
+    public boolean collideFromLeft(Integer collider, Integer target) {
         var colliderComponent = myEntityManager.getComponent(collider, BasicComponent.class); //FIXME these two lines duplicated in all collision methods
         var targetComponent = myEntityManager.getComponent(target, BasicComponent.class);
         double width1 = colliderComponent.getWidth();
@@ -29,7 +29,7 @@ public class CollisionDetector {
     }
 
     //FIXME no collide from bottom (CollideFromBottom event uses this method)
-    public boolean collideFromTop(Integer collider, Integer target) throws NoEntityException {
+    public boolean collideFromTop(Integer collider, Integer target) {
         var colliderComponent = myEntityManager.getComponent(collider, BasicComponent.class);
         var targetComponent = myEntityManager.getComponent(target, BasicComponent.class);
         double height1 = colliderComponent.getHeight();
