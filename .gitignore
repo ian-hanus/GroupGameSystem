@@ -1,6 +1,6 @@
 # IDEA Ignores #
 ################
-*.iml
+.iml
 *.ipr
 *.iws
 .idea/

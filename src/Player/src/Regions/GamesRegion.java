@@ -23,6 +23,8 @@ public class GamesRegion extends Region {
     public static final double HEADER_HEIGHT = 15;
     public static final double SCROLLBAR_WIDTH = 20;
 
+    private final String PANEL_ID = "gamesBox";
+
     private ArrayList<Thumbnail> myThumbnails;
     private ScrollPane myGamesPane;
     private double myThumbnailWidth;
@@ -31,22 +33,15 @@ public class GamesRegion extends Region {
     private HashMap<String, String> myMap;
     private ArrayList<String> myFavorites;
 
-    public GamesRegion(double wd, double ht, Paint color) {
-        super(wd, ht, color);
+    public GamesRegion(String regionID) {
+        super();
 
         myGamesPane = new ScrollPane();
-        myGamesPane.setPrefWidth(myWidth);
-        myGamesPane.setPrefHeight(myHeight);
-        myGamesPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        myGamesPane.setBackground(new Background(new BackgroundFill(
-                myColor, new CornerRadii(5, 5, 5, 5,  false),
-                new Insets(20, 20, 20, 20))));
-        // TODO: un-hardcode this
-        myGamesPane.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue;");
+        myGamesPane.setId(regionID);
 
-        // TODO: and this
+        // TODO: Do not hardcode this
 
-        myThumbnailWidth = myWidth - (2 * OFFSET) - SCROLLBAR_WIDTH; // -15 to account for the scrollbar which is 15
+        myThumbnailWidth = 380 - (2 * OFFSET) - SCROLLBAR_WIDTH; // -15 to account for the scrollbar which is 15
         myThumbnailHeight = myThumbnailWidth / 2;
 
 //        buildLists();
@@ -67,10 +62,10 @@ public class GamesRegion extends Region {
     // TODO: gamesRegion should update whenever we add to favorites/remove from favorites
 
     private void buildGamesMap() {
-        myMap.put("Flappy Bird", "res/images/flappy-bird.png");
-        myMap.put("Mario", "res/images/mario.jpg");
-        myMap.put("Metroid", "res/images/metroid.png");
-        myMap.put("Doodle Jump", "res/images/doodle-jump.jpg");
+        myMap.put("Flappy Bird", "src/Player/res/images/flappy-bird.png");
+        myMap.put("Mario", "src/Player/res/images/mario.jpg");
+        myMap.put("Metroid", "src/Player/res/images/metroid.png");
+        myMap.put("Doodle Jump", "src/Player/res/images/doodle-jump.jpg");
 
         myFavorites.add("Doodle Jump");
     }
@@ -78,9 +73,9 @@ public class GamesRegion extends Region {
     protected void buildGroup() {
 
         myPanels = new VBox();
+        myPanels.setId(PANEL_ID);
 
-        myPanels.setPadding(new Insets(OFFSET, OFFSET, OFFSET, OFFSET));
-        myPanels.setSpacing(OFFSET);
+        myThumbnails = new ArrayList<>();
 
         myPanels.getChildren().add(makeHeader(true));
         myPanels.getChildren().addAll(makeThumbnails(true));
@@ -115,7 +110,6 @@ public class GamesRegion extends Region {
             }
         }
 
-        label.setStyle("-fx-font-family: 'Trebuchet MS'; -fx-font-size: 20; -fx-text-fill: 'white';");
         label.setLayoutX(OFFSET);
         header.getChildren().add(label);
 
@@ -132,12 +126,12 @@ public class GamesRegion extends Region {
             games.addAll(myMap.keySet());
         }
 
-        myThumbnails = new ArrayList<>();
+//        myThumbnails = new ArrayList<>();
 
         for (int i = 0; i < games.size(); i ++) {
-            String gamename = games.get(i);
-            String filename = myMap.get(gamename);
-            Thumbnail thumbnail = new Thumbnail(gamename, filename, myThumbnailWidth, myThumbnailHeight);
+            String gameName = games.get(i);
+            String filename = myMap.get(gameName);
+            Thumbnail thumbnail = new Thumbnail(gameName, filename, myThumbnailWidth, myThumbnailHeight);
             myThumbnails.add(thumbnail);
             StackPane thumbPane = thumbnail.getPane();
             thumbnails.add(thumbPane);

@@ -1,5 +1,6 @@
 package auth.helpers;
 
+import auth.ObjectControl.ObjectManager;
 import auth.panes.BottomPane;
 import auth.panes.LeftPane;
 import auth.panes.RightPane;
@@ -12,11 +13,14 @@ import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
 
 public class ScreenHelpers {
+    private static final String STYLE_SHEET = "authoring.css";
+
     public static void initScene(Scene scene, Group root) {
         scene.setRoot(root);
         root.setStyle(BG_STYLE);
         placePanes(root);
         placeCanvas(root);
+        scene.getStylesheets().add(STYLE_SHEET);
     }
 
     private static void placeCanvas(Group root) {
@@ -29,6 +33,10 @@ public class ScreenHelpers {
         var toolsPane = new LeftPane(centreVertical(TOOLS_PANE_HEIGHT), TOOLS_PANE_WIDTH, TOOLS_PANE_HEIGHT);
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT);
         var objLibPane = new RightPane(computeMarginToBottomEdge(propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT);
+
+        var objectManager = new ObjectManager(objLibPane.getView());
+        propsPane.getView().getChildren().add(objectManager.getCreatorView());
+        objLibPane.getView().getChildren().add(objectManager.getBankView());
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));

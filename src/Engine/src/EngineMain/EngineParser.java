@@ -1,10 +1,8 @@
 package EngineMain;
 
-import GameObjects.GameObject;
-import Physics.CollisionHandler;
-import Responses.Response;
+import ECS.Components.Component;
 
-import java.util.List;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -22,12 +20,11 @@ public class EngineParser {
         return null;
     }
 
-    public List initializeActiveObjects(){
+    public Map<Double, Map<String, Component>> initializeActiveObjects(){
         return null;
     }
 
-    public GameObject makeHero(){
+    public Set<Timer> makeTimerMap() {
         return null;
     }
-
 }

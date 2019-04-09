@@ -19,7 +19,7 @@ public abstract class ScrollableWindow extends Feature {
     private LinkedList<String> myTextChain;
 
     /**
-     * Constructer for a ScrollableWindow object
+     * Constructor for a ScrollableWindow object
      */
     public ScrollableWindow() {
         myHBox = new HBox();
