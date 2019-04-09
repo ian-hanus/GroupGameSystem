@@ -2,6 +2,7 @@ package Physics;
 
 import ECS.*;
 import ECS.Components.EnvironmentComponent;
+import ECS.Components.ImpassableComponent;
 import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
 import Conditionals.Conditional;
@@ -43,7 +44,7 @@ public class CollisionHandler {
         myCurrentCollisions = new HashMap<>();
         for (Integer entity1 : entities) {
             for (Integer entity2 : entities) {
-                if (entity1 == entity2)
+                if (entity1 >= entity2) //prevent collisions from happening twice
                     continue;
                 checkCollision(entity1, entity2);
             }
@@ -88,6 +89,25 @@ public class CollisionHandler {
             Pair<List<Event>> responseListPair = myCollisionResponses.get(tagPair);
             activateEvents(entity1, entity2, responseListPair.getItem1());
             activateEvents(entity2, entity1, responseListPair.getItem2());
+        }
+
+        dealWithImpassable(entity1, entity2);
+        dealWithImpassable(entity2, entity1);
+    }
+
+    //FIXME duplicated between parts of collision handler and parts of entity manager
+    private void dealWithImpassable(Integer entity1, Integer entity2) {
+        var impassableComponent = myEntityManager.getComponent(entity2, ImpassableComponent.class);
+        if (impassableComponent != null && impassableComponent.getImpassable()) {
+            var motion = myEntityManager.getComponent(entity1, MotionComponent.class);
+            if (motion == null)
+                return;
+            if (myCollisionDetector.collideFromTop(entity1, entity2) || myCollisionDetector.collideFromTop(entity2, entity1)) {
+                motion.setYVelocity(0);
+            }
+            else if (myCollisionDetector.collideFromLeft(entity1, entity2) || myCollisionDetector.collideFromLeft(entity2, entity1)) {
+                motion.setXVelocity(0);
+            }
         }
     }
 
