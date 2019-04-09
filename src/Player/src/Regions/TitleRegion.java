@@ -9,6 +9,7 @@ import javafx.scene.paint.Paint;
 
 public class TitleRegion extends Region {
     public static final String TEXT_STR = "Cracking Open a Scrolled One";
+    private final String TITLE_LABEL_ID = "titleLabel";
 
     private GridPane myTitlePane;
 
@@ -26,7 +27,7 @@ public class TitleRegion extends Region {
     protected void buildGroup() {
 
         Label titleLabel = new Label(TEXT_STR);
-        titleLabel.setId("titleLabel");
+        titleLabel.setId(TITLE_LABEL_ID);
 
         myGroup.getChildren().add(titleLabel);
 

@@ -14,8 +14,9 @@ import java.util.Map;
 
 public class Description {
 
-    private final String OPTIONS_STYLESHEET = "options";
-    private final String DESCRIPTION_STYLESHEET = "desc";
+    private final String OPTIONS_ID = "options";
+    private final String BUTTONS_ID = "buttonsBox";
+    private final String DESCRIPTION_ID = "descGrid";
     public final static double IMAGE_WIDTH = 365;
     public final static double IMAGE_HEIGHT = 180;
     public final static double DESC_WIDTH = IMAGE_WIDTH;
@@ -50,7 +51,7 @@ public class Description {
         myGame = game;
 
         myPane = new GridPane();
-        myPane.setId(DESCRIPTION_STYLESHEET);
+        myPane.setId(DESCRIPTION_ID);
 
         placeImage();
         placeDescription();
@@ -77,10 +78,11 @@ public class Description {
     // TODO: add Play, Edit, Rate, Rating, High Scores
     private void placeGameOptions() {
         myGameOptions = new HBox();
-        myGameOptions.setId(OPTIONS_STYLESHEET);
+        myGameOptions.setId(OPTIONS_ID);
 
         var leftPadding = new Region();
         var options = new VBox();
+        options.setId(BUTTONS_ID);
         var rightPadding = new Region();
 
         Button run = new Run(myContext, myGame).getButton();
