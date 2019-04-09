@@ -1,9 +1,6 @@
 package ECS;
 
-import ECS.Components.BasicComponent;
-import ECS.Components.Component;
-import ECS.Components.HealthComponent;
-import ECS.Components.MotionComponent;
+import ECS.Components.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -132,5 +129,14 @@ public class EntityManager {
 
     public void stop(int entityID) {
 
+    }
+
+    public void jump(int entityID) {
+        var jumpComponent = (JumpComponent) getComponent(entityID, JumpComponent.class);
+        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        if (jumpComponent != null && motionComponent != null) {
+            double jumpVelocity = jumpComponent.getJumpVelocity();
+            motionComponent.setYVelocity(jumpVelocity);
+        }
     }
 }
