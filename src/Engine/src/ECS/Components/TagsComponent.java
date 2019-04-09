@@ -13,4 +13,8 @@ public class TagsComponent extends Component {
     public List<String> getTags() {
         return Collections.unmodifiableList(myTags);
     }
+
+    public boolean contains(String tag){
+        return myTags.contains(tag);
+    }
 }

@@ -24,4 +24,9 @@ public class HealthComparison extends Comparison{
     public boolean compare(EntityManager entityManager){
         return checkOperator(((HealthComponent) getComponent()).getHealth(), ((HealthComponent) getCompareTo()).getHealth());
     }
+
+    @Override
+    public Conditional copy() {
+        return new HealthComparison(required(), myObject, getMyComparisonOperator(), getCompareTo());
+    }
 }

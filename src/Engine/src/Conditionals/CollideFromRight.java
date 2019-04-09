@@ -2,6 +2,10 @@ package Conditionals;
 
 import ECS.CollisionDetector;
 import ECS.EntityManager;
+import ECS.NoEntityException;
+import GameObjects.GameObject;
+import GameObjects.ObjectManager;
+import Physics.CollisionHandler;
 
 public class CollideFromRight extends ObjectConditional{
 
@@ -10,7 +14,7 @@ public class CollideFromRight extends ObjectConditional{
         }
 
         @Override
-        public boolean satisfied(int other, EntityManager entityManager){
+        public boolean satisfied(int other, EntityManager entityManager) {
             CollisionDetector collisionDetector = new CollisionDetector(entityManager);
             return collisionDetector.collideFromLeft(other, myObject);
         }

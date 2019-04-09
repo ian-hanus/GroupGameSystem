@@ -11,14 +11,10 @@ public class CollideFromBottom extends ObjectConditional {
     }
 
     @Override
-    public boolean satisfied(int other, EntityManager entityManager){
+    public boolean satisfied(int other, EntityManager entityManager) {
         CollisionDetector collisionDetector = new CollisionDetector(entityManager);
-        try {
-            return collisionDetector.collideFromTop(other, myObject);
-        }
-        catch(NoEntityException e){
-            e.getMessage();
-        }
+        return collisionDetector.collideFromTop(other, myObject);
+    }
 
     @Override
     public boolean satisfied(EntityManager entityManager){
