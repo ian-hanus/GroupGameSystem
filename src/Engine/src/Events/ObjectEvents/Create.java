@@ -3,10 +3,7 @@ package Events.ObjectEvents;
 import Conditionals.Conditional;
 import ECS.Components.Component;
 import ECS.EntityManager;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

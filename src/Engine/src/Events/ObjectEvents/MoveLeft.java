@@ -2,7 +2,6 @@ package Events.ObjectEvents;
 
 import Conditionals.Conditional;
 import ECS.EntityManager;
-import GameObjects.ObjectManager;
 
 import java.util.List;
 
