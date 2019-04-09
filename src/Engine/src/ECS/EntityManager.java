@@ -143,7 +143,7 @@ public class EntityManager {
     }
 
     public void setX(int obj, double newX){
-        Component basic = myEntityMap.get(obj).get(BasicComponent.class);
+        Component basic = getComponent(obj, BasicComponent.class);
         double currentX = ((BasicComponent) basic).getX();
         double finalX = currentX;
         CollisionDetector collisionDetector = new CollisionDetector(this);
