@@ -21,6 +21,7 @@ public class CollisionHandler {
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
     private Map<Integer, Set<Integer>> myPreviousCollisions;
     private Map<Integer, Set<Integer>> myCurrentCollisions;
+    private Map<Integer, EnvironmentComponent> myEntityCurrentEnvironments;
 
     public CollisionHandler(EntityManager objectManager, LevelManager levelManager, CollisionDetector collisionDetector) {
         myEntityManager = objectManager;
@@ -29,6 +30,7 @@ public class CollisionHandler {
         myCollisionResponses = new HashMap<>();
         myPreviousCollisions = new HashMap<>();
         myCurrentCollisions = new HashMap<>();
+        myEntityCurrentEnvironments = new HashMap<>();
     }
 
     public void moveRight() {
@@ -70,7 +72,7 @@ public class CollisionHandler {
     }
 
     private void setInDefaultEnvironment(Integer entity) {
-        //TODO update acceleration, and more?
+        myEntityCurrentEnvironments.put(entity, null);
     }
 
     private void checkCollision(Integer entity1, Integer entity2) {
@@ -112,15 +114,19 @@ public class CollisionHandler {
         var currentMotionComponent = myEntityManager.getComponent(current, MotionComponent.class);
         var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
 
-        if (currentMotionComponent == null || otherEnvironmentComponent == null)
+        if (currentMotionComponent == null)
             return;
 
         if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))
-            setInEnvironment(currentMotionComponent, otherEnvironmentComponent);
+            setInEnvironment(current, currentMotionComponent, otherEnvironmentComponent);
     }
 
-    private void setInEnvironment(MotionComponent motion, EnvironmentComponent environment) {
-        //TODO dampen velocities, update accelerations, handle friction?
+    private void setInEnvironment(Integer entity, MotionComponent motion, EnvironmentComponent environment) {
+        myEntityCurrentEnvironments.put(entity, environment);
+
+        double scaleFactor = environment.getVelDamper();
+        motion.setXVelocity(scaleFactor * motion.getXVelocity());
+        motion.setYVelocity(scaleFactor * motion.getYVelocity());
     }
 
     //TODO fix if Events are changed
