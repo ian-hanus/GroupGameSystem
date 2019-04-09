@@ -2,6 +2,9 @@ package ECS;
 
 import ECS.Components.BasicComponent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CollisionDetector {
     private EntityManager myEntityManager;
 

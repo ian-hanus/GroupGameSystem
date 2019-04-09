@@ -1,7 +1,6 @@
 package Physics;
 
 import ECS.*;
-import ECS.Components.BasicComponent;
 import ECS.Components.EnvironmentComponent;
 import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
@@ -23,6 +22,11 @@ public class CollisionHandler {
     private Map<Integer, Set<Integer>> myCurrentCollisions;
     private Map<Integer, EnvironmentComponent> myEntityCurrentEnvironments;
 
+    //FIXME
+    private static final double MY_DEFAULT_ACCEL_Y = 5;
+    private static final double MY_DEFAULT_ACCEL_X = 0;
+    //FIXME
+
     public CollisionHandler(EntityManager objectManager, LevelManager levelManager, CollisionDetector collisionDetector) {
         myEntityManager = objectManager;
         myLevelManager = levelManager;
@@ -31,14 +35,6 @@ public class CollisionHandler {
         myPreviousCollisions = new HashMap<>();
         myCurrentCollisions = new HashMap<>();
         myEntityCurrentEnvironments = new HashMap<>();
-    }
-
-    public void moveRight() {
-
-    }
-
-    public void moveLeft() {
-
     }
 
     //assumes collisionResponses and entities are nonnull
@@ -73,6 +69,11 @@ public class CollisionHandler {
 
     private void setInDefaultEnvironment(Integer entity) {
         myEntityCurrentEnvironments.put(entity, null);
+        var motion = myEntityManager.getComponent(entity, MotionComponent.class);
+        if (motion != null) {
+            motion.setXAcceleration(MY_DEFAULT_ACCEL_X);
+            motion.setYAcceleration(MY_DEFAULT_ACCEL_Y);
+        }
     }
 
     private void checkCollision(Integer entity1, Integer entity2) {
@@ -149,9 +150,11 @@ public class CollisionHandler {
                 }
             }
             if (event.conditionsSatisfied(other, myEntityManager)) {
-                if (event instanceof ObjectEvent)
-                    ((ObjectEvent) event).activate(other, myEntityManager);
-                else
+                if (event instanceof ObjectEvent) {
+                    ((ObjectEvent) event).setOther(other);
+                    ((ObjectEvent) event).activate(myEntityManager);
+                }
+                    else
                     ((GameEvent) event).activate(myLevelManager);
             }
         }

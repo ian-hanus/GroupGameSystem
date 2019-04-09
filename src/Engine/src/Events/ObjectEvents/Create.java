@@ -26,8 +26,4 @@ public class Create extends ObjectEvent{
         entityManager.create(myObject, myComponents);
     }
 
-    @Override
-    public void activate(int other, EntityManager entityManager) {
-        entityManager.create(myObject, myComponents);
-    }
 }
