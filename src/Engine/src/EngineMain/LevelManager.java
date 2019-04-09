@@ -12,12 +12,16 @@ public class LevelManager {
     private List<TimerSequence> myTimers;
     private EntityManager myEntityManager;
     double myCount;
+    double myLevelWidth;
+    double myLevelHeight;
 
-    public LevelManager(List<TimerSequence> timers, EntityManager entityManager, double count){
+    public LevelManager(List<TimerSequence> timers, EntityManager entityManager, double count, double width, double height){
         levelPassed = false;
         myEntityManager = entityManager;
         myTimers = timers;
         myCount = count;
+        myLevelWidth = width;
+        myLevelHeight = height;
     }
 
     public void addSequence(Map<Integer, List<Event>> eventsWhileOn, Map<Integer, List<Event>> eventsAfter,
@@ -49,4 +53,31 @@ public class LevelManager {
         levelPassed = true;
     }
 
+    public double[] determineOffset(double userX, double userY, double userWidth, double userHeight, double screenWidth,
+                                    double screenHeight) {
+        double offsetX;
+        double offsetY;
+
+        if (userX <= .5 * screenWidth - .5 * userWidth) {
+            offsetX = 0;
+        }
+        else if (myLevelWidth - userX <= .5 * screenWidth + .5 * userWidth) {
+            offsetX = myLevelWidth - screenWidth;
+        }
+        else {
+            offsetX = userX + .5 * userWidth - .5 * screenWidth;
+        }
+
+        if (userY <= .5 * screenHeight - .5 * userHeight) {
+            offsetY = 0;
+        }
+        else if (myLevelHeight - userY <= .5 * screenHeight + .5 * userHeight) {
+            offsetY = myLevelHeight - screenHeight;
+        }
+        else {
+            offsetY = userY + .5 * userHeight - .75 * screenHeight; // this puts the user 3/4 the way dow the screen
+        }
+
+        return new double[]{offsetX, offsetY};
+    }
 }
