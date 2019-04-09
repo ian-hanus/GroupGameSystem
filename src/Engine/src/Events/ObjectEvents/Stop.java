@@ -1,8 +1,7 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
+import ECS.EntityManager;
 
 import java.util.List;
 
@@ -13,10 +12,5 @@ public class Stop extends ObjectEvent {
     }
 
     @Override
-    public void activate(ObjectManager objectManager) { objectManager.stop(myObject);}
-
-    @Override
-    public void activate(double other, ObjectManager objectManager) {
-        objectManager.stop(myObject);
-    }
+    public void activate(EntityManager entityManager) { entityManager.stop(myObject);}
 }

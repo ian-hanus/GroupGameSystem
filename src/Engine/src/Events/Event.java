@@ -2,8 +2,7 @@ package Events;
 
 import Conditionals.Conditional;
 import Conditionals.ObjectConditional;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
+import ECS.EntityManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +18,6 @@ public class Event {
         myConditionals = conditionals;
     }
 
-    /*
-    public boolean conditionsSatisfied(double obj1, double obj2, ObjectManager objectManager){
-        for (Conditional conditional : myConditionals){
-            if (!conditional.satisfied(obj1, obj2, objectManager)) return false;
-        }
-        return true;
-    }
-    */
-
     public Event copy(){
         List<Conditional> conditionalsCopy = new ArrayList<>();
         for(Conditional conditional: myConditionals){
@@ -36,7 +26,7 @@ public class Event {
         return new Event(conditionalsCopy);
     }
 
-    public void setConditionalObject(double obj){
+    public void setConditionalObject(int obj){
         for(Conditional conditional: myConditionals){
             if (conditional instanceof ObjectConditional){
                 if (((ObjectConditional) conditional).getMyObj() == -1) ((ObjectConditional) conditional).setMyObject(obj);
@@ -44,16 +34,16 @@ public class Event {
             }
     }
 
-    public boolean conditionsSatisfied(double obj, ObjectManager objectManager){
+    public boolean conditionsSatisfied(int obj, EntityManager entityManager){
         for (Conditional conditional : myConditionals){
-            if (!conditional.satisfied(obj, objectManager) && conditional.required()) return false;
+            if (!conditional.satisfied(obj, entityManager) && conditional.required()) return false;
         }
         return true;
     }
 
-    public boolean conditionsSatisfied(ObjectManager objectManager){
+    public boolean conditionsSatisfied(EntityManager entityManager){
         for (Conditional conditional : myConditionals){
-            if (!conditional.satisfied(objectManager)) return false;
+            if (!conditional.satisfied(entityManager) && conditional.required()) return false;
         }
         return true;
     }

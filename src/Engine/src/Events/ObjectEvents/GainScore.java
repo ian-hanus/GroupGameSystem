@@ -1,8 +1,7 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
+import ECS.EntityManager;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class GainScore extends ObjectEvent {
         super();
         myGain = scoreGain;
     }
-    public GainScore(double obj, double scoreGain){
+    public GainScore(int obj, double scoreGain){
         super(obj);
         myGain = scoreGain;
     }
@@ -22,18 +21,14 @@ public class GainScore extends ObjectEvent {
         super(conditionals);
         myGain = scoreGain;
     }
-    public GainScore(List<Conditional> conditionals, double obj, double scoreGain){
+    public GainScore(List<Conditional> conditionals, int obj, double scoreGain){
         super(conditionals, obj);
         myGain = scoreGain;
     }
 
     @Override
-    public void activate(ObjectManager objectManager){
-        objectManager.increaseScore(myObject, myGain);
+    public void activate(EntityManager entityManager){
+        entityManager.increaseScore(myObject, myGain);
     }
 
-    @Override
-    public void activate(double other, ObjectManager objectManager){
-        objectManager.increaseScore(myObject, myGain);
-    }
 }

@@ -2,25 +2,21 @@ package Events.ObjectEvents;
 
 import Conditionals.Conditional;
 
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
+import ECS.EntityManager;
 
 import java.util.List;
 
 public class Kill extends ObjectEvent {
 
     public Kill() {super();}
-    public Kill(double obj){super(obj);}
+    public Kill(int obj){super(obj);}
     public Kill(List<Conditional> conditionals){super(conditionals);}
-    public Kill(List<Conditional> conditionals, double obj){
+    public Kill(List<Conditional> conditionals, int obj){
         super(conditionals, obj);
     }
 
     @Override
-    public void activate(ObjectManager objectManager) { }
-
-    @Override
-    public void activate(double other, ObjectManager objectManager) {
-        objectManager.kill(other);
+    public void activate(EntityManager entityManager) {
+        entityManager.die(myOther);
     }
 }

@@ -1,7 +1,8 @@
 package Regions;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import Features.Controls.*;
+import PlayerMain.PlayerStage;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,12 +14,12 @@ import java.util.Map;
 
 public class Description {
 
-    public final static double IMAGE_WIDTH = 350;
-    public final static double IMAGE_HEIGHT = 125;
+    private final String VBOX_STYLESHEET = "options";
+    private final String DESCRIPTION_STYLESHEET = "desc";
+    public final static double IMAGE_WIDTH = 330;
+    public final static double IMAGE_HEIGHT = 165;
     public final static double DESC_WIDTH = IMAGE_WIDTH;
     public final static double DESC_HEIGHT = 200;
-    public final static double GO_WIDTH = 100;
-    public final static double GO_HEIGHT = 350;
 
     private Map<String, String> myImageMap;
     private Map<String, String> myDescMap;
@@ -28,10 +29,12 @@ public class Description {
     private ImageView myImage;
     private Label myDescription;
     private VBox myGameOptions;
+    private PlayerStage myContext;
 
-    public Description(String game) {
+    public Description(String game, PlayerStage context) {
+        this.myContext = context;
 
-        // TODO: store this info differently
+        // TODO: store this info differently---could be done in ResourceBundle or JSON
         myImageMap = new HashMap<>();
         myImageMap.put("Flappy Bird", "/images/flappy-bird.png");
         myImageMap.put("Mario", "/images/mario.jpg");
@@ -47,8 +50,7 @@ public class Description {
         myGame = game;
 
         myPane = new GridPane();
-        myPane.setPadding(new Insets(20));
-        myPane.setAlignment(Pos.TOP_LEFT);
+        myPane.setId(DESCRIPTION_STYLESHEET);
 
         placeImage();
         placeDescription();
@@ -59,8 +61,8 @@ public class Description {
     private void placeImage() {
 
         myImage = new ImageView(new Image(this.getClass().getResourceAsStream(myImageMap.get(myGame))));
-//        myImage.setFitHeight(IMAGE_HEIGHT);
-//        myImage.setFitWidth(IMAGE_WIDTH);
+        myImage.setFitHeight(IMAGE_HEIGHT);
+        myImage.setFitWidth(IMAGE_WIDTH);
         myPane.add(myImage, 0, 0, 2, 1);
 
     }
@@ -72,22 +74,21 @@ public class Description {
 
     }
 
+    // TODO: add Play, Edit, Rate, Rating, High Scores
     private void placeGameOptions() {
-
         myGameOptions = new VBox();
-        myGameOptions.setPrefWidth(GO_WIDTH);
-        myGameOptions.setPrefHeight(GO_HEIGHT);
-        myGameOptions.setStyle("-fx-background: lightsteelblue; -fx-background-radius: 5; -fx-background-color: lightsteelblue;");
-        myPane.add(myGameOptions, 1, 0, 1, 2);
+        myGameOptions.setId(VBOX_STYLESHEET);
 
+        Button run = new Run(myContext, myGame).getButton();
+        Button edit = new Edit(myContext, myGame).getButton();
+        Button rate = new Rate(myContext, myGame).getButton();
+
+        myGameOptions.getChildren().addAll(run, edit, rate);
+        myPane.add(myGameOptions, 2, 0, 1, 2);
     }
 
 
     protected GridPane getPane() {
         return myPane;
     }
-
-
-
-
 }

@@ -1,23 +1,24 @@
 package Conditionals;
 
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
+import ECS.CollisionDetector;
+import ECS.EntityManager;
+import ECS.NoEntityException;
 import Physics.CollisionHandler;
 
 public class CollideFromLeft extends ObjectConditional{
 
-    CollideFromLeft(boolean required, double obj){
+    CollideFromLeft(boolean required, int obj){
         super(required, obj);
     }
 
     @Override
-    public boolean satisfied(double other, ObjectManager objectManager){
-        CollisionHandler collisionHandler = new CollisionHandler(objectManager);
-        return collisionHandler.collideFromLeft(myObject, other);
+    public boolean satisfied(int other, EntityManager entityManager) {
+        CollisionDetector collisionDetector = new CollisionDetector(entityManager);
+        return collisionDetector.collideFromLeft(myObject, other);
     }
 
     @Override
-    public boolean satisfied(ObjectManager objectManager){
+    public boolean satisfied(EntityManager entityManager){
         return false; //TODO:error
     }
 

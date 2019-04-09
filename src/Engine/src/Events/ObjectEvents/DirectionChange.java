@@ -1,20 +1,18 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
-import Events.Event;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
+import ECS.EntityManager;
 
 import java.util.List;
 
 public class DirectionChange extends ObjectEvent {
     private double myAdjustmentAngle;
 
-    public DirectionChange(double angle){
+    public DirectionChange(int angle){
         myAdjustmentAngle = angle;
     }
 
-    public DirectionChange(double obj, double angle){
+    public DirectionChange(int obj, double angle){
         super(obj);
         myAdjustmentAngle = angle;
     }
@@ -24,19 +22,14 @@ public class DirectionChange extends ObjectEvent {
         myAdjustmentAngle = angle;
     }
 
-    public DirectionChange(List<Conditional> conditionals, double obj, double angle){
+    public DirectionChange(List<Conditional> conditionals, int obj, double angle){
         super(conditionals, obj);
         myAdjustmentAngle = angle;
     }
 
 
     @Override
-    public void activate(ObjectManager objectManager){
-        objectManager.adjustDirection(myObject, myAdjustmentAngle);
-    }
-
-    @Override
-    public void activate(double other, ObjectManager objectManager){
-        objectManager.adjustDirection(myObject, myAdjustmentAngle);
+    public void activate(EntityManager entityManager){
+        entityManager.adjustDirection(myObject, myAdjustmentAngle);
     }
 }

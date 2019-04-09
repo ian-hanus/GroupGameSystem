@@ -1,6 +1,6 @@
 package EngineMain;
 
-import GameObjects.GameObject;
+import ECS.Components.Component;
 
 
 import java.util.Map;
@@ -20,11 +20,7 @@ public class EngineParser {
         return null;
     }
 
-    public Map<Double, Map<String, Components>> initializeActiveObjects(){
-        return null;
-    }
-
-    public GameObject makeHero(){
+    public Map<Double, Map<String, Component>> initializeActiveObjects(){
         return null;
     }
 

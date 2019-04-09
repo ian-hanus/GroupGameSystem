@@ -1,8 +1,7 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
+import ECS.EntityManager;
 
 import java.util.List;
 
@@ -10,18 +9,12 @@ public class Deflect extends DirectionChange{
 
     double myAdjustmentAngle;
 
-    public Deflect(List<Conditional> conditionals, double angle){
+    public Deflect(List<Conditional> conditionals, int angle){
         super(conditionals,180);
     }
 
     @Override
-    public void activate(ObjectManager objectManager){
-        objectManager.adjustDirection(myObject, myAdjustmentAngle);
+    public void activate(EntityManager entityManager){
+        entityManager.adjustDirection(myObject, myAdjustmentAngle);
     }
-
-    @Override
-    public void activate(double other, ObjectManager objectManager){
-        objectManager.adjustDirection(myObject, myAdjustmentAngle);
-    }
-
 }

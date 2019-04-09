@@ -1,42 +1,45 @@
 package Events.ObjectEvents;
 
 import Conditionals.Conditional;
-import Conditionals.ObjectConditional;
+import ECS.EntityManager;
 import Events.Event;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ObjectEvent extends Event {
 
-    double myObject;
+    protected int myObject;
+    protected int myOther;
 
     public ObjectEvent(){
         super();
     }
 
-    public ObjectEvent(double obj){
+    public ObjectEvent(int obj){
         super();
         myObject = obj;
+        myOther = -1;
     }
 
     public ObjectEvent(List<Conditional> conditionals){
         super(conditionals);
         myObject = -1;
+        myOther = -1;
     }
 
-    public ObjectEvent(List<Conditional> conditionals, double obj){
+    public ObjectEvent(List<Conditional> conditionals, int obj){
         super(conditionals);
         myObject = obj;
+        myOther = -1;
     }
 
-    public void setEventObject(double obj){
+    public void setEventObject(int obj){
         if(myObject == -1) myObject = obj;
     }
 
-    public abstract void activate(ObjectManager objectManager);
-    public abstract void activate(double other, ObjectManager objectManager);
+    public abstract void activate(EntityManager entityManager);
 
+    public void setOther(int other){
+        if(myOther == -1) myOther = other;
+    }
 }
