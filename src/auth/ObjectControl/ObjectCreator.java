@@ -30,7 +30,7 @@ public class ObjectCreator {
 //                "Test8", "Test9", "Test10"};
 //        String[] componentDisplay = new String[]{"Image File Path", "Object Name", "Test 3", "Test 4", "Test 5", "Test 6", "Test 7",
 //                "Test 8", "Test 9", "Test 10"};
-        var resource = ResourceBundle.getBundle("Components");
+        var resource = ResourceBundle.getBundle("components");
         for(var key:Collections.list(resource.getKeys())){
             myDisplayStrings.put(key, resource.getString(key));
         }

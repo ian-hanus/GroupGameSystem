@@ -1,23 +1,17 @@
 package PlayerMain;
 
-import EngineMain.Controller;
 import Regions.DescriptionRegion;
 import Regions.GamesRegion;
 import Regions.Thumbnail;
 import Regions.TitleRegion;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class PlayerStage {
     private final String STYLESHEET = "style.css";

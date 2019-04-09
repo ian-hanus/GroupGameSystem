@@ -1,3 +1,3 @@
 module Engine {
-    exports EngineMain;
+    exports controller;
 }
