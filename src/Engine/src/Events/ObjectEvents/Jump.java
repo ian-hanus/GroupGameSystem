@@ -21,10 +21,5 @@ public class Jump extends ObjectEvent {
         entityManager.jump(myObject);
     }
 
-    @Override
-    public void activate(int other, EntityManager entityManager) {
-        entityManager.jump(myObject);
-    }
-
 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 public abstract class ObjectEvent extends Event {
 
     int myObject;
+    int myOther;
 
     public ObjectEvent(){
         super();
@@ -17,16 +18,19 @@ public abstract class ObjectEvent extends Event {
     public ObjectEvent(int obj){
         super();
         myObject = obj;
+        myOther = -1;
     }
 
     public ObjectEvent(List<Conditional> conditionals){
         super(conditionals);
         myObject = -1;
+        myOther = -1;
     }
 
     public ObjectEvent(List<Conditional> conditionals, int obj){
         super(conditionals);
         myObject = obj;
+        myOther = -1;
     }
 
     public void setEventObject(int obj){
@@ -34,6 +38,8 @@ public abstract class ObjectEvent extends Event {
     }
 
     public abstract void activate(EntityManager entityManager);
-    public abstract void activate(int other, EntityManager entityManager);
 
+    public void setOther(int other){
+        if(myOther == -1) myOther = other;
+    }
 }

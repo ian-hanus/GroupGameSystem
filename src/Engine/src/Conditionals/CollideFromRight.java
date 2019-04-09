@@ -3,8 +3,6 @@ package Conditionals;
 import ECS.CollisionDetector;
 import ECS.EntityManager;
 import ECS.NoEntityException;
-import GameObjects.GameObject;
-import GameObjects.ObjectManager;
 import Physics.CollisionHandler;
 
 public class CollideFromRight extends ObjectConditional{
