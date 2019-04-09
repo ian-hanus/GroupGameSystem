@@ -19,6 +19,8 @@ public class MoveLeft extends ObjectEvent {
 
     @Override
     public void activate(int other, EntityManager entityManager) {
-        entityManager.setDirection(myObject, 180);
+        double currentPos = entityManager.getX(myObject);
+        double currentPos = entityManager.getX(myObject);
+        entityManager.setX(myObject, currentPos + );
     }
 }

@@ -1,11 +1,15 @@
 package EngineMain;
 
+import ECS.CollisionDetector;
 import ECS.Components.Component;
 import ECS.Components.MotionComponent;
+import ECS.Components.TagsComponent;
 import ECS.EntityManager;
 import ECS.Pair;
 import Events.ObjectEvents.MoveLeft;
 import Events.ObjectEvents.ObjectEvent;
+import GameObjects.GameObject;
+import GameObjects.EntityManager;
 import Physics.CollisionHandler;
 import Events.Event;
 
@@ -32,7 +36,7 @@ public class Controller {
         initializeDataVariables();
         myEntityManager = new EntityManager(myActiveObjects);
         myLevelManager = new LevelManager(myTimers, myEntityManager, myIterationCounter);
-        myCollisionHandler = new CollisionHandler(myEntityManager);
+        myCollisionHandler = new CollisionHandler(myEntityManager, myLevelManager, new CollisionDetector(myEntityManager));
         myStepTime = stepTime;
         myIterationCounter = 0;
     }
@@ -45,8 +49,8 @@ public class Controller {
         myCollisionResponses = myDataManager.loadCollisionResponseMap();
         myTimers = myDataManager.loadTimerMap();
         for(int id : myActiveObjects.keySet()){
-            Component type =  myActiveObjects.get(id, new Class<T> TagsComponent);
-            if(((Type) type).getType.equals("USER")) {
+            Component type =  myActiveObjects.get(id).get(TagsComponent.class);
+            if(((TagsComponent) type).contains("User")){
                 myUserID = id;
                 break;
             }
@@ -78,8 +82,29 @@ public class Controller {
     public void updateScene(){
         myLevelManager.updateTimer();
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
-        for (int obj : myActiveObjects.keySet()) {
+        for (int obj : myActiveObjects.keySet()){
             myEntityManager.move(obj);
+            Component motion = myActiveObjects.get(obj).get("STATE");
+            if(((MotionComponent) motion).colliding()) myEntityManager.restoreMovementDefaults(obj);
+            myEntityManager.setCollide(obj, false);
+            myEntityManager.updateStats(obj);
         }
     }
+
+    public Map<Integer, Map<Class<? extends Component>, Component>> getEntities(){
+        return myActiveObjects;
+    }
+
+
+
+
+
+
+
+
+
+    private Map<GameObject[], Set<Event>[]> makeCollisionResponseMap() {
+        return null;
+    }
+
 }
