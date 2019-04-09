@@ -1,7 +1,6 @@
 package auth.helpers;
 
-import auth.PropertyChangers.BlockProperties;
-import auth.PropertyChangers.ObjectProperties;
+import auth.ObjectControl.ObjectManager;
 import auth.panes.BottomPane;
 import auth.panes.LeftPane;
 import auth.panes.RightPane;
@@ -35,8 +34,9 @@ public class ScreenHelpers {
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT);
         var objLibPane = new RightPane(computeMarginToBottomEdge(propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT);
 
-        var objProperties = new BlockProperties("Test Block");
-        propsPane.getView().getChildren().add(objProperties.getVisualization());
+        var objectManager = new ObjectManager(objLibPane.getView());
+        propsPane.getView().getChildren().add(objectManager.getCreatorView());
+        objLibPane.getView().getChildren().add(objectManager.getBankView());
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
