@@ -2,8 +2,6 @@ package Conditionals;
 
 import ECS.Components.Component;
 import ECS.EntityManager;
-import ECS.NoEntityException;
-import GameObjects.GameObject;
 
 import java.util.List;
 import java.util.Map;

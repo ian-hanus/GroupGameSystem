@@ -1,8 +1,10 @@
 package Events.ObjectEvents;
 
+import Conditionals.CollideFromRight;
 import Conditionals.Conditional;
 import ECS.EntityManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoveLeft extends ObjectEvent {
@@ -14,13 +16,19 @@ public class MoveLeft extends ObjectEvent {
         super(conditionals, obj);
     }
 
+    private void setConditional{
+        if (myConditionals == null) myConditionals = new ArrayList<>();
+        myConditionals.add(new CollideFromRight());
+    }
+
     @Override
     public void activate(EntityManager entityManager) { }
 
     @Override
     public void activate(int other, EntityManager entityManager) {
         double currentPos = entityManager.getX(myObject);
-        double currentPos = entityManager.getX(myObject);
-        entityManager.setX(myObject, currentPos + );
+        double motionXVel = entityManager.getMotionXVel(myObject);
+        double stepTime = entityManager.getStepTime(myObject);
+        entityManager.setX(myObject, currentPos + motionXVel * stepTime);
     }
 }
