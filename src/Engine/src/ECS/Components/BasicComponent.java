@@ -19,6 +19,16 @@ public class BasicComponent extends Component {
         myZIndex = zIndex;
     }
 
+    public BasicComponent(File file, double xPos, double yPos, double width, double height) {
+        myFile = file;
+        myXPos = xPos;
+        myYPos = yPos;
+        myWidth = width;
+        myHeight = height;
+
+    }
+
+
     public double getWidth() {
         return myWidth;
     }

@@ -28,8 +28,10 @@ public class Controller {
     private LevelManager myLevelManager;
     private double myStepTime;
     private double myIterationCounter;
+    private double myWidth;
+    private double myHeight;
 
-    public Controller(double stepTime){
+    public Controller(double stepTime, double width, double height){
         myDataManager = new DataManager();
         initializeDataVariables();
         myEntityManager = new EntityManager(myActiveObjects);
@@ -37,6 +39,8 @@ public class Controller {
         myCollisionHandler = new CollisionHandler(myEntityManager, myLevelManager, new CollisionDetector(myEntityManager));
         myStepTime = stepTime;
         myIterationCounter = 0;
+        myWidth = width;
+        myHeight = height;
     }
 
     //FIXME??
@@ -82,27 +86,11 @@ public class Controller {
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
         for (int obj : myActiveObjects.keySet()){
             myEntityManager.move(obj);
-            Component motion = myActiveObjects.get(obj).get("STATE");
-            if(((MotionComponent) motion).colliding()) myEntityManager.restoreMovementDefaults(obj);
-            myEntityManager.setCollide(obj, false);
-            myEntityManager.updateStats(obj);
         }
     }
 
     public Map<Integer, Map<Class<? extends Component>, Component>> getEntities(){
         return myActiveObjects;
-    }
-
-
-
-
-
-
-
-
-
-    private Map<GameObject[], Set<Event>[]> makeCollisionResponseMap() {
-        return null;
     }
 
 }
