@@ -1,9 +1,10 @@
 package ECS;
 
 import ECS.Components.BasicComponent;
+import ECS.Components.ImpassableComponent;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 public class CollisionDetector {
     private EntityManager myEntityManager;
@@ -12,7 +13,19 @@ public class CollisionDetector {
         myEntityManager = entityManager;
     }
 
-    //FIXME do we need to detect whether the collision is right, top, left, or bottom based on solely the velocity angle?
+    public Integer[] getImpassableColliders(Integer entity, Set<Integer> allEntities) {
+        ArrayList<Integer> impassables = new ArrayList<>();
+        for (Integer other : allEntities) {
+            if (other.equals(entity))
+                continue;
+            var impassableComponent = myEntityManager.getComponent(other, ImpassableComponent.class);
+            if (impassableComponent != null && impassableComponent.getImpassable())
+                impassables.add(other);
+        }
+        return impassables.toArray(new Integer[0]);
+    }
+
+                           //FIXME do we need to detect whether the collision is right, top, left, or bottom based on solely the velocity angle?
     public boolean collides(Integer collider, Integer target) {
             return collideFromLeft(collider, target) ||
                     //collideFromRight(component1, component2) ||
