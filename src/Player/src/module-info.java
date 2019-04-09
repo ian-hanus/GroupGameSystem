@@ -1,5 +1,6 @@
 module player {
     requires Engine;
+
     requires javafx.graphics;
     requires javafx.media;
     requires javafx.web;
