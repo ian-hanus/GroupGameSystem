@@ -1,16 +1,16 @@
 package auth.panes;
 
-import javafx.scene.layout.Region;
+import javafx.scene.layout.Pane;
 
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
 
-public abstract class Pane {
-    private Region view;
-    public Pane(double x, double y, double width, double height, String style) {
+public abstract class CustomPane {
+    private Pane view;
+    public CustomPane(double x, double y, double width, double height, String style) {
         view = createStyledRectangle(x, y,
                 width, height, style);
     }
-    public Region getView() {
+    public Pane getView() {
         return view;
     }
 }

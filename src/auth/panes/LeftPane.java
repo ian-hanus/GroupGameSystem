@@ -3,7 +3,7 @@ package auth.panes;
 import static auth.Dimensions.*;
 import static auth.Styles.LEFT_PANE_STYLE;
 
-public class LeftPane extends Pane {
+public class LeftPane extends CustomPane {
     public LeftPane(double y, double width, double height) {
         super(LEFT_EDGE, y, width, height, LEFT_PANE_STYLE);
     }

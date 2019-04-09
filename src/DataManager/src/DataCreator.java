@@ -1,5 +1,5 @@
-package Data;
-
+import Data.DataInterface;
+import Data.GameInformation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
