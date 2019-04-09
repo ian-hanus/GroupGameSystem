@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public class EntityManager {
-    private HashMap<Integer, Map<Class<? extends Component>, Component>> myEntityMap;
+    private Map<Integer, Map<Class<? extends Component>, Component>> myEntityMap;
 
-    public EntityManager() {
-        myEntityMap = new HashMap<>();
+    public EntityManager(Map<Integer, Map<Class<? extends Component>, Component>> entityMap) {
+        myEntityMap = entityMap;
     }
 
     public void addComponent(int entityID, Component component) {
