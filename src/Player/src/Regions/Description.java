@@ -16,8 +16,8 @@ public class Description {
 
     private final String VBOX_STYLESHEET = "options";
     private final String DESCRIPTION_STYLESHEET = "desc";
-    public final static double IMAGE_WIDTH = 330;
-    public final static double IMAGE_HEIGHT = 165;
+    public final static double IMAGE_WIDTH = 500;
+    public final static double IMAGE_HEIGHT = IMAGE_WIDTH / 2;
     public final static double DESC_WIDTH = IMAGE_WIDTH;
     public final static double DESC_HEIGHT = 200;
 

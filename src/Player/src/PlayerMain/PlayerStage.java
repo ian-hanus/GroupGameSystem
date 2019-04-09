@@ -21,8 +21,8 @@ public class PlayerStage {
     private final String TITLE_STYLESHEET = "titleRegion";
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
-    public final double ST_WIDTH = 1200;
-    public final double ST_HEIGHT = 600;
+    public final double ST_WIDTH = 1400;
+    public final double ST_HEIGHT = 800;
     public final Paint ST_COLOR = Color.web("284376");
     public final double ST_SPACING = 20;
 
@@ -73,15 +73,17 @@ public class PlayerStage {
      * Run(), edit(), rate() currently placeholder. Update these methods.
      */
     public void run(String gameName) {
-        System.out.println(gameName + " is running!");
+//        System.out.println(gameName + " is running!");
+        Engine.src.Controller x = new Controller();
+
     }
 
     public void edit(String gameName) {
-        System.out.println(gameName + " is being edited!");
+//        System.out.println(gameName + " is being edited!");
     }
 
     public void rate(String gameName) {
-        System.out.println("Rating for " + gameName + " is being changed!");
+//        System.out.println("Rating for " + gameName + " is being changed!");
     }
 
     protected Stage makeStage() {
