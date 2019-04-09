@@ -1,5 +1,6 @@
 package EngineMain;
 
+import ECS.Components.Component;
 import GameObjects.GameObject;
 
 
@@ -20,7 +21,7 @@ public class EngineParser {
         return null;
     }
 
-    public Map<Double, Map<String, Components>> initializeActiveObjects(){
+    public Map<Double, Map<String, Component>> initializeActiveObjects(){
         return null;
     }
 

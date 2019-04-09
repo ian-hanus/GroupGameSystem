@@ -2,6 +2,7 @@ package Conditionals;
 
 import ECS.Components.Component;
 import ECS.EntityManager;
+import ECS.NoEntityException;
 import GameObjects.GameObject;
 
 import java.util.List;
@@ -10,7 +11,6 @@ import java.util.Map;
 public abstract class Comparison extends ObjectConditional{
 
     private String myComparisonOperator;
-    private int myObject;
     private Component myCompareTo;
     private Component myComponent;
     protected Class myComponentName;
@@ -54,17 +54,19 @@ public abstract class Comparison extends ObjectConditional{
 
     @Override
     public boolean satisfied(int obj, EntityManager entityManager) {
-        if (myCompareTo == null){
+        if (myCompareTo == null) {
             myCompareTo = entityManager.getComponent(obj, myComponentName);
         }
         myComponent = entityManager.getComponent(myObject, myComponentName);
-        return compare(entityManager);
+        if (!(myComponent == null)) return compare(entityManager);
+        else return true;
     }
 
     @Override
     public boolean satisfied(EntityManager entityManager) {
         myComponent = entityManager.getComponent(myObject, myComponentName);
-        return compare(entityManager);
+        if (!(myComponent == null)) return compare(entityManager);
+        else return true;
     }
 
     protected Component getCompareTo(){
@@ -73,5 +75,9 @@ public abstract class Comparison extends ObjectConditional{
 
     protected Component getComponent(){
         return myComponent;
+    }
+
+    protected String getMyComparisonOperator(){
+        return myComparisonOperator;
     }
 }
