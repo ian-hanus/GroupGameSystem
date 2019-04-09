@@ -32,9 +32,4 @@ public class DirectionChange extends ObjectEvent {
     public void activate(EntityManager entityManager){
         entityManager.adjustDirection(myObject, myAdjustmentAngle);
     }
-
-    @Override
-    public void activate(int other, EntityManager entityManager){
-        entityManager.adjustDirection(myObject, myAdjustmentAngle);
-    }
 }

@@ -2,11 +2,12 @@ package EngineMain;
 
 import ECS.CollisionDetector;
 import ECS.Components.Component;
-import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
 import ECS.EntityManager;
 import ECS.Pair;
+import Events.ObjectEvents.Jump;
 import Events.ObjectEvents.MoveLeft;
+import Events.ObjectEvents.MoveRight;
 import Events.ObjectEvents.ObjectEvent;
 import Physics.CollisionHandler;
 import Events.Event;
@@ -49,10 +50,9 @@ public class Controller {
         myScreenHeight = screenHeight;
         myDataManager = new DataManager();
         initializeDataVariables();
-        myEntityManager = new EntityManager(myActiveObjects);
+        myEntityManager = new EntityManager(myActiveObjects, myStepTime);
         myLevelManager = new LevelManager(myTimers, myEntityManager, myIterationCounter);
         myCollisionHandler = new CollisionHandler(myEntityManager, myLevelManager, new CollisionDetector(myEntityManager));
-        myStepTime = stepTime;
         myIterationCounter = 0;
         myWidth = width;
         myHeight = height;

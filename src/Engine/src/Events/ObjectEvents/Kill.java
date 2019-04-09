@@ -16,10 +16,7 @@ public class Kill extends ObjectEvent {
     }
 
     @Override
-    public void activate(EntityManager entityManager) { }
-
-    @Override
-    public void activate(int other, EntityManager entityManager) {
-        entityManager.die(other);
+    public void activate(EntityManager entityManager) {
+        entityManager.die(myOther);
     }
 }

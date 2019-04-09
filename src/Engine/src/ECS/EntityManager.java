@@ -8,9 +8,11 @@ import java.util.Map;
 
 public class EntityManager {
     private Map<Integer, Map<Class<? extends Component>, Component>> myEntityMap;
+    private double myStepTime;
 
-    public EntityManager(Map<Integer, Map<Class<? extends Component>, Component>> entityMap) {
+    public EntityManager(Map<Integer, Map<Class<? extends Component>, Component>> entityMap, double stepTime) {
         myEntityMap = entityMap;
+        myStepTime = stepTime;
     }
 
     public void addComponent(int entityID, Component component) {
@@ -138,5 +140,59 @@ public class EntityManager {
             double jumpVelocity = jumpComponent.getJumpVelocity();
             motionComponent.setYVelocity(jumpVelocity);
         }
+    }
+
+    public void setX(int obj, double newX){
+        Component basic = myEntityMap.get(obj).get(BasicComponent.class);
+        double currentX = ((BasicComponent) basic).getX();
+        double finalX = currentX;
+        CollisionDetector collisionDetector = new CollisionDetector(this);
+        List<Integer> impassableColliders = collisionDetector.getCollidersOfType(ImpassableComponent.class);
+        for(Integer impassable : impassableColliders){
+            if ((collisionDetector.collideFromLeft(impassable, obj) && newX > currentX) ||
+                (collisionDetector.collideFromLeft(obj, impassable) && newX < currentX)) {
+                finalX = currentX;
+            }
+        }
+        ((BasicComponent) basic).setX(finalX);
+    }
+
+    public void setY(int obj, double newY){
+        Component basic = getComponent(obj, BasicComponent.class);
+        double currentY = ((BasicComponent) basic).getY();
+        double finalY = currentY;
+        CollisionDetector collisionDetector = new CollisionDetector(this);
+        List<Integer> impassableColliders = collisionDetector.getCollidersOfType(ImpassableComponent.class);
+        for(Integer impassable : impassableColliders){
+            if ((collisionDetector.collideFromTop(impassable, obj) && newY > currentY) ||
+                    (collisionDetector.collideFromTop(impassable, obj) && newY < currentY)) {
+                finalY = currentY;
+            }
+        }
+        ((BasicComponent) basic).setY(finalY);
+    }
+
+    public double getX(int obj) {
+        Component basic = getComponent(obj, BasicComponent.class);
+        return ((BasicComponent) basic).getX();
+    }
+
+    public double getY(int obj) {
+        Component basic = getComponent(obj, BasicComponent.class);
+        return ((BasicComponent) basic).getY();
+    }
+
+    public double getMotionXVel(int obj) {
+        Component motion = getComponent(obj, MotionComponent.class);
+        return ((MotionComponent) motion).getMovementXVelocity();
+    }
+
+    public double getMotionYVel(int obj) {
+        Component motion = getComponent(obj, MotionComponent.class);
+        return ((MotionComponent) motion).getMovementYVelocity();
+    }
+
+    public double getStepTime() {
+        return myStepTime;
     }
 }

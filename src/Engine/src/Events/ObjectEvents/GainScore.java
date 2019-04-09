@@ -31,8 +31,4 @@ public class GainScore extends ObjectEvent {
         entityManager.increaseScore(myObject, myGain);
     }
 
-    @Override
-    public void activate(int other, EntityManager entityManager){
-        entityManager.increaseScore(myObject, myGain);
-    }
 }
