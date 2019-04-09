@@ -7,8 +7,6 @@ import ECS.Components.TagsComponent;
 import ECS.EntityManager;
 import ECS.Pair;
 import Events.ObjectEvents.ObjectEvent;
-import GameObjects.GameObject;
-import GameObjects.EntityManager;
 import Physics.CollisionHandler;
 import Events.Event;
 
@@ -46,7 +44,7 @@ public class Controller {
         myActiveObjects = myDataManager.loadDefaultObjects();
         myHotKeys = myDataManager.loadHotKeyMap();
         myCollisionResponses = myDataManager.loadCollisionResponseMap();
-        myTimers = myDataManager.loadTimerMap();
+        //myTimers = myDataManager.loadTimerMap();
         for(int id : myActiveObjects.keySet()){
             Component type =  myActiveObjects.get(id).get(TagsComponent.class);
             if(((TagsComponent) type).contains("User")){
