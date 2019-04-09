@@ -1,3 +1,5 @@
+package parser;
+
 import Data.GameInformation;
 
 public interface DataInterface {

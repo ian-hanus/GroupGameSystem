@@ -1,3 +1,5 @@
+package parser;
+
 public class Level {
     // TODO: Establish what must be passed with the new entity based backend
 //    private Map<Integer, Map<String, Component>> myActiveObjects;
@@ -7,7 +9,7 @@ public class Level {
 //    private List<Object> myObjectBank;
 //    private Image myBackground;
 //
-//    public Level(Integer levelNumber, List<Object> gameObjects, List<Object> objectBank, Image background){
+//    public parser.Level(Integer levelNumber, List<Object> gameObjects, List<Object> objectBank, Image background){
 //        myLevelNumber = levelNumber;
 //        myGameObjects = gameObjects;
 //        myObjectBank = objectBank;

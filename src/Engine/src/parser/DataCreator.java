@@ -1,3 +1,5 @@
+package parser;
+
 import Data.DataInterface;
 import Data.GameInformation;
 import com.google.gson.Gson;
@@ -29,7 +31,7 @@ public class DataCreator implements DataInterface {
             GameInformation gameInformation = myGson.fromJson(new FileReader(fileName), GameInformation.class);
             return gameInformation;
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to load GameInformation from JSON file " + fileName);
+            System.out.println("Unable to load parser.GameInformation from JSON file " + fileName);
         }
         return new GameInformation(null, null, null, null);
     }
