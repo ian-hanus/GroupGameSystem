@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 public class CommentBox extends Feature {
 
     private static final String PROMPT = "Enter Comment";
+    private static final String UPLOAD_BUTTON = "UPLOAD";
     private static final double COMMENT_STRETCH_WIDTH = 1000;
     private static final double BUTTON_WIDTH = 100;
     private static final double BUTTON_STRETCH_HEIGHT = 60;
@@ -21,7 +22,7 @@ public class CommentBox extends Feature {
      * Constructor for CommentBox and its buttons for uploading. Creates listeners for buttons
      */
     public CommentBox() {
-        myUploadButton = new Button("UPLOAD");
+        myUploadButton = new Button(UPLOAD_BUTTON);
         myUploadButton.setOnAction((event) -> uploadComment());
         myCommentInput = new TextArea();
         myCommentInput.setPrefRowCount(10);

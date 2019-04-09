@@ -8,26 +8,22 @@ import javafx.scene.paint.Paint;
 import java.io.File;
 
 public class Thumbnail {
-
-    public static final Paint DEFAULT_COLOR = Color.RED;
-
     private String myName;
     private StackPane myPaneRoot;
     private ImageView myImage;
     private double myWidth;
     private double myHeight;
-    private double myOffset;
 
-    public Thumbnail(String gamename, String filename, double wd, double ht) {
+    public Thumbnail(String gameName, String filename, double wd, double ht) {
 
-        myName = gamename;
+        myName = gameName;
         File file = new File(filename);
         myImage = new ImageView();
         try {
             myImage = new ImageView(file.toURI().toString());
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("oops");
+            //TODO: better exception handling
+            System.out.println("Error occurred when trying to set an image for game thumbnail");
         }
 
         myPaneRoot = new StackPane();
@@ -42,7 +38,6 @@ public class Thumbnail {
     }
 
     private void makeThumbnail() {
-//        myPaneRoot.getChildren().add(new Rectangle(myWidth, myHeight, DEFAULT_COLOR));
         myImage.setFitWidth(myWidth);
         myImage.setFitHeight(myHeight);
         myPaneRoot.getChildren().add(myImage);

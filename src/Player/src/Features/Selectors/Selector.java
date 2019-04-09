@@ -29,7 +29,7 @@ public abstract class Selector extends Feature {
     /**
      * Return the dropbox of the Selector
      *
-     * @return
+     * @return myDropBox
      */
     @Override
     public Node getMainComponent() {
