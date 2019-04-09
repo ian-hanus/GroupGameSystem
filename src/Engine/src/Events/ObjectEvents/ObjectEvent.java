@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class ObjectEvent extends Event {
 
-    int myObject;
-    int myOther;
+    protected int myObject;
+    protected int myOther;
 
     public ObjectEvent(){
         super();

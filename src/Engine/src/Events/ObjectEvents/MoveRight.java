@@ -11,12 +11,12 @@ import Events.ObjectEvents.ObjectEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoveLeft extends ObjectEvent {
+public class MoveRight extends ObjectEvent {
 
-    public MoveLeft() {super();}
-    public MoveLeft(int obj){super(obj);}
-    public MoveLeft(List<Conditional> conditionals){super(conditionals);}
-    public MoveLeft(List<Conditional> conditionals, int obj){
+    public MoveRight() {super();}
+    public MoveRight(int obj){super(obj);}
+    public MoveRight(List<Conditional> conditionals){super(conditionals);}
+    public MoveRight(List<Conditional> conditionals, int obj){
         super(conditionals, obj);
     }
 
@@ -25,6 +25,6 @@ public class MoveLeft extends ObjectEvent {
             double currentPos = entityManager.getX(myObject);
             double motionXVel = entityManager.getMotionXVel(myObject);
             double stepTime = entityManager.getStepTime();
-            entityManager.setX(myObject, currentPos - motionXVel * stepTime);
+            entityManager.setX(myObject, currentPos + motionXVel * stepTime);
     }
 }
