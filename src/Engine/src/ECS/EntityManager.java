@@ -130,7 +130,12 @@ public class EntityManager {
     }
 
     public void stop(int entityID) {
-
+        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        if (motionComponent != null) {
+            //might want to split this up into x and y stop methods
+            motionComponent.setXVelocity(0);
+            motionComponent.setYVelocity(0);
+        }
     }
 
     public void jump(int entityID) {
@@ -143,7 +148,7 @@ public class EntityManager {
     }
 
     public void setX(int obj, double newX){
-        Component basic = myEntityMap.get(obj).get(BasicComponent.class);
+        Component basic = getComponent(obj, BasicComponent.class);
         double currentX = ((BasicComponent) basic).getX();
         double finalX = newX;
         CollisionDetector collisionDetector = new CollisionDetector(this);
