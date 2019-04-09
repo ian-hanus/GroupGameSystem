@@ -6,18 +6,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.layout.Region;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Description {
 
-    private final String VBOX_STYLESHEET = "options";
-    private final String DESCRIPTION_STYLESHEET = "desc";
-    public final static double IMAGE_WIDTH = 330;
-    public final static double IMAGE_HEIGHT = 165;
+    private final String OPTIONS_ID = "options";
+    private final String BUTTONS_ID = "buttonsBox";
+    private final String DESCRIPTION_ID = "descGrid";
+    public final static double IMAGE_WIDTH = 365;
+    public final static double IMAGE_HEIGHT = 180;
     public final static double DESC_WIDTH = IMAGE_WIDTH;
     public final static double DESC_HEIGHT = 200;
 
@@ -28,7 +29,7 @@ public class Description {
     private GridPane myPane;
     private ImageView myImage;
     private Label myDescription;
-    private VBox myGameOptions;
+    private HBox myGameOptions;
     private PlayerStage myContext;
 
     public Description(String game, PlayerStage context) {
@@ -50,7 +51,7 @@ public class Description {
         myGame = game;
 
         myPane = new GridPane();
-        myPane.setId(DESCRIPTION_STYLESHEET);
+        myPane.setId(DESCRIPTION_ID);
 
         placeImage();
         placeDescription();
@@ -76,14 +77,23 @@ public class Description {
 
     // TODO: add Play, Edit, Rate, Rating, High Scores
     private void placeGameOptions() {
-        myGameOptions = new VBox();
-        myGameOptions.setId(VBOX_STYLESHEET);
+        myGameOptions = new HBox();
+        myGameOptions.setId(OPTIONS_ID);
+
+        var leftPadding = new Region();
+        var options = new VBox();
+        options.setId(BUTTONS_ID);
+        var rightPadding = new Region();
 
         Button run = new Run(myContext, myGame).getButton();
         Button edit = new Edit(myContext, myGame).getButton();
         Button rate = new Rate(myContext, myGame).getButton();
 
-        myGameOptions.getChildren().addAll(run, edit, rate);
+        options.getChildren().addAll(run, edit, rate);
+        myGameOptions.setHgrow(leftPadding, Priority.ALWAYS);
+        myGameOptions.setHgrow(rightPadding, Priority.ALWAYS);
+
+        myGameOptions.getChildren().addAll(leftPadding, options, rightPadding);
         myPane.add(myGameOptions, 2, 0, 1, 2);
     }
 

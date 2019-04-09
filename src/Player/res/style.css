@@ -2,11 +2,11 @@
 
 .gridPane {
     -fx-padding: 15 15 15 15;
-    -fx-background-color: #284376;
+    -fx-background-color: #808080;
     -fx-alignment: center;
 }
 
-#desc {
+#descGrid {
     -fx-padding: 20;
     -fx-alignment: "top-left";
 }
@@ -15,19 +15,23 @@
     -fx-pref-width: 770;
     -fx-pref-height: 75;
     -fx-alignment: "bottom-left";
-    -fx-background: #B0C4DE;
+    -fx-background: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
     -fx-background-radius: 5 5 5 5;
+    -fx-border-radius: 5 5 5 5;
 }
 
 .scroll-pane {
     -fx-padding: 5 5 5 5;
-    -fx-background: #B0C4DE;
+    -fx-background: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
     -fx-background-radius: 5;
     -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
 }
 
 #gamesRegion {
-    -fx-pref-width: 380;
+    -fx-pref-width: 370;
     -fx-pref-height: 560;
 }
 
@@ -46,32 +50,45 @@
     -fx-font-size: 50;
 }
 
-.vbox {
+#gamesBox {
     -fx-background-radius: 5;
     -fx-pref-width: 100;
     -fx-pref-height: 350;
-}
-
-#panel {
     -fx-padding: 10 10 10 10;
     -fx-spacing: 10;
 }
 
+#buttonsBox {
+    -fx-pref-width: 200;
+    -fx-spacing: 10;
+    -fx-alignment: "top-center";
+}
+
 #options {
     -fx-background-radius: 5;
-    -fx-pref-width: 300;
-    -fx-pref-height: 350;
+    -fx-pref-width: 375;
+    -fx-pref-height: 425;
     -fx-alignment: center;
 }
 
-.button {
-    -fx-pref-width: 100;
-    -fx-pref-height: 50;
+.button, .button:focused {
+    -fx-pref-width: 120;
+    -fx-pref-height: 60;
     -fx-background-radius: 10;
+    -fx-background-color: linear-gradient(#FFFFFF, #EEEEEE),
+    radial-gradient(center 50% -40%, radius 200%, #EEEEEE 45%, #FFFFFF 50%);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 1);
 }
 
-/* not sure how to do this for every panel---there must be a better way than copying this several times */
-.button:focused {
-    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-radius: 10;
+.button:hover{
+    -fx-background-color:
+            linear-gradient(#EEEEEE, #CCCCCC),
+            radial-gradient(center 50% 50%, radius 100%, #CCCCCC, #EEEEEE);
+}
+
+.button:pressed {
+    -fx-background-color:
+            linear-gradient(#AAAAAA, #555555),
+            #EEEEEE, #CCCCCC,
+            radial-gradient(center 50% 50%, radius 100%, #FFFFFF, #AAAAAA);
 }
