@@ -1,4 +1,4 @@
-import Data.GameInformation;
+package DataManager;
 
 public interface DataInterface {
     void saveGame(String fileName, GameInformation gameInformation);

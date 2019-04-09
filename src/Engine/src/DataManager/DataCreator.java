@@ -1,5 +1,5 @@
-import Data.DataInterface;
-import Data.GameInformation;
+package DataManager;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,6 +31,6 @@ public class DataCreator implements DataInterface {
         } catch (FileNotFoundException e) {
             System.out.println("Unable to load GameInformation from JSON file " + fileName);
         }
-        return new GameInformation(null, null, null, null);
+        return new GameInformation(null, null, null);
     }
 }
