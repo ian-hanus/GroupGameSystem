@@ -1,8 +1,21 @@
 package Conditionals;
 
-import GameObjects.GameObject;
+import GameObjects.ObjectManager;
 
-public interface Conditional {
-    boolean satisfied();
-    boolean satisfied(GameObject obj1, GameObject obj2);
+public abstract class Conditional {
+
+    protected boolean Required;
+
+    public Conditional(boolean required){
+        Required = required;
+    }
+
+    public abstract boolean satisfied(ObjectManager objectManager);
+    public abstract boolean satisfied(double obj, ObjectManager objectManager);
+
+    public boolean required(){
+        return Required;
+    }
+
+    abstract Conditional copy();
 }
