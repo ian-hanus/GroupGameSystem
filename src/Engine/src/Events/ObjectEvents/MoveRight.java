@@ -22,9 +22,6 @@ public class MoveRight extends ObjectEvent {
 
     @Override
     public void activate(EntityManager entityManager) {
-            double currentPos = entityManager.getX(myObject);
-            double motionXVel = entityManager.getMotionXVel(myObject);
-            double stepTime = entityManager.getStepTime();
-            entityManager.setX(myObject, currentPos + motionXVel * stepTime);
+        entityManager.moveHorizontal(myObject, true);
     }
 }

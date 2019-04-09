@@ -17,9 +17,6 @@ public class MoveDown extends ObjectEvent {
 
     @Override
     public void activate(EntityManager entityManager) {
-        double currentPos = entityManager.getY(myObject);
-        double motionYVel = entityManager.getMotionYVel(myObject);
-        double stepTime = entityManager.getStepTime();
-        entityManager.setY(myObject, currentPos - motionYVel * stepTime);
+        entityManager.moveVertical(myObject, true);
     }
 }

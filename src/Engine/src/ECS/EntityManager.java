@@ -147,7 +147,34 @@ public class EntityManager {
         }
     }
 
-    public void setX(int obj, double newX){
+    //TODO remove duplication between horizontal and vertical
+    public void moveVertical(Integer entity, boolean down) {
+        var basic = getComponent(entity, BasicComponent.class);
+        var motion = getComponent(entity, MotionComponent.class);
+        if (basic == null || motion == null)
+            return;
+
+        double yPos = basic.getY();
+        double yVel = motion.getMovementYVelocity();
+        int direction = down ? 1 : -1;
+        setY(entity, yPos + direction * yVel * myStepTime);
+    }
+
+    //TODO remove duplication between horizontal and vertical
+    public void moveHorizontal(Integer entity, boolean right) {
+        var basic = getComponent(entity, BasicComponent.class);
+        var motion = getComponent(entity, MotionComponent.class);
+        if (basic == null || motion == null)
+            return;
+
+        double xPos = basic.getX();
+        double xVel = motion.getMovementXVelocity();
+        int direction = right ? 1 : -1;
+        setX(entity, xPos + direction * xVel * myStepTime);
+    }
+
+    //TODO remove duplication between setY and also in collision handler and detector
+    private void setX(int obj, double newX){
         Component basic = getComponent(obj, BasicComponent.class);
         double currentX = ((BasicComponent) basic).getX();
         double finalX = newX;
@@ -162,7 +189,8 @@ public class EntityManager {
         ((BasicComponent) basic).setX(finalX);
     }
 
-    public void setY(int obj, double newY){
+    //TODO remove duplication between setY and also in collision handler and detector
+    private void setY(int obj, double newY){
         Component basic = getComponent(obj, BasicComponent.class);
         double currentY = ((BasicComponent) basic).getY();
         double finalY = newY;
@@ -175,29 +203,5 @@ public class EntityManager {
             }
         }
         ((BasicComponent) basic).setY(finalY);
-    }
-
-    public double getX(int obj) {
-        Component basic = getComponent(obj, BasicComponent.class);
-        return ((BasicComponent) basic).getX();
-    }
-
-    public double getY(int obj) {
-        Component basic = getComponent(obj, BasicComponent.class);
-        return ((BasicComponent) basic).getY();
-    }
-
-    public double getMotionXVel(int obj) {
-        Component motion = getComponent(obj, MotionComponent.class);
-        return ((MotionComponent) motion).getMovementXVelocity();
-    }
-
-    public double getMotionYVel(int obj) {
-        Component motion = getComponent(obj, MotionComponent.class);
-        return ((MotionComponent) motion).getMovementYVelocity();
-    }
-
-    public double getStepTime() {
-        return myStepTime;
     }
 }
