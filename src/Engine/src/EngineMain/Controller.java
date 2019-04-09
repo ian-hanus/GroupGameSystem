@@ -1,6 +1,7 @@
 package EngineMain;
 
 import ECS.CollisionDetector;
+import ECS.Components.BasicComponent;
 import ECS.Components.Component;
 import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
@@ -42,6 +43,8 @@ public class Controller {
     private LevelManager myLevelManager;
     private double myStepTime;
     private double myIterationCounter;
+    private double displayOffsetX;
+    private double displayOffsetY;
 
     public Controller(double stepTime, double screenWidth, double screenHeight){
         myStepTime = stepTime;
@@ -65,8 +68,10 @@ public class Controller {
         myTimers = myDataManager.loadTimerMap();
         for(int id : myActiveObjects.keySet()){
             Component type =  myActiveObjects.get(id).get(TagsComponent.class);
-            if(((TagsComponent) type).contains("User")){
+            if(((TagsComponent) type).contains("USER")){
                 myUserID = id;
+                BasicComponent basic = (BasicComponent)myActiveObjects.get(id).get(BasicComponent.class);
+                displayOffsetX = basic.getX() + .5 * basic.getWidth() - .5;
                 break;
             }
         }
@@ -106,6 +111,8 @@ public class Controller {
         }
         updateScroll();
     }
+
+    public
 
     public void updateScroll() {
 

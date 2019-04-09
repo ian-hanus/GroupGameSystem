@@ -7,6 +7,8 @@ public class BasicComponent extends Component {
     private double myHeight;
     private double myXPos;
     private double myYPos;
+    private double displayXPos;
+    private double displayYPos
     private File myFile;
     private int myZIndex;
 
@@ -42,6 +44,22 @@ public class BasicComponent extends Component {
     public void setX(double xPos) { this.myXPos = xPos; }
 
     public void setY(double yPos) { this.myYPos = yPos; }
+
+    public double getDisplayX() {
+        return displayXPos;
+    }
+
+    public double getDisplayY() {
+        return displayYPos;
+    }
+
+    public void setDisplayX(double x) {
+        displayXPos = x;
+    }
+
+    public void setDisplayY(double y) {
+        displayYPos = y;
+    }
 
     public File getMyFile() {
         return myFile;
