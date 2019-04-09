@@ -92,3 +92,8 @@
             #EEEEEE, #CCCCCC,
             radial-gradient(center 50% 50%, radius 100%, #FFFFFF, #AAAAAA);
 }
+
+.slider {
+    -fx-show-tick-marks: true;
+    -fx-show-tick-labels: true;
+}
