@@ -18,10 +18,6 @@ import java.util.List;
         @Override
         public void activate(EntityManager entityManager) { entityManager.die(myObject);}
 
-        @Override
-        public void activate(int other, EntityManager entityManager) {
-            entityManager.die(myObject);
-        }
     }
 
 

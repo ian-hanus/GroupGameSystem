@@ -150,9 +150,11 @@ public class CollisionHandler {
                 }
             }
             if (event.conditionsSatisfied(other, myEntityManager)) {
-                if (event instanceof ObjectEvent)
-                    ((ObjectEvent) event).activate(other, myEntityManager);
-                else
+                if (event instanceof ObjectEvent) {
+                    ((ObjectEvent) event).setOther(other);
+                    ((ObjectEvent) event).activate(myEntityManager);
+                }
+                    else
                     ((GameEvent) event).activate(myLevelManager);
             }
         }
