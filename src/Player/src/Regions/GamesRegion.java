@@ -23,7 +23,7 @@ public class GamesRegion extends Region {
     public static final double HEADER_HEIGHT = 15;
     public static final double SCROLLBAR_WIDTH = 20;
 
-    private final String PANEL_STYLESHEET = "panel";
+    private final String PANEL_ID = "gamesBox";
 
     private ArrayList<Thumbnail> myThumbnails;
     private ScrollPane myGamesPane;
@@ -73,7 +73,9 @@ public class GamesRegion extends Region {
     protected void buildGroup() {
 
         myPanels = new VBox();
-        myPanels.setId(PANEL_STYLESHEET);
+        myPanels.setId(PANEL_ID);
+
+        myThumbnails = new ArrayList<>();
 
         myPanels.getChildren().add(makeHeader(true));
         myPanels.getChildren().addAll(makeThumbnails(true));
@@ -124,7 +126,7 @@ public class GamesRegion extends Region {
             games.addAll(myMap.keySet());
         }
 
-        myThumbnails = new ArrayList<>();
+//        myThumbnails = new ArrayList<>();
 
         for (int i = 0; i < games.size(); i ++) {
             String gameName = games.get(i);
