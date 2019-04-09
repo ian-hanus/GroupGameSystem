@@ -7,6 +7,7 @@ import ECS.Components.MotionComponent;
 import ECS.Components.TagsComponent;
 import ECS.EntityManager;
 import ECS.Pair;
+import Events.ObjectEvents.Jump;
 import Events.ObjectEvents.MoveLeft;
 import Events.ObjectEvents.ObjectEvent;
 import Physics.CollisionHandler;
@@ -41,24 +42,19 @@ public class Controller {
     private LevelManager myLevelManager;
     private double myStepTime;
     private double myIterationCounter;
-    private double myWidth;
-    private double myHeight;
-    private double displayOffsetX;
-    private double displayOffsetY;
+    private double[] offset;
 
-    public Controller(double stepTime, double screenWidth, double screenHeight){
+    public Controller(double stepTime, double screenWidth, double screenHeight, double levelWidth, double levelHeight){
         myStepTime = stepTime;
         myScreenWidth = screenWidth;
         myScreenHeight = screenHeight;
         myDataManager = new DataManager();
         initializeDataVariables();
         myEntityManager = new EntityManager(myActiveObjects);
-        myLevelManager = new LevelManager(myTimers, myEntityManager, myIterationCounter);
+        myLevelManager = new LevelManager(myTimers, myEntityManager, myIterationCounter, levelWidth, levelHeight);
         myCollisionHandler = new CollisionHandler(myEntityManager, myLevelManager, new CollisionDetector(myEntityManager));
         myStepTime = stepTime;
         myIterationCounter = 0;
-        myWidth = width;
-        myHeight = height;
     }
 
     //FIXME??
@@ -72,8 +68,6 @@ public class Controller {
             Component type =  myActiveObjects.get(id).get(TagsComponent.class);
             if(((TagsComponent) type).contains("USER")){
                 myUserID = id;
-                BasicComponent basic = (BasicComponent)myActiveObjects.get(id).get(BasicComponent.class);
-                displayOffsetX = basic.getX() + .5 * basic.getWidth() - .5;
                 break;
             }
         }
@@ -107,13 +101,21 @@ public class Controller {
         for (int obj : myActiveObjects.keySet()){
             myEntityManager.move(obj);
         }
-        updateScroll();
+        offset = updateOffset();
     }
 
-    public void updateScroll() {
-
+    public double[] updateOffset() {
+        BasicComponent basic = (BasicComponent) myActiveObjects.get(myUserID).get(BasicComponent.class);
+        double userX = basic.getX();
+        double userY = basic.getY();
+        double userWidth = basic.getWidth();
+        double userHeight = basic.getHeight();
+        return myLevelManager.determineOffset(userX, userY, userWidth, userHeight, myScreenWidth, myScreenHeight);
     }
 
+    public double[] getOffset() {
+        return offset;
+    }
     public Map<Integer, Map<Class<? extends Component>, Component>> getEntities(){
         return myActiveObjects;
     }
