@@ -147,7 +147,7 @@ public class EntityManager {
         double currentX = ((BasicComponent) basic).getX();
         double finalX = currentX;
         CollisionDetector collisionDetector = new CollisionDetector(this);
-        List<Integer> impassableColliders = collisionDetector.getCollidersOfType(ImpassableComponent.class);
+        List<Integer> impassableColliders = collisionDetector.getImpassableColliders();
         for(Integer impassable : impassableColliders){
             if ((collisionDetector.collideFromLeft(impassable, obj) && newX > currentX) ||
                 (collisionDetector.collideFromLeft(obj, impassable) && newX < currentX)) {
@@ -162,7 +162,7 @@ public class EntityManager {
         double currentY = ((BasicComponent) basic).getY();
         double finalY = currentY;
         CollisionDetector collisionDetector = new CollisionDetector(this);
-        List<Integer> impassableColliders = collisionDetector.getCollidersOfType(ImpassableComponent.class);
+        List<Integer> impassableColliders = collisionDetector.getImpassableColliders();
         for(Integer impassable : impassableColliders){
             if ((collisionDetector.collideFromTop(impassable, obj) && newY > currentY) ||
                     (collisionDetector.collideFromTop(impassable, obj) && newY < currentY)) {
