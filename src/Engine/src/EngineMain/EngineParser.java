@@ -1,7 +1,6 @@
 package EngineMain;
 
 import ECS.Components.Component;
-import GameObjects.GameObject;
 
 
 import java.util.Map;
