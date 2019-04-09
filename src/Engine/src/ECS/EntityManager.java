@@ -145,9 +145,9 @@ public class EntityManager {
     public void setX(int obj, double newX){
         Component basic = myEntityMap.get(obj).get(BasicComponent.class);
         double currentX = ((BasicComponent) basic).getX();
-        double finalX = currentX;
+        double finalX = newX;
         CollisionDetector collisionDetector = new CollisionDetector(this);
-        List<Integer> impassableColliders = collisionDetector.getImpassableColliders();
+        Integer[] impassableColliders = collisionDetector.getImpassableColliders(obj, myEntityMap.keySet());
         for(Integer impassable : impassableColliders){
             if ((collisionDetector.collideFromLeft(impassable, obj) && newX > currentX) ||
                 (collisionDetector.collideFromLeft(obj, impassable) && newX < currentX)) {
@@ -160,9 +160,9 @@ public class EntityManager {
     public void setY(int obj, double newY){
         Component basic = getComponent(obj, BasicComponent.class);
         double currentY = ((BasicComponent) basic).getY();
-        double finalY = currentY;
+        double finalY = newY;
         CollisionDetector collisionDetector = new CollisionDetector(this);
-        List<Integer> impassableColliders = collisionDetector.getImpassableColliders();
+        Integer[] impassableColliders = collisionDetector.getImpassableColliders(obj, myEntityMap.keySet());
         for(Integer impassable : impassableColliders){
             if ((collisionDetector.collideFromTop(impassable, obj) && newY > currentY) ||
                     (collisionDetector.collideFromTop(impassable, obj) && newY < currentY)) {
