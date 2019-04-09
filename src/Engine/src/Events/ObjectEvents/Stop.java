@@ -13,9 +13,4 @@ public class Stop extends ObjectEvent {
 
     @Override
     public void activate(EntityManager entityManager) { entityManager.stop(myObject);}
-
-    @Override
-    public void activate(int other, EntityManager entityManager) {
-        entityManager.stop(myObject);
-    }
 }
