@@ -2,7 +2,7 @@ package Engine.src.Triggers.Events.GameEvents;
 
 import Engine.src.Triggers.Conditionals.Conditional;
 import Engine.src.Controller.LevelManager;
-import Triggers.Events.Event;
+import Engine.src.Triggers.Events.Event;
 
 import java.util.List;
 import java.util.Map;

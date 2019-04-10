@@ -1,12 +1,12 @@
-package PlayerMain;
+package Player.src.PlayerMain;
 
-import Components.BasicComponent;
-import Components.Component;
-import Controller.Controller;
-import Regions.DescriptionRegion;
-import Regions.GamesRegion;
-import Regions.Thumbnail;
-import Regions.TitleRegion;
+import Engine.src.Components.BasicComponent;
+import Engine.src.Components.Component;
+import Engine.src.Controller.Controller;
+import Player.src.Regions.DescriptionRegion;
+import Player.src.Regions.GamesRegion;
+import Player.src.Regions.Thumbnail;
+import Player.src.Regions.TitleRegion;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;

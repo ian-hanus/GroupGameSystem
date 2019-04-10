@@ -1,6 +1,6 @@
 package Launcher.src.Initial;
 
-import PlayerMain.GameLoop;
+import Player.src.PlayerMain.GameLoop;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
