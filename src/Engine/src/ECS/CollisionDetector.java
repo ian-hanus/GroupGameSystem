@@ -47,7 +47,11 @@ public class CollisionDetector {
         double width1 = colliderComponent.getWidth();
         double x1 = colliderComponent.getX();
         double x2 = targetComponent.getX();
-        return x1 + width1 >= x2;
+        double height1 = colliderComponent.getHeight();
+        double height2 = targetComponent.getHeight();
+        double y1 = colliderComponent.getY();
+        double y2 = targetComponent.getY();
+        return x1 + width1 >= x2 && !(y2 >= height1 + y1 || y2 <= y1 - height2);
     }
 
     //FIXME no collide from bottom (CollideFromBottom event uses this method)
@@ -57,6 +61,10 @@ public class CollisionDetector {
         double height1 = colliderComponent.getHeight();
         double y1 = colliderComponent.getY();
         double y2 = targetComponent.getY();
-        return y1 + height1>= y2;
+        double width1 = colliderComponent.getWidth();
+        double width2 = colliderComponent.getWidth();
+        double x1 = colliderComponent.getX();
+        double x2 = colliderComponent.getX();
+        return y1 + height1>= y2 && !(x2 >= width1 + x1 || x2 <= x1 - width2);
     }
 }
