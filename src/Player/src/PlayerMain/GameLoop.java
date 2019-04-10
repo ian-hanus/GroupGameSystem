@@ -1,6 +1,5 @@
 package PlayerMain;
 
-import EngineMain.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
