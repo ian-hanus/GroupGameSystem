@@ -1,4 +1,4 @@
-package Parser;
+package DataManager;
 
 public class Splash {
 }

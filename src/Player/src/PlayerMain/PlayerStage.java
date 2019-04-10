@@ -1,8 +1,8 @@
 package PlayerMain;
 
-import ECS.Components.BasicComponent;
-import ECS.Components.Component;
-import EngineMain.Controller;
+import Components.BasicComponent;
+import Components.Component;
+import Controller.Controller;
 import Regions.DescriptionRegion;
 import Regions.GamesRegion;
 import Regions.Thumbnail;

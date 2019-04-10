@@ -1,12 +1,11 @@
 module player {
-    requires Engine;
-
     requires javafx.graphics;
     requires javafx.media;
     requires javafx.web;
     requires java.datatransfer;
+    requires Engine;
 
     exports PlayerMain;
-    exports Features;
+//    exports Features;
     exports Regions;
 }
