@@ -1,6 +1,6 @@
-package Controller;
+package Engine.src.Controller;
 
-import Components.Component;
+import Engine.src.Components.Component;
 import Triggers.Timer;
 
 
