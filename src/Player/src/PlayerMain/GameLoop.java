@@ -3,13 +3,11 @@ package PlayerMain;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class GameLoop extends Application {
+public class GameLoop {
 
-    public void start(Stage stage) {
+    public Stage getStage() {
         PlayerStage player = new PlayerStage();
-        Stage st = player.makeStage();
-        st.show();
-
+        return player.makeStage();
     }
 
     // TODO: Add methods for playing game
