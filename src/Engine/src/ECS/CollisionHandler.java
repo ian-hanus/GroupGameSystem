@@ -117,10 +117,13 @@ public class CollisionHandler {
             var motion = myEntityManager.getComponent(entity1, MotionComponent.class);
             if (motion == null)
                 return;
-            if (myCollisionDetector.collideFromTop(entity1, entity2) || myCollisionDetector.collideFromTop(entity2, entity1)) {
+            if (myCollisionDetector.collideFromTop(entity1, entity2) && motion.getYVelocity() > 0
+                    || myCollisionDetector.collideFromTop(entity2, entity1) && motion.getYVelocity() < 0) {
+                System.out.println(myCollisionDetector.collideFromTop(entity2, entity1));
                 motion.setYVelocity(0);
             }
-            else if (myCollisionDetector.collideFromLeft(entity1, entity2) || myCollisionDetector.collideFromLeft(entity2, entity1)) {
+            else if (myCollisionDetector.collideFromLeft(entity1, entity2) && motion.getXVelocity() > 0
+                    || myCollisionDetector.collideFromLeft(entity2, entity1) && motion.getXVelocity() < 0) {
                 motion.setXVelocity(0);
             }
         }
