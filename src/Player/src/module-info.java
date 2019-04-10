@@ -1,4 +1,4 @@
-module player {
+module Player {
     requires javafx.graphics;
     requires javafx.media;
     requires javafx.web;
