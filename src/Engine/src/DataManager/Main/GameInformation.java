@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/DataManager/src/GameInformation.java
+
+=======
 package Main;
+>>>>>>> e8f3cab84551a57c141de56be919e2df8395ea17:src/Engine/src/DataManager/Main/GameInformation.java
 
 import java.util.List;
 import java.util.Map;

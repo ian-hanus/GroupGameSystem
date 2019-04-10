@@ -1,4 +1,7 @@
+<<<<<<< HEAD:src/DataManager/src/DataCreator.java
+=======
 package Main;
+>>>>>>> e8f3cab84551a57c141de56be919e2df8395ea17:src/Engine/src/DataManager/Main/DataCreator.java
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
