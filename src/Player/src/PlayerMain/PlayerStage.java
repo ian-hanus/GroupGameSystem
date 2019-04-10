@@ -130,7 +130,31 @@ public class PlayerStage {
         gameStage.show();
 
         // start game loop
-
+        while (true) {
+            Map<Integer, ImageView> newImageViewMap = new HashMap<>();
+            Map<Integer, Map<Class<? extends Component>, Component>> newGameEntities = gameController.getEntities();
+            for (Integer newID: newGameEntities.keySet()) {
+                BasicComponent newEnt = (BasicComponent) gameEntities.get(newID).get(BasicComponent.class);
+                double newEntWd = newEnt.getWidth();
+                double newEntHt = newEnt.getHeight();
+                double newEntX = newEnt.getX();
+                double newEntY = newEnt.getY();
+//            double entZIndex = ent.getZindex();
+                File entFile = newEnt.getMyFile();
+                ImageView newIV = new ImageView();
+                try {
+                    newIV = new ImageView(entFile.getAbsolutePath());
+                    newIV.setX(newEntX);
+                    newIV.setY(newEntY);
+                    newIV.setFitWidth(newEntWd);
+                    newIV.setFitHeight(newEntHt);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("uh oh");
+                }
+                imageViewMap.put(newID, newIV);
+            }
+        }
     }
 
     public void edit(String gameName) {
