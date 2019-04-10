@@ -130,31 +130,94 @@ public class PlayerStage {
         gameStage.show();
 
         // start game loop
+//        while (true) {
+//            Map<Integer, ImageView> newImageViewMap = new HashMap<>();
+//            Map<Integer, Map<Class<? extends Component>, Component>> newGameEntities = gameController.getEntities();
+//            for (Integer newID: newGameEntities.keySet()) {
+//                BasicComponent newEnt = (BasicComponent) gameEntities.get(newID).get(BasicComponent.class);
+//                double newEntWd = newEnt.getWidth();
+//                double newEntHt = newEnt.getHeight();
+//                double newEntX = newEnt.getX();
+//                double newEntY = newEnt.getY();
+////            double entZIndex = ent.getZindex();
+//                File entFile = newEnt.getMyFile();
+//                ImageView newIV = new ImageView();
+//                try {
+//                    newIV = new ImageView(entFile.getAbsolutePath());
+//                    newIV.setX(newEntX);
+//                    newIV.setY(newEntY);
+//                    newIV.setFitWidth(newEntWd);
+//                    newIV.setFitHeight(newEntHt);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    System.out.println("uh oh");
+//                }
+//                imageViewMap.put(newID, newIV);
+//            }
+//            gameRoot.getChildren().clear();
+//            gameRoot.getChildren().addAll(imageViewMap.values());
+//        }
+
         while (true) {
-            Map<Integer, ImageView> newImageViewMap = new HashMap<>();
-            Map<Integer, Map<Class<? extends Component>, Component>> newGameEntities = gameController.getEntities();
-            for (Integer newID: newGameEntities.keySet()) {
-                BasicComponent newEnt = (BasicComponent) gameEntities.get(newID).get(BasicComponent.class);
+            for (int id : gameEntities.keySet()) {
+                // check if key is in imageViewMap
+                BasicComponent newEnt = (BasicComponent) gameEntities.get(id).get(BasicComponent.class);
                 double newEntWd = newEnt.getWidth();
                 double newEntHt = newEnt.getHeight();
                 double newEntX = newEnt.getX();
                 double newEntY = newEnt.getY();
 //            double entZIndex = ent.getZindex();
                 File entFile = newEnt.getMyFile();
-                ImageView newIV = new ImageView();
-                try {
-                    newIV = new ImageView(entFile.getAbsolutePath());
-                    newIV.setX(newEntX);
-                    newIV.setY(newEntY);
-                    newIV.setFitWidth(newEntWd);
-                    newIV.setFitHeight(newEntHt);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("uh oh");
+                if (imageViewMap.containsKey(id)) {
+                    // if so check for diffs in objects
+                    ImageView curr = imageViewMap.get(id);
+                    double currWd = curr.getFitWidth();
+                    double currHt = curr.getFitHeight();
+                    double currX = curr.getX();
+                    double currY = curr.getY();
+                    if (newEntWd != currWd || newEntHt != currHt || newEntX != currX || newEntY != currY) {
+                        ImageView newIV = new ImageView();
+                        try {
+                            newIV = new ImageView(entFile.getAbsolutePath());
+                            newIV.setX(newEntX);
+                            newIV.setY(newEntY);
+                            newIV.setFitWidth(newEntWd);
+                            newIV.setFitHeight(newEntHt);
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                            System.out.println("uh oh");
+                        }
+                        imageViewMap.put(id, newIV);
+                        gameRoot.getChildren().add(imageViewMap.get(id));
+                    }
                 }
-                imageViewMap.put(newID, newIV);
+                // if key is not in imageViewMap add component
+                else {
+                    ImageView newIV = new ImageView();
+                    try {
+                        newIV = new ImageView(entFile.getAbsolutePath());
+                        newIV.setX(newEntX);
+                        newIV.setY(newEntY);
+                        newIV.setFitWidth(newEntWd);
+                        newIV.setFitHeight(newEntHt);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("uh oh");
+                    }
+                    imageViewMap.put(id, newIV);
+                    gameRoot.getChildren().add(imageViewMap.get(id));
+                }
+            }
+            for (int key : imageViewMap.keySet()) {
+                // if id no longer in gameEntities remove from imageViewMap
+                if (! gameEntities.containsKey(key)) {
+                    gameRoot.getChildren().remove(imageViewMap.get(key));
+                }
             }
         }
+
+
     }
 
     public void edit(String gameName) {
