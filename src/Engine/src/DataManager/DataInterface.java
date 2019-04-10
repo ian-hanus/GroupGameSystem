@@ -2,7 +2,7 @@
 package DataManager;
 
 public interface DataInterface {
-    void saveGame(String fileName, GameInformation gameInformation);
+    void saveGame(String fileName, DataManager.GameInformation gameInformation);
 
-    GameInformation loadGame(String fileName);
+    DataManager.GameInformation loadGame(String fileName);
 }

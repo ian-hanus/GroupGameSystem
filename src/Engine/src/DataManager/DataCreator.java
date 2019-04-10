@@ -10,14 +10,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-public class DataCreator implements DataInterface {
+public class DataCreator implements DataManager.DataInterface {
     private Gson myGson;
 
     public DataCreator(){
         myGson = new GsonBuilder().setPrettyPrinting().create();
     }
 
-    public void saveGame(String fileName, GameInformation gameInformation){
+    public void saveGame(String fileName, DataManager.GameInformation gameInformation){
         try {
             myGson.toJson(gameInformation, new FileWriter("./" + fileName));
         } catch (IOException e) {
@@ -25,13 +25,13 @@ public class DataCreator implements DataInterface {
         }
     }
 
-    public GameInformation loadGame(String fileName){
+    public DataManager.GameInformation loadGame(String fileName){
         try {
-            GameInformation gameInformation = myGson.fromJson(new FileReader(fileName), GameInformation.class);
+            DataManager.GameInformation gameInformation = myGson.fromJson(new FileReader(fileName), DataManager.GameInformation.class);
             return gameInformation;
         } catch (FileNotFoundException e) {
             System.out.println("Unable to load Engine.src.DataManager.GameInformation from JSON file " + fileName);
         }
-        return new GameInformation(null, null, null);
+        return new DataManager.GameInformation(null, null, null);
     }
 }
