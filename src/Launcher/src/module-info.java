@@ -1,6 +1,6 @@
 module Launcher {
     requires Auth;
-//    requires Player;
+    requires Player;
 
     requires javafx.web;
     requires java.datatransfer;
