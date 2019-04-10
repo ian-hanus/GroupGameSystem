@@ -109,7 +109,7 @@ public class Controller {
     public void processKey(String key){
         if (myHotKeys.containsKey(key)){
             Event event = myHotKeys.get(key);
-            event = event.copy();
+            //event = event.copy();
             event.setConditionalObject(myUserID);
             if (event.conditionsSatisfied(myEntityManager)){
                 if(event instanceof ObjectEvent){
