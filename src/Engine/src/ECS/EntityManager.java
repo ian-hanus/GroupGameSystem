@@ -1,9 +1,7 @@
 package ECS;
 
-import ECS.Components.*;
+import Components.*;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class EntityManager {
@@ -51,7 +49,7 @@ public class EntityManager {
     }
 
     public void die(int entityID) {
-        //TODO error checking, does removing a non-existent entity work
+        //TODO error checking, does removing a non-existent Entity work
         myEntityMap.remove(entityID);
     }
 

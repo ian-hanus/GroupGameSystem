@@ -1,7 +1,7 @@
 module Engine {
     requires gson;
 
-    exports EngineMain;
-    exports ECS;
-    exports ECS.Components;
+    exports Controller;
+    exports Components;
+    exports Parser;
 }
