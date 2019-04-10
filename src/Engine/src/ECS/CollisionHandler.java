@@ -131,13 +131,14 @@ public class CollisionHandler {
     }
 
     private Pair<String>[] findRelevantTagPairs(Integer entity1, Integer entity2) {
+        ArrayList<Pair<String>> tagPairs = new ArrayList<>();
+
         var tags1 = myEntityManager.getComponent(entity1, TagsComponent.class);
         var tags2 = myEntityManager.getComponent(entity2, TagsComponent.class);
 
         if (tags1 == null || tags2 == null)
-            return new Pair[]{new Pair("",""), new Pair("", "")};
+            return tagPairs.toArray(new Pair[0]);
 
-        ArrayList<Pair<String>> tagPairs = new ArrayList<>();
         for (String tag1 : tags1.getTags()) {
             for (String tag2 : tags2.getTags()) {
                 var tagPair = new Pair(tag1, tag2);
@@ -155,7 +156,7 @@ public class CollisionHandler {
         var currentMotionComponent = myEntityManager.getComponent(current, MotionComponent.class);
         var otherEnvironmentComponent = myEntityManager.getComponent(current, EnvironmentComponent.class);
 
-        if (currentMotionComponent == null)
+        if (currentMotionComponent == null || otherEnvironmentComponent == null)
             return;
 
         if (myPreviousCollisions.containsKey(current) && !myPreviousCollisions.get(current).contains(other))

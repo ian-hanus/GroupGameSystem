@@ -12,8 +12,17 @@ import java.util.List;
 import java.util.Map;
 
 public class DefaultGame {
+    private static final String BLOCK_IMAGE = "block.jpg";
+    private static final String USER_IMAGE = "mario.png";
+    private static final double USER_WIDTH = 30;
+    private static final double USER_HEIGHT = 50;
+    private static final double USER_MOVEMENT_VELOCITY = 10;
+    private static final double USER_JUMP_VELOCITY = 10; //good to increase if you increase gravity and vice versa
+    private static final double GRAVITY = 1;
+
     private Map<Integer, Map<Class<? extends Component>, Component>> myActiveObjects;
     private Map<Pair<String>, Pair<List<Event>>> myCollisionMap;
+    private List<Map<Class<? extends Component>, Component>> myBlocks;
 
     public DefaultGame() {
         myActiveObjects = new HashMap<>();
@@ -23,23 +32,50 @@ public class DefaultGame {
     }
 
     private void addActiveObjects() {
+        makeUser();
+
+        myBlocks = new ArrayList<>();
+        addBlock(0, 250, 100);
+        addBlock(110, 250, 100);
+        addBlock(220, 300, 150);
+        addBlock(450, 200, 50);
+        addImpassableAndTags();
+
+        int blockNumber = 1;
+        for (var block : myBlocks) {
+            myActiveObjects.put(blockNumber, block);
+            blockNumber++;
+        }
+    }
+
+    private void addBlock(double x, double y, double width) {
+        Map<Class<? extends Component>, Component> block = new HashMap<>();
+        myBlocks.add(block);
+        block.put(BasicComponent.class, new BasicComponent("/images/" + BLOCK_IMAGE, x, y,width, 75));
+    }
+
+    private List<String> addImpassableAndTags() {
+        List<String> blockTag = new ArrayList<>();
+        blockTag.add("BLOCK");
+        for (var block : myBlocks) {
+            block.put(ImpassableComponent.class, new ImpassableComponent(true));
+            block.put(TagsComponent.class, new TagsComponent(blockTag));
+        }
+        return blockTag;
+    }
+
+    private void makeUser() {
         Map<Class<? extends Component>, Component> user = new HashMap<>();
-        user.put(BasicComponent.class, new BasicComponent("/images/mario.jpg", 300, 100, 50, 50));
-        user.put(MotionComponent.class, new MotionComponent(0, 0, 0, 5, 0, 10, 0));
-        user.put(JumpComponent.class, new JumpComponent(30));
+        user.put(BasicComponent.class, new BasicComponent("/images/" + USER_IMAGE, 300, 100, USER_WIDTH, USER_HEIGHT));
+        user.put(MotionComponent.class, new MotionComponent(0, 0, 0, GRAVITY, 0, USER_MOVEMENT_VELOCITY, 0));
+        user.put(JumpComponent.class, new JumpComponent(USER_JUMP_VELOCITY));
         List<String> userTag = new ArrayList<>();
         userTag.add("USER");
         user.put(TagsComponent.class, new TagsComponent(userTag));
         myActiveObjects.put(0, user);
-
-        Map<Class<? extends Component>, Component> block = new HashMap<>();
-        block.put(BasicComponent.class, new BasicComponent("/images/doodle-jump.jpg", 0, 250, 1000, 75));
-        block.put(ImpassableComponent.class, new ImpassableComponent(true));
-        List<String> blockTag = new ArrayList<>();
-        blockTag.add("BLOCK");
-        block.put(TagsComponent.class, new TagsComponent(blockTag));
-        myActiveObjects.put(1, block);
     }
+
+
 
     private void addCollisions() {
         var tagPair = new Pair<>("USER","BLOCK");

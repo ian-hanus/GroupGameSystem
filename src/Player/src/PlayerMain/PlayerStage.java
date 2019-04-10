@@ -143,7 +143,7 @@ public class PlayerStage {
             imageView.setY(basicComponent.getY() - myGameController.getOffset()[1]);
         }
 
-        System.out.println(myGameController.getOffset()[0]);
+        //System.out.println(myGameController.getOffset()[0]);
     }
 
     private void updateOrRemoveImageViews() {
