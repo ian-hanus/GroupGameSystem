@@ -1,5 +1,11 @@
 package PlayerMain;
 
+<<<<<<< .merge_file_Yiy8Vx
+=======
+import ECS.Components.BasicComponent;
+import ECS.Components.Component;
+import EngineMain.Controller;
+>>>>>>> .merge_file_A6hD40
 import Regions.DescriptionRegion;
 import Regions.GamesRegion;
 import Regions.Thumbnail;
@@ -78,51 +84,50 @@ public class PlayerStage {
      * Run(), edit(), rate() currently placeholder. Update these methods.
      */
     public void run(String gameName) {
-//
-//        // make an instance of the Stage
-//
-//        Stage gameStage = new Stage();
-//        Group gameRoot = new Group();
-//
-//        // put everything into gameRoot
-//
-//        Map<Integer, ImageView> imageViewMap = new HashMap<>();
-//
-//        Controller gameController = new Controller(STEP_TIME, GAME_WIDTH, GAME_HEIGHT);
-//        Map<Integer, Map<Class<? extends Component>, Component>> gameEntities = gameController.getEntities();
-//
-//        for (Integer id: gameEntities.keySet) {
-//            Component ent = gameEntities.get(id).get(BasicComponent.class);
-//            double entWd = ent.getWidth();
-//            double entHt = ent.getHeight();
-//            double entX = ent.getX();
-//            double entY = ent.getY();
+
+        // make an instance of the Stage
+
+        Stage gameStage = new Stage();
+        Group gameRoot = new Group();
+
+        // put everything into gameRoot
+
+        Map<Integer, ImageView> imageViewMap = new HashMap<>();
+
+        Controller gameController = new Controller(STEP_TIME, GAME_WIDTH, GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
+        Map<Integer, Map<Class<? extends Component>, Component>> gameEntities = gameController.getEntities();
+
+        for (Integer id: gameEntities.keySet()) {
+            BasicComponent ent = (BasicComponent) gameEntities.get(id).get(BasicComponent.class);
+            double entWd = ent.getWidth();
+            double entHt = ent.getHeight();
+            double entX = ent.getX();
+            double entY = ent.getY();
 //            double entZIndex = ent.getZindex();
-//            String entFilename = ent.getMyFile();
-//
-//            File file = new File(entFilename);
-//            ImageView iv = new ImageView();
-//            try {
-//                iv = new ImageView(file.toURI().toString());
-//                iv.setX(entX);
-//                iv.setY(entY);
-//                iv.setFitWidth(entWd);
-//                iv.setFitHeight(entHt);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                System.out.println("uh oh");
-//            }
-//
-//            imageViewMap.put(id, iv);
-//        }
-//
-//        gameRoot.getChildren().addAll(imageViewMap.values());
-//
-//        Scene gameScene = new Scene(gameRoot, GAME_BG);
-//        gameStage.setScene(gameScene);
-//        gameStage.show();
-//
-//        // start game loop
+            File entFile = ent.getMyFile();
+
+            ImageView iv = new ImageView();
+            try {
+                iv = new ImageView(entFile.getAbsolutePath());
+                iv.setX(entX);
+                iv.setY(entY);
+                iv.setFitWidth(entWd);
+                iv.setFitHeight(entHt);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("uh oh");
+            }
+
+            imageViewMap.put(id, iv);
+        }
+
+        gameRoot.getChildren().addAll(imageViewMap.values());
+
+        Scene gameScene = new Scene(gameRoot, GAME_BG);
+        gameStage.setScene(gameScene);
+        gameStage.show();
+
+        // start game loop
 
     }
 
