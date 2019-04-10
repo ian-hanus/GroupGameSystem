@@ -1,7 +1,8 @@
 package Engine.src.Triggers.Events.ObjectEvents;
 
-import Engine.src.Triggers.Conditionals.Conditional;
-import Engine.src.ECS.EntityManager;
+import Triggers.Conditionals.Conditional;
+import ECS.EntityManager;
+import Triggers.Events.Event;
 
 import java.util.List;
 
@@ -17,5 +18,10 @@ public class MoveRight extends ObjectEvent {
     @Override
     public void activate(EntityManager entityManager) {
         entityManager.moveHorizontal(myObject, true);
+    }
+
+    @Override
+    public Event copy() {
+        return new MoveRight(copyConditionals(), myObject);
     }
 }

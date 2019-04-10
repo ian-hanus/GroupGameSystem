@@ -1,8 +1,9 @@
 package Engine.src.Triggers.Events.ObjectEvents;
 
-import Engine.src.Triggers.Conditionals.Conditional;
-import Engine.src.Components.Component;
-import Engine.src.ECS.EntityManager;
+import Triggers.Conditionals.Conditional;
+import Components.Component;
+import ECS.EntityManager;
+import Triggers.Events.Event;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +27,8 @@ public class Create extends ObjectEvent{
         entityManager.create(myObject, myComponents);
     }
 
+    @Override
+    public Event copy() {
+        return new Create(copyConditionals(), myObject, myComponents);
+    }
 }
