@@ -1,7 +1,6 @@
-package Initial;
+package Launcher.src.Initial;
 
-import PlayerMain.GameLoop;
-import basic.RunAuth;
+import Player.src.PlayerMain.GameLoop;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -44,7 +43,7 @@ public class Launcher extends Application {
     }
 
     private void initializeAuthoringStage() {
-        RunAuth authoringEnvironment = new RunAuth();
+        //RunAuth authoringEnvironment = new RunAuth();
         //myAuthoringStage =  //TODO get stage from authoring!!!!
     }
 

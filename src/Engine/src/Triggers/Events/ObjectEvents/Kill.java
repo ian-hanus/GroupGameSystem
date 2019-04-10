@@ -1,6 +1,6 @@
-package Triggers.Events.ObjectEvents;
+package Engine.src.Triggers.Events.ObjectEvents;
 
-import Triggers.Conditionals.Conditional;
+import Engine.src.Triggers.Conditionals.Conditional;
 
 import ECS.EntityManager;
 import Triggers.Events.Event;

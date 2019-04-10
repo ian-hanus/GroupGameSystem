@@ -1,4 +1,4 @@
-package Triggers.Events.GameEvents;
+package Engine.src.Triggers.Events.GameEvents;
 
 import Triggers.Conditionals.Conditional;
 import Controller.LevelManager;

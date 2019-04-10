@@ -1,7 +1,7 @@
-package Regions;
+package Player.src.Regions;
 
-import Features.Controls.*;
-import PlayerMain.PlayerStage;
+import Player.src.Features.Controls.*;
+import Player.src.PlayerMain.PlayerStage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;

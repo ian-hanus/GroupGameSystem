@@ -1,9 +1,9 @@
-package Controller;
+package Engine.src.Controller;
 
-import Components.*;
-import ECS.Pair;
-import Triggers.Events.Event;
-import Triggers.Events.ObjectEvents.Deflect;
+import Engine.src.Components.*;
+import Engine.src.ECS.Pair;
+import Engine.src.Triggers.Events.Event;
+import Engine.src.Triggers.Events.ObjectEvents.Deflect;
 
 import java.io.File;
 import java.util.ArrayList;
