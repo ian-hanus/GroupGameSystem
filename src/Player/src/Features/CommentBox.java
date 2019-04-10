@@ -1,5 +1,6 @@
 package Features;
 
+import Features.ScrollableWindows.CommentSection;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -17,17 +18,19 @@ public class CommentBox extends Feature {
     private Button myUploadButton;
     private TextArea myCommentInput;
     private String myComment;
+    private CommentSection myCommentSection;
 
     /**
      * Constructor for CommentBox and its buttons for uploading. Creates listeners for buttons
      */
-    public CommentBox() {
+    public CommentBox(CommentSection commentSection) {
         myUploadButton = new Button(UPLOAD_BUTTON);
         myUploadButton.setOnAction((event) -> uploadComment());
         myCommentInput = new TextArea();
         myCommentInput.setPrefRowCount(10);
         myCommentInput.setPrefColumnCount(10);
         myCommentInput.setPromptText(PROMPT);
+        myCommentSection = commentSection;
     }
 
     /**
@@ -46,7 +49,7 @@ public class CommentBox extends Feature {
         myCommentInput.setText("");
         myCommentInput.setPromptText(PROMPT);
         try {
-
+            myCommentSection.addComment(myComment);
         }
         catch (Exception e) {
             myCommentInput.setPromptText("--" + e.getMessage() + "-- Enter a valid comment");
