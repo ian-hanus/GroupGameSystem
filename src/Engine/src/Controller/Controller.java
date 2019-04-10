@@ -42,16 +42,22 @@ public class Controller {
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
     private Map<Integer, Map<Class<? extends Component>, Component>> myActiveObjects;
     private List<Event> myTriggers;
+
     private int myUserID;
-    private CollisionHandler myCollisionHandler;
-    private EngineParser myEngineParser;
-    private EntityManager myEntityManager;
-    private LevelManager myLevelManager;
     private double myStepTime;
     private double myIterationCounter;
-    private double[] offset;
+    private double[] myOffset;
+
+    private CollisionHandler myCollisionHandler;
+    private EntityManager myEntityManager;
+    private LevelManager myLevelManager;
 
     public Controller(double stepTime, double screenWidth, double screenHeight, double levelWidth, double levelHeight){
+        myHotKeys = new HashMap<>();
+        myTimers = new ArrayList<>();
+        myCollisionResponses = new HashMap<>();
+        myTriggers = new ArrayList<>();
+
         myStepTime = stepTime;
         myScreenWidth = screenWidth;
         myScreenHeight = screenHeight;
@@ -84,7 +90,6 @@ public class Controller {
     }
 
     private void setDefaultKeys() {
-        myHotKeys = new HashMap<>();
         myHotKeys.put("A", new MoveLeft(myUserID));
         myHotKeys.put("D", new MoveRight(myUserID));
         myHotKeys.put("SPACE", new Jump(myUserID));
@@ -131,7 +136,7 @@ public class Controller {
         for (int obj : myActiveObjects.keySet()){
             myEntityManager.move(obj);
         }
-        offset = updateOffset();
+        myOffset = updateOffset();
     }
 
     public double[] updateOffset() {
@@ -144,7 +149,7 @@ public class Controller {
     }
 
     public double[] getOffset() {
-        return offset;
+        return myOffset;
     }
     public Map<Integer, Map<Class<? extends Component>, Component>> getEntities(){
         return myActiveObjects;
