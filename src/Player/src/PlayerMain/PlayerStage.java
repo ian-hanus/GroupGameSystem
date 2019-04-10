@@ -98,8 +98,8 @@ public class PlayerStage {
     public void run(String gameName) {
         Stage gameStage = new Stage();
         myGameRoot = new Group();
-        myImageViewMap = new HashMap<>();
-        myGameController = new Controller(STEP_TIME, GAME_WIDTH, GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
+        myImageViewMap = new HashMap<>();                   //FIXME go full screen
+        myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
 
         addNewImageViews();
@@ -114,17 +114,36 @@ public class PlayerStage {
     }
 
     private void animate() {
-        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
+        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> { step(); scrollImageViews(); });
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
     }
 
-    public void step() {
+    private void step() {
         myGameController.updateScene();
         addNewImageViews();
         updateOrRemoveImageViews();
+    }
+
+    private void scrollImageViews() {
+        for (Integer id : myImageViewMap.keySet()) {
+            ImageView imageView = myImageViewMap.get(id);
+
+            var entity = myGameEntityMap.get(id);
+            if (entity == null)
+                continue;
+
+            var basicComponent = (BasicComponent) entity.get(BasicComponent.class);
+            if (basicComponent == null)
+                continue;
+
+            imageView.setX(basicComponent.getX() - myGameController.getOffset()[0]);
+            imageView.setY(basicComponent.getY() - myGameController.getOffset()[1]);
+        }
+
+        System.out.println(myGameController.getOffset()[0]);
     }
 
     private void updateOrRemoveImageViews() {
