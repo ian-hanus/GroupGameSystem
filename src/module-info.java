@@ -9,6 +9,7 @@ module voogasalad.crackingopen {
     requires gson;
     exports auth;
     exports gamecenter;
+    exports Launcher.src.Initial;
 
 }
 

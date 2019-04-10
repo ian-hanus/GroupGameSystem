@@ -1,5 +1,5 @@
 
-package DataManager;
+package Engine.src.DataManager;
 
 public interface DataInterface {
     void saveGame(String fileName, DataManager.GameInformation gameInformation);
