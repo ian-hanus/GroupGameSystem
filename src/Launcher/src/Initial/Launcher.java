@@ -1,6 +1,6 @@
 package Initial;
 
-//import PlayerMain.GameLoop;
+import PlayerMain.GameLoop;
 import basic.RunAuth;
 
 import javafx.scene.Scene;
@@ -9,6 +9,10 @@ import javafx.stage.Stage;
 import javafx.application.Application;
 
 public class Launcher extends Application {
+    private Stage myLauncherStage;
+    private Stage myPlayerStage;
+    private Stage myAuthoringStage;
+
     public static void main (String[] args) {
         launch(args);
     }
@@ -19,17 +23,32 @@ public class Launcher extends Application {
      * @param stage stage
      */
     public void start (Stage stage) {
-        var root = new BorderPane();
-        setUpScene(stage, root);
+        initializeLauncherStage(stage);
+        initializePlayerStage();
+        initializeAuthoringStage();
 
-        stage.show();
+        display(myPlayerStage); //FIXME display myLauncherStage and add buttons to display auth or player
     }
 
-    private void setUpScene(Stage stage, BorderPane root) {
-        RunAuth authoringEnvironment = new RunAuth();
-//        GameLoop player = new GameLoop();
-
+    private void initializeLauncherStage(Stage stage) {
+        myLauncherStage = stage;
+        var root = new BorderPane();
         Scene scene = new Scene(root);
-        stage.setScene(scene);
+        myLauncherStage.setScene(scene);
+        //TODO implement actual launcher display
+    }
+
+    private void initializePlayerStage() {
+        GameLoop player = new GameLoop();
+        myPlayerStage = player.getStage();
+    }
+
+    private void initializeAuthoringStage() {
+        RunAuth authoringEnvironment = new RunAuth();
+        //myAuthoringStage =  //TODO get stage from authoring!!!!
+    }
+
+    private void display(Stage stage) {
+        stage.show();
     }
 }
