@@ -13,6 +13,11 @@ import Triggers.Events.Event;
 
 import java.util.*;
 
+/**
+ * FIXME
+ * Bugs: default gravity etc not set
+ *       impassables don't allow movement at all
+ */
 public class CollisionHandler {
     private EntityManager myEntityManager;
     private LevelManager myLevelManager;
