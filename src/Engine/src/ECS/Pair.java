@@ -22,7 +22,7 @@ public class Pair<T> implements Iterable<T> {
     }
 
     public T getItem2() {
-        return myItems.get(0);
+        return myItems.get(1);
     }
 
     @Override
