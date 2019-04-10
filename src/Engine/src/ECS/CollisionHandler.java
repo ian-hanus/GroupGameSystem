@@ -47,7 +47,7 @@ public class CollisionHandler {
         myCollisionResponses = collisionResponses;
         myCurrentCollisions = new HashMap<>();
 
-        updateVelocities(entities);
+        moveThenUpdateVelocities(entities);
 
         for (Integer entity1 : entities) {
             for (Integer entity2 : entities) {
@@ -64,11 +64,13 @@ public class CollisionHandler {
         myPreviousCollisions = myCurrentCollisions;
     }
 
-    private void updateVelocities(Set<Integer> entities) {
+    private void moveThenUpdateVelocities(Set<Integer> entities) {
         for (int id : entities){
             var motionComponent = myEntityManager.getComponent(id, MotionComponent.class);
-            if (motionComponent != null)
+            if (motionComponent != null) {
+                myEntityManager.move(id);
                 motionComponent.updateVelocity();
+            }
         }
     }
 
@@ -111,19 +113,18 @@ public class CollisionHandler {
     }
 
     //FIXME duplicated between parts of collision handler and parts of Entity manager
-    private void dealWithImpassable(Integer entity1, Integer entity2) {
-        var impassableComponent = myEntityManager.getComponent(entity2, ImpassableComponent.class);
+    private void dealWithImpassable(Integer mover, Integer impassable) {
+        var impassableComponent = myEntityManager.getComponent(impassable, ImpassableComponent.class);
         if (impassableComponent != null && impassableComponent.getImpassable()) {
-            var motion = myEntityManager.getComponent(entity1, MotionComponent.class);
+            var motion = myEntityManager.getComponent(mover, MotionComponent.class);
             if (motion == null)
                 return;
-            if (myCollisionDetector.collideFromTop(entity1, entity2) && motion.getYVelocity() > 0
-                    || myCollisionDetector.collideFromTop(entity2, entity1) && motion.getYVelocity() < 0) {
-                System.out.println(myCollisionDetector.collideFromTop(entity2, entity1));
+            if (myCollisionDetector.collideFromTop(mover, impassable) && motion.getYVelocity() > 0
+                    || myCollisionDetector.collideFromTop(impassable, mover) && motion.getYVelocity() < 0) {
                 motion.setYVelocity(0);
             }
-            else if (myCollisionDetector.collideFromLeft(entity1, entity2) && motion.getXVelocity() > 0
-                    || myCollisionDetector.collideFromLeft(entity2, entity1) && motion.getXVelocity() < 0) {
+            else if (myCollisionDetector.collideFromLeft(mover, impassable) && motion.getXVelocity() > 0
+                    || myCollisionDetector.collideFromLeft(impassable, mover) && motion.getXVelocity() < 0) {
                 motion.setXVelocity(0);
             }
         }

@@ -134,9 +134,6 @@ public class Controller {
         myTriggers = newTriggers;
         myLevelManager.updateTimer();
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
-        for (int obj : myActiveObjects.keySet()){
-            myEntityManager.move(obj);
-        }
         myOffset = updateOffset();
     }
 
