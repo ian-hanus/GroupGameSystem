@@ -1,4 +1,4 @@
-package Main;
+package Initial;
 
 public class Splash {
 }

@@ -1,4 +1,4 @@
-module player {
+module Player {
     requires Engine;
 
     requires javafx.graphics;
