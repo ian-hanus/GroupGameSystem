@@ -151,7 +151,7 @@ public class CollisionHandler {
 
     //TODO fix if Triggers.Events are changed
     private void activateEvents(Integer current, Integer other, List<Event> responseList) {
-        for (Event event : responseList) {
+        for (Event e : responseList) {
             /*if (event instanceof ObjectEvent) {                 //only include other if necessary for conditionals
                 ((ObjectEvent) event).activate(current, other, myEntityManager);
             }
@@ -159,9 +159,7 @@ public class CollisionHandler {
                 ((GameEvent) event).activate(current, other, myLevelManager);
             }*/
             //FIXME delegate rest of method to ObjectEvent/GameEvent and uncomment code above
-
-            if (event instanceof ObjectEvent)
-                ((ObjectEvent) event).setEventObject(current);
+            Event event = e.copy();
             List<Conditional> conditionals = event.getConditionals();
             for (Conditional conditional : conditionals) {
                 if (conditional instanceof ObjectConditional) {
@@ -170,6 +168,7 @@ public class CollisionHandler {
             }
             if (event.conditionsSatisfied(other, myEntityManager)) {
                 if (event instanceof ObjectEvent) {
+                    ((ObjectEvent) event).setEventObject(current);
                     ((ObjectEvent) event).setOther(other);
                     ((ObjectEvent) event).activate(myEntityManager);
                 }
