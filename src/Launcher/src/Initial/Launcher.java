@@ -1,6 +1,6 @@
 package Initial;
 
-//import PlayerMain.GameLoop;
+import PlayerMain.GameLoop;
 import basic.RunAuth;
 
 import javafx.scene.Scene;
@@ -26,8 +26,8 @@ public class Launcher extends Application {
     }
 
     private void setUpScene(Stage stage, BorderPane root) {
-        RunAuth authoringEnvironment = new RunAuth();
-//        GameLoop player = new GameLoop();
+        //RunAuth authoringEnvironment = new RunAuth();
+        GameLoop player = new GameLoop();
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
