@@ -3,6 +3,7 @@ package Controller;
 import Components.*;
 import ECS.Pair;
 import Triggers.Events.Event;
+import Triggers.Events.ObjectEvents.Deflect;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class DefaultGame {
 
     private void addActiveObjects() {
         Map<Class<? extends Component>, Component> user = new HashMap<>();
-        user.put(BasicComponent.class, new BasicComponent("/images/mario.jpg", 300, 200, 50, 50));
-        user.put(MotionComponent.class, new MotionComponent(0, 0, 0, 0, 0, 10, 0));
+        user.put(BasicComponent.class, new BasicComponent("/images/mario.jpg", 300, 100, 50, 50));
+        user.put(MotionComponent.class, new MotionComponent(0, 0, 0, 5, 0, 10, 0));
         user.put(JumpComponent.class, new JumpComponent(30));
         List<String> userTag = new ArrayList<>();
         userTag.add("USER");
@@ -41,7 +42,12 @@ public class DefaultGame {
     }
 
     private void addCollisions() {
-        //TODO
+        var tagPair = new Pair<>("USER","BLOCK");
+        var deflect = new Deflect(new ArrayList<>(), 0);
+        var list1 = new ArrayList<Event>();
+        var list2 = new ArrayList<Event>();
+        list1.add(deflect);
+        myCollisionMap.put(tagPair, new Pair<>(list1, list2));
     }
 
     public Map<Integer, Map<Class<? extends Component>, Component>> getActiveObjects() {
