@@ -7,11 +7,11 @@ public class BasicComponent extends Component {
     private double myHeight;
     private double myXPos;
     private double myYPos;
-    private File myFile;
+    private String myFilename;
     private int myZIndex;
 
-    public BasicComponent(File file, double xPos, double yPos, double width, double height, int zIndex) {
-        myFile = file;
+    public BasicComponent(String filename, double xPos, double yPos, double width, double height, int zIndex) {
+        myFilename = filename;
         myXPos = xPos;
         myYPos = yPos;
         myWidth = width;
@@ -19,8 +19,8 @@ public class BasicComponent extends Component {
         myZIndex = zIndex;
     }
 
-    public BasicComponent(File file, double xPos, double yPos, double width, double height) {
-        myFile = file;
+    public BasicComponent(String filename, double xPos, double yPos, double width, double height) {
+        myFilename = filename;
         myXPos = xPos;
         myYPos = yPos;
         myWidth = width;
@@ -53,12 +53,12 @@ public class BasicComponent extends Component {
 
     public void setY(double yPos) { this.myYPos = yPos; }
 
-    public File getMyFile() {
-        return myFile;
+    public String getMyFilename() {
+        return myFilename;
     }
 
-    public void setMyFile(File myFile) {
-        this.myFile = myFile;
+    public void setMyFile(String filename) {
+        this.myFilename = filename;
     }
 
     public int getMyZIndex() {

@@ -6,7 +6,7 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 
 /**
- * An iterable, ordered pair with a robust check for equality.
+ * An iterable, unordered pair with a robust check for equality.
  */
 public class Pair<T> implements Iterable<T> {
     ArrayList<T> myItems;
@@ -22,16 +22,23 @@ public class Pair<T> implements Iterable<T> {
     }
 
     public T getItem2() {
-        return myItems.get(0);
+        return myItems.get(1);
     }
 
     @Override
     public boolean equals(Object other) {
         if (this.getClass().isInstance(other)) {
             var otherPair = (Pair<T>) other;
-            return getItem1().equals(otherPair.getItem1()) && getItem2().equals(otherPair.getItem2());
+            boolean currentOrder = getItem1().equals(otherPair.getItem1()) && getItem2().equals(otherPair.getItem2());
+            boolean reversedOrder = getItem1().equals(otherPair.getItem2()) && getItem2().equals(otherPair.getItem1());
+            return currentOrder || reversedOrder;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getItem1().hashCode() + getItem2().hashCode();
     }
 
     @Override

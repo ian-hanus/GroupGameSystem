@@ -7,6 +7,7 @@ import Triggers.Timer;
 import java.util.Map;
 import java.util.Set;
 
+@Deprecated
 public class EngineParser {
 
     public Map parseDefaultObjects(){

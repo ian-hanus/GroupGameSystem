@@ -13,6 +13,11 @@ import Triggers.Events.Event;
 
 import java.util.*;
 
+/**
+ * FIXME
+ * Bugs: default gravity etc not set
+ *       impassables don't allow movement at all
+ */
 public class CollisionHandler {
     private EntityManager myEntityManager;
     private LevelManager myLevelManager;
@@ -41,6 +46,9 @@ public class CollisionHandler {
     public void dealWithCollisions(Set<Integer> entities, Map<Pair<String>, Pair<List<Event>>> collisionResponses) {
         myCollisionResponses = collisionResponses;
         myCurrentCollisions = new HashMap<>();
+
+        moveThenUpdateVelocities(entities);
+
         for (Integer entity1 : entities) {
             for (Integer entity2 : entities) {
                 if (entity1 >= entity2) //prevent collisions from happening twice
@@ -54,6 +62,16 @@ public class CollisionHandler {
                 setInDefaultEnvironment(entity);
         }
         myPreviousCollisions = myCurrentCollisions;
+    }
+
+    private void moveThenUpdateVelocities(Set<Integer> entities) {
+        for (int id : entities){
+            var motionComponent = myEntityManager.getComponent(id, MotionComponent.class);
+            if (motionComponent != null) {
+                myEntityManager.move(id);
+                motionComponent.updateVelocity();
+            }
+        }
     }
 
     private boolean notInteractingWithEnvironment(Integer entity) {
@@ -95,16 +113,18 @@ public class CollisionHandler {
     }
 
     //FIXME duplicated between parts of collision handler and parts of Entity manager
-    private void dealWithImpassable(Integer entity1, Integer entity2) {
-        var impassableComponent = myEntityManager.getComponent(entity2, ImpassableComponent.class);
+    private void dealWithImpassable(Integer mover, Integer impassable) {
+        var impassableComponent = myEntityManager.getComponent(impassable, ImpassableComponent.class);
         if (impassableComponent != null && impassableComponent.getImpassable()) {
-            var motion = myEntityManager.getComponent(entity1, MotionComponent.class);
+            var motion = myEntityManager.getComponent(mover, MotionComponent.class);
             if (motion == null)
                 return;
-            if (myCollisionDetector.collideFromTop(entity1, entity2) || myCollisionDetector.collideFromTop(entity2, entity1)) {
+            if (myCollisionDetector.collideFromTop(mover, impassable) && motion.getYVelocity() > 0
+                    || myCollisionDetector.collideFromTop(impassable, mover) && motion.getYVelocity() < 0) {
                 motion.setYVelocity(0);
             }
-            else if (myCollisionDetector.collideFromLeft(entity1, entity2) || myCollisionDetector.collideFromLeft(entity2, entity1)) {
+            else if (myCollisionDetector.collideFromLeft(mover, impassable) && motion.getXVelocity() > 0
+                    || myCollisionDetector.collideFromLeft(impassable, mover) && motion.getXVelocity() < 0) {
                 motion.setXVelocity(0);
             }
         }
@@ -125,6 +145,7 @@ public class CollisionHandler {
                     tagPairs.add(tagPair);
             }
         }
+
         return tagPairs.toArray(new Pair[0]);
     }
 

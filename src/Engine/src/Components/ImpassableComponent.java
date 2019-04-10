@@ -3,7 +3,7 @@ package Components;
 public class ImpassableComponent extends Component {
     private boolean myImpassable;
 
-    private ImpassableComponent(boolean impassable) {
+    public ImpassableComponent(boolean impassable) {
         myImpassable = impassable;
     }
 
