@@ -128,6 +128,8 @@ public class GCScreen {
         // TODO: Open player for this game
         if (index == 0) {
             new RunDemo().run();
+        } else if (index == 3) {
+            // TODO: Load real game
         }
     }
 
