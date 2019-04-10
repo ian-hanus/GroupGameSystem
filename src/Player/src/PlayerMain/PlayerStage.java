@@ -10,6 +10,7 @@ import Regions.TitleRegion;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -106,11 +107,11 @@ public class PlayerStage {
             double entX = ent.getX();
             double entY = ent.getY();
 //            double entZIndex = ent.getZindex();
-            File entFile = ent.getMyFile();
+            String entFilename = ent.getMyFilename();
 
             ImageView iv = new ImageView();
             try {
-                iv = new ImageView(entFile.getAbsolutePath());
+                iv = new ImageView(new Image(this.getClass().getResourceAsStream(entFilename)));
                 iv.setX(entX);
                 iv.setY(entY);
                 iv.setFitWidth(entWd);
@@ -167,7 +168,7 @@ public class PlayerStage {
                 double newEntX = newEnt.getX();
                 double newEntY = newEnt.getY();
 //            double entZIndex = ent.getZindex();
-                File entFile = newEnt.getMyFile();
+                String entFilename = newEnt.getMyFilename();
                 if (imageViewMap.containsKey(id)) {
                     // if so check for diffs in objects
                     ImageView curr = imageViewMap.get(id);
@@ -178,7 +179,7 @@ public class PlayerStage {
                     if (newEntWd != currWd || newEntHt != currHt || newEntX != currX || newEntY != currY) {
                         ImageView newIV = new ImageView();
                         try {
-                            newIV = new ImageView(entFile.getAbsolutePath());
+                            newIV = new ImageView(new Image(this.getClass().getResourceAsStream(entFilename)));
                             newIV.setX(newEntX);
                             newIV.setY(newEntY);
                             newIV.setFitWidth(newEntWd);
@@ -196,7 +197,7 @@ public class PlayerStage {
                 else {
                     ImageView newIV = new ImageView();
                     try {
-                        newIV = new ImageView(entFile.getAbsolutePath());
+                        newIV = new ImageView(new Image(this.getClass().getResourceAsStream(entFilename)));
                         newIV.setX(newEntX);
                         newIV.setY(newEntY);
                         newIV.setFitWidth(newEntWd);
