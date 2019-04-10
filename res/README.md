@@ -1,1 +1,1 @@
-Use this directory to store all necessary resources
+.
