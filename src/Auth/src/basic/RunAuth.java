@@ -5,25 +5,26 @@ import javafx.application.Application;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  */
 public class RunAuth extends Application {
     public static  Font sofiaPro, sofiaProSmall, bebasKai, bebasKaiMedium;
-
-
     private Stage mainStage;
 
     @Override
     public void start (Stage stage) {
         // attach scene to the stage and display it
         mainStage = new CanvasScreen().createScreen(stage, this);
-
         stage.show();
         stage.setResizable(false);
     }
+
     /**
-     * Main function to serve as entry point
+     * Starter function to serve as entry point
      * @param args: cmd line args
      */
     public static void main(String args[]) {

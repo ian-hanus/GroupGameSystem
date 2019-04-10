@@ -1,9 +1,4 @@
-<<<<<<< HEAD:src/Engine/src/Parser/GameInformation.java
-package Parser;
-=======
-
-package Main;
->>>>>>> f69bbaed5ff52acfe6b33c6cec697d06d4358748:src/Engine/src/DataManager/Main/GameInformation.java
+package DataManager;
 
 import java.util.List;
 import java.util.Map;

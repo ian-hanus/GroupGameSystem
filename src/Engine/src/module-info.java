@@ -1,7 +1,9 @@
 module Engine {
     requires gson;
 
-    exports Controller;
     exports Components;
-    exports Parser;
+    exports Triggers;
+    exports Controller;
+    exports DataManager;
+    exports ECS;
 }
