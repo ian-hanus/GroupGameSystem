@@ -130,6 +130,7 @@ public class CollisionHandler {
                     tagPairs.add(tagPair);
             }
         }
+
         return tagPairs.toArray(new Pair[0]);
     }
 
