@@ -7,7 +7,7 @@ package Player.src.Regions;
  */
 public interface PlayerStage {
     /**
-     * The Main class can call PlayerStageInstance.makeStage() to get the Stage, which is the view.
+     * The Starter class can call PlayerStageInstance.makeStage() to get the Stage, which is the view.
      * The implementation for creating the scene in the stage should be done in a separate class, makeStage just
      * returns the stage, it does not create the scene.
      *

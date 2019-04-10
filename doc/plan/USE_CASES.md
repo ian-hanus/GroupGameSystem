@@ -76,7 +76,7 @@ appears in the descriptionRegion
 * the game's thumbnail appears in the Favorites section of the gamesRegion.
 
 Example Code:
-* Main.start() -> PlayerStage.makeStage() -> gamesRegion.buildGroup() -> places all the
+* Starter.start() -> PlayerStage.makeStage() -> gamesRegion.buildGroup() -> places all the
 Thumbnail objects in the ScrollPane of the gamesRegion.
 * gamesRegion.buildGroup() -> makeHeader(true), makeThumbnails(true), makeHeader(false), 
 makeThumbnails(false). this sets up the "Favorites" header and inserts the thumbnails

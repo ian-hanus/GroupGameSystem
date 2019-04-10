@@ -3,6 +3,7 @@ package Features.ScrollableWindows;
 public class GameStatusInfo extends ScrollableWindow {
 
     String gameStatus = "";
+    String gameName;
     int myLives;
     int myLevel;
     int enemiesAlive;
@@ -12,7 +13,8 @@ public class GameStatusInfo extends ScrollableWindow {
     double myZ;
     double timeElapsed;
 
-    public GameStatusInfo() {
+    public GameStatusInfo(String game) {
+        gameName = game;
         myLives = 0;
         myLevel = 1;
         enemiesAlive = 1;
@@ -26,6 +28,7 @@ public class GameStatusInfo extends ScrollableWindow {
 
     protected void updateGameStatus() {
         gameStatus = "";
+        gameName += ("Game: " + gameName + "\n");
         gameStatus += ("Lives: " + myLives + "\n");
         gameStatus += ("Level: " + myLevel + "\n");
         gameStatus += ("Enemies Alive: " + enemiesAlive + "\n");
