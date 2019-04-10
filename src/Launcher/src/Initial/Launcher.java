@@ -41,13 +41,11 @@ public class Launcher extends Application {
     private void initializePlayerStage() {
         GameLoop player = new GameLoop();
         myPlayerStage = player.getStage();
-        System.out.println(myPlayerStage.getScene().getStylesheets().add("player_style.css"));
     }
 
     private void initializeAuthoringStage() {
         RunAuth authoringEnvironment = new RunAuth();
         //myAuthoringStage =  //TODO get stage from authoring!!!!
-        //myAuthoringStage.getScene().getStylesheets().add("authoring_style.css");
     }
 
     private void display(Stage stage) {
