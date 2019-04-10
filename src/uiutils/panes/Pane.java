@@ -1,8 +1,7 @@
-package auth.panes;
+package uiutils.panes;
 
 import auth.UIElement;
-import javafx.scene.Node;
-import javafx.scene.layout.Region;
+
 import static auth.Strings.*;
 
 import static auth.helpers.RectangleHelpers.createStyledRectangle;

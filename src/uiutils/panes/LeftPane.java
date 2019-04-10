@@ -1,4 +1,4 @@
-package auth.panes;
+package uiutils.panes;
 
 import static auth.Dimensions.*;
 import static auth.Styles.LEFT_PANE_STYLE;

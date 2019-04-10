@@ -1,16 +1,15 @@
 package auth.helpers;
 
-import auth.Callback;
 import auth.RunAuth;
 import auth.UIElementWrapper;
 import auth.pagination.PaginationUIElement;
-import auth.panes.*;
+import javafx.geometry.Pos;
+import javafx.scene.layout.StackPane;
+import uiutils.panes.*;
 import auth.screens.CanvasScreen;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import static auth.Colors.DEFAULT_TEXT_COLOR;

@@ -1,6 +1,5 @@
-package auth.panes;
+package uiutils.panes;
 
-import static auth.Dimensions.ENV_WINDOW_HEIGHT;
 import static auth.Styles.CENTRE_PANE_STYLE;
 
 public class CentrePane extends Pane{

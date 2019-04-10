@@ -1,4 +1,4 @@
-package auth.panes;
+package uiutils.panes;
 
         import static auth.Styles.RIGHT_PANE_STYLE;
         import static auth.helpers.DimensionCalculator.*;

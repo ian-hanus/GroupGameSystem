@@ -1,7 +1,6 @@
-package auth.panes;
+package uiutils.panes;
 
 import static auth.Styles.*;
-import static auth.helpers.DimensionCalculator.*;
 import static auth.Dimensions.*;
 
 public class BottomPane extends Pane {
