@@ -1,5 +1,6 @@
 package gamecenter;
 
+import Player.src.PlayerMain.PlayerStage;
 import demotests.RunDemo;
 import gamecenter.gamedata.DataParser;
 import gamecenter.gamedata.DataStruct;
@@ -129,7 +130,7 @@ public class GCScreen {
         if (index == 0) {
             new RunDemo().run();
         } else if (index == 3) {
-            // TODO: Load real game
+            // TODO: Run Hunter's real game
         }
     }
 
