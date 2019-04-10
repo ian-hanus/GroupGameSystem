@@ -24,7 +24,7 @@ public class RunAuth extends Application {
     }
 
     /**
-     * Main function to serve as entry point
+     * Starter function to serve as entry point
      * @param args: cmd line args
      */
     public static void main(String args[]) {
