@@ -15,22 +15,28 @@ public class CollisionDetector {
 
     public Integer[] getImpassableColliders(Integer entity, Set<Integer> allEntities) {
         ArrayList<Integer> impassables = new ArrayList<>();
-        for (Integer other : allEntities) {
+/*        for (Integer other : allEntities) {
             if (other.equals(entity))
                 continue;
             var impassableComponent = myEntityManager.getComponent(other, ImpassableComponent.class);
             if (impassableComponent != null && impassableComponent.getImpassable())
                 impassables.add(other);
-        }
+        }*/
         return impassables.toArray(new Integer[0]);
     }
 
                            //FIXME do we need to detect whether the collision is right, top, left, or bottom based on solely the velocity angle?
     public boolean collides(Integer collider, Integer target) {
-            return collideFromLeft(collider, target) ||
+        var colliderComponent = myEntityManager.getComponent(collider, BasicComponent.class);
+        var targetComponent = myEntityManager.getComponent(target, BasicComponent.class);
+        return colliderComponent.getX() < targetComponent.getX() + targetComponent.getWidth() &&
+                colliderComponent.getX() + colliderComponent.getWidth() > targetComponent.getX() &&
+                colliderComponent.getY() < targetComponent.getY() + targetComponent.getHeight() &&
+                colliderComponent.getY() + colliderComponent.getHeight() > targetComponent.getY();
+            /*return collideFromLeft(collider, target) ||
                     //collideFromRight(component1, component2) ||
                     //collideFromBottom(component1, component2) ||
-                    collideFromTop(collider, target);
+                    collideFromTop(collider, target);*/
             //FIXME uncomment methods above
     }
 
