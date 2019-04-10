@@ -1,7 +1,7 @@
 package ECS;
 
-import ECS.Components.BasicComponent;
-import ECS.Components.ImpassableComponent;
+import Components.BasicComponent;
+import Components.ImpassableComponent;
 
 import java.util.ArrayList;
 import java.util.Set;
