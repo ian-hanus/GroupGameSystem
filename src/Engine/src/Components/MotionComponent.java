@@ -4,13 +4,16 @@ package Components;
  * Assumes time step is 1 (multiplies velocity by 1 when returning new position or acceleration by 1 when updating velocity)
  */
 public class MotionComponent extends Component {
+    private static final double MAX_X_VELOCITY = 20;
+    private static final double MAX_Y_VELOCITY = 20;
+
     private double myXVelocity;
     private double myYVelocity;
     private double myXAcceleration;
     private double myYAcceleration;
     private double myAngle;
-    private double myMaxXVelocity;
-    private double myMaxYVelocity;
+    private double myMaxXVelocity = MAX_X_VELOCITY;
+    private double myMaxYVelocity = MAX_Y_VELOCITY;
     private double myMovementXVelocity;
     private double myMovementYVelocity;
 

@@ -10,13 +10,14 @@ public class Deflect extends DirectionChange{
 
     double myAdjustmentAngle;
 
-    public Deflect(List<Conditional> conditionals, double angle){
-        super(conditionals,180);
+    public Deflect(List<Conditional> conditionals, double angle) {
+        super(conditionals, 180);
     }
 
     @Override
     public void activate(EntityManager entityManager){
-        entityManager.adjustDirection(myObject, myAdjustmentAngle);
+        //entityManager.setYVelocity(myObject, 0);//FIXME using this to stop y velocity
+        //entityManager.adjustDirection(myObject, myAdjustmentAngle);
     }
 
     @Override

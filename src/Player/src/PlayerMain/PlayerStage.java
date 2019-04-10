@@ -7,16 +7,20 @@ import Regions.DescriptionRegion;
 import Regions.GamesRegion;
 import Regions.Thumbnail;
 import Regions.TitleRegion;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,15 +38,24 @@ public class PlayerStage {
     public final Paint ST_COLOR = Color.web("284376");
     public final double ST_SPACING = 20;
 
-    public final double STEP_TIME = 30;
+    public final double STEP_TIME = 5;
     public final double GAME_WIDTH = 1400;
     public final double GAME_HEIGHT = 800;
     public final Paint GAME_BG = Color.BLACK;
+
+    public static final int FRAMES_PER_SECOND = 30;
+    public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private Scene myScene;
     private GridPane myVisualRoot;
     private ArrayList<String> myGames;
     private ArrayList<String> myImageFiles;
+
+    private Controller myGameController;
+    private Group myGameRoot;
+    private Map<Integer, Map<Class<? extends Component>, Component>> myGameEntityMap;
+    private Map<Integer, ImageView> myImageViewMap;
 
     public PlayerStage() {
 
@@ -82,144 +95,107 @@ public class PlayerStage {
         }
     }
 
-    /**
-     * Run(), edit(), rate() currently placeholder. Update these methods.
-     */
     public void run(String gameName) {
-
-        // make an instance of the Stage
-
         Stage gameStage = new Stage();
-        Group gameRoot = new Group();
+        myGameRoot = new Group();
+        myImageViewMap = new HashMap<>();                   //FIXME go full screen
+        myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH, GAME_HEIGHT);
+        myGameEntityMap = myGameController.getEntities();
 
-        // put everything into gameRoot
+        addNewImageViews();
 
-        Map<Integer, ImageView> imageViewMap = new HashMap<>();
-
-        Controller gameController = new Controller(STEP_TIME, GAME_WIDTH, GAME_HEIGHT, GAME_WIDTH, GAME_HEIGHT);
-        Map<Integer, Map<Class<? extends Component>, Component>> gameEntities = gameController.getEntities();
-
-        for (Integer id: gameEntities.keySet()) {
-            BasicComponent ent = (BasicComponent) gameEntities.get(id).get(BasicComponent.class);
-            double entWd = ent.getWidth();
-            double entHt = ent.getHeight();
-            double entX = ent.getX();
-            double entY = ent.getY();
-//            double entZIndex = ent.getZindex();
-            File entFile = ent.getMyFile();
-
-            ImageView iv = new ImageView();
-            try {
-                iv = new ImageView(entFile.getAbsolutePath());
-                iv.setX(entX);
-                iv.setY(entY);
-                iv.setFitWidth(entWd);
-                iv.setFitHeight(entHt);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("uh oh");
-            }
-
-            imageViewMap.put(id, iv);
-        }
-
-        gameRoot.getChildren().addAll(imageViewMap.values());
-
-        Scene gameScene = new Scene(gameRoot, GAME_BG);
+        Scene gameScene = new Scene(myGameRoot, GAME_BG);
         gameStage.setScene(gameScene);
         gameStage.show();
 
-        // start game loop
-//        while (true) {
-//            Map<Integer, ImageView> newImageViewMap = new HashMap<>();
-//            Map<Integer, Map<Class<? extends Component>, Component>> newGameEntities = gameController.getEntities();
-//            for (Integer newID: newGameEntities.keySet()) {
-//                BasicComponent newEnt = (BasicComponent) gameEntities.get(newID).get(BasicComponent.class);
-//                double newEntWd = newEnt.getWidth();
-//                double newEntHt = newEnt.getHeight();
-//                double newEntX = newEnt.getX();
-//                double newEntY = newEnt.getY();
-////            double entZIndex = ent.getZindex();
-//                File entFile = newEnt.getMyFile();
-//                ImageView newIV = new ImageView();
-//                try {
-//                    newIV = new ImageView(entFile.getAbsolutePath());
-//                    newIV.setX(newEntX);
-//                    newIV.setY(newEntY);
-//                    newIV.setFitWidth(newEntWd);
-//                    newIV.setFitHeight(newEntHt);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    System.out.println("uh oh");
-//                }
-//                imageViewMap.put(newID, newIV);
-//            }
-//            gameRoot.getChildren().clear();
-//            gameRoot.getChildren().addAll(imageViewMap.values());
-//        }
+        gameScene.setOnKeyPressed(e -> myGameController.processKey(e.getCode().toString()));
 
-        while (true) {
-            for (int id : gameEntities.keySet()) {
-                // check if key is in imageViewMap
-                BasicComponent newEnt = (BasicComponent) gameEntities.get(id).get(BasicComponent.class);
-                double newEntWd = newEnt.getWidth();
-                double newEntHt = newEnt.getHeight();
-                double newEntX = newEnt.getX();
-                double newEntY = newEnt.getY();
-//            double entZIndex = ent.getZindex();
-                File entFile = newEnt.getMyFile();
-                if (imageViewMap.containsKey(id)) {
-                    // if so check for diffs in objects
-                    ImageView curr = imageViewMap.get(id);
-                    double currWd = curr.getFitWidth();
-                    double currHt = curr.getFitHeight();
-                    double currX = curr.getX();
-                    double currY = curr.getY();
-                    if (newEntWd != currWd || newEntHt != currHt || newEntX != currX || newEntY != currY) {
-                        ImageView newIV = new ImageView();
-                        try {
-                            newIV = new ImageView(entFile.getAbsolutePath());
-                            newIV.setX(newEntX);
-                            newIV.setY(newEntY);
-                            newIV.setFitWidth(newEntWd);
-                            newIV.setFitHeight(newEntHt);
-                        }
-                        catch (Exception e) {
-                            e.printStackTrace();
-                            System.out.println("uh oh");
-                        }
-                        imageViewMap.put(id, newIV);
-                        gameRoot.getChildren().add(imageViewMap.get(id));
-                    }
-                }
-                // if key is not in imageViewMap add component
-                else {
-                    ImageView newIV = new ImageView();
-                    try {
-                        newIV = new ImageView(entFile.getAbsolutePath());
-                        newIV.setX(newEntX);
-                        newIV.setY(newEntY);
-                        newIV.setFitWidth(newEntWd);
-                        newIV.setFitHeight(newEntHt);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        System.out.println("uh oh");
-                    }
-                    imageViewMap.put(id, newIV);
-                    gameRoot.getChildren().add(imageViewMap.get(id));
-                }
-            }
-            for (int key : imageViewMap.keySet()) {
-                // if id no longer in gameEntities remove from imageViewMap
-                if (! gameEntities.containsKey(key)) {
-                    gameRoot.getChildren().remove(imageViewMap.get(key));
-                }
-            }
-        }
-
-
+        animate();
     }
 
+    private void animate() {
+        var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> { step(); scrollImageViews(); });
+        var animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
+    }
+
+    private void step() {
+        myGameController.updateScene();
+        addNewImageViews();
+        updateOrRemoveImageViews();
+    }
+
+    private void scrollImageViews() {
+        for (Integer id : myImageViewMap.keySet()) {
+            ImageView imageView = myImageViewMap.get(id);
+
+            var entity = myGameEntityMap.get(id);
+            if (entity == null)
+                continue;
+
+            var basicComponent = (BasicComponent) entity.get(BasicComponent.class);
+            if (basicComponent == null)
+                continue;
+
+            imageView.setX(basicComponent.getX() - myGameController.getOffset()[0]);
+            imageView.setY(basicComponent.getY() - myGameController.getOffset()[1]);
+        }
+
+        System.out.println(myGameController.getOffset()[0]);
+    }
+
+    private void updateOrRemoveImageViews() {
+        for (int id : myImageViewMap.keySet()) {
+            if (!myGameEntityMap.containsKey(id))
+                myGameRoot.getChildren().remove(myImageViewMap.get(id));
+            updateImageView(id);
+        }
+    }
+
+    private void addNewImageViews() {
+        for (int id : myGameEntityMap.keySet()) {
+            if (myImageViewMap.containsKey(id))
+                continue;
+
+            var newImageView = new ImageView();
+            myImageViewMap.put(id, newImageView);
+            myGameRoot.getChildren().add(newImageView);
+            updateImageView(id);
+        }
+    }
+
+    private void updateImageView(int id) {
+        BasicComponent basicComponent = (BasicComponent) myGameEntityMap.get(id).get(BasicComponent.class);
+        if (basicComponent == null)
+            return;
+
+        ImageView imageView = myImageViewMap.get(id);
+        moveAndResize(imageView, basicComponent);
+        setImageIfNecessary(imageView, basicComponent);
+    }
+
+    private void moveAndResize(ImageView imageView, BasicComponent basicComponent) {
+        imageView.setX(basicComponent.getX());
+        imageView.setY(basicComponent.getY());
+        imageView.setFitWidth(basicComponent.getWidth());
+        imageView.setFitHeight(basicComponent.getHeight());
+    }
+
+    private void setImageIfNecessary(ImageView imageView, BasicComponent entity) {
+        InputStream newInputStream = this.getClass().getResourceAsStream(entity.getMyFilename());
+        if (newInputStream == null)
+            return;
+
+        Image newImage = new Image(newInputStream);
+        if (!newImage.equals(imageView.getImage()))
+            imageView.setImage(newImage);
+    }
+
+    /**
+     *    edit(), rate() currently placeholder. Update these methods.
+     */
     public void edit(String gameName) {
 //        System.out.println(gameName + " is being edited!");
     }
@@ -232,6 +208,7 @@ public class PlayerStage {
         Stage ret = new Stage();
         ret.setTitle(ST_TITLE);
         ret.setScene(myScene);
+        myScene.getStylesheets().add("style.css");
         return ret;
     }
 }

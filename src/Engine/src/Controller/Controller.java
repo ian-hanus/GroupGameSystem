@@ -42,16 +42,22 @@ public class Controller {
     private Map<Pair<String>, Pair<List<Event>>> myCollisionResponses;
     private Map<Integer, Map<Class<? extends Component>, Component>> myActiveObjects;
     private List<Event> myTriggers;
+
     private int myUserID;
-    private CollisionHandler myCollisionHandler;
-    private EngineParser myEngineParser;
-    private EntityManager myEntityManager;
-    private LevelManager myLevelManager;
     private double myStepTime;
     private double myIterationCounter;
-    private double[] offset;
+    private double[] myOffset;
+
+    private CollisionHandler myCollisionHandler;
+    private EntityManager myEntityManager;
+    private LevelManager myLevelManager;
 
     public Controller(double stepTime, double screenWidth, double screenHeight, double levelWidth, double levelHeight){
+        myHotKeys = new HashMap<>();
+        myTimers = new ArrayList<>();
+        myCollisionResponses = new HashMap<>();
+        myTriggers = new ArrayList<>();
+
         myStepTime = stepTime;
         myScreenWidth = screenWidth;
         myScreenHeight = screenHeight;
@@ -61,10 +67,15 @@ public class Controller {
         myEntityManager = new EntityManager(myActiveObjects, myStepTime);
         myCollisionHandler = new CollisionHandler(myEntityManager, myLevelManager, new CollisionDetector(myEntityManager));
         myIterationCounter = 0;
+
+        setDefaultKeys();
+        setDefaultTriggers();
     }
 
     //FIXME??
     public void initializeDataVariables(){
+        myActiveObjects = new DefaultGame().getActiveObjects(); //FIXME remove for non default, hardcoded game
+        myCollisionResponses = new DefaultGame().getCollisionMap();
         //myActiveObjects = myDataManager.loadDefaultObjects();
         //myHotKeys = myDataManager.loadHotKeyMap();
         //myCollisionResponses = myDataManager.loadCollisionResponseMap();
@@ -77,12 +88,9 @@ public class Controller {
                 break;
             }
         }
-        setDefaultKeys();
-        setDefaultTriggers();
     }
 
     private void setDefaultKeys() {
-        myHotKeys = new HashMap<>();
         myHotKeys.put("A", new MoveLeft(myUserID));
         myHotKeys.put("D", new MoveRight(myUserID));
         myHotKeys.put("SPACE", new Jump(myUserID));
@@ -91,16 +99,18 @@ public class Controller {
     private void setDefaultTriggers(){
         for(Integer id : myActiveObjects.keySet()) {
             Component health = myEntityManager.getComponent(id, HealthComponent.class);
-            List<Conditional> conditionals = new ArrayList<>();
-            conditionals.add(new HealthComparison(true, id, "<=", new HealthComponent(0, 0)));
-            myTriggers.add(new Die(conditionals, id));
+            if (health != null) {
+                List<Conditional> conditionals = new ArrayList<>();
+                conditionals.add(new HealthComparison(true, id, "<=", new HealthComponent(0, 0)));
+                myTriggers.add(new Die(conditionals, id));
+            }
         }
     }
 
     public void processKey(String key){
         if (myHotKeys.containsKey(key)){
             Event event = myHotKeys.get(key);
-            event = event.copy();
+            //event = event.copy();
             event.setConditionalObject(myUserID);
             if (event.conditionsSatisfied(myEntityManager)){
                 if(event instanceof ObjectEvent){
@@ -124,10 +134,7 @@ public class Controller {
         myTriggers = newTriggers;
         myLevelManager.updateTimer();
         myCollisionHandler.dealWithCollisions(myActiveObjects.keySet(), myCollisionResponses);
-        for (int obj : myActiveObjects.keySet()){
-            myEntityManager.move(obj);
-        }
-        offset = updateOffset();
+        myOffset = updateOffset();
     }
 
     public double[] updateOffset() {
@@ -140,7 +147,7 @@ public class Controller {
     }
 
     public double[] getOffset() {
-        return offset;
+        return myOffset;
     }
     public Map<Integer, Map<Class<? extends Component>, Component>> getEntities(){
         return myActiveObjects;
