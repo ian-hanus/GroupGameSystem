@@ -87,7 +87,7 @@ Features/Goals
         * Secondary: Player back end
     * Features:
         * First sprint: Building the game choosing state and being able to run the game engine and authoring environment
-        * Second sprint: Adding to the graphical components of the Engine and Authoring environment
+        * Second sprint: Adding to the graphical Components of the Engine and Authoring environment
 * Duc Tran (dt135)
     * Responsibilities:
         * Primary: Authoring Environment Backend

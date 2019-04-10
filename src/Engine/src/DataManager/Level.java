@@ -1,7 +1,7 @@
 package DataManager;
 
-import ECS.Components.Component;
-import Events.Event;
+import Components.Component;
+import Triggers.Events.Event;
 
 import java.util.Collections;
 import java.util.List;
