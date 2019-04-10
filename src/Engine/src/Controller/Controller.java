@@ -65,6 +65,7 @@ public class Controller {
 
     //FIXME??
     public void initializeDataVariables(){
+        myActiveObjects = new DefaultGame().getActiveObjects(); //FIXME remove for non default, hardcoded game
         //myActiveObjects = myDataManager.loadDefaultObjects();
         //myHotKeys = myDataManager.loadHotKeyMap();
         //myCollisionResponses = myDataManager.loadCollisionResponseMap();
