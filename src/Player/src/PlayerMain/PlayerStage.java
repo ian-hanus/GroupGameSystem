@@ -38,12 +38,12 @@ public class PlayerStage {
     public final Paint ST_COLOR = Color.web("284376");
     public final double ST_SPACING = 20;
 
-    public final double STEP_TIME = 30;
+    public final double STEP_TIME = 3;
     public final double GAME_WIDTH = 1400;
     public final double GAME_HEIGHT = 800;
     public final Paint GAME_BG = Color.BLACK;
 
-    public static final int FRAMES_PER_SECOND = 10;
+    public static final int FRAMES_PER_SECOND = 30;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
