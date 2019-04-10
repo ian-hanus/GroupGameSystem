@@ -38,7 +38,7 @@ public class PlayerStage {
     public final Paint ST_COLOR = Color.web("284376");
     public final double ST_SPACING = 20;
 
-    public final double STEP_TIME = 3;
+    public final double STEP_TIME = 5;
     public final double GAME_WIDTH = 1400;
     public final double GAME_HEIGHT = 800;
     public final Paint GAME_BG = Color.BLACK;
