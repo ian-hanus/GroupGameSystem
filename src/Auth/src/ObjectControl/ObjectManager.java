@@ -42,7 +42,7 @@ public class ObjectManager {
         myPane.getChildren().add(myObjectBank.getView());
     }
 
-    // TODO: add the x and y components to the map before passing to DataManager
+    // TODO: add the x and y Components to the map before passing to DataManager
     public void writeObject(Map<String, String> objectComponents, double xLoc, double yLoc){
         objectComponents.put("xLoc", Double.toString(xLoc));
         objectComponents.put("yLoc", Double.toString(yLoc));
