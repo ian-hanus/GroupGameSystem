@@ -23,7 +23,7 @@ public class DefaultGame {
 
     private void addActiveObjects() {
         Map<Class<? extends Component>, Component> user = new HashMap<>();
-        user.put(BasicComponent.class, new BasicComponent(new File("mario.png"), 300, 200, 50, 50));
+        user.put(BasicComponent.class, new BasicComponent("/images/mario.jpg", 300, 200, 50, 50));
         user.put(MotionComponent.class, new MotionComponent(0, 0, 0, 0, 0, 10, 0));
         user.put(JumpComponent.class, new JumpComponent(30));
         List<String> userTag = new ArrayList<>();
@@ -32,7 +32,7 @@ public class DefaultGame {
         myActiveObjects.put(0, user);
 
         Map<Class<? extends Component>, Component> block = new HashMap<>();
-        block.put(BasicComponent.class, new BasicComponent(new File("block.png"), 0, 250, 1000, 75));
+        block.put(BasicComponent.class, new BasicComponent("/images/doodle-jump.jpg", 0, 250, 1000, 75));
         block.put(ImpassableComponent.class, new ImpassableComponent(true));
         List<String> blockTag = new ArrayList<>();
         blockTag.add("BLOCK");

@@ -61,6 +61,9 @@ public class Controller {
         myEntityManager = new EntityManager(myActiveObjects, myStepTime);
         myCollisionHandler = new CollisionHandler(myEntityManager, myLevelManager, new CollisionDetector(myEntityManager));
         myIterationCounter = 0;
+
+        setDefaultKeys();
+        setDefaultTriggers();
     }
 
     //FIXME??
@@ -78,8 +81,6 @@ public class Controller {
                 break;
             }
         }
-        setDefaultKeys();
-        setDefaultTriggers();
     }
 
     private void setDefaultKeys() {
@@ -92,9 +93,11 @@ public class Controller {
     private void setDefaultTriggers(){
         for(Integer id : myActiveObjects.keySet()) {
             Component health = myEntityManager.getComponent(id, HealthComponent.class);
-            List<Conditional> conditionals = new ArrayList<>();
-            conditionals.add(new HealthComparison(true, id, "<=", new HealthComponent(0, 0)));
-            myTriggers.add(new Die(conditionals, id));
+            if (health != null) {
+                List<Conditional> conditionals = new ArrayList<>();
+                conditionals.add(new HealthComparison(true, id, "<=", new HealthComponent(0, 0)));
+                myTriggers.add(new Die(conditionals, id));
+            }
         }
     }
 
