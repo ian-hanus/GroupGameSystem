@@ -26,10 +26,6 @@ public class ObjectCreator {
         myImageChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/data"));
         myImageChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG image file", "*.png", "*.jpg"));
         myDisplayStrings = new TreeMap<>();
-//        String[] componentTags = new String[]{"ImageFile", "ObjectName", "Test3", "Test4", "Test5", "Test6", "Test7",
-//                "Test8", "Test9", "Test10"};
-//        String[] componentDisplay = new String[]{"Image File Path", "Object Name", "Test 3", "Test 4", "Test 5", "Test 6", "Test 7",
-//                "Test 8", "Test 9", "Test 10"};
         var resource = ResourceBundle.getBundle("Components");
         for(var key:Collections.list(resource.getKeys())){
             myDisplayStrings.put(key, resource.getString(key));

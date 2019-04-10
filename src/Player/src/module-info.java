@@ -6,6 +6,6 @@ module player {
     requires java.datatransfer;
 
     exports PlayerMain;
-    exports Features;
+//    exports Features;
     exports Regions;
 }
