@@ -42,4 +42,7 @@ public abstract class ObjectEvent extends Event {
     public void setOther(int other){
         if(myOther == -1) myOther = other;
     }
+
+    @Override
+    public abstract Event copy();
 }

@@ -27,4 +27,9 @@ public class AddSequence extends GameEvent {
     public void activate(LevelManager levelManager) {
         levelManager.addSequence(myEventsWhileOn, myEventsAfter, myDurations, IsLoop);
     }
+
+    @Override
+    public Event copy() {
+        return new AddSequence(copyConditionals(), myEventsWhileOn, myEventsAfter, myDurations, IsLoop);
+    }
 }

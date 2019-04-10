@@ -17,4 +17,7 @@ public abstract class GameEvent extends Event {
     }
 
     public abstract void activate(LevelManager gameManager);
+
+    @Override
+    public abstract Event copy();
 }

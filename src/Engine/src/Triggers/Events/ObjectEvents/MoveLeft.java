@@ -2,6 +2,7 @@ package Triggers.Events.ObjectEvents;
 
 import Triggers.Conditionals.Conditional;
 import ECS.EntityManager;
+import Triggers.Events.Event;
 
 import java.util.List;
 
@@ -17,5 +18,10 @@ public class MoveLeft extends ObjectEvent {
     @Override
     public void activate(EntityManager entityManager) {
         entityManager.moveHorizontal(myObject, false);
+    }
+
+    @Override
+    public Event copy() {
+        return new MoveLeft(copyConditionals(), myObject);
     }
 }

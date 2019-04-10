@@ -3,6 +3,7 @@ package Triggers.Events.ObjectEvents;
 import Triggers.Conditionals.Conditional;
 
 import ECS.EntityManager;
+import Triggers.Events.Event;
 
 import java.util.List;
 
@@ -18,5 +19,10 @@ public class Kill extends ObjectEvent {
     @Override
     public void activate(EntityManager entityManager) {
         entityManager.die(myOther);
+    }
+
+    @Override
+    public Event copy() {
+        return new Kill(copyConditionals(), myObject);
     }
 }
