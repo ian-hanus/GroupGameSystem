@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class PlayerStage{
 
     List<String> myFavorites = new ArrayList<>();
-    // myMap is a map of games to their images that already exists
+    // myMap is a map of games to their player_images that already exists
 
     public void buildGroup() {
         placeHeader(true); // adds "Favorites" header
