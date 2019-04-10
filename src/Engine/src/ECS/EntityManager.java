@@ -62,7 +62,6 @@ public class EntityManager {
         var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
         var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
         if (motionComponent != null && basicComponent != null) {
-            motionComponent.updateVelocity();
             double newX = motionComponent.getNewX(basicComponent.getX());
             double newY = motionComponent.getNewY(basicComponent.getY());
             basicComponent.setX(newX);
@@ -80,6 +79,12 @@ public class EntityManager {
         var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
         if (motionComponent != null)
             motionComponent.setDirection(angle);
+    }
+
+    public void setYVelocity(int entityID, double vel) {
+        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        if (motionComponent != null)
+            motionComponent.setYVelocity(vel);
     }
 
     public void adjustHealth(int entityID, int delta) {

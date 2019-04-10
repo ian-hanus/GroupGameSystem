@@ -46,6 +46,9 @@ public class CollisionHandler {
     public void dealWithCollisions(Set<Integer> entities, Map<Pair<String>, Pair<List<Event>>> collisionResponses) {
         myCollisionResponses = collisionResponses;
         myCurrentCollisions = new HashMap<>();
+
+        updateVelocities(entities);
+
         for (Integer entity1 : entities) {
             for (Integer entity2 : entities) {
                 if (entity1 >= entity2) //prevent collisions from happening twice
@@ -59,6 +62,14 @@ public class CollisionHandler {
                 setInDefaultEnvironment(entity);
         }
         myPreviousCollisions = myCurrentCollisions;
+    }
+
+    private void updateVelocities(Set<Integer> entities) {
+        for (int id : entities){
+            var motionComponent = myEntityManager.getComponent(id, MotionComponent.class);
+            if (motionComponent != null)
+                motionComponent.updateVelocity();
+        }
     }
 
     private boolean notInteractingWithEnvironment(Integer entity) {
