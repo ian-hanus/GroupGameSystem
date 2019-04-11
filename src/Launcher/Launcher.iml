@@ -7,17 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="mac" level="project" />
     <orderEntry type="module" module-name="Auth" />
     <orderEntry type="module" module-name="Player" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/../../lib/javafx/win" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/../../lib/javafx/win" recursive="false" />
-      </library>
-    </orderEntry>
   </component>
 </module>

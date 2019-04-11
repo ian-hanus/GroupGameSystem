@@ -133,7 +133,8 @@ public class GCScreen {
         if (index == 0) {
             new RunDemo().run();
         } else if (index == 3) {
-            // TODO: Run Hunter's real game
+            new PlayerStage().run("mario");  //COMMENT to show player and run mario from there
+            //new PlayerStage().makeStage().show();    UNCOMMENT to show player
         }
     }
 

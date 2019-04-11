@@ -4,16 +4,17 @@ import Engine.src.Components.*;
 import Engine.src.ECS.Pair;
 import Engine.src.Triggers.Events.Event;
 import Engine.src.Triggers.Events.ObjectEvents.Deflect;
+import Engine.src.Triggers.Events.ObjectEvents.Portal;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class DefaultGame {
-    private static final String BLOCK_IMAGE = "block.jpg";
-    private static final String USER_IMAGE = "mario.png";
+    private static final String BLOCK_IMAGE = "/img/block.jpg";
+    private static final String USER_IMAGE = "/img/mario.png";
+    private static final String PORTAL_IMAGE = "/img/portal.jpg";
     private static final double USER_WIDTH = 30;
     private static final double USER_HEIGHT = 50;
     private static final double USER_MOVEMENT_VELOCITY = 10;
@@ -35,23 +36,61 @@ public class DefaultGame {
         makeUser();
 
         myBlocks = new ArrayList<>();
-        addBlock(0, 250, 100);
-        addBlock(110, 250, 100);
-        addBlock(220, 300, 150);
-        addBlock(450, 200, 50);
+
+        addBlock(0, 200, 200);
+        includeTrampoline(300, 400, 100);
+        addBlock(550, 200, 200);
+
+        includeShooter(1500, 300, 100, true);
+
+        addBlock(2000, 200, 50); //make these stop your x velocity and end the game
+        addBlock(2200, 400, 50);
+        addBlock(2400, 100, 50);
+        addBlock(2600, 200, 50);
+        addBlock(2800, 400, 50);
+        addBlock(3000, 0, 50);
+        addBlock(3200, 100, 50);
+        addBlock(3400, 500, 50);
+        addBlock(3600, 100, 50);
+
+        includeShooter(4200, 300, 100, false);
+
         addImpassableAndTags();
 
-        int blockNumber = 1;
+        int blockNumber = 4;
         for (var block : myBlocks) {
             myActiveObjects.put(blockNumber, block);
             blockNumber++;
         }
     }
 
+    private void includeTrampoline(double x, double y, double width) {
+        Map<Class<? extends Component>, Component> trampoline = new HashMap<>();
+        trampoline.put(BasicComponent.class, new BasicComponent(BLOCK_IMAGE, x, y,width, 75));
+        List<String> trampolineTag = new ArrayList<>();
+        trampolineTag.add("TRAMPOLINE");
+        trampoline.put(TagsComponent.class, new TagsComponent(trampolineTag));
+        myActiveObjects.put(1, trampoline);
+    }
+
+    private void includeShooter(double x, double y, double width, boolean shoot) {
+        Map<Class<? extends Component>, Component> trampoline = new HashMap<>();
+        trampoline.put(BasicComponent.class, new BasicComponent(PORTAL_IMAGE, x, y,width, 75));
+        List<String> trampolineTag = new ArrayList<>();
+        if (shoot)
+            trampolineTag.add("SHOOTER");
+        else
+            trampolineTag.add("STOPPER");
+        trampoline.put(TagsComponent.class, new TagsComponent(trampolineTag));
+
+        int id = shoot ? 2 : 3;
+        myActiveObjects.put(id, trampoline);
+    }
+
     private void addBlock(double x, double y, double width) {
         Map<Class<? extends Component>, Component> block = new HashMap<>();
         myBlocks.add(block);
-        block.put(BasicComponent.class, new BasicComponent("/images/" + BLOCK_IMAGE, x, y,width, 75));
+        block.put(BasicComponent.class, new BasicComponent(BLOCK_IMAGE, x, y,width, 75));
     }
 
     private List<String> addImpassableAndTags() {
@@ -66,7 +105,7 @@ public class DefaultGame {
 
     private void makeUser() {
         Map<Class<? extends Component>, Component> user = new HashMap<>();
-        user.put(BasicComponent.class, new BasicComponent("/images/" + USER_IMAGE, 300, 100, USER_WIDTH, USER_HEIGHT));
+        user.put(BasicComponent.class, new BasicComponent(USER_IMAGE, 50, 50, USER_WIDTH, USER_HEIGHT));
         user.put(MotionComponent.class, new MotionComponent(0, 0, 0, GRAVITY, 0, USER_MOVEMENT_VELOCITY, 0));
         user.put(JumpComponent.class, new JumpComponent(USER_JUMP_VELOCITY));
         List<String> userTag = new ArrayList<>();
@@ -75,14 +114,18 @@ public class DefaultGame {
         myActiveObjects.put(0, user);
     }
 
-
-
     private void addCollisions() {
-        var tagPair = new Pair<>("USER","BLOCK");
-        var deflect = new Deflect(new ArrayList<>(), 0);
+        //makeCollision("USER", "BLOCK", new Deflect(new ArrayList<>(), 0));
+        makeCollision("USER", "TRAMPOLINE", new Deflect(new ArrayList<>(), 0));
+        makeCollision("USER", "SHOOTER", new Portal(new ArrayList<>(), true));
+        makeCollision("USER", "STOPPER", new Portal(new ArrayList<>(), false));
+    }
+
+    private void makeCollision(String tag1, String tag2, Event event) {
+        var tagPair = new Pair<>(tag1, tag2);
         var list1 = new ArrayList<Event>();
         var list2 = new ArrayList<Event>();
-        list1.add(deflect);
+        list1.add(event);
         myCollisionMap.put(tagPair, new Pair<>(list1, list2));
     }
 

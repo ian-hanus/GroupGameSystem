@@ -1,8 +1,8 @@
 package Engine.src.Triggers.Events.ObjectEvents;
 
-import Triggers.Conditionals.Conditional;
-import ECS.EntityManager;
-import Triggers.Events.Event;
+import Engine.src.Triggers.Conditionals.Conditional;
+import Engine.src.ECS.EntityManager;
+import Engine.src.Triggers.Events.Event;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class Deflect extends DirectionChange{
 
     @Override
     public void activate(EntityManager entityManager){
-        //entityManager.setYVelocity(myObject, 0);//FIXME using this to stop y velocity
+        entityManager.setYVelocity(myObject, -25);//FIXME modifiying for demo
         //entityManager.adjustDirection(myObject, myAdjustmentAngle);
     }
 

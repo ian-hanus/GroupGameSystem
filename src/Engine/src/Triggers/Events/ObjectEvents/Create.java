@@ -1,9 +1,9 @@
 package Engine.src.Triggers.Events.ObjectEvents;
 
-import Triggers.Conditionals.Conditional;
-import Components.Component;
-import ECS.EntityManager;
-import Triggers.Events.Event;
+import Engine.src.Triggers.Conditionals.Conditional;
+import Engine.src.Components.Component;
+import Engine.src.ECS.EntityManager;
+import Engine.src.Triggers.Events.Event;
 
 import java.util.List;
 import java.util.Map;
