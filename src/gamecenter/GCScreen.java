@@ -1,6 +1,7 @@
 package gamecenter;
 
 import Player.src.PlayerMain.PlayerStage;
+import auth.RunAuth;
 import demotests.RunDemo;
 import gamecenter.gamedata.DataParser;
 import gamecenter.gamedata.DataStruct;
@@ -246,6 +247,7 @@ public class GCScreen {
         button.setLayoutX(GC_TITLE_PANE_X + GC_PERMA_PANE_WIDTH/2 - button.getLayoutBounds().getWidth()/2 + BUTTON_OFFSET_CORRECTION);
         button.setLayoutY(GC_PERMA_PANE_Y + GC_PERMA_PANE_HEIGHT/2 - button.getLayoutBounds().getHeight()/2
         + GC_PERMA_CONTENT_OFFSET);
+        button.setOnMouseClicked(e -> {new RunAuth().start(new Stage());});
 
         parent.getChildren().addAll(defaultPermaText, button);
     }

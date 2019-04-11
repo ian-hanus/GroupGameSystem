@@ -19,6 +19,7 @@ import static auth.Styles.*;
 import static auth.Strings.*;
 import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
+import static gamecenter.RunGameCenter.bebasKaiMedium;
 
 public class ScreenHelpers {
     private static final String STYLE_SHEET = "authoring.css";
@@ -33,7 +34,7 @@ public class ScreenHelpers {
 
     private static void placeScenePagination(CanvasScreen context) {
         var sceneText = new Text("Scene 1");
-        sceneText.setFont(RunAuth.bebasKaiMedium);
+        sceneText.setFont(bebasKaiMedium);
         sceneText.setFill(DEFAULT_TEXT_COLOR);
         var pagination = new PaginationUIElement(sceneText, (arg) -> {
             // TODO
