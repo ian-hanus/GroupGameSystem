@@ -1,5 +1,6 @@
 package auth.helpers;
 
+import auth.ObjectControl.ObjectManager;
 import auth.RunAuth;
 import auth.UIElementWrapper;
 import auth.pagination.PaginationUIElement;
@@ -20,12 +21,14 @@ import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
 
 public class ScreenHelpers {
+    private static final String STYLE_SHEET = "authoring.css";
     public static void initScene(CanvasScreen context, Scene scene, Group root) {
         scene.setRoot(root);
         root.setStyle(BG_STYLE);
         placePanes(context);
         placeCanvas(context);
         placeScenePagination(context);
+        scene.getStylesheets().add(STYLE_SHEET);
     }
 
     private static void placeScenePagination(CanvasScreen context) {
@@ -62,6 +65,10 @@ public class ScreenHelpers {
         var toolsPane = new LeftPane(centreVertical(TOOLS_PANE_HEIGHT), TOOLS_PANE_WIDTH, TOOLS_PANE_HEIGHT, TOOLS_PANE_ID);
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, PROPS_PANE_ID);
         var objLibPane = new RightPane(computeMarginToBottomEdge((Region) propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, OBJ_LIB_PANE_ID);
+
+        ObjectManager objectManager = new ObjectManager(objLibPane.getView());
+        propsPane.getView().getChildren().add(objectManager.getCreatorView());
+        objLibPane.getView().getChildren().add(objectManager.getBankView());
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
