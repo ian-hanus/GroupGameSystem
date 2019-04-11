@@ -1,15 +1,15 @@
-package ECS;
+package Engine.src.ECS;
 
-import Components.EnvironmentComponent;
-import Components.ImpassableComponent;
-import Components.MotionComponent;
-import Components.TagsComponent;
-import Triggers.Conditionals.Conditional;
-import Triggers.Conditionals.ObjectConditional;
-import Controller.LevelManager;
-import Triggers.Events.GameEvents.GameEvent;
-import Triggers.Events.ObjectEvents.ObjectEvent;
-import Triggers.Events.Event;
+import Engine.src.Components.EnvironmentComponent;
+import Engine.src.Components.ImpassableComponent;
+import Engine.src.Components.MotionComponent;
+import Engine.src.Components.TagsComponent;
+import Engine.src.Triggers.Conditionals.Conditional;
+import Engine.src.Triggers.Conditionals.ObjectConditional;
+import Engine.src.Controller.LevelManager;
+import Engine.src.Triggers.Events.GameEvents.GameEvent;
+import Engine.src.Triggers.Events.ObjectEvents.ObjectEvent;
+import Engine.src.Triggers.Events.Event;
 
 import java.util.*;
 
@@ -176,7 +176,7 @@ public class CollisionHandler {
 
     //TODO fix if Triggers.Events are changed
     private void activateEvents(Integer current, Integer other, List<Event> responseList) {
-        for (Event event : responseList) {
+        for (Event e : responseList) {
             /*if (event instanceof ObjectEvent) {                 //only include other if necessary for conditionals
                 ((ObjectEvent) event).activate(current, other, myEntityManager);
             }
@@ -184,9 +184,7 @@ public class CollisionHandler {
                 ((GameEvent) event).activate(current, other, myLevelManager);
             }*/
             //FIXME delegate rest of method to ObjectEvent/GameEvent and uncomment code above
-
-            if (event instanceof ObjectEvent)
-                ((ObjectEvent) event).setEventObject(current);
+            Event event = e.copy();
             List<Conditional> conditionals = event.getConditionals();
             for (Conditional conditional : conditionals) {
                 if (conditional instanceof ObjectConditional) {
@@ -195,6 +193,7 @@ public class CollisionHandler {
             }
             if (event.conditionsSatisfied(other, myEntityManager)) {
                 if (event instanceof ObjectEvent) {
+                    ((ObjectEvent) event).setEventObject(current);
                     ((ObjectEvent) event).setOther(other);
                     ((ObjectEvent) event).activate(myEntityManager);
                 }

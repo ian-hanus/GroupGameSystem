@@ -1,10 +1,10 @@
-package Controller;
+package Engine.src.Controller;
 
-import Components.*;
-import ECS.Pair;
-import Triggers.Events.Event;
-import Triggers.Events.ObjectEvents.Deflect;
-import Triggers.Events.ObjectEvents.Portal;
+import Engine.src.Components.*;
+import Engine.src.ECS.Pair;
+import Engine.src.Triggers.Events.Event;
+import Engine.src.Triggers.Events.ObjectEvents.Deflect;
+import Engine.src.Triggers.Events.ObjectEvents.Portal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
