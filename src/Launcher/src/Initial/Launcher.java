@@ -4,7 +4,9 @@ import PlayerMain.GameLoop;
 import basic.RunAuth;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.application.Application;
 
@@ -23,11 +25,11 @@ public class Launcher extends Application {
      * @param stage stage
      */
     public void start (Stage stage) {
-        initializeLauncherStage(stage);
         initializePlayerStage();
         initializeAuthoringStage();
+        initializeLauncherStage(stage);
 
-        display(myPlayerStage); //FIXME display myLauncherStage and add buttons to display auth or player
+        display(myLauncherStage); //FIXME display myLauncherStage and add buttons to display auth or player
     }
 
     private void initializeLauncherStage(Stage stage) {
@@ -35,7 +37,19 @@ public class Launcher extends Application {
         var root = new BorderPane();
         Scene scene = new Scene(root);
         myLauncherStage.setScene(scene);
-        //TODO implement actual launcher display
+
+        HBox hbox = new HBox();
+        hbox.getChildren().add(createButton("Authoring", myAuthoringStage));
+        hbox.getChildren().add(createButton("Player", myPlayerStage));
+        scene.setRoot(hbox);
+    }
+
+    private Button createButton(String text, Stage stageToShow) {
+        Button button = new Button(text);
+        button.setOnAction(e -> display(stageToShow));
+        button.setMinWidth(500);
+        button.setMinHeight(500);
+        return button;
     }
 
     private void initializePlayerStage() {
@@ -45,7 +59,7 @@ public class Launcher extends Application {
 
     private void initializeAuthoringStage() {
         RunAuth authoringEnvironment = new RunAuth();
-        //myAuthoringStage =  //TODO get stage from authoring!!!!
+        myAuthoringStage =  authoringEnvironment.getStage(); //TODO get stage from authoring!!!!
     }
 
     private void display(Stage stage) {
