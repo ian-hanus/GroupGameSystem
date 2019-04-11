@@ -37,10 +37,10 @@ public class Description {
 
         // TODO: store this info differently---could be done in ResourceBundle or JSON
         myImageMap = new HashMap<>();
-        myImageMap.put("Flappy Bird", "/images/flappy-bird.png");
-        myImageMap.put("Mario", "/images/mario.jpg");
-        myImageMap.put("Metroid", "/images/metroid.png");
-        myImageMap.put("Doodle Jump", "/images/doodle-jump.jpg");
+        myImageMap.put("Flappy Bird", "/img/flappy-bird.png");
+        myImageMap.put("Mario", "/img/mario.jpg");
+        myImageMap.put("Metroid", "/img/metroid.png");
+        myImageMap.put("Doodle Jump", "/img/doodle-jump.jpg");
 
         myDescMap = new HashMap<>();
         myDescMap.put("Flappy Bird", "a bird and it flies pipes jump whoo");

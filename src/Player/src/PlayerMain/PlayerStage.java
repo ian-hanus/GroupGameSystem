@@ -105,6 +105,7 @@ public class PlayerStage {
         addNewImageViews();
 
         Scene gameScene = new Scene(myGameRoot, GAME_BG);
+        //gameScene.getStylesheets().add("style.css");
         gameStage.setScene(gameScene);
         gameStage.show();
 
@@ -185,7 +186,7 @@ public class PlayerStage {
 //        System.out.println("Rating for " + gameName + " is being changed!");
     }
 
-    protected Stage makeStage() {
+    public Stage makeStage() {
         Stage ret = new Stage();
         ret.setTitle(ST_TITLE);
         ret.setScene(myScene);
