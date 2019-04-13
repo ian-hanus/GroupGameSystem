@@ -110,6 +110,13 @@ public class CanvasScreen extends Screen {
         }
     }
 
+    public UIElement getUIElementById(String id) {
+        for (UIElement element : possessedElements) {
+            if (element.getID().equals(id)) return element;
+        }
+        return null;
+    }
+
     public void removeUIElement(UIElement... elements) {
         for (UIElement element : elements) {
             this.container.getChildren().remove(element.getView());

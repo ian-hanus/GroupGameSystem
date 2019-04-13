@@ -145,7 +145,6 @@ public class ScreenHelpers {
     }
 
     private static void repopulatePropertiesPane(CanvasScreen context) {
-        // TODO
         System.out.println("Properties for " + context.selectedType + " with ID " + context.selectedID);
     }
 
@@ -188,6 +187,8 @@ public class ScreenHelpers {
                     var thisIcon = (Selectable) e[0];
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
                         context.currentlySelected.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                     if (context.currentlySelected != thisIcon) {
                         context.currentlySelected = thisIcon;
@@ -198,6 +199,8 @@ public class ScreenHelpers {
                         System.out.println("Color icon clicked for " + r.id);
                     } else {
                         thisIcon.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                 });
                 row.getChildren().add(icon.getView());
@@ -205,6 +208,12 @@ public class ScreenHelpers {
         }
         VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
         context.getColorGrid().getChildren().add(row);
+    }
+
+    private static void clearSelection(CanvasScreen context) {
+        context.currentlySelected = null;
+        context.selectedID = null;
+        context.selectedType = null;
     }
 
     private static void initialiseAudioGrid(CanvasScreen context) {
@@ -225,6 +234,8 @@ public class ScreenHelpers {
                     var thisIcon = (Selectable) e[0];
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
                         context.currentlySelected.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                     if (context.currentlySelected != thisIcon) {
                         context.currentlySelected = thisIcon;
@@ -235,6 +246,8 @@ public class ScreenHelpers {
                         System.out.println("Audio icon clicked for " + r.id);
                     } else {
                         thisIcon.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                 }, true);
                 row.getChildren().add(icon.getView());
@@ -262,6 +275,8 @@ public class ScreenHelpers {
                     var thisIcon = (Selectable) e[0];
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
                         context.currentlySelected.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                     if (context.currentlySelected != thisIcon) {
                         context.currentlySelected = thisIcon;
@@ -272,6 +287,8 @@ public class ScreenHelpers {
                         System.out.println("Image icon clicked for " + r.id);
                     } else {
                         thisIcon.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                 });
                 row.getChildren().add(icon.getView());
@@ -300,6 +317,8 @@ public class ScreenHelpers {
                     var thisIcon = (Selectable) optionalArgs[0];
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
                         context.currentlySelected.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                     if (context.currentlySelected != thisIcon) {
                         context.currentlySelected = thisIcon;
@@ -310,6 +329,8 @@ public class ScreenHelpers {
                         System.out.println("Object icon clicked for "+o.objectID);
                     } else {
                         thisIcon.deselect();
+                        clearSelection(context);
+                        repopulatePropertiesPane(context);
                     }
                 }
             };
@@ -348,6 +369,24 @@ public class ScreenHelpers {
         return Color.WHITE;
     }
 
+    private static void populatePropsPane(CanvasScreen context, Pane propsPane) {
+        var containerPane = new BorderPane();
+        containerPane.setPrefWidth(RIGHT_PANE_WIDTH - RIGHT_PANE_MARGIN/2);
+        containerPane.setPrefHeight(RIGHT_PANE_HEIGHT - RIGHT_PANE_MARGIN);
+        containerPane.setLayoutX(RIGHT_PANE_MARGIN/4);
+        containerPane.setLayoutY(RIGHT_PANE_MARGIN/2);
+
+        var titleText = new Text(SCENE_PROPERTIES_TITLE);
+        titleText.setFont(bebasKai);
+        titleText.setFill(DEFAULT_TEXT_COLOR);
+        containerPane.setTop(titleText);
+        BorderPane.setAlignment(titleText, Pos.CENTER);
+
+        repopulatePropertiesPane(context);
+
+        propsPane.getView().getChildren().addAll(containerPane);
+    }
+
     private static void placePanes(CanvasScreen context) {
         var toolsPane = new LeftPane(centreVertical(TOOLS_PANE_HEIGHT), TOOLS_PANE_WIDTH, TOOLS_PANE_HEIGHT, TOOLS_PANE_ID);
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, PROPS_PANE_ID);
@@ -355,6 +394,7 @@ public class ScreenHelpers {
 
         populateToolsPane(context, toolsPane);
         populateObLibPane(context, objLibPane);
+        populatePropsPane(context, propsPane);
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));

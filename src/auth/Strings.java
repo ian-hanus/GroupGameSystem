@@ -15,4 +15,5 @@ public class Strings {
     public static String IMG_RES_TITLE = "Image Resources";
     public static String AUD_RES_TITLE = "Audio Resources";
     public static String COLORS_TITLE = "Color Palette";
+    public static String SCENE_PROPERTIES_TITLE = "Scene Properties";
 }
