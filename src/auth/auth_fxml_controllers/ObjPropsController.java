@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 import static auth.helpers.DataHelpers.*;
+import static auth.helpers.ScreenHelpers.*;
 import static java.util.Map.entry;
 
 public class ObjPropsController extends JXMLController {
@@ -45,8 +46,13 @@ public class ObjPropsController extends JXMLController {
     @FXML
     public void objectIDKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if (!objectIDExists(game, objectIDField.getText()))
+            if (!objectIDExists(game, objectIDField.getText())) {
                 selectedObject.objectID = objectIDField.getText();
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
+            }
             else
                 objectIDField.setText(selectedObject.objectID);
         }
@@ -57,6 +63,10 @@ public class ObjPropsController extends JXMLController {
         if (e.getCode() == KeyCode.ENTER) {
             try {
                 selectedObject.width = Double.parseDouble(widthField.getText());
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
             } catch (Exception ex) {
                 // Illegal value
                 widthField.setText(String.format( "%.2f", selectedObject.width));
@@ -69,6 +79,10 @@ public class ObjPropsController extends JXMLController {
         if (e.getCode() == KeyCode.ENTER) {
             try {
                 selectedObject.height = Double.parseDouble(heightField.getText());
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
             } catch (Exception ex) {
                 // Illegal value
                 heightField.setText(String.format( "%.2f", selectedObject.height));
@@ -79,8 +93,13 @@ public class ObjPropsController extends JXMLController {
     @FXML
     public void bgImageKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if(imgExists(game, bgImgField.getText()))
+            if(imgExists(game, bgImgField.getText())) {
                 selectedObject.bgImage = bgImgField.getText();
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
+            }
             else
                 bgImgField.setText(selectedObject.bgImage);
         }
@@ -89,8 +108,13 @@ public class ObjPropsController extends JXMLController {
     @FXML
     public void bgColorKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if(colorExists(game, bgColorField.getText()))
+            if(colorExists(game, bgColorField.getText())) {
                 selectedObject.bgColor = bgColorField.getText();
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
+            }
             else
                 bgColorField.setText(selectedObject.bgColor);
         }

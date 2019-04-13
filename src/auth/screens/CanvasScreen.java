@@ -97,9 +97,13 @@ public class CanvasScreen extends Screen {
         return count;
     }
 
-    public void switchToScene(int index) {
+    public void switchToScene(int index, boolean deselect) {
         currentScene = index;
-        selectedType = null; selectedID = null; currentlySelected = null; // deselect everything so scene has focus
+        if (deselect) {
+            selectedType = null;
+            selectedID = null;
+            currentlySelected = null; // deselect everything so scene has focus
+        }
         // TODO: loadScene(index);
         System.out.println("Current scene is "+currentScene);
         repopulatePropertiesPane(this);

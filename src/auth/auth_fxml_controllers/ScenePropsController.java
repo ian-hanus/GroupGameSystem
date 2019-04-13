@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import java.security.KeyException;
 
 import static auth.helpers.DataHelpers.*;
+import static auth.helpers.ScreenHelpers.*;
 
 public class ScenePropsController extends JXMLController{
     private Game game;
@@ -40,8 +41,13 @@ public class ScenePropsController extends JXMLController{
     @FXML
     public void sceneIDKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if (!sceneIDExists(game, sceneIDField.getText()))
+            if (!sceneIDExists(game, sceneIDField.getText())) {
                 game.scenes.get(currentScene).sceneID = sceneIDField.getText();
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
+            }
             else
                 sceneIDField.setText(game.scenes.get(currentScene).sceneID);
         }
@@ -50,8 +56,13 @@ public class ScenePropsController extends JXMLController{
     @FXML
     public void bgColorKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if (colorExists(game, bgColorField.getText()))
+            if (colorExists(game, bgColorField.getText())) {
                 game.scenes.get(currentScene).bgColor = bgColorField.getText();
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
+            }
             else
                 bgColorField.setText(game.scenes.get(currentScene).bgColor);
         }
@@ -60,8 +71,13 @@ public class ScenePropsController extends JXMLController{
     @FXML
     public void bgImgKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if (imgExists(game, bgImgField.getText()))
+            if (imgExists(game, bgImgField.getText())) {
                 game.scenes.get(currentScene).bgImg = bgImgField.getText();
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
+            }
             else
                 bgImgField.setText(game.scenes.get(currentScene).bgImg);
         }

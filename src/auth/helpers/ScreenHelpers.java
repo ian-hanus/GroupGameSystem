@@ -59,7 +59,7 @@ public class ScreenHelpers {
         sceneText.setFill(DEFAULT_TEXT_COLOR);
         var pagination = new PaginationUIElement(sceneText, (arg) -> {
             final int index = (Integer) arg[0];
-            context.switchToScene(index);
+            context.switchToScene(index, true);
         }, SCENE_PAGINATION);
         var pane = placeScenePaginationPane();
         var borderPane = new BorderPane();
@@ -209,7 +209,6 @@ public class ScreenHelpers {
         initialiseImagesGrid(context);
         initialiseAudioGrid(context);
         initialiseColorGrid(context);
-
     }
 
     private static void initialiseColorGrid(CanvasScreen context) {
@@ -382,7 +381,7 @@ public class ScreenHelpers {
                 var icon = new ColorIcon(getColorByID(context.getGame(), o.bgColor), o.objectID, callback);
                 row.getChildren().add(icon.getView());
             } else {
-                var icon = new ImageIcon(getImageById(context.getGame(), o.bgColor), o.objectID, callback);
+                var icon = new ImageIcon(getImageById(context.getGame(), o.bgImage), o.objectID, callback);
                 row.getChildren().add(icon.getView());
             }
         }
@@ -448,5 +447,9 @@ public class ScreenHelpers {
         populateToolsPane(context, toolsPane);
         populatePropsPane(context, propsPane);
         populateObLibPane(context, objLibPane);
+    }
+
+    public static void refreshCanvas(CanvasScreen context) {
+        // TODO
     }
 }

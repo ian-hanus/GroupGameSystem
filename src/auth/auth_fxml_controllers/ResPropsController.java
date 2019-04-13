@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import java.util.Map;
 
 import static auth.helpers.DataHelpers.*;
+import static auth.helpers.ScreenHelpers.*;
 import static java.util.Map.entry;
 
 public class ResPropsController extends JXMLController{
@@ -61,8 +62,13 @@ public class ResPropsController extends JXMLController{
     @FXML
     public void resourceIDKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if (!resourceIDExists(game, resourceIDField.getText(), map.get(selectedType)))
+            if (!resourceIDExists(game, resourceIDField.getText(), map.get(selectedType))) {
                 selectedResource.resourceID = resourceIDField.getText();
+
+                // Now refresh grids and reload scene
+                initialiseGrids(context);
+                refreshCanvas(context);
+            }
             else
             resourceIDField.setText(selectedResource.resourceID);
         }
