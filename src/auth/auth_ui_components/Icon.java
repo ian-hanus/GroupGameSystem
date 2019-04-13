@@ -16,6 +16,7 @@ public abstract class Icon implements Selectable {
     private Group view;
     private Circle bgCircle;
     private ImageView icon;
+    private Color selectedShadowColor = Color.rgb(255, 255, 255, 0.75);
 
     private boolean selected = false, selectable = true;
 
@@ -30,7 +31,7 @@ public abstract class Icon implements Selectable {
                 // Either color/tool
                 bgCircle.setEffect(makeShadowSelected());
             } else {
-                view.getChildren().get(0).setEffect(makeShadowSelected());
+                view.setEffect(makeShadowSelected());
             }
             selected = true;
         }
@@ -43,7 +44,7 @@ public abstract class Icon implements Selectable {
                 // Either color/tool
                 bgCircle.setEffect(makeShadow());
             } else {
-                view.getChildren().get(0).setEffect(makeShadow());
+                view.setEffect(makeShadow());
             }
             selected = false;
         }
@@ -94,7 +95,7 @@ public abstract class Icon implements Selectable {
     }
 
     private Effect makeShadowSelected() {
-        return makeShadow(Color.rgb(255, 255, 255, 0.75));
+        return makeShadow(selectedShadowColor);
     }
 
     private void addBgImage(Image img) {
