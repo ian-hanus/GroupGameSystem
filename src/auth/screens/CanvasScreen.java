@@ -3,6 +3,7 @@ package auth.screens;
 import auth.RunAuth;
 import auth.UIElement;
 import auth.pagination.PaginationUIElement;
+import gamedata.Game;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,12 +14,14 @@ import java.util.List;
 import static auth.Colors.*;
 import static auth.Dimensions.*;
 import static auth.Strings.*;
+import static auth.helpers.DataHelpers.createNewScene;
 import static auth.helpers.ScreenHelpers.initScene;
 
 public class CanvasScreen extends Screen {
     private RunAuth context;
     private Group container;
     private Stage stage;
+    private Game game;
 
     public PaginationUIElement getPagination() {
         return pagination;
@@ -34,6 +37,8 @@ public class CanvasScreen extends Screen {
 
     public CanvasScreen() {
         possessedElements = new ArrayList<>();
+        game = new Game();
+        game.scenes.add(createNewScene());
     }
 
     public void registerNewUIElement(UIElement... elements) {
