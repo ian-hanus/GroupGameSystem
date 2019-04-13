@@ -20,6 +20,11 @@
     "handler" : "handleNewAudioRes"
   },
   {
+    "name" : "color_palette",
+    "tooltip" : "Add new color to palette",
+    "handler" : "handleNewColor"
+  },
+  {
     "name" : "delete",
     "tooltip" : "Delete current selection",
     "handler" : "handleDeleteCurrentSelection"

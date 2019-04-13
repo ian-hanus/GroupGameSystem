@@ -118,13 +118,16 @@ public class ScreenHelpers {
         containerPane.setTop(titleText);
         BorderPane.setAlignment(titleText, Pos.CENTER);
 
-        var objectGrid = new GridPane(); var imgGrid = new GridPane(); var audioGrid = new GridPane(); var colorGrid = new GridPane();
+        var objectGrid = new GridPane();
+        var imgGrid = new GridPane();
+        var audioGrid = new GridPane();
+        var colorGrid = new GridPane();
 
         var pagination = new PaginationUIElement(objectGrid, (arg) -> {
             final int index = (Integer) arg[0];
             titleText.setText(titles[index]);
-            // TODO: Switch between objects, images and audio
         }, SCENE_PAGINATION);
+
         pagination.addPage(imgGrid); // for images
         pagination.addPage(audioGrid); // for audio
         pagination.addPage(colorGrid); // for colour palette
