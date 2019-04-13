@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -47,12 +48,23 @@ public abstract class Icon {
         bgCircle.setFill(color);
     }
 
+    private Effect makeShadow() {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0.0, 0.0, 0.0, 0.25));
+        return dropShadow;
+    }
+
     private void addBgImage(Image img) {
         var imgView = new ImageView(img);
         imgView.setFitWidth(2*BG_CIRCLE_RADIUS);
         imgView.setFitHeight(2*BG_CIRCLE_RADIUS);
         imgView.setClip(bgCircle);
+        imgView.setEffect(makeShadow());
+        imgView.setCursor(Cursor.HAND);
         view.getChildren().add(imgView);
+
     }
 
     public Group getView() {
@@ -74,13 +86,7 @@ public abstract class Icon {
         bgCircle.setFill(BG_COLOUR);
         bgCircle.setCursor(Cursor.HAND);
         bgCircle.setCenterY(BG_CIRCLE_RADIUS); bgCircle.setCenterX(BG_CIRCLE_RADIUS);
-
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setRadius(5.0);
-        dropShadow.setOffsetY(3.0);
-        dropShadow.setColor(Color.color(0.0, 0.0, 0.0, 0.25));
-
-        bgCircle.setEffect(dropShadow);
+        bgCircle.setEffect(makeShadow());
         if (add)
             view.getChildren().add(bgCircle);
     }

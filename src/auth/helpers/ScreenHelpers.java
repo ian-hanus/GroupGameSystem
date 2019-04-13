@@ -158,8 +158,86 @@ public class ScreenHelpers {
     }
 
     public static void initialiseGrids(CanvasScreen context) {
-        System.out.println("initialiseGrids() called");
-        // TODO First initialise objectsGrid
+        initialiseObjectsGrid(context);
+        initialiseImagesGrid(context);
+        initialiseAudioGrid(context);
+        initialiseColorGrid(context);
+
+    }
+
+    private static void initialiseColorGrid(CanvasScreen context) {
+        if (context.getColorGrid().getChildren().size() != 0) {
+            context.getColorGrid().getChildren().clear(); // Remove all the HBox's within this VBox
+        }
+
+        var row = new HBox(5);
+        for (var r : context.getGame().resources) {
+            if (row.getChildren().size() == 3) {
+                VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+                context.getColorGrid().getChildren().add(row);
+                row = new HBox(5);
+            }
+            if (r.resourceType == Resource.ResourceType.COLOR_RESOURCE) {
+                var icon = new ColorIcon(getColorByID(context.getGame(), r.id), r.id, e -> {
+                    // TODO
+                    System.out.println("Color icon clicked for " + r.id);
+                });
+                row.getChildren().add(icon.getView());
+            }
+        }
+        VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+        context.getColorGrid().getChildren().add(row);
+    }
+
+    private static void initialiseAudioGrid(CanvasScreen context) {
+        if (context.getAudioGrid().getChildren().size() != 0) {
+            context.getAudioGrid().getChildren().clear(); // Remove all the HBox's within this VBox
+        }
+
+        var row = new HBox(5);
+        for (var r : context.getGame().resources) {
+            if (row.getChildren().size() == 3) {
+                VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+                context.getAudioGrid().getChildren().add(row);
+                row = new HBox(5);
+            }
+            if (r.resourceType == Resource.ResourceType.AUDIO_RESOURCE) {
+                var icon = new ToolIcon("audio", r.id, e -> {
+                    // TODO
+                    System.out.println("Audio icon clicked for " + r.id);
+                });
+                row.getChildren().add(icon.getView());
+            }
+        }
+        VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+        context.getAudioGrid().getChildren().add(row);
+    }
+
+    private static void initialiseImagesGrid(CanvasScreen context) {
+        if (context.getImageGrid().getChildren().size() != 0) {
+            context.getImageGrid().getChildren().clear(); // Remove all the HBox's within this VBox
+        }
+
+        var row = new HBox(5);
+        for (var r : context.getGame().resources) {
+            if (row.getChildren().size() == 3) {
+                VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+                context.getImageGrid().getChildren().add(row);
+                row = new HBox(5);
+            }
+            if (r.resourceType == Resource.ResourceType.IMAGE_RESOURCE) {
+                var icon = new ImageIcon(getImageById(context.getGame(), r.id), r.id, e -> {
+                    // TODO
+                    System.out.println("Image icon clicked for " + r.id);
+                });
+                row.getChildren().add(icon.getView());
+            }
+        }
+        VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+        context.getImageGrid().getChildren().add(row);
+    }
+
+    private static void initialiseObjectsGrid(CanvasScreen context) {
         if (context.getObjectGrid().getChildren().size() != 0) {
             context.getObjectGrid().getChildren().clear(); // Remove all the HBox's within this VBox
         }
@@ -188,12 +266,6 @@ public class ScreenHelpers {
         }
         VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
         context.getObjectGrid().getChildren().add(row);
-
-
-        // TODO Then initialise imagesGrid
-        // TODO Then initialise audioGrid
-        // TODO Then initialise colorGrid
-
     }
 
     private static Image getImageById(Game game, String id) {
