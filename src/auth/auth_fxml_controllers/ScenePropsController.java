@@ -56,8 +56,8 @@ public class ScenePropsController extends JXMLController{
     @FXML
     public void bgColorKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if (colorExists(game, bgColorField.getText())) {
-                game.scenes.get(currentScene).bgColor = bgColorField.getText();
+            if (colorExists(game, bgColorField.getText()) || bgColorField.getText().strip().isEmpty()) {
+                game.scenes.get(currentScene).bgColor = bgColorField.getText().strip();
 
                 // Now refresh grids and reload scene
                 initialiseGrids(context);
@@ -71,8 +71,8 @@ public class ScenePropsController extends JXMLController{
     @FXML
     public void bgImgKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if (imgExists(game, bgImgField.getText())) {
-                game.scenes.get(currentScene).bgImg = bgImgField.getText();
+            if (imgExists(game, bgImgField.getText()) || bgImgField.getText().strip().isEmpty()) {
+                game.scenes.get(currentScene).bgImg = bgImgField.getText().strip();
 
                 // Now refresh grids and reload scene
                 initialiseGrids(context);

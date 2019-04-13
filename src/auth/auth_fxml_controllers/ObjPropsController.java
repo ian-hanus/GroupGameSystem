@@ -93,8 +93,8 @@ public class ObjPropsController extends JXMLController {
     @FXML
     public void bgImageKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if(imgExists(game, bgImgField.getText())) {
-                selectedObject.bgImage = bgImgField.getText();
+            if(imgExists(game, bgImgField.getText()) || bgImgField.getText().strip().isEmpty()) {
+                selectedObject.bgImage = bgImgField.getText().strip();
 
                 // Now refresh grids and reload scene
                 initialiseGrids(context);
@@ -108,8 +108,8 @@ public class ObjPropsController extends JXMLController {
     @FXML
     public void bgColorKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
-            if(colorExists(game, bgColorField.getText())) {
-                selectedObject.bgColor = bgColorField.getText();
+            if(colorExists(game, bgColorField.getText()) || bgColorField.getText().strip().isEmpty()) {
+                selectedObject.bgColor = bgColorField.getText().strip();
 
                 // Now refresh grids and reload scene
                 initialiseGrids(context);
