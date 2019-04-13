@@ -13,7 +13,7 @@ import java.util.List;
 public class PaginationUIElement implements UIElement {
     private BorderPane mainView;
     private PaginationDots dots;
-    private int index = 0, numPages = 0;
+    private int index = 0, numPages = 1; // Always start with 1 page
     private Arrow leftArrow;
     private Arrow rightArrow;
     private List<Node> pages;
@@ -27,7 +27,7 @@ public class PaginationUIElement implements UIElement {
         rightArrow.onClick((o) -> goForwards());
         pages = new ArrayList<>();
         pages.add(dynamicView);
-        dots = new PaginationDots();
+        dots = new PaginationDots(this);
         mainView = new BorderPane();
         mainView.setCenter(dynamicView);
         mainView.setLeft(leftArrow.getView());
@@ -35,6 +35,15 @@ public class PaginationUIElement implements UIElement {
         mainView.setBottom(dots.getView());
         this.ID = ID;
         this.onPageChanged = onPageChanged;
+    }
+
+    public void goToPage(int newIndex) {
+        if (newIndex < numPages && newIndex > -1) {
+            mainView.setCenter(pages.get(newIndex));
+            dots.setIndex(newIndex);
+            onPageChanged.onCallback(newIndex);
+            index = newIndex;
+        }
     }
 
     private void goForwards() {
@@ -55,8 +64,12 @@ public class PaginationUIElement implements UIElement {
 
     public void addPage(Node pageView) {
         pages.add(pageView);
-        numPages++;
+        ++numPages;
         dots.increment();
+
+        mainView.setCenter(pages.get(numPages-1));
+        onPageChanged.onCallback(numPages-1);
+        index = numPages-1;
     }
 
     public void removePage(int index) {

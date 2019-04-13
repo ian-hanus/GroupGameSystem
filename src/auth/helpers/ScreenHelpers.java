@@ -52,7 +52,7 @@ public class ScreenHelpers {
         borderPane.setCenter(pagination.getView());
         borderPane.setMinWidth(CONSOLE_PANE_WIDTH - 24);
         borderPane.setMaxWidth(CONSOLE_PANE_WIDTH - 24);
-        borderPane.setLayoutY(9.5);
+        borderPane.setLayoutY(7);
         borderPane.setLayoutX(12);
         pane.getView().getChildren().add(borderPane);
         context.registerNewUIElement(pane);
