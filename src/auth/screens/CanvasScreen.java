@@ -7,6 +7,7 @@ import auth.pagination.PaginationUIElement;
 import gamedata.Game;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -16,13 +17,37 @@ import static auth.Colors.*;
 import static auth.Dimensions.*;
 import static auth.Strings.*;
 import static auth.helpers.DataHelpers.createNewScene;
-import static auth.helpers.ScreenHelpers.initScene;
+import static auth.helpers.ScreenHelpers.*;
 
 public class CanvasScreen extends Screen {
     private RunAuth context;
     private Group container;
     private Stage stage;
     private Game game;
+
+    public VBox getObjectGrid() {
+        return objectGrid;
+    }
+
+    private VBox objectGrid;
+
+    public VBox getImageGrid() {
+        return imageGrid;
+    }
+
+    private VBox imageGrid;
+
+    public VBox getAudioGrid() {
+        return audioGrid;
+    }
+
+    private VBox audioGrid;
+
+    public VBox getColorGrid() {
+        return colorGrid;
+    }
+
+    private VBox colorGrid;
 
     private int currentScene = 0;
 
@@ -42,6 +67,11 @@ public class CanvasScreen extends Screen {
         possessedElements = new ArrayList<>();
         game = new Game();
         game.scenes.add(DataHelpers.createNewScene());
+        objectGrid = new VBox(5);
+        imageGrid = new VBox(5);
+        audioGrid = new VBox(5);
+        colorGrid = new VBox(5);
+        initialiseGrids(game, objectGrid, imageGrid, audioGrid, colorGrid);
     }
 
     public int createNewScene() {

@@ -4,6 +4,7 @@ import auth.RunAuth;
 import auth.UIElementWrapper;
 import auth.auth_ui_components.ToolIcon;
 import auth.pagination.PaginationUIElement;
+import gamedata.Game;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
@@ -118,24 +119,23 @@ public class ScreenHelpers {
         containerPane.setTop(titleText);
         BorderPane.setAlignment(titleText, Pos.CENTER);
 
-        var objectGrid = new GridPane();
-        var imgGrid = new GridPane();
-        var audioGrid = new GridPane();
-        var colorGrid = new GridPane();
-
-        var pagination = new PaginationUIElement(objectGrid, (arg) -> {
+        var pagination = new PaginationUIElement(context.getObjectGrid(), (arg) -> {
             final int index = (Integer) arg[0];
             titleText.setText(titles[index]);
         }, SCENE_PAGINATION);
 
-        pagination.addPage(imgGrid); // for images
-        pagination.addPage(audioGrid); // for audio
-        pagination.addPage(colorGrid); // for colour palette
+        pagination.addPage(context.getImageGrid()); // for images
+        pagination.addPage(context.getAudioGrid()); // for audio
+        pagination.addPage(context.getColorGrid()); // for colour palette
         pagination.goToPage(0); // Switch back to objects
 
         containerPane.setCenter(pagination.getView());
 
         objLibPane.getView().getChildren().addAll(containerPane);
+    }
+
+    public static void initialiseGrids(Game game, VBox objectGrid, VBox imageGrid, VBox audioGrid, VBox colorGrid) {
+        // TODO: Initialise grids from object
     }
 
     private static void placePanes(CanvasScreen context) {
