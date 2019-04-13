@@ -63,6 +63,11 @@ public class ResPropsController extends JXMLController{
     public void resourceIDKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             if (!resourceIDExists(game, resourceIDField.getText(), map.get(selectedType))) {
+                // update all ID references
+                if (selectedResource.resourceType.equals(Resource.ResourceType.IMAGE_RESOURCE) ||
+                selectedResource.resourceType.equals(Resource.ResourceType.COLOR_RESOURCE)) {
+                    updateResourceIDReferences(context, game, selectedResource.resourceID, resourceIDField.getText(), map.get(selectedType));
+                }
                 selectedResource.resourceID = resourceIDField.getText();
 
                 // Now refresh grids and reload scene

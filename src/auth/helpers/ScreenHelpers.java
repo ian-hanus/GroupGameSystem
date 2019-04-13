@@ -245,6 +245,8 @@ public class ScreenHelpers {
                         repopulatePropertiesPane(context);
                     }
                 });
+                if(context.selectedType == Color.class && context.selectedID.equals(r.resourceID))
+                    icon.select();
                 row.getChildren().add(icon.getView());
             }
         }
@@ -292,6 +294,8 @@ public class ScreenHelpers {
                         repopulatePropertiesPane(context);
                     }
                 }, true);
+                if(context.selectedType == AudioClip.class && context.selectedID.equals(r.resourceID))
+                    icon.select();
                 row.getChildren().add(icon.getView());
             }
         }
@@ -333,6 +337,8 @@ public class ScreenHelpers {
                         repopulatePropertiesPane(context);
                     }
                 });
+                if(context.selectedType == Image.class && context.selectedID.equals(r.resourceID))
+                    icon.select();
                 row.getChildren().add(icon.getView());
             }
         }
@@ -379,9 +385,13 @@ public class ScreenHelpers {
             if (o.bgImage.isEmpty() || o.bgImage.isBlank()) {
                 // No image, use bgColor
                 var icon = new ColorIcon(getColorByID(context.getGame(), o.bgColor), o.objectID, callback);
+                if(context.selectedType == GameObject.class && context.selectedID.equals(o.objectID))
+                    icon.select();
                 row.getChildren().add(icon.getView());
             } else {
                 var icon = new ImageIcon(getImageById(context.getGame(), o.bgImage), o.objectID, callback);
+                if(context.selectedType == GameObject.class && context.selectedID.equals(o.objectID))
+                    icon.select();
                 row.getChildren().add(icon.getView());
             }
         }

@@ -46,7 +46,7 @@
                onKeyPressed="#bgColorKeyPressed"
                GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-    <Label text="bgImg" styleClass="propertyName"
+    <Label text="bgImage" styleClass="propertyName"
            GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 
     <TextField fx:id="bgImgField" styleClass="propertyValue"

@@ -47,6 +47,9 @@ public class ObjPropsController extends JXMLController {
     public void objectIDKeyPressed(KeyEvent e) {
         if (e.getCode() == KeyCode.ENTER) {
             if (!objectIDExists(game, objectIDField.getText())) {
+                // update all ID references
+                updateObjectIDReferences(context, game, selectedObject.objectID, objectIDField.getText());
+
                 selectedObject.objectID = objectIDField.getText();
 
                 // Now refresh grids and reload scene
