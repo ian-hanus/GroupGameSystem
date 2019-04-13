@@ -3,13 +3,16 @@ package auth.helpers;
 import auth.Callback;
 import auth.RunAuth;
 import auth.UIElementWrapper;
+import auth.auth_fxml_controllers.ScenePropsController;
 import auth.auth_ui_components.*;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
 import gamedata.GameObject;
 import gamedata.Resource;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -27,6 +30,7 @@ import uiutils.panes.Pane;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static auth.Colors.DEFAULT_TEXT_COLOR;
@@ -145,10 +149,32 @@ public class ScreenHelpers {
     }
 
     private static void repopulatePropertiesPane(CanvasScreen context) {
-        System.out.println("Properties for " + context.selectedType + " with ID " + context.selectedID);
+        var propsPane = (javafx.scene.layout.Pane) ((Group)context.getUIElementById(RIGHT_PANES_GROUP_ID).getView()).getChildren().get(0);
+        var contentPane = (javafx.scene.layout.Pane) ((ScrollPane) ((BorderPane) propsPane.getChildren().get(0)).getCenter()).getContent();
+        contentPane.getChildren().clear();
+        try {
+            if (context.currentlySelected == null) {
+                // Show props for scene
+                FXMLLoader loader = new FXMLLoader(ScreenHelpers.class.getResource("/properties_pane_fxml/sceneprops.fxml"));
+                var fxmlPane = (javafx.scene.layout.Pane) loader.load();
+                loader.<ScenePropsController>getController().initData(propsPane, context);
+                contentPane.getChildren().add(fxmlPane);
+            } else if (context.selectedType == GameObject.class) {
+                // TODO Show props for game object
+            } else if (context.selectedType == Image.class) {
+                // TODO Show props for image resource
+            } else if (context.selectedType == AudioClip.class) {
+                // TODO Show props for audio resource
+            } else if (context.selectedType == Color.class) {
+                // TODO Show props for color resource
+            }
+        } catch (IOException e) {
+            // shouldn't ever happen
+            e.printStackTrace();
+        }
     }
 
-    private static ScrollPane wrapInScrollView(VBox v) {
+    private static ScrollPane wrapInScrollView(Node v) {
         var sp = new ScrollPane();
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -371,7 +397,7 @@ public class ScreenHelpers {
 
     private static void populatePropsPane(CanvasScreen context, Pane propsPane) {
         var containerPane = new BorderPane();
-        containerPane.setPrefWidth(RIGHT_PANE_WIDTH - RIGHT_PANE_MARGIN/2);
+        containerPane.setMaxWidth(RIGHT_PANE_WIDTH - RIGHT_PANE_MARGIN/2);
         containerPane.setPrefHeight(RIGHT_PANE_HEIGHT - RIGHT_PANE_MARGIN);
         containerPane.setLayoutX(RIGHT_PANE_MARGIN/4);
         containerPane.setLayoutY(RIGHT_PANE_MARGIN/2);
@@ -382,9 +408,13 @@ public class ScreenHelpers {
         containerPane.setTop(titleText);
         BorderPane.setAlignment(titleText, Pos.CENTER);
 
-        repopulatePropertiesPane(context);
+        var mainContainer = new javafx.scene.layout.Pane();
+        var centerView = wrapInScrollView(mainContainer);
+        containerPane.setCenter(centerView);
 
         propsPane.getView().getChildren().addAll(containerPane);
+
+        repopulatePropertiesPane(context);
     }
 
     private static void placePanes(CanvasScreen context) {
@@ -392,14 +422,14 @@ public class ScreenHelpers {
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, PROPS_PANE_ID);
         var objLibPane = new RightPane(computeMarginToBottomEdge((Region) propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, OBJ_LIB_PANE_ID);
 
-        populateToolsPane(context, toolsPane);
-        populateObLibPane(context, objLibPane);
-        populatePropsPane(context, propsPane);
-
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
 
         var consolePane = new BottomPane(CONSOLE_HORIZONTAL_OFFSET, CONSOLE_PANE_WIDTH, CONSOLE_PANE_HEIGHT);
         context.registerNewUIElement(toolsPane, new UIElementWrapper(rightPanesGroup, RIGHT_PANES_GROUP_ID), consolePane);
+
+        populateToolsPane(context, toolsPane);
+        populatePropsPane(context, propsPane);
+        populateObLibPane(context, objLibPane);
     }
 }
