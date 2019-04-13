@@ -10,4 +10,5 @@ public class Strings {
     public static String RIGHT_PANES_GROUP_ID = "RIGHT_PANES_GROUP_ID";
     public static String SCENE_PAGINATION = "SCENE_PAGINATION";
     public static String SCENE_PAGINATION_PANE_ID = "SCENE_PAGINATION_PANE_ID";
+    public static String TOOLS_CONFIG_FILE_PATH = "data/tools.json";
 }

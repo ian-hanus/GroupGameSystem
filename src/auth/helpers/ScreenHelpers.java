@@ -1,22 +1,29 @@
 package auth.helpers;
 
-import auth.ObjectControl.ObjectManager;
 import auth.RunAuth;
 import auth.UIElementWrapper;
+import auth.auth_ui_components.ToolIcon;
 import auth.pagination.PaginationUIElement;
 import javafx.geometry.Pos;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
+import org.json.JSONArray;
 import uiutils.panes.*;
 import auth.screens.CanvasScreen;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import uiutils.panes.Pane;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import static auth.Colors.DEFAULT_TEXT_COLOR;
 import static auth.Dimensions.*;
 import static auth.Styles.*;
 import static auth.Strings.*;
+import static auth.auth_ui_components.ToolIcon.BG_CIRCLE_RADIUS;
 import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
 import static gamecenter.RunGameCenter.bebasKaiMedium;
@@ -42,16 +49,19 @@ public class ScreenHelpers {
             System.out.println("New index " + index);
         }, SCENE_PAGINATION);
         var pane = placeScenePaginationPane();
-        pagination.getView().setLayoutX(12);
-        pagination.getView().setLayoutY(9.5);
-        pane.getView().getChildren().add(pagination.getView());
+        var borderPane = new BorderPane();
+        borderPane.setCenter(pagination.getView());
+        borderPane.setMinWidth(CONSOLE_PANE_WIDTH - 24);
+        borderPane.setMaxWidth(CONSOLE_PANE_WIDTH - 24);
+        borderPane.setLayoutY(9.5);
+        borderPane.setLayoutX(12);
+        pane.getView().getChildren().add(borderPane);
         context.registerNewUIElement(pane);
     }
 
     private static Pane placeScenePaginationPane() {
-        return new CentrePane(CONSOLE_HORIZONTAL_OFFSET + CANVAS_WIDTH/2 - SCENE_PAGINATION_WIDTH/2,
-                PAGINATION_VERTICAL_OFFSET,
-                SCENE_PAGINATION_WIDTH,
+        return new TopPane(CONSOLE_HORIZONTAL_OFFSET,
+                CONSOLE_PANE_WIDTH,
                 SCENE_PAGINATION_HEIGHT,
                 SCENE_PAGINATION_PANE_ID);
     }
@@ -62,14 +72,42 @@ public class ScreenHelpers {
         context.registerNewUIElement(new UIElementWrapper(canvas, CANVAS_ID));
     }
 
+    private static void populateToolsPane(LeftPane toolsPane) {
+        var vboxParent = new VBox(5);
+
+        try {
+            JSONArray tools = new JSONArray(new Scanner(new File(TOOLS_CONFIG_FILE_PATH)).useDelimiter("\\Z").next());
+            for (int i = 0; i < tools.length(); i++) {
+                var tool = tools.getJSONObject(i);
+                var name = tool.getString("name");
+                var tooltip = tool.getString("tooltip");
+                var handler = tool.getString("handler");
+
+                vboxParent.getChildren().add(new ToolIcon(name, tooltip, callback -> {
+                    try {
+                        var method = ToolClickHandlers.class.getMethod(handler);
+                        method.invoke(null);
+                    } catch (Exception e) {
+                        // Would never happen
+                    }
+                }).getView());
+            }
+
+            vboxParent.setLayoutX(TOOLS_PANE_WIDTH/2 - BG_CIRCLE_RADIUS - 5);
+            vboxParent.setLayoutY(TOOLS_PANE_HEIGHT/2 - (tools.length()*2*BG_CIRCLE_RADIUS + (tools.length()-1)*15)/2);
+
+            toolsPane.getView().getChildren().add(vboxParent);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void placePanes(CanvasScreen context) {
         var toolsPane = new LeftPane(centreVertical(TOOLS_PANE_HEIGHT), TOOLS_PANE_WIDTH, TOOLS_PANE_HEIGHT, TOOLS_PANE_ID);
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, PROPS_PANE_ID);
         var objLibPane = new RightPane(computeMarginToBottomEdge((Region) propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, OBJ_LIB_PANE_ID);
 
-        ObjectManager objectManager = new ObjectManager(objLibPane.getView());
-        propsPane.getView().getChildren().add(objectManager.getCreatorView());
-        objLibPane.getView().getChildren().add(objectManager.getBankView());
+        populateToolsPane(toolsPane);
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
