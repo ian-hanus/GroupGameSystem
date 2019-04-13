@@ -2,6 +2,7 @@ package auth.pagination;
 
 import auth.Callback;
 import auth.UIElement;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -31,8 +32,11 @@ public class PaginationUIElement implements UIElement {
         mainView = new BorderPane();
         mainView.setCenter(dynamicView);
         mainView.setLeft(leftArrow.getView());
+        BorderPane.setAlignment(leftArrow.getView(), Pos.CENTER);
         mainView.setRight(rightArrow.getView());
+        BorderPane.setAlignment(rightArrow.getView(), Pos.CENTER);
         mainView.setBottom(dots.getView());
+        BorderPane.setAlignment(dots.getView(), Pos.CENTER);
         this.ID = ID;
         this.onPageChanged = onPageChanged;
     }

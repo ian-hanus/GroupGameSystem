@@ -26,6 +26,7 @@ import static auth.Strings.*;
 import static auth.auth_ui_components.ToolIcon.BG_CIRCLE_RADIUS;
 import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
+import static gamecenter.RunGameCenter.bebasKai;
 import static gamecenter.RunGameCenter.bebasKaiMedium;
 
 public class ScreenHelpers {
@@ -102,12 +103,44 @@ public class ScreenHelpers {
         }
     }
 
+    private static void populateObLibPane(CanvasScreen context, Pane objLibPane) {
+        var containerPane = new BorderPane();
+        containerPane.setPrefWidth(RIGHT_PANE_WIDTH - RIGHT_PANE_MARGIN/2);
+        containerPane.setPrefHeight(RIGHT_PANE_HEIGHT - RIGHT_PANE_MARGIN);
+        containerPane.setLayoutX(RIGHT_PANE_MARGIN/4);
+        containerPane.setLayoutY(RIGHT_PANE_MARGIN/2);
+
+        String[] titles = {OBJECTS_TITLE, IMG_RES_TITLE, AUD_RES_TITLE};
+
+        var titleText = new Text(titles[0]);
+        titleText.setFont(bebasKai);
+        titleText.setFill(DEFAULT_TEXT_COLOR);
+        containerPane.setTop(titleText);
+        BorderPane.setAlignment(titleText, Pos.CENTER);
+
+        var objectGrid = new GridPane(); var imgGrid = new GridPane(); var audioGrid = new GridPane();
+
+        var pagination = new PaginationUIElement(objectGrid, (arg) -> {
+            final int index = (Integer) arg[0];
+            titleText.setText(titles[index]);
+            // TODO: Switch between objects, images and audio
+        }, SCENE_PAGINATION);
+        pagination.addPage(imgGrid); // for images
+        pagination.addPage(audioGrid); // for audio
+        pagination.goToPage(0); // Switch back to objects
+
+        containerPane.setCenter(pagination.getView());
+
+        objLibPane.getView().getChildren().addAll(containerPane);
+    }
+
     private static void placePanes(CanvasScreen context) {
         var toolsPane = new LeftPane(centreVertical(TOOLS_PANE_HEIGHT), TOOLS_PANE_WIDTH, TOOLS_PANE_HEIGHT, TOOLS_PANE_ID);
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, PROPS_PANE_ID);
         var objLibPane = new RightPane(computeMarginToBottomEdge((Region) propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, OBJ_LIB_PANE_ID);
 
         populateToolsPane(context, toolsPane);
+        populateObLibPane(context, objLibPane);
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
