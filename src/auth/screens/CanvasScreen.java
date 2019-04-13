@@ -2,6 +2,7 @@ package auth.screens;
 
 import auth.RunAuth;
 import auth.UIElement;
+import auth.helpers.DataHelpers;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
 import javafx.scene.Group;
@@ -23,6 +24,8 @@ public class CanvasScreen extends Screen {
     private Stage stage;
     private Game game;
 
+    private int currentScene = 0;
+
     public PaginationUIElement getPagination() {
         return pagination;
     }
@@ -38,7 +41,18 @@ public class CanvasScreen extends Screen {
     public CanvasScreen() {
         possessedElements = new ArrayList<>();
         game = new Game();
-        game.scenes.add(createNewScene());
+        game.scenes.add(DataHelpers.createNewScene());
+    }
+
+    public int createNewScene() {
+        game.scenes.add(DataHelpers.createNewScene());
+        return game.scenes.size();
+    }
+
+    public void switchToScene(int index) {
+        currentScene = index;
+        // TODO: loadScene(index);
+        System.out.println("Current scene is "+currentScene);
     }
 
     public void registerNewUIElement(UIElement... elements) {

@@ -15,11 +15,11 @@ import static gamecenter.RunGameCenter.bebasKaiMedium;
  */
 public class ToolClickHandlers {
     public static void handleNewScene (CanvasScreen context) {
-        var sceneText = new Text("Scene " + new Random().nextInt());
+        int newSceneCount = context.createNewScene();
+        var sceneText = new Text("Scene " + newSceneCount);
         sceneText.setFont(bebasKaiMedium);
         sceneText.setFill(DEFAULT_TEXT_COLOR);
         context.getPagination().addPage(sceneText);
-        System.out.println("In handle new scene");
     }
 
     public static void handleNewObject () {
