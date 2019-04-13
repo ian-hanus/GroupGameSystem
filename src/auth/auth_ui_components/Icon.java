@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class Icon {
+public abstract class Icon {
     private Group view;
     private Circle bgCircle;
     private ImageView icon;
@@ -21,7 +21,7 @@ public class Icon {
 
     public Icon(Image img, String tooltipText, Callback onClickCallback) {
         view = new Group();
-        makeBgCircle();
+        makeBgCircle(false);
         addBgImage(img);
         addTooltip(tooltipText);
         setOnClickListener(onClickCallback);
@@ -68,7 +68,7 @@ public class Icon {
         view.setOnMouseClicked(e -> callback.onCallback(null));
     }
 
-    private void makeBgCircle() {
+    private void makeBgCircle(boolean add) {
         bgCircle = new Circle();
         bgCircle.setRadius(BG_CIRCLE_RADIUS);
         bgCircle.setFill(BG_COLOUR);
@@ -81,7 +81,12 @@ public class Icon {
         dropShadow.setColor(Color.color(0.0, 0.0, 0.0, 0.25));
 
         bgCircle.setEffect(dropShadow);
-        view.getChildren().add(bgCircle);
+        if (add)
+            view.getChildren().add(bgCircle);
+    }
+
+    private void makeBgCircle() {
+        makeBgCircle(true);
     }
 
     private void addImgIcon(String iconID) {

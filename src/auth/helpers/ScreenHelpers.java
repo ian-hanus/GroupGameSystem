@@ -2,12 +2,15 @@ package auth.helpers;
 
 import auth.RunAuth;
 import auth.UIElementWrapper;
+import auth.auth_ui_components.Icon;
 import auth.auth_ui_components.ToolIcon;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.json.JSONArray;
 import uiutils.panes.*;
@@ -140,6 +143,7 @@ public class ScreenHelpers {
         // TODO Then initialise imagesGrid
         // TODO Then initialise audioGrid
         // TODO Then initialise colorGrid
+
     }
 
     private static void placePanes(CanvasScreen context) {

@@ -72,7 +72,6 @@ public class CanvasScreen extends Screen {
         imageGrid = new VBox(5);
         audioGrid = new VBox(5);
         colorGrid = new VBox(5);
-        initialiseGrids(this);
     }
 
     public int createNewScene() {
@@ -131,6 +130,7 @@ public class CanvasScreen extends Screen {
         this.context = context;
         stage.setScene(scene);
         stage.setTitle(DEFAULT_TITLE);
+        initialiseGrids(this);
         return stage;
     }
 }
