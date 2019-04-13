@@ -136,8 +136,10 @@ public class ScreenHelpers {
     }
 
     public static void initialiseGrids(CanvasScreen context) {
-        // TODO: Initialise grids from object
-        System.out.println("Initialise grids called");
+        // TODO First initialise objectsGrid
+        // TODO Then initialise imagesGrid
+        // TODO Then initialise audioGrid
+        // TODO Then initialise colorGrid
     }
 
     private static void placePanes(CanvasScreen context) {
