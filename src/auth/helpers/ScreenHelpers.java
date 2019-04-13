@@ -1,13 +1,12 @@
 package auth.helpers;
 
+import auth.Callback;
 import auth.RunAuth;
 import auth.UIElementWrapper;
-import auth.auth_ui_components.ColorIcon;
-import auth.auth_ui_components.Icon;
-import auth.auth_ui_components.ImageIcon;
-import auth.auth_ui_components.ToolIcon;
+import auth.auth_ui_components.*;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
+import gamedata.GameObject;
 import gamedata.Resource;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -180,7 +179,19 @@ public class ScreenHelpers {
             if (r.resourceType == Resource.ResourceType.COLOR_RESOURCE) {
                 var icon = new ColorIcon(getColorByID(context.getGame(), r.id), r.id, e -> {
                     // TODO
-                    System.out.println("Color icon clicked for " + r.id);
+                    var thisIcon = (Selectable) e[0];
+                    if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
+                        context.currentlySelected.deselect();
+                    }
+                    if (context.currentlySelected != thisIcon) {
+                        context.currentlySelected = thisIcon;
+                        thisIcon.select();
+                        context.selectedID = r.id;
+                        context.selectedType = Resource.ResourceType.COLOR_RESOURCE.getClass();
+                        System.out.println("Color icon clicked for " + r.id);
+                    } else {
+                        thisIcon.deselect();
+                    }
                 });
                 row.getChildren().add(icon.getView());
             }
@@ -204,8 +215,20 @@ public class ScreenHelpers {
             if (r.resourceType == Resource.ResourceType.AUDIO_RESOURCE) {
                 var icon = new ToolIcon("audio", r.id, e -> {
                     // TODO
-                    System.out.println("Audio icon clicked for " + r.id);
-                });
+                    var thisIcon = (Selectable) e[0];
+                    if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
+                        context.currentlySelected.deselect();
+                    }
+                    if (context.currentlySelected != thisIcon) {
+                        context.currentlySelected = thisIcon;
+                        thisIcon.select();
+                        context.selectedID = r.id;
+                        context.selectedType = Resource.ResourceType.AUDIO_RESOURCE.getClass();
+                        System.out.println("Audio icon clicked for " + r.id);
+                    } else {
+                        thisIcon.deselect();
+                    }
+                }, true);
                 row.getChildren().add(icon.getView());
             }
         }
@@ -228,7 +251,19 @@ public class ScreenHelpers {
             if (r.resourceType == Resource.ResourceType.IMAGE_RESOURCE) {
                 var icon = new ImageIcon(getImageById(context.getGame(), r.id), r.id, e -> {
                     // TODO
-                    System.out.println("Image icon clicked for " + r.id);
+                    var thisIcon = (Selectable) e[0];
+                    if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
+                        context.currentlySelected.deselect();
+                    }
+                    if (context.currentlySelected != thisIcon) {
+                        context.currentlySelected = thisIcon;
+                        thisIcon.select();
+                        context.selectedID = r.id;
+                        context.selectedType = Resource.ResourceType.IMAGE_RESOURCE.getClass();
+                        System.out.println("Image icon clicked for " + r.id);
+                    } else {
+                        thisIcon.deselect();
+                    }
                 });
                 row.getChildren().add(icon.getView());
             }
@@ -249,18 +284,31 @@ public class ScreenHelpers {
                 context.getObjectGrid().getChildren().add(row);
                 row = new HBox(5);
             }
+            var callback = new Callback(){
+                @Override
+                public void onCallback(Object... optionalArgs) {
+                    // TODO
+                    var thisIcon = (Selectable) optionalArgs[0];
+                    if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
+                        context.currentlySelected.deselect();
+                    }
+                    if (context.currentlySelected != thisIcon) {
+                        context.currentlySelected = thisIcon;
+                        thisIcon.select();
+                        context.selectedID = o.objectID;
+                        context.selectedType = GameObject.class;
+                        System.out.println("Object icon clicked for "+o.objectID);
+                    } else {
+                        thisIcon.deselect();
+                    }
+                }
+            };
             if (o.bgImage.isEmpty() || o.bgImage.isBlank()) {
                 // No image, use bgColor
-                var icon = new ColorIcon(getColorByID(context.getGame(), o.bgColor), o.objectID, e -> {
-                    // TODO
-                    System.out.println("Object icon clicked for "+o.objectID);
-                });
+                var icon = new ColorIcon(getColorByID(context.getGame(), o.bgColor), o.objectID, callback);
                 row.getChildren().add(icon.getView());
             } else {
-                var icon = new ImageIcon(getImageById(context.getGame(), o.bgColor), o.objectID, e -> {
-                    // TODO
-                    System.out.println("Object icon clicked for "+o.objectID);
-                });
+                var icon = new ImageIcon(getImageById(context.getGame(), o.bgColor), o.objectID, callback);
                 row.getChildren().add(icon.getView());
             }
         }

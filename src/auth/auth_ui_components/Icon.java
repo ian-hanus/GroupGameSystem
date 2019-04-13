@@ -119,7 +119,7 @@ public abstract class Icon implements Selectable {
 
     private void setOnClickListener(Callback callback) {
         view.setOnMouseClicked(e -> {
-            callback.onCallback(null);
+            callback.onCallback(Icon.this);
         });
     }
 

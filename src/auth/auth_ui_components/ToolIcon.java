@@ -7,4 +7,8 @@ public class ToolIcon extends Icon{
         super(iconID, tooltipText, onClickCallback);
         super.setSelectable(false);
     }
+    public ToolIcon(String iconID, String tooltipText, Callback onClickCallback, boolean selectable) {
+        super(iconID, tooltipText, onClickCallback);
+        super.setSelectable(selectable);
+    }
 }
