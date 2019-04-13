@@ -3,6 +3,7 @@ package auth.helpers;
 import auth.Callback;
 import auth.RunAuth;
 import auth.UIElementWrapper;
+import auth.auth_fxml_controllers.ObjPropsController;
 import auth.auth_fxml_controllers.ScenePropsController;
 import auth.auth_ui_components.*;
 import auth.pagination.PaginationUIElement;
@@ -155,12 +156,18 @@ public class ScreenHelpers {
         try {
             if (context.currentlySelected == null) {
                 // Show props for scene
+                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(SCENE_PROPERTIES_TITLE);
                 FXMLLoader loader = new FXMLLoader(ScreenHelpers.class.getResource("/properties_pane_fxml/sceneprops.fxml"));
                 var fxmlPane = (javafx.scene.layout.Pane) loader.load();
                 loader.<ScenePropsController>getController().initData(propsPane, context);
                 contentPane.getChildren().add(fxmlPane);
             } else if (context.selectedType == GameObject.class) {
-                // TODO Show props for game object
+                // Show props for game object
+                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(OBJECTS_PROPERTIES_TITLE);
+                FXMLLoader loader = new FXMLLoader(ScreenHelpers.class.getResource("/properties_pane_fxml/objprops.fxml"));
+                var fxmlPane = (javafx.scene.layout.Pane) loader.load();
+                loader.<ObjPropsController>getController().initData(propsPane, context);
+                contentPane.getChildren().add(fxmlPane);
             } else if (context.selectedType == Image.class) {
                 // TODO Show props for image resource
             } else if (context.selectedType == AudioClip.class) {
