@@ -146,7 +146,7 @@ public class ScreenHelpers {
         objLibPane.getView().getChildren().addAll(containerPane);
     }
 
-    private static void repopulatePropertiesPane(CanvasScreen context) {
+    public static void repopulatePropertiesPane(CanvasScreen context) {
         var propsPane = (javafx.scene.layout.Pane) ((Group)context.getUIElementById(RIGHT_PANES_GROUP_ID).getView()).getChildren().get(0);
         var contentPane = (javafx.scene.layout.Pane) ((ScrollPane) ((BorderPane) propsPane.getChildren().get(0)).getCenter()).getContent();
         contentPane.getChildren().clear();

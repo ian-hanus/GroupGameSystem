@@ -72,7 +72,7 @@ public class CanvasScreen extends Screen {
     public CanvasScreen() {
         possessedElements = new ArrayList<>();
         game = new Game();
-        game.scenes.add(DataHelpers.createNewScene());
+        game.scenes.add(DataHelpers.createNewScene(game.scenes.size()+1));
         objectGrid = new VBox(5);
         imageGrid = new VBox(5);
         audioGrid = new VBox(5);
@@ -80,7 +80,7 @@ public class CanvasScreen extends Screen {
     }
 
     public int createNewScene() {
-        game.scenes.add(DataHelpers.createNewScene());
+        game.scenes.add(DataHelpers.createNewScene(game.scenes.size()+1));
         return game.scenes.size();
     }
 
@@ -99,8 +99,14 @@ public class CanvasScreen extends Screen {
 
     public void switchToScene(int index) {
         currentScene = index;
+        selectedType = null; selectedID = null; currentlySelected = null; // deselect everything so scene has focus
         // TODO: loadScene(index);
         System.out.println("Current scene is "+currentScene);
+        repopulatePropertiesPane(this);
+    }
+
+    public int getCurrentScene() {
+        return currentScene;
     }
 
     public void registerNewUIElement(UIElement... elements) {
