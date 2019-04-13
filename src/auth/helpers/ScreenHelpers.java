@@ -44,9 +44,8 @@ public class ScreenHelpers {
         sceneText.setFont(bebasKaiMedium);
         sceneText.setFill(DEFAULT_TEXT_COLOR);
         var pagination = new PaginationUIElement(sceneText, (arg) -> {
-            // TODO
+            // TODO call context.setScene(index);
             var index = arg[0];
-            System.out.println("New index " + index);
         }, SCENE_PAGINATION);
         var pane = placeScenePaginationPane();
         var borderPane = new BorderPane();
