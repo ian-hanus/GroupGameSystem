@@ -14,6 +14,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.json.JSONArray;
@@ -143,6 +144,11 @@ public class ScreenHelpers {
         objLibPane.getView().getChildren().addAll(containerPane);
     }
 
+    private static void repopulatePropertiesPane(CanvasScreen context) {
+        // TODO
+        System.out.println("Properties for " + context.selectedType + " with ID " + context.selectedID);
+    }
+
     private static ScrollPane wrapInScrollView(VBox v) {
         var sp = new ScrollPane();
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -187,7 +193,8 @@ public class ScreenHelpers {
                         context.currentlySelected = thisIcon;
                         thisIcon.select();
                         context.selectedID = r.id;
-                        context.selectedType = Resource.ResourceType.COLOR_RESOURCE.getClass();
+                        context.selectedType = Color.class;
+                        repopulatePropertiesPane(context);
                         System.out.println("Color icon clicked for " + r.id);
                     } else {
                         thisIcon.deselect();
@@ -223,7 +230,8 @@ public class ScreenHelpers {
                         context.currentlySelected = thisIcon;
                         thisIcon.select();
                         context.selectedID = r.id;
-                        context.selectedType = Resource.ResourceType.AUDIO_RESOURCE.getClass();
+                        context.selectedType = AudioClip.class;
+                        repopulatePropertiesPane(context);
                         System.out.println("Audio icon clicked for " + r.id);
                     } else {
                         thisIcon.deselect();
@@ -259,7 +267,8 @@ public class ScreenHelpers {
                         context.currentlySelected = thisIcon;
                         thisIcon.select();
                         context.selectedID = r.id;
-                        context.selectedType = Resource.ResourceType.IMAGE_RESOURCE.getClass();
+                        context.selectedType = Image.class;
+                        repopulatePropertiesPane(context);
                         System.out.println("Image icon clicked for " + r.id);
                     } else {
                         thisIcon.deselect();
@@ -297,6 +306,7 @@ public class ScreenHelpers {
                         thisIcon.select();
                         context.selectedID = o.objectID;
                         context.selectedType = GameObject.class;
+                        repopulatePropertiesPane(context);
                         System.out.println("Object icon clicked for "+o.objectID);
                     } else {
                         thisIcon.deselect();
