@@ -1,9 +1,9 @@
 package auth.helpers;
 
 import auth.Callback;
-import auth.RunAuth;
 import auth.UIElementWrapper;
 import auth.auth_fxml_controllers.ObjPropsController;
+import auth.auth_fxml_controllers.ResPropsController;
 import auth.auth_fxml_controllers.ScenePropsController;
 import auth.auth_ui_components.*;
 import auth.pagination.PaginationUIElement;
@@ -14,13 +14,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import org.json.JSONArray;
 import uiutils.panes.*;
 import auth.screens.CanvasScreen;
@@ -41,7 +39,6 @@ import static auth.Strings.*;
 import static auth.auth_ui_components.ToolIcon.BG_CIRCLE_RADIUS;
 import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
-import static gamecenter.Dimensions.*;
 import static gamecenter.RunGameCenter.bebasKai;
 import static gamecenter.RunGameCenter.bebasKaiMedium;
 
@@ -169,16 +166,29 @@ public class ScreenHelpers {
                 loader.<ObjPropsController>getController().initData(propsPane, context);
                 contentPane.getChildren().add(fxmlPane);
             } else if (context.selectedType == Image.class) {
-                // TODO Show props for image resource
+                // Show props for image resource
+                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(IMG_RES_PROPERTIES_TITLE);
+                loadResourceFXML(context, propsPane, contentPane);
             } else if (context.selectedType == AudioClip.class) {
-                // TODO Show props for audio resource
+                // Show props for audio resource
+                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(AUD_RES_PROPERTIES_TITLE);
+                loadResourceFXML(context, propsPane, contentPane);
             } else if (context.selectedType == Color.class) {
-                // TODO Show props for color resource
+                // Show props for color resource
+                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(COL_RES_PROPERTIES_TITLE);
+                loadResourceFXML(context, propsPane, contentPane);
             }
         } catch (IOException e) {
             // shouldn't ever happen
             e.printStackTrace();
         }
+    }
+
+    private static void loadResourceFXML(CanvasScreen context, javafx.scene.layout.Pane propsPane, javafx.scene.layout.Pane contentPane) throws IOException{
+        FXMLLoader loader = new FXMLLoader(ScreenHelpers.class.getResource("/properties_pane_fxml/resprops.fxml"));
+        var fxmlPane = (javafx.scene.layout.Pane) loader.load();
+        loader.<ResPropsController>getController().initData(propsPane, context);
+        contentPane.getChildren().add(fxmlPane);
     }
 
     private static ScrollPane wrapInScrollView(Node v) {
@@ -215,7 +225,7 @@ public class ScreenHelpers {
                 row = new HBox(5);
             }
             if (r.resourceType == Resource.ResourceType.COLOR_RESOURCE) {
-                var icon = new ColorIcon(getColorByID(context.getGame(), r.id), r.id, e -> {
+                var icon = new ColorIcon(getColorByID(context.getGame(), r.resourceID), r.resourceID, e -> {
                     // TODO
                     var thisIcon = (Selectable) e[0];
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
@@ -226,10 +236,10 @@ public class ScreenHelpers {
                     if (context.currentlySelected != thisIcon) {
                         context.currentlySelected = thisIcon;
                         thisIcon.select();
-                        context.selectedID = r.id;
+                        context.selectedID = r.resourceID;
                         context.selectedType = Color.class;
                         repopulatePropertiesPane(context);
-                        System.out.println("Color icon clicked for " + r.id);
+                        System.out.println("Color icon clicked for " + r.resourceID);
                     } else {
                         thisIcon.deselect();
                         clearSelection(context);
@@ -262,7 +272,7 @@ public class ScreenHelpers {
                 row = new HBox(5);
             }
             if (r.resourceType == Resource.ResourceType.AUDIO_RESOURCE) {
-                var icon = new ToolIcon("audio", r.id, e -> {
+                var icon = new ToolIcon("audio", r.resourceID, e -> {
                     // TODO
                     var thisIcon = (Selectable) e[0];
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
@@ -273,10 +283,10 @@ public class ScreenHelpers {
                     if (context.currentlySelected != thisIcon) {
                         context.currentlySelected = thisIcon;
                         thisIcon.select();
-                        context.selectedID = r.id;
+                        context.selectedID = r.resourceID;
                         context.selectedType = AudioClip.class;
                         repopulatePropertiesPane(context);
-                        System.out.println("Audio icon clicked for " + r.id);
+                        System.out.println("Audio icon clicked for " + r.resourceID);
                     } else {
                         thisIcon.deselect();
                         clearSelection(context);
@@ -303,7 +313,7 @@ public class ScreenHelpers {
                 row = new HBox(5);
             }
             if (r.resourceType == Resource.ResourceType.IMAGE_RESOURCE) {
-                var icon = new ImageIcon(getImageById(context.getGame(), r.id), r.id, e -> {
+                var icon = new ImageIcon(getImageById(context.getGame(), r.resourceID), r.resourceID, e -> {
                     // TODO
                     var thisIcon = (Selectable) e[0];
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
@@ -314,10 +324,10 @@ public class ScreenHelpers {
                     if (context.currentlySelected != thisIcon) {
                         context.currentlySelected = thisIcon;
                         thisIcon.select();
-                        context.selectedID = r.id;
+                        context.selectedID = r.resourceID;
                         context.selectedType = Image.class;
                         repopulatePropertiesPane(context);
-                        System.out.println("Image icon clicked for " + r.id);
+                        System.out.println("Image icon clicked for " + r.resourceID);
                     } else {
                         thisIcon.deselect();
                         clearSelection(context);
@@ -383,7 +393,7 @@ public class ScreenHelpers {
     private static Image getImageById(Game game, String id) {
         try {
             for (var r : game.resources) {
-                if (r.resourceType == Resource.ResourceType.IMAGE_RESOURCE && r.id.equals(id)) {
+                if (r.resourceType == Resource.ResourceType.IMAGE_RESOURCE && r.resourceID.equals(id)) {
                     return new Image(new File(r.src).toURI().toURL().toExternalForm());
                 }
             }
@@ -395,7 +405,7 @@ public class ScreenHelpers {
 
     private static Color getColorByID(Game game, String id) {
         for (var r : game.resources) {
-            if (r.resourceType == Resource.ResourceType.COLOR_RESOURCE && r.id.equals(id)) {
+            if (r.resourceType == Resource.ResourceType.COLOR_RESOURCE && r.resourceID.equals(id)) {
                 return Color.valueOf(r.src);
             }
         }
