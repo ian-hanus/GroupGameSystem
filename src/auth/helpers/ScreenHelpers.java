@@ -110,7 +110,7 @@ public class ScreenHelpers {
         containerPane.setLayoutX(RIGHT_PANE_MARGIN/4);
         containerPane.setLayoutY(RIGHT_PANE_MARGIN/2);
 
-        String[] titles = {OBJECTS_TITLE, IMG_RES_TITLE, AUD_RES_TITLE};
+        String[] titles = {OBJECTS_TITLE, IMG_RES_TITLE, AUD_RES_TITLE, COLORS_TITLE};
 
         var titleText = new Text(titles[0]);
         titleText.setFont(bebasKai);
@@ -118,7 +118,7 @@ public class ScreenHelpers {
         containerPane.setTop(titleText);
         BorderPane.setAlignment(titleText, Pos.CENTER);
 
-        var objectGrid = new GridPane(); var imgGrid = new GridPane(); var audioGrid = new GridPane();
+        var objectGrid = new GridPane(); var imgGrid = new GridPane(); var audioGrid = new GridPane(); var colorGrid = new GridPane();
 
         var pagination = new PaginationUIElement(objectGrid, (arg) -> {
             final int index = (Integer) arg[0];
@@ -127,6 +127,7 @@ public class ScreenHelpers {
         }, SCENE_PAGINATION);
         pagination.addPage(imgGrid); // for images
         pagination.addPage(audioGrid); // for audio
+        pagination.addPage(colorGrid); // for colour palette
         pagination.goToPage(0); // Switch back to objects
 
         containerPane.setCenter(pagination.getView());

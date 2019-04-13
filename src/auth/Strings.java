@@ -14,4 +14,5 @@ public class Strings {
     public static String OBJECTS_TITLE = "Objects";
     public static String IMG_RES_TITLE = "Image Resources";
     public static String AUD_RES_TITLE = "Audio Resources";
+    public static String COLORS_TITLE = "Color Palette";
 }
