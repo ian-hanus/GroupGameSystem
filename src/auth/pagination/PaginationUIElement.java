@@ -54,16 +54,16 @@ public class PaginationUIElement implements UIElement {
         if (index < numPages) {
             mainView.setCenter(pages.get(++index));
             dots.setIndex(index);
+            onPageChanged.onCallback(index);
         }
-        onPageChanged.onCallback(index);
     }
 
     private void goBack() {
         if (index > 0) {
             mainView.setCenter(pages.get(--index));
             dots.setIndex(index);
+            onPageChanged.onCallback(index);
         }
-        onPageChanged.onCallback(index);
     }
 
     public void addPage(Node pageView) {
