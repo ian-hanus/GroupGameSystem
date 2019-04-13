@@ -1,6 +1,7 @@
 package auth.helpers;
 
 import gamedata.Game;
+import gamedata.GameObject;
 import gamedata.Resource;
 import gamedata.Scene;
 
@@ -50,6 +51,24 @@ public class DataHelpers {
     public static boolean resourceIDExists(Game game, String id, Resource.ResourceType type) {
         for (var s : game.resources) {
             if (s.resourceID.equals(id) && s.resourceType.equals(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static GameObject getObjectByID(Game game, String id) {
+        for (var s : game.gameObjects) {
+            if (s.objectID.equals(id)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public static boolean objectIDExists(Game game, String id) {
+        for (var s : game.gameObjects) {
+            if (s.objectID.equals(id)) {
                 return true;
             }
         }

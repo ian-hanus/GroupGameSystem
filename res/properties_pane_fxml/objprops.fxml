@@ -22,30 +22,35 @@
            GridPane.columnIndex="0" GridPane.rowIndex="1"
            styleClass="propertyName"/>
 
-    <TextField styleClass="propertyValue"
+    <TextField styleClass="propertyValue" fx:id="objectIDField"
+               onKeyPressed="#objectIDKeyPressed"
                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     <Label text="width" styleClass="propertyName"
            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 
-    <TextField fx:id="passwordField" styleClass="propertyValue"
+    <TextField fx:id="widthField" styleClass="propertyValue"
+               onKeyPressed="#widthKeyPressed"
                GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
     <Label text="height" styleClass="propertyName"
            GridPane.columnIndex="0" GridPane.rowIndex="3"/>
 
-    <TextField fx:id="passwordField" styleClass="propertyValue"
+    <TextField fx:id="heightField" styleClass="propertyValue"
+               onKeyPressed="#heightKeyPressed"
                GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
     <Label text="bgColor" styleClass="propertyName"
            GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 
-    <TextField fx:id="passwordField" styleClass="propertyValue"
+    <TextField fx:id="bgColorField" styleClass="propertyValue"
+               onKeyPressed="#bgColorKeyPressed"
                GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
     <Label text="bgImg" styleClass="propertyName"
            GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 
-    <TextField fx:id="passwordField" styleClass="propertyValue"
+    <TextField fx:id="bgImgField" styleClass="propertyValue"
+               onKeyPressed="#bgImageKeyPressed"
                GridPane.columnIndex="1" GridPane.rowIndex="5"/>
     <stylesheets>
         <URL value="@styles/sceneprops.css" />
