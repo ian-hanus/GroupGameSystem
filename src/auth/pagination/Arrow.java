@@ -27,6 +27,7 @@ public abstract class Arrow implements UIElement {
                 // Do nothing on arrow click if a valid method is not provided
             }
         });
+        arrowImage.setPickOnBounds(true);
     }
 
     @Override

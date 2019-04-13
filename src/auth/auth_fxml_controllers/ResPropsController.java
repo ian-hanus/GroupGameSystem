@@ -7,19 +7,32 @@ import gamedata.Scene;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 
+import java.util.Map;
+
 import static auth.helpers.DataHelpers.*;
+import static java.util.Map.entry;
 
 public class ResPropsController extends JXMLController{
     private Game game;
     private String selectedID;
     private Class selectedType;
 
+    private Map<Class, Resource.ResourceType> map = Map.ofEntries(
+            entry(Image.class, Resource.ResourceType.IMAGE_RESOURCE),
+            entry(AudioClip.class, Resource.ResourceType.AUDIO_RESOURCE),
+            entry(Color.class, Resource.ResourceType.COLOR_RESOURCE)
+    );
+
     @FXML
     public TextField resourceIDField, srcField;
+
+    private Resource selectedResource;
 
     @Override
     public void initData(Pane propsPane, CanvasScreen context) {
@@ -27,14 +40,8 @@ public class ResPropsController extends JXMLController{
         game = context.getGame();
         selectedID = context.selectedID;
         selectedType = context.selectedType;
-
-        if (selectedType == Image.class) {
-            populateFormUsingResourceInfo(getResourceByType(game, selectedID, Resource.ResourceType.IMAGE_RESOURCE));
-        } else if (selectedType == AudioClip.class) {
-            populateFormUsingResourceInfo(getResourceByType(game, selectedID, Resource.ResourceType.AUDIO_RESOURCE));
-        } else if (selectedType == Color.class) {
-            populateFormUsingResourceInfo(getResourceByType(game, selectedID, Resource.ResourceType.COLOR_RESOURCE));
-        }
+        selectedResource = getResourceByType(game, selectedID, map.get(selectedType));
+        populateFormUsingResourceInfo(selectedResource);
     }
 
     private void populateFormUsingResourceInfo(Resource resource) {
@@ -48,6 +55,16 @@ public class ResPropsController extends JXMLController{
             } else {
                 srcField.setText(resource.src);
             }
+        }
+    }
+
+    @FXML
+    public void resourceIDKeyPressed(KeyEvent e) {
+        if (e.getCode() == KeyCode.ENTER) {
+            if (!resourceIDExists(game, resourceIDField.getText(), map.get(selectedType)))
+                selectedResource.resourceID = resourceIDField.getText();
+            else
+            resourceIDField.setText(selectedResource.resourceID);
         }
     }
 }

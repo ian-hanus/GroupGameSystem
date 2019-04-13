@@ -47,4 +47,13 @@ public class DataHelpers {
         return null;
     }
 
+    public static boolean resourceIDExists(Game game, String id, Resource.ResourceType type) {
+        for (var s : game.resources) {
+            if (s.resourceID.equals(id) && s.resourceType.equals(type)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

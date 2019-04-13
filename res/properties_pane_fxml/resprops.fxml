@@ -23,6 +23,7 @@
            styleClass="propertyName"/>
 
     <TextField styleClass="propertyValue" fx:id="resourceIDField"
+               onKeyPressed="#resourceIDKeyPressed"
                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
     <Label text="src" styleClass="propertyName"
