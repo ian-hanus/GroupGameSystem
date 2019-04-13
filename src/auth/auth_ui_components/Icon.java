@@ -10,11 +10,44 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import uiutils.panes.Pane;
 
-public abstract class Icon {
+public abstract class Icon implements Selectable {
     private Group view;
     private Circle bgCircle;
     private ImageView icon;
+
+    private boolean selected = false, selectable = true;
+
+    protected void setSelectable(boolean selectable) {
+        this.selectable = selectable;
+    }
+
+    @Override
+    public void select() {
+        if (selectable) {
+            if (view.getChildren().contains(bgCircle)) {
+                // Either color/tool
+                bgCircle.setEffect(makeShadowSelected());
+            } else {
+                view.getChildren().get(0).setEffect(makeShadowSelected());
+            }
+            selected = true;
+        }
+    }
+
+    @Override
+    public void deselect() {
+        if (selectable) {
+            if (view.getChildren().contains(bgCircle)) {
+                // Either color/tool
+                bgCircle.setEffect(makeShadow());
+            } else {
+                view.getChildren().get(0).setEffect(makeShadow());
+            }
+            selected = false;
+        }
+    }
 
     public static final double BG_CIRCLE_RADIUS = 25;
     public static final double ICON_SIZE = 30;
@@ -48,12 +81,20 @@ public abstract class Icon {
         bgCircle.setFill(color);
     }
 
-    private Effect makeShadow() {
+    private Effect makeShadow(Color color) {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setRadius(5.0);
         dropShadow.setOffsetY(3.0);
-        dropShadow.setColor(Color.color(0.0, 0.0, 0.0, 0.25));
+        dropShadow.setColor(color);
         return dropShadow;
+    }
+
+    private Effect makeShadow() {
+        return makeShadow(Color.color(0.0, 0.0, 0.0, 0.25));
+    }
+
+    private Effect makeShadowSelected() {
+        return makeShadow(Color.rgb(255, 255, 255, 0.75));
     }
 
     private void addBgImage(Image img) {
@@ -77,7 +118,9 @@ public abstract class Icon {
     }
 
     private void setOnClickListener(Callback callback) {
-        view.setOnMouseClicked(e -> callback.onCallback(null));
+        view.setOnMouseClicked(e -> {
+            callback.onCallback(null);
+        });
     }
 
     private void makeBgCircle(boolean add) {

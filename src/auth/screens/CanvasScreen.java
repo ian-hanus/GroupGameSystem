@@ -2,6 +2,7 @@ package auth.screens;
 
 import auth.RunAuth;
 import auth.UIElement;
+import auth.auth_ui_components.Selectable;
 import auth.helpers.DataHelpers;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
@@ -25,6 +26,10 @@ public class CanvasScreen extends Screen {
     private Group container;
     private Stage stage;
     private Game game;
+
+    public Selectable currentlySelected = null;
+    public Class selectedType = null;
+    public String selectedID = "";
 
     public VBox getObjectGrid() {
         return objectGrid;
