@@ -2,6 +2,7 @@ package auth.screens;
 
 import auth.RunAuth;
 import auth.UIElement;
+import auth.pagination.PaginationUIElement;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,6 +19,16 @@ public class CanvasScreen extends Screen {
     private RunAuth context;
     private Group container;
     private Stage stage;
+
+    public PaginationUIElement getPagination() {
+        return pagination;
+    }
+
+    public void setPagination(PaginationUIElement pagination) {
+        this.pagination = pagination;
+    }
+
+    private PaginationUIElement pagination;
 
     private List<UIElement> possessedElements;
 

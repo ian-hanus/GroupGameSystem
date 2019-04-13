@@ -56,6 +56,7 @@ public class ScreenHelpers {
         borderPane.setLayoutX(12);
         pane.getView().getChildren().add(borderPane);
         context.registerNewUIElement(pane);
+        context.setPagination(pagination);
     }
 
     private static Pane placeScenePaginationPane() {
