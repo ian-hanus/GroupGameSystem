@@ -22,7 +22,7 @@ public class DataHelpers {
 
     public static boolean colorExists(Game game, String id) {
         for (var s : game.resources) {
-            if (s.resourceID.equals(id) && s.resourceType == Resource.ResourceType.COLOR_RESOURCE) {
+            if (s.resourceID.equals(id) && s.resourceType.equals(Resource.ResourceType.COLOR_RESOURCE)) {
                 return true;
             }
         }
@@ -31,10 +31,20 @@ public class DataHelpers {
 
     public static boolean imgExists(Game game, String id) {
         for (var s : game.resources) {
-            if (s.resourceID.equals(id) && s.resourceType == Resource.ResourceType.IMAGE_RESOURCE) {
+            if (s.resourceID.equals(id) && s.resourceType.equals(Resource.ResourceType.IMAGE_RESOURCE)) {
                 return true;
             }
         }
         return false;
     }
+
+    public static Resource getResourceByType(Game game, String id, Resource.ResourceType type) {
+        for (var s : game.resources) {
+            if (s.resourceID.equals(id) && s.resourceType.equals(type)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
 }

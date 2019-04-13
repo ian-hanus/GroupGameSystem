@@ -22,13 +22,13 @@
            GridPane.columnIndex="0" GridPane.rowIndex="1"
            styleClass="propertyName"/>
 
-    <TextField styleClass="propertyValue"
+    <TextField styleClass="propertyValue" fx:id="resourceIDField"
                GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
     <Label text="src" styleClass="propertyName"
            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
 
-    <TextField fx:id="passwordField" styleClass="propertyValue"
+    <TextField fx:id="srcField" styleClass="propertyValue" disable="true"
                GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
     <stylesheets>
