@@ -2,12 +2,17 @@ package auth.helpers;
 
 import auth.RunAuth;
 import auth.UIElementWrapper;
+import auth.auth_ui_components.ColorIcon;
 import auth.auth_ui_components.Icon;
+import auth.auth_ui_components.ImageIcon;
 import auth.auth_ui_components.ToolIcon;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
+import gamedata.Resource;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -31,6 +36,7 @@ import static auth.Strings.*;
 import static auth.auth_ui_components.ToolIcon.BG_CIRCLE_RADIUS;
 import static auth.helpers.DimensionCalculator.*;
 import static auth.helpers.RectangleHelpers.createStyledRectangle;
+import static gamecenter.Dimensions.*;
 import static gamecenter.RunGameCenter.bebasKai;
 import static gamecenter.RunGameCenter.bebasKaiMedium;
 
@@ -123,14 +129,14 @@ public class ScreenHelpers {
         containerPane.setTop(titleText);
         BorderPane.setAlignment(titleText, Pos.CENTER);
 
-        var pagination = new PaginationUIElement(context.getObjectGrid(), (arg) -> {
+        var pagination = new PaginationUIElement(wrapInScrollView(context.getObjectGrid()), (arg) -> {
             final int index = (Integer) arg[0];
             titleText.setText(titles[index]);
         }, SCENE_PAGINATION);
 
-        pagination.addPage(context.getImageGrid()); // for images
-        pagination.addPage(context.getAudioGrid()); // for audio
-        pagination.addPage(context.getColorGrid()); // for colour palette
+        pagination.addPage(wrapInScrollView(context.getImageGrid())); // for images
+        pagination.addPage(wrapInScrollView(context.getAudioGrid())); // for audio
+        pagination.addPage(wrapInScrollView(context.getColorGrid())); // for colour palette
         pagination.goToPage(0); // Switch back to objects
 
         containerPane.setCenter(pagination.getView());
@@ -138,12 +144,78 @@ public class ScreenHelpers {
         objLibPane.getView().getChildren().addAll(containerPane);
     }
 
+    private static ScrollPane wrapInScrollView(VBox v) {
+        var sp = new ScrollPane();
+        sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sp.setMaxHeight(60*3+15*2);
+        sp.setContent(v);
+        sp.setStyle("-fx-background: #333333;\n" +
+                "   -fx-border-color: transparent;" +
+                "-fx-background-color: #33333300;");
+
+        return sp;
+    }
+
     public static void initialiseGrids(CanvasScreen context) {
+        System.out.println("initialiseGrids() called");
         // TODO First initialise objectsGrid
+        if (context.getObjectGrid().getChildren().size() != 0) {
+            context.getObjectGrid().getChildren().clear(); // Remove all the HBox's within this VBox
+        }
+
+        var row = new HBox(5);
+        for (var o : context.getGame().gameObjects) {
+            if (row.getChildren().size() == 3) {
+                VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+                context.getObjectGrid().getChildren().add(row);
+                row = new HBox(5);
+            }
+            if (o.bgImage.isEmpty() || o.bgImage.isBlank()) {
+                // No image, use bgColor
+                var icon = new ColorIcon(getColorByID(context.getGame(), o.bgColor), o.objectID, e -> {
+                    // TODO
+                    System.out.println("Object icon clicked for "+o.objectID);
+                });
+                row.getChildren().add(icon.getView());
+            } else {
+                var icon = new ImageIcon(getImageById(context.getGame(), o.bgColor), o.objectID, e -> {
+                    // TODO
+                    System.out.println("Object icon clicked for "+o.objectID);
+                });
+                row.getChildren().add(icon.getView());
+            }
+        }
+        VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
+        context.getObjectGrid().getChildren().add(row);
+
+
         // TODO Then initialise imagesGrid
         // TODO Then initialise audioGrid
         // TODO Then initialise colorGrid
 
+    }
+
+    private static Image getImageById(Game game, String id) {
+        try {
+            for (var r : game.resources) {
+                if (r.resourceType == Resource.ResourceType.IMAGE_RESOURCE && r.id.equals(id)) {
+                    return new Image(new File(r.src).toURI().toURL().toExternalForm());
+                }
+            }
+            return null;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static Color getColorByID(Game game, String id) {
+        for (var r : game.resources) {
+            if (r.resourceType == Resource.ResourceType.COLOR_RESOURCE && r.id.equals(id)) {
+                return Color.valueOf(r.src);
+            }
+        }
+        return Color.WHITE;
     }
 
     private static void placePanes(CanvasScreen context) {
