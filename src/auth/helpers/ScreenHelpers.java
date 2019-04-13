@@ -6,6 +6,7 @@ import auth.auth_ui_components.ToolIcon;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import org.json.JSONArray;
@@ -134,8 +135,9 @@ public class ScreenHelpers {
         objLibPane.getView().getChildren().addAll(containerPane);
     }
 
-    public static void initialiseGrids(Game game, VBox objectGrid, VBox imageGrid, VBox audioGrid, VBox colorGrid) {
+    public static void initialiseGrids(CanvasScreen context) {
         // TODO: Initialise grids from object
+        System.out.println("Initialise grids called");
     }
 
     private static void placePanes(CanvasScreen context) {

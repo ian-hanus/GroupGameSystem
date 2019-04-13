@@ -5,6 +5,7 @@ import auth.UIElement;
 import auth.helpers.DataHelpers;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
+import gamedata.Resource;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -71,12 +72,25 @@ public class CanvasScreen extends Screen {
         imageGrid = new VBox(5);
         audioGrid = new VBox(5);
         colorGrid = new VBox(5);
-        initialiseGrids(game, objectGrid, imageGrid, audioGrid, colorGrid);
+        initialiseGrids(this);
     }
 
     public int createNewScene() {
         game.scenes.add(DataHelpers.createNewScene());
         return game.scenes.size();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public int getResourcesCount(Resource.ResourceType type) {
+        int count = 0;
+        for (Resource r : game.resources) {
+            if (r.resourceType == type)
+                count ++;
+        }
+        return count;
     }
 
     public void switchToScene(int index) {
