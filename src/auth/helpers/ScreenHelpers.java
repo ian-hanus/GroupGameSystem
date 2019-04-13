@@ -72,7 +72,7 @@ public class ScreenHelpers {
         context.registerNewUIElement(new UIElementWrapper(canvas, CANVAS_ID));
     }
 
-    private static void populateToolsPane(LeftPane toolsPane) {
+    private static void populateToolsPane(CanvasScreen context, LeftPane toolsPane) {
         var vboxParent = new VBox(5);
 
         try {
@@ -85,8 +85,8 @@ public class ScreenHelpers {
 
                 vboxParent.getChildren().add(new ToolIcon(name, tooltip, callback -> {
                     try {
-                        var method = ToolClickHandlers.class.getMethod(handler);
-                        method.invoke(null);
+                        var method = ToolClickHandlers.class.getMethod(handler, CanvasScreen.class);
+                        method.invoke(null, context);
                     } catch (Exception e) {
                         // Would never happen
                     }
@@ -107,7 +107,7 @@ public class ScreenHelpers {
         var propsPane = new RightPane(TOP_EDGE, RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, PROPS_PANE_ID);
         var objLibPane = new RightPane(computeMarginToBottomEdge((Region) propsPane.getView(), RIGHT_PANE_MARGIN), RIGHT_PANE_WIDTH, RIGHT_PANE_HEIGHT, OBJ_LIB_PANE_ID);
 
-        populateToolsPane(toolsPane);
+        populateToolsPane(context, toolsPane);
 
         var rightPanesGroup = new Group(propsPane.getView(), objLibPane.getView());
         rightPanesGroup.setLayoutY(centreVertical(rightPanesGroup.getLayoutBounds().getHeight()));
