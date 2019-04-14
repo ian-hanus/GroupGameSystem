@@ -18,6 +18,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
@@ -48,6 +50,24 @@ import static gamecenter.RunGameCenter.bebasKaiMedium;
 public class ScreenHelpers {
     private static final String STYLE_SHEET = "authoring.css";
     public static final String DRAGGING_CLONE = "DRAGGING_CLONE";
+
+    private static Color selectedShadowColor = Color.rgb(255, 255, 255, 0.75);
+
+    public static Effect makeShadow(Color color) {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(color);
+        return dropShadow;
+    }
+
+    public static Effect makeShadow() {
+        return makeShadow(Color.color(0.0, 0.0, 0.0, 0.25));
+    }
+
+    public static Effect makeShadowSelected() {
+        return makeShadow(selectedShadowColor);
+    }
 
     public static void initScene(CanvasScreen context, Scene scene, Group root) {
         scene.setRoot(root);
@@ -182,6 +202,14 @@ public class ScreenHelpers {
                 // Show props for color resource
                 ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(COL_RES_PROPERTIES_TITLE);
                 loadResourceFXML(context, propsPane, contentPane);
+            } else if (context.selectedType == Instance.class) {
+                // Show props for instance
+                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(INSTANCE_PROPERTIES_TITLE);
+                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(OBJECTS_PROPERTIES_TITLE);
+                FXMLLoader loader = new FXMLLoader(ScreenHelpers.class.getResource("/properties_pane_fxml/ins_props.fxml"));
+                var fxmlPane = (javafx.scene.layout.Pane) loader.load();
+                loader.<ObjPropsController>getController().initData(propsPane, context);
+                contentPane.getChildren().add(fxmlPane);
             }
         } catch (IOException e) {
             // shouldn't ever happen
@@ -373,6 +401,9 @@ public class ScreenHelpers {
                 public void onCallback(Object... optionalArgs) {
                     // TODO
                     var thisIcon = (Selectable) optionalArgs[0];
+                    if(context.currentlySelected != null) {
+                        context.currentlySelected.deselect();
+                    }
                     if (context.currentlySelected != null && context.currentlySelected != thisIcon) {
                         context.currentlySelected.deselect();
                         clearSelection(context);
@@ -460,10 +491,11 @@ public class ScreenHelpers {
             newInstance.height = (instanceOf.height > 0 ? instanceOf.height : 60);
             game.scenes.get(context.getCurrentScene()).instances.add(newInstance);
             System.out.println("Instance created requested for " + instanceOf.objectID +" at ("+absoluteX+","+absoluteY+")");
+            refreshCanvas(context);
         }
     }
 
-    private static Image getImageById(Game game, String id) {
+    public static Image getImageById(Game game, String id) {
         try {
             for (var r : game.resources) {
                 if (r.resourceType == Resource.ResourceType.IMAGE_RESOURCE && r.resourceID.equals(id)) {
@@ -476,7 +508,7 @@ public class ScreenHelpers {
         }
     }
 
-    private static Color getColorByID(Game game, String id) {
+    public static Color getColorByID(Game game, String id) {
         for (var r : game.resources) {
             if (r.resourceType == Resource.ResourceType.COLOR_RESOURCE && r.resourceID.equals(id)) {
                 return Color.valueOf(r.src);
@@ -524,6 +556,31 @@ public class ScreenHelpers {
     }
 
     public static void refreshCanvas(CanvasScreen context) {
-        // TODO
+        // TODO complete this
+        var x = context.getUIElementById("CANVAS_ITEM");
+        while (x != null) {
+            context.removeUIElement(x);
+            x = context.getUIElementById("CANVAS_ITEM");
+        }
+
+        for (var i : context.getGame().scenes.get(context.getCurrentScene()).instances) {
+            var iui = new InstanceUI(i, context.getGame());
+            var view = iui.getView();
+            view.setOnMouseClicked(e -> {
+                if(iui.selected) {
+                    iui.deselect();
+                    context.selectedType = null;
+                    context.selectedID = null;
+                    context.currentlySelected = null;
+                } else {
+                    iui.select();
+                    context.selectedType = Instance.class;
+                    context.selectedID = i.instanceID;
+                    context.currentlySelected = iui;
+                }
+                repopulatePropertiesPane(context);
+            });
+            context.registerNewUIElement(new UIElementWrapper(view, "CANVAS_ITEM"));
+        }
     }
 }

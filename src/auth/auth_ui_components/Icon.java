@@ -12,11 +12,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import uiutils.panes.Pane;
 
+import static auth.helpers.ScreenHelpers.*;
+
 public abstract class Icon implements Selectable {
     private Group view;
     private Circle bgCircle;
     private ImageView icon;
-    private Color selectedShadowColor = Color.rgb(255, 255, 255, 0.75);
 
     private boolean selected = false, selectable = true;
 
@@ -80,22 +81,6 @@ public abstract class Icon implements Selectable {
 
     private void setBgCircleColor(Color color) {
         bgCircle.setFill(color);
-    }
-
-    private Effect makeShadow(Color color) {
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setRadius(5.0);
-        dropShadow.setOffsetY(3.0);
-        dropShadow.setColor(color);
-        return dropShadow;
-    }
-
-    private Effect makeShadow() {
-        return makeShadow(Color.color(0.0, 0.0, 0.0, 0.25));
-    }
-
-    private Effect makeShadowSelected() {
-        return makeShadow(selectedShadowColor);
     }
 
     private void addBgImage(Image img) {

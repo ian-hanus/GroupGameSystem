@@ -2,10 +2,12 @@ package auth.screens;
 
 import auth.RunAuth;
 import auth.UIElement;
+import auth.auth_ui_components.InstanceUI;
 import auth.auth_ui_components.Selectable;
 import auth.helpers.DataHelpers;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
+import gamedata.Instance;
 import gamedata.Resource;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -105,7 +107,8 @@ public class CanvasScreen extends Screen {
             currentlySelected = null; // deselect everything so scene has focus
         }
         // TODO: loadScene(index);
-        // System.out.println("Current scene is "+currentScene+" and it has "+game.scenes.get(currentScene).instances.size()+" instances.");
+        System.out.println("Current scene is "+currentScene+" and it has "+game.scenes.get(currentScene).instances.size()+" instances.");
+        refreshCanvas(this);
         repopulatePropertiesPane(this);
     }
 
