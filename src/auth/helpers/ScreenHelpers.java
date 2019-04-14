@@ -10,6 +10,7 @@ import auth.auth_ui_components.*;
 import auth.pagination.PaginationUIElement;
 import gamedata.Game;
 import gamedata.GameObject;
+import gamedata.Instance;
 import gamedata.Resource;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
@@ -215,7 +216,7 @@ public class ScreenHelpers {
         initialiseColorGrid(context);
     }
 
-    private static void initialiseColorGrid(CanvasScreen context) {
+    public static void initialiseColorGrid(CanvasScreen context) {
         if (context.getColorGrid().getChildren().size() != 0) {
             context.getColorGrid().getChildren().clear(); // Remove all the HBox's within this VBox
         }
@@ -264,7 +265,7 @@ public class ScreenHelpers {
         context.selectedType = null;
     }
 
-    private static void initialiseAudioGrid(CanvasScreen context) {
+    public static void initialiseAudioGrid(CanvasScreen context) {
         if (context.getAudioGrid().getChildren().size() != 0) {
             context.getAudioGrid().getChildren().clear(); // Remove all the HBox's within this VBox
         }
@@ -307,7 +308,7 @@ public class ScreenHelpers {
         context.getAudioGrid().getChildren().add(row);
     }
 
-    private static void initialiseImagesGrid(CanvasScreen context) {
+    public static void initialiseImagesGrid(CanvasScreen context) {
         if (context.getImageGrid().getChildren().size() != 0) {
             context.getImageGrid().getChildren().clear(); // Remove all the HBox's within this VBox
         }
@@ -355,7 +356,7 @@ public class ScreenHelpers {
 
     private static double orgSceneX, orgSceneY, orgTranslateX, orgTranslateY;
 
-    private static void initialiseObjectsGrid(CanvasScreen context) {
+    public static void initialiseObjectsGrid(CanvasScreen context) {
         if (context.getObjectGrid().getChildren().size() != 0) {
             context.getObjectGrid().getChildren().clear(); // Remove all the HBox's within this VBox
         }
@@ -432,7 +433,7 @@ public class ScreenHelpers {
             icon.getView().setOnMouseReleased(t -> {
                 if (draggingObjectCloneUIElement != null) {
                     //System.out.println("New location: (" + t.getSceneX() + ", " + t.getSceneY() + ")");
-                    createNewInstance(context.getGame(), o, t.getSceneX(), t.getSceneY());
+                    createNewInstance(context, context.getGame(), o, t.getSceneX(), t.getSceneY());
                     context.removeUIElement(draggingObjectCloneUIElement);
                 }
                 draggingObjectClone = null;
@@ -446,9 +447,20 @@ public class ScreenHelpers {
         context.getObjectGrid().getChildren().add(row);
     }
 
-    private static void createNewInstance(Game game, GameObject instanceOf, double absoluteX, double absoluteY) {
-        // TODO check if this is being placed on the canvas, and if so, create an instance
-        System.out.println("Instance creation requested for " + instanceOf.objectID +" at ("+absoluteX+","+absoluteY+")");
+    private static void createNewInstance(CanvasScreen context, Game game, GameObject instanceOf, double absoluteX, double absoluteY) {
+        if (absoluteX >= CONSOLE_HORIZONTAL_OFFSET && absoluteX <= CONSOLE_HORIZONTAL_OFFSET + CANVAS_WIDTH &&
+        absoluteY >= CANVAS_VERTICAL_OFFSET && absoluteY <= CANVAS_VERTICAL_OFFSET + CANVAS_HEIGHT) {
+            var newInstance = new Instance();
+            newInstance.bgImage = instanceOf.bgImage; newInstance.bgColor = instanceOf.bgColor; newInstance.instanceOf = instanceOf.objectID;
+            newInstance.instanceID = "instance_"+game.scenes.get(context.getCurrentScene()).instances.size();
+            newInstance.x = absoluteX - CONSOLE_HORIZONTAL_OFFSET;
+            newInstance.y = absoluteY - CANVAS_VERTICAL_OFFSET;
+            newInstance.zIndex = 1;
+            newInstance.width = (instanceOf.width > 0 ? instanceOf.width : 60);
+            newInstance.height = (instanceOf.height > 0 ? instanceOf.height : 60);
+            game.scenes.get(context.getCurrentScene()).instances.add(newInstance);
+            System.out.println("Instance created requested for " + instanceOf.objectID +" at ("+absoluteX+","+absoluteY+")");
+        }
     }
 
     private static Image getImageById(Game game, String id) {

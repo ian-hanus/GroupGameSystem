@@ -105,7 +105,7 @@ public class CanvasScreen extends Screen {
             currentlySelected = null; // deselect everything so scene has focus
         }
         // TODO: loadScene(index);
-        System.out.println("Current scene is "+currentScene);
+        // System.out.println("Current scene is "+currentScene+" and it has "+game.scenes.get(currentScene).instances.size()+" instances.");
         repopulatePropertiesPane(this);
     }
 

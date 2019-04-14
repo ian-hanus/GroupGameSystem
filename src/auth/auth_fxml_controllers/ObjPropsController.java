@@ -53,7 +53,7 @@ public class ObjPropsController extends JXMLController {
                 selectedObject.objectID = objectIDField.getText();
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
+                initialiseObjectsGrid(context);
                 refreshCanvas(context);
             }
             else
@@ -68,7 +68,6 @@ public class ObjPropsController extends JXMLController {
                 selectedObject.width = Double.parseDouble(widthField.getText());
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
                 refreshCanvas(context);
             } catch (Exception ex) {
                 // Illegal value
@@ -84,7 +83,6 @@ public class ObjPropsController extends JXMLController {
                 selectedObject.height = Double.parseDouble(heightField.getText());
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
                 refreshCanvas(context);
             } catch (Exception ex) {
                 // Illegal value
@@ -100,7 +98,7 @@ public class ObjPropsController extends JXMLController {
                 selectedObject.bgImage = bgImgField.getText().strip();
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
+                initialiseObjectsGrid(context);
                 refreshCanvas(context);
             }
             else
@@ -115,7 +113,7 @@ public class ObjPropsController extends JXMLController {
                 selectedObject.bgColor = bgColorField.getText().strip();
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
+                initialiseObjectsGrid(context);
                 refreshCanvas(context);
             }
             else

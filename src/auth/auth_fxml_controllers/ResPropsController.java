@@ -71,7 +71,17 @@ public class ResPropsController extends JXMLController{
                 selectedResource.resourceID = resourceIDField.getText();
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
+                switch (map.get(selectedType)) {
+                    case IMAGE_RESOURCE:
+                        initialiseImagesGrid(context);
+                        break;
+                    case COLOR_RESOURCE:
+                        initialiseColorGrid(context);
+                        break;
+                    case AUDIO_RESOURCE:
+                        initialiseAudioGrid(context);
+                        break;
+                }
                 refreshCanvas(context);
             }
             else

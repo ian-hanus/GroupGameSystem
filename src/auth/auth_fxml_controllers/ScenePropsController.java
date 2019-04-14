@@ -38,10 +38,6 @@ public class ScenePropsController extends JXMLController{
         if (e.getCode() == KeyCode.ENTER) {
             if (!sceneIDExists(game, sceneIDField.getText())) {
                 game.scenes.get(currentScene).sceneID = sceneIDField.getText();
-
-                // Now refresh grids and reload scene
-                initialiseGrids(context);
-                refreshCanvas(context);
             }
             else
                 sceneIDField.setText(game.scenes.get(currentScene).sceneID);
@@ -55,7 +51,6 @@ public class ScenePropsController extends JXMLController{
                 game.scenes.get(currentScene).bgColor = bgColorField.getText().strip();
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
                 refreshCanvas(context);
             }
             else
@@ -70,7 +65,6 @@ public class ScenePropsController extends JXMLController{
                 game.scenes.get(currentScene).bgImage = bgImgField.getText().strip();
 
                 // Now refresh grids and reload scene
-                initialiseGrids(context);
                 refreshCanvas(context);
             }
             else
