@@ -2,7 +2,6 @@ package gamecenter;
 
 import Player.src.PlayerMain.PlayerStage;
 import auth.RunAuth;
-import demotests.RunDemo;
 import gamecenter.gamedata.DataParser;
 import gamecenter.gamedata.DataStruct;
 import javafx.geometry.Insets;

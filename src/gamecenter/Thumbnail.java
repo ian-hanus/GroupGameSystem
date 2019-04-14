@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import static gamecenter.Dimensions.*;
-import static gamecenter.Styles.*;
+import static gamecenter.StyleConstants.*;
 import static javafx.scene.paint.Color.WHITE;
 
 public class Thumbnail {
