@@ -7,7 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 
 /**
- * Abstract superclass to serve as template for all buttons/controls. Should be used for creating new Button objects.
+ * Abstract superclass to serve as template for all buttons/controls. Should be used for creating new Button gameObjects.
  *
  * @author Januario Carreiro
  */
