@@ -205,10 +205,9 @@ public class ScreenHelpers {
             } else if (context.selectedType == Instance.class) {
                 // Show props for instance
                 ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(INSTANCE_PROPERTIES_TITLE);
-                ((Text) ((BorderPane) propsPane.getChildren().get(0)).getTop()).setText(OBJECTS_PROPERTIES_TITLE);
-                FXMLLoader loader = new FXMLLoader(ScreenHelpers.class.getResource("/properties_pane_fxml/ins_props.fxml"));
+                FXMLLoader loader = new FXMLLoader(ScreenHelpers.class.getResource("/properties_pane_fxml/insprops.fxml"));
                 var fxmlPane = (javafx.scene.layout.Pane) loader.load();
-                loader.<ObjPropsController>getController().initData(propsPane, context);
+                // loader.<ObjPropsController>getController().initData(propsPane, context);
                 contentPane.getChildren().add(fxmlPane);
             }
         } catch (IOException e) {
