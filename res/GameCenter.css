@@ -1,0 +1,50 @@
+/* All styles for GameCenter will go here */
+
+#parentPane {
+    -fx-background-color: #808080;
+}
+
+.permaPane {
+    -fx-background-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+}
+
+.thumbPane {
+    -fx-background: #333333;
+    -fx-border-color: transparent;
+    -fx-background-color: #33333300;
+}
+
+.leftPane {
+    -fx-background-color: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 0 15 15 0;
+    -fx-background-radius: 0 15 15 0;
+}
+
+.rightPane {
+    -fx-background-color: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 15 0 0 15;
+    -fx-background-radius: 15 0 0 15;
+}
+
+.centerPane {
+    -fx-background-color: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 15 15 15 15;
+    -fx-background-radius: 15 15 15 15;
+}
+
+.bottomPane {
+    -fx-background-color: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-border-radius: 15 15 0 0;
+    -fx-background-radius: 15 15 0 0;
+}
+
+.canvas {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-radius: 5 5 5 5;
+}

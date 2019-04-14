@@ -27,13 +27,17 @@ import static gamecenter.Colours.*;
 import static gamecenter.Dimensions.*;
 import static gamecenter.RunGameCenter.*;
 import static gamecenter.Strings.*;
-import static gamecenter.Styles.*;
+import static gamecenter.StyleConstants.*;
 import static auth.Styles.CENTRE_PANE_STYLE;
 
+/**
+ * TODO: make javaDoc
+ */
 public class GCScreen {
     private Stage stage;
     private Scene scene;
     private Pane parent;
+    private ScrollPane thumbPane;
     private List<DataStruct> gameData;
     private uiutils.panes.Pane titlePane, permaPane, gameListPane;
     private int activeThumbnail = -1;
@@ -54,18 +58,16 @@ public class GCScreen {
         try {
             gameData = DataParser.parseConfig("data/player_data.json");
             int i = 0;
-            var sp = new ScrollPane();
-            sp.setMinWidth(THUMBNAIL_SIZE + 40);
-            sp.setPrefWidth(THUMBNAIL_SIZE + 40);
-            sp.setLayoutX(GC_RIGHT_PANE_WIDTH/2 - THUMBNAIL_SIZE/2 - 20);
-            sp.setPrefHeight(GC_RIGHT_PANE_HEIGHT);
-            sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            thumbPane = new ScrollPane();
+            thumbPane.setMinWidth(THUMBNAIL_SIZE + 40);
+            thumbPane.setPrefWidth(THUMBNAIL_SIZE + 40);
+            thumbPane.setLayoutX(GC_RIGHT_PANE_WIDTH/2 - THUMBNAIL_SIZE/2 - 20);
+            thumbPane.setPrefHeight(GC_RIGHT_PANE_HEIGHT);
+            thumbPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            thumbPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             var scrollContents = new VBox(20);
-            sp.setContent(scrollContents);
-            sp.setStyle("-fx-background: #333333;\n" +
-                    "   -fx-border-color: transparent;" +
-                    "-fx-background-color: #33333300;");
+            thumbPane.setContent(scrollContents);
+            thumbPane.getStyleClass().add(GC_THUMBPANE_STYLE);
             for(var d : gameData) {
                 var thumbnail = new Thumbnail(new Image(GCScreen.class.getResourceAsStream("/img/"+d.imagePath)));
                 thumbnails.add(thumbnail);
@@ -81,7 +83,7 @@ public class GCScreen {
                 }
                 i ++;
             }
-            gameListPane.getView().getChildren().add(sp);
+            gameListPane.getView().getChildren().add(thumbPane);
         } catch (FileNotFoundException e) {
             // Shouldn't ever happen
         }
@@ -130,13 +132,7 @@ public class GCScreen {
     }
 
     private void playClickListener(int index) {
-        // TODO: Open player for this game
-        if (index == 0) {
-            new RunDemo().run();
-        } else if (index == 3) {
-            new PlayerStage().run("mario");  //COMMENT to show player and run mario from there
-            //new PlayerStage().makeStage().show();    UNCOMMENT to show player
-        }
+        new PlayerStage().run(gameData.get(index).name);
     }
 
     private void socialClickListener(int index) {
@@ -172,7 +168,7 @@ public class GCScreen {
         clipRect.setArcWidth(25); clipRect.setArcHeight(25);
         permaBgImage.setClip(clipRect);
         permaBgImage.setEffect(new GaussianBlur(100));
-        permaPane.getView().setStyle("-fx-background-color: transparent; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);");
+        permaPane.getView().getStyleClass().add(GC_PERMA_PANE_STYLE);
         permaPane.getView().getChildren().add(permaBgImage);
     }
 
@@ -271,7 +267,8 @@ public class GCScreen {
 
     private Scene initScene() {
         parent = new Pane();
-        parent.setStyle(GC_BG_STYLE);
+        parent.setId(GC_PARENT_ID);
+        parent.getStylesheets().add(GC_STYLESHEET);
 
         parent.setPrefWidth(GC_WINDOW_WIDTH);
         parent.setPrefHeight(GC_WINDOW_HEIGHT);
@@ -280,6 +277,9 @@ public class GCScreen {
 
     }
 
+    /**
+     * TODO: make javaDoc
+     */
     public void show() {
         stage.show();
     }
