@@ -1,6 +1,7 @@
 package auth.helpers;
 
 import auth.Callback;
+import auth.UIElement;
 import auth.UIElementWrapper;
 import auth.auth_fxml_controllers.ObjPropsController;
 import auth.auth_fxml_controllers.ResPropsController;
@@ -11,6 +12,7 @@ import gamedata.Game;
 import gamedata.GameObject;
 import gamedata.Resource;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -44,6 +46,8 @@ import static gamecenter.RunGameCenter.bebasKaiMedium;
 
 public class ScreenHelpers {
     private static final String STYLE_SHEET = "authoring.css";
+    public static final String DRAGGING_CLONE = "DRAGGING_CLONE";
+
     public static void initScene(CanvasScreen context, Scene scene, Group root) {
         scene.setRoot(root);
         root.setStyle(BG_STYLE);
@@ -346,6 +350,11 @@ public class ScreenHelpers {
         context.getImageGrid().getChildren().add(row);
     }
 
+    private static Group draggingObjectClone;
+    private static UIElement draggingObjectCloneUIElement;
+
+    private static double orgSceneX, orgSceneY, orgTranslateX, orgTranslateY;
+
     private static void initialiseObjectsGrid(CanvasScreen context) {
         if (context.getObjectGrid().getChildren().size() != 0) {
             context.getObjectGrid().getChildren().clear(); // Remove all the HBox's within this VBox
@@ -382,21 +391,64 @@ public class ScreenHelpers {
                     }
                 }
             };
+            Icon icon, duplicate;
             if (o.bgImage.isEmpty() || o.bgImage.isBlank()) {
                 // No image, use bgColor
-                var icon = new ColorIcon(getColorByID(context.getGame(), o.bgColor), o.objectID, callback);
-                if(context.selectedType == GameObject.class && context.selectedID.equals(o.objectID))
-                    icon.select();
-                row.getChildren().add(icon.getView());
+                icon = new ColorIcon(getColorByID(context.getGame(), o.bgColor), o.objectID, callback);
+                duplicate = new ColorIcon(getColorByID(context.getGame(), o.bgColor), "", e -> {});
             } else {
-                var icon = new ImageIcon(getImageById(context.getGame(), o.bgImage), o.objectID, callback);
-                if(context.selectedType == GameObject.class && context.selectedID.equals(o.objectID))
-                    icon.select();
-                row.getChildren().add(icon.getView());
+                icon = new ImageIcon(getImageById(context.getGame(), o.bgImage), o.objectID, callback);
+                duplicate = new ImageIcon(getImageById(context.getGame(), o.bgImage), "", e -> {});
             }
+            if(context.selectedType == GameObject.class && context.selectedID.equals(o.objectID))
+                icon.select();
+
+            icon.getView().setOnMousePressed(t -> {
+                orgSceneX = t.getSceneX();
+                orgSceneY = t.getSceneY();
+                orgTranslateX = ((Group)(t.getSource())).getTranslateX();
+                orgTranslateY = ((Group)(t.getSource())).getTranslateY();
+            });
+
+            icon.getView().setOnMouseDragged(t -> {
+                double offsetX = t.getSceneX() - orgSceneX;
+                double offsetY = t.getSceneY() - orgSceneY;
+                double newTranslateX = orgTranslateX + offsetX;
+                double newTranslateY = orgTranslateY + offsetY;
+
+                if (Math.sqrt(Math.pow(newTranslateX,2)+Math.pow(newTranslateY, 2)) > 30) {
+                    // If they're actually dragging (i.e. going beyond the size of the icon)
+                    if (draggingObjectClone == null) {
+                        draggingObjectClone = duplicate.getView();
+                        draggingObjectCloneUIElement = new UIElementWrapper(draggingObjectClone, DRAGGING_CLONE);
+                        draggingObjectClone.setLayoutX(t.getSceneX() - 30);
+                        draggingObjectClone.setLayoutY(t.getSceneY() - 30);
+                        context.registerNewUIElement(draggingObjectCloneUIElement);
+                    }
+                    draggingObjectClone.setLayoutX(t.getSceneX() - 30);
+                    draggingObjectClone.setLayoutY(t.getSceneY() - 30);
+                }
+            });
+            icon.getView().setOnMouseReleased(t -> {
+                if (draggingObjectCloneUIElement != null) {
+                    //System.out.println("New location: (" + t.getSceneX() + ", " + t.getSceneY() + ")");
+                    createNewInstance(context.getGame(), o, t.getSceneX(), t.getSceneY());
+                    context.removeUIElement(draggingObjectCloneUIElement);
+                }
+                draggingObjectClone = null;
+            });
+            row.getChildren().add(icon.getView());
+            Bounds boundsInScene = icon.getView().localToScene(icon.getView().getBoundsInLocal());
+            duplicate.getView().setLayoutX(boundsInScene.getCenterX());
+            duplicate.getView().setLayoutY(boundsInScene.getCenterY());
         }
         VBox.setMargin(row, new Insets(0, 0, 0, (30)/2.0));
         context.getObjectGrid().getChildren().add(row);
+    }
+
+    private static void createNewInstance(Game game, GameObject instanceOf, double absoluteX, double absoluteY) {
+        // TODO check if this is being placed on the canvas, and if so, create an instance
+        System.out.println("Instance creation requested for " + instanceOf.objectID +" at ("+absoluteX+","+absoluteY+")");
     }
 
     private static Image getImageById(Game game, String id) {
