@@ -1,9 +1,9 @@
-package gamecenter;
+package GameCenter;
 
 import Player.src.PlayerMain.PlayerStage;
 import auth.RunAuth;
-import gamecenter.gamedata.DataParser;
-import gamecenter.gamedata.DataStruct;
+import GameCenter.GameData.DataParser;
+import GameCenter.GameData.DataStruct;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,11 +22,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static gamecenter.Colours.*;
-import static gamecenter.Dimensions.*;
-import static gamecenter.RunGameCenter.*;
-import static gamecenter.Strings.*;
-import static gamecenter.StyleConstants.*;
+import static GameCenter.Colours.*;
+import static GameCenter.Dimensions.*;
+import static GameCenter.RunGameCenter.*;
+import static GameCenter.Strings.*;
+import static GameCenter.StyleConstants.*;
 import static auth.Styles.CENTRE_PANE_STYLE;
 
 /**
@@ -68,7 +68,7 @@ public class GCScreen {
             thumbPane.setContent(scrollContents);
             thumbPane.getStyleClass().add(GC_THUMBPANE_STYLE);
             for(var d : gameData) {
-                var thumbnail = new Thumbnail(new Image(GCScreen.class.getResourceAsStream("/img/"+d.imagePath)));
+                var thumbnail = new Thumbnail(new Image(GCScreen.class.getResourceAsStream("/img/"+d.imagePath)), d.name);
                 thumbnails.add(thumbnail);
                 scrollContents.getChildren().add(thumbnail.getView());
                 final int index = i;

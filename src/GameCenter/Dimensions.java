@@ -1,4 +1,4 @@
-package gamecenter;
+package GameCenter;
 
 public class Dimensions {
     public static final double GC_WINDOW_WIDTH = 750;

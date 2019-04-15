@@ -5,11 +5,45 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gamecenter.GameCenterController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="GameCenter.GameCenterController"
+            prefWidth="975.0" prefHeight="500.0"
+            id="parentPane">
+    <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+    <stylesheets><URL value="@GameCenter.css"/></stylesheets>
+
+    <!-- Title pane and corresponding text -->
+    <HBox   styleClass="centerPane"
+            layoutX="250" layoutY="25">
+        <padding><Insets top="5" right="5" bottom="5" left="5"/></padding>
+        <Text   styleClass="paneText"
+                fx:id="titleText"
+                text="Game Center"/>
+    </HBox>
+
+
+    <Pane   styleClass="centerPane"
+            fx:id="descriptionPane"
+            layoutX="250" layoutY="85"
+            prefWidth="425" prefHeight="390">
+    </Pane>
+
+    <Pane   styleClass="centerPane"
+            fx:id="thumbnailPane"
+            layoutX="700" layoutY="25"
+            prefWidth="250" prefHeight="450">
+    </Pane>
+
+    <Pane   styleClass="centerPane"
+            fx:id="socialPane"
+            layoutX="25" layoutY="25"
+            prefWidth="200" prefHeight="450">
+    </Pane>
 
 </AnchorPane>

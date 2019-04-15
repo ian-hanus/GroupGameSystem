@@ -1,26 +1,23 @@
-package gamecenter;
+package GameCenter;
 
-import auth.helpers.RectangleHelpers;
-import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.effect.ColorInput;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import static gamecenter.Dimensions.*;
-import static gamecenter.StyleConstants.*;
+import static GameCenter.Dimensions.*;
 import static javafx.scene.paint.Color.WHITE;
 
 public class Thumbnail {
+    private String myName;
     private Group view;
     private boolean selected;
-    public Thumbnail(Image img) {
+    public Thumbnail(Image img, String name) {
         view = new Group(); view.setCursor(Cursor.HAND);
+        myName = name;
         Rectangle clipRect = new Rectangle(THUMBNAIL_SIZE,THUMBNAIL_SIZE);
         Rectangle bgRect = new Rectangle(THUMBNAIL_SIZE,THUMBNAIL_SIZE);
         clipRect.setArcHeight(20.0);
@@ -55,4 +52,6 @@ public class Thumbnail {
     public Node getView () {
         return view;
     }
+
+    public String getName() {return myName; }
 }

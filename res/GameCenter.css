@@ -1,7 +1,14 @@
-/* All styles for GameCenter will go here */
+/*@font-face {*/
+    /*src: local("bebaskai.otf");*/
+/*}*/
 
 #parentPane {
     -fx-background-color: #808080;
+}
+
+.paneText {
+    -fx-fill: #DDDDDD;
+    -fx-font-size: 25;
 }
 
 .permaPane {

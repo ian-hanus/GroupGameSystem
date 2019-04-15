@@ -1,4 +1,4 @@
-package gamecenter;
+package GameCenter;
 
 public class StyleConstants {
     public static final String GC_STYLESHEET = "GameCenter.css";

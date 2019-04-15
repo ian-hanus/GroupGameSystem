@@ -1,4 +1,4 @@
-package gamecenter;
+package GameCenter;
 
 import auth.RunAuth;
 import javafx.application.Application;
