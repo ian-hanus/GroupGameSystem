@@ -8,31 +8,41 @@
 
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
-<GridPane xmlns="http://javafx.com/javafx"
+<?import java.net.URL?>
+<BorderPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          alignment="center" hgap="25" vgap="10"
           fx:controller="network_account.LoginController"
-          prefHeight="400.0" prefWidth="600.0">
+          prefHeight="400.0" prefWidth="600.0"
+            styleClass="borderPane">
 
-    <columnConstraints>
-        <ColumnConstraints percentWidth="50"  />
-        <ColumnConstraints percentWidth="50" />
-    </columnConstraints>
+    <center>
+        <GridPane alignment="center" hgap="25" vgap="10"
+                  prefHeight="300.0" prefWidth="500.0" styleClass="gridPane">
 
-    <padding><Insets left="15" right="15"/></padding>
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"  />
+                <ColumnConstraints percentWidth="50" />
+            </columnConstraints>
 
-    <Label fx:id="Title" text="Welcome, Scroller!" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <padding><Insets left="15" right="15"/></padding>
 
-    <Text fx:id="Prompt" text="Please enter account information." GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label fx:id="Title" text="Welcome, Scroller!" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="welcomeLabel"/>
 
-    <Label fx:id="UsernameLabel" text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <Text fx:id="Prompt" text="Please enter account information." GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="prompt"/>
 
-    <TextField fx:id="UsernameField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <Label fx:id="UsernameLabel" text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="textfieldLabel"/>
 
-    <Label text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="UsernameField" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="textfield"/>
 
-    <TextField fx:id="PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <Label fx:id="PasswordLabel" text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="textfieldLabel"/>
 
-    <Button fx:id="LoginButton" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <PasswordField fx:id="PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="textfield"/>
 
-</GridPane>
+            <Button fx:id="LoginButton" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="4" onKeyPressed="#loginPressed"/>
+        </GridPane>
+    </center>
+
+    <stylesheets>
+        <URL value="@styles/networkstyle.css" />
+    </stylesheets>
+</BorderPane>

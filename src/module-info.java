@@ -12,6 +12,6 @@ module voogasalad.crackingopen {
     exports auth.screens;
     exports Launcher.src.Initial;
     exports auth.auth_fxml_controllers;
-
+    exports network_account;
 }
 
