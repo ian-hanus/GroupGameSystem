@@ -19,7 +19,7 @@
 
     <stylesheets><URL value="@GameCenter.css"/></stylesheets>
 
-    <!-- Title pane and corresponding text -->
+    <!-- Title pane -->
     <HBox   styleClass="centerPane"
             layoutX="250" layoutY="25">
         <padding><Insets top="5" right="5" bottom="5" left="5"/></padding>
@@ -28,22 +28,28 @@
                 text="Game Center"/>
     </HBox>
 
-
+    <!-- Description Pane -->
     <Pane   styleClass="centerPane"
             fx:id="descriptionPane"
             layoutX="250" layoutY="85"
             prefWidth="425" prefHeight="390">
     </Pane>
 
-    <ScrollPane   styleClass="thumbPane"
-            fx:id="thumbPane"
-            layoutX="700" layoutY="25"
-            prefWidth="250" prefHeight="450">
-        <VBox   fx:id="thumbPaneContent"
-                spacing="20">
-        </VBox>
-    </ScrollPane>
+    <!-- Thumbnail Pane -->
+    <Pane styleClass="centerPane"
+        layoutX="700" layoutY="25"
+        prefWidth="250" prefHeight="450">
+        <ScrollPane   styleClass="thumbPane"
+                fx:id="thumbPane"
+                layoutX="10" layoutY="10"
+                prefWidth="230" prefHeight="430">
+            <VBox   fx:id="thumbPaneContent"
+                    spacing="20">
+            </VBox>
+        </ScrollPane>
+    </Pane>
 
+    <!-- Social Pane -->
     <Pane   styleClass="centerPane"
             fx:id="socialPane"
             layoutX="25" layoutY="25"

@@ -58,9 +58,9 @@ public class GCScreen {
             gameData = DataParser.parseConfig("data/player_data.json");
             int i = 0;
             thumbPane = new ScrollPane();
-            thumbPane.setMinWidth(THUMBNAIL_SIZE + 40);
-            thumbPane.setPrefWidth(THUMBNAIL_SIZE + 40);
-            thumbPane.setLayoutX(GC_RIGHT_PANE_WIDTH/2 - THUMBNAIL_SIZE/2 - 20);
+            thumbPane.setMinWidth(THUMBNAIL_WIDTH + 40);
+            thumbPane.setPrefWidth(THUMBNAIL_WIDTH + 40);
+            thumbPane.setLayoutX(GC_RIGHT_PANE_WIDTH/2 - THUMBNAIL_WIDTH /2 - 20);
             thumbPane.setPrefHeight(GC_RIGHT_PANE_HEIGHT);
             thumbPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
             thumbPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

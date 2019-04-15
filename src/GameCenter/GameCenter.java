@@ -1,18 +1,12 @@
 package GameCenter;
 
-import GameCenter.GameData.DataParser;
-import GameCenter.GameData.DataStruct;
+import GameCenter.GameCenterController;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 /**
  * GameCenter.java is the launcher for the Game Center, where a user can launch games through the Player, launch the
@@ -34,6 +28,9 @@ import java.util.List;
  * 14 April 2019
  */
 public class GameCenter extends Application {
+    private Parent myRoot;
+    private GameCenterController myGCC;
+
     /**
      * Method to launch the application. Required when extending Application.
      */
@@ -49,7 +46,10 @@ public class GameCenter extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/GameCenter.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/GameCenter.fxml"));
+
+        this.myRoot = loader.load();
+        this.myGCC = loader.getController();
 
 //        try {
 //            sofiaPro = Font.loadFont(this.getClass().getResourceAsStream("/fonts/sofiapro-light.otf"),30);
@@ -60,7 +60,9 @@ public class GameCenter extends Application {
 //            System.out.println("A problem occurred when loading resources.");
 //        }
 
-        Scene scene = new Scene(root, 975, 500);
+        myGCC.placeThumbnails();
+
+        Scene scene = new Scene(myRoot, 975, 500);
         scene.getStylesheets().add("GameCenter.css");
 
         stage.setTitle("Game Center");

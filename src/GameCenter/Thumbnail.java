@@ -18,16 +18,16 @@ public class Thumbnail {
     public Thumbnail(Image img, String name) {
         view = new Group(); view.setCursor(Cursor.HAND);
         myName = name;
-        Rectangle clipRect = new Rectangle(THUMBNAIL_SIZE,THUMBNAIL_SIZE);
-        Rectangle bgRect = new Rectangle(THUMBNAIL_SIZE,THUMBNAIL_SIZE);
+        Rectangle clipRect = new Rectangle(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
+        Rectangle bgRect = new Rectangle(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
         clipRect.setArcHeight(20.0);
         clipRect.setArcWidth(20.0);
         bgRect.setArcHeight(20.0);
         bgRect.setArcWidth(20.0);
         bgRect.setFill(WHITE);
         var imgView = new ImageView(img);
-        imgView.setFitHeight(THUMBNAIL_SIZE);
-        imgView.setFitWidth(THUMBNAIL_SIZE);
+        imgView.setFitHeight(THUMBNAIL_WIDTH);
+        imgView.setFitWidth(THUMBNAIL_WIDTH);
         imgView.setLayoutX(0); imgView.setLayoutY(0);
         imgView.setClip(clipRect);
         view.getChildren().addAll(bgRect, imgView);
