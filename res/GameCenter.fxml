@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -19,12 +20,6 @@
     <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
 
     <stylesheets><URL value="@GameCenter.css" /></stylesheets>
-
-    <!-- Description Pane -->
-    <Pane fx:id="descriptionPane" layoutX="250" layoutY="85" prefHeight="390" prefWidth="425" styleClass="descriptionPane">
-        <Button fx:id="newGameButton" layoutX="114.0" layoutY="173.0" styleClass="button" text="Create a new game">
-        </Button>
-    </Pane>
 
     <!-- Thumbnail Pane -->
     <Pane layoutX="700" layoutY="25" prefHeight="450" prefWidth="250" styleClass="centerPane">
@@ -64,5 +59,24 @@
       </padding>
         <Text fx:id="titleText" styleClass="paneText" text="Game Center" />
     </HBox>
+
+    <!-- Description Pane -->
+   <Pane layoutX="631.0" layoutY="25.0" prefHeight="44.0" prefWidth="44.0" styleClass="centerPane" />
+   <StackPane layoutX="250.0" layoutY="85.0" prefHeight="390.0" prefWidth="425.0" styleClass="centerPane">
+      <children>
+          <Pane fx:id="newGamePane" prefHeight="390" prefWidth="425" styleClass="centerPane">
+            <children>
+                 <Button fx:id="newGameButton" layoutX="114.0" layoutY="173.0" styleClass="button" text="Create a new game" />
+            </children>
+          </Pane>
+         <Pane fx:id="descriptionPane" prefHeight="200.0" prefWidth="200.0" styleClass="descriptionPane" visible="false">
+            <children>
+                 <Button fx:id="editButton" layoutX="85.0" layoutY="264.0" mnemonicParsing="false" text="Edit" />
+                 <Button fx:id="playButton" layoutX="181.0" layoutY="264.0" mnemonicParsing="false" text="Play" />
+                 <Button fx:id="rateButton" layoutX="277.0" layoutY="264.0" mnemonicParsing="false" text="Rate" />
+            </children>
+         </Pane>
+      </children>
+   </StackPane>
 
 </AnchorPane>

@@ -58,7 +58,7 @@ public class GameCenter extends Application {
 //            System.out.println("A problem occurred when loading resources.");
 //        }
 
-        myGCC.placeThumbnails();
+        myGCC.initGameCenter();
 
         Scene scene = new Scene(myRoot, 975, 500);
         scene.getStylesheets().add("GameCenter.css");

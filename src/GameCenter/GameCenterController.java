@@ -26,12 +26,20 @@ public class GameCenterController {
 
     public Pane socialPane;
     public VBox thumbPaneContent;
+    public Pane newGamePane;
     public Pane descriptionPane;
     public Text titleText;
     public ScrollPane thumbPane;
     public Button newGameButton;
+    public Button playButton;
+    public Button editButton;
+    public Button rateButton;
 
-    void placeThumbnails() {
+    void initGameCenter() {
+        placeThumbnails();
+    }
+
+    private void placeThumbnails() {
         thumbnails = new ArrayList<Thumbnail>();
         activeThumbnail = -1;
         int counter = 0;
@@ -66,28 +74,28 @@ public class GameCenterController {
     }
 
     private void revertDescription() {
-        descriptionPane.getChildren().remove(activeGameImageView);
-        newGameButton.setVisible(true);
+        newGamePane.getChildren().remove(activeGameImageView);
+        descriptionPane.setVisible(false);
     }
 
     private void loadGameDetails(int index) {
         if (activeGameImageView != null) {
-            descriptionPane.getChildren().remove(activeGameImageView);
+            newGamePane.getChildren().remove(activeGameImageView);
         }
-        newGameButton.setVisible(false);
         loadGameImage(index);
+        descriptionPane.setVisible(true);
     }
 
     private void loadGameImage(int index) {
         activeGameImageView = new ImageView(this.getClass().getResource("/img/"+gameData.get(index).imagePath).toString());
-        activeGameImageView.setFitWidth(descriptionPane.getWidth());
-        activeGameImageView.setFitHeight(descriptionPane.getHeight());
+        activeGameImageView.setFitWidth(newGamePane.getWidth());
+        activeGameImageView.setFitHeight(newGamePane.getHeight());
         activeGameImageView.setEffect(new GaussianBlur(100));
         var clipRect = new Rectangle();
-        clipRect.setWidth(descriptionPane.getWidth());
-        clipRect.setHeight(descriptionPane.getHeight());
+        clipRect.setWidth(newGamePane.getWidth());
+        clipRect.setHeight(newGamePane.getHeight());
         clipRect.setArcWidth(25); clipRect.setArcHeight(25);
         activeGameImageView.setClip(clipRect);
-        descriptionPane.getChildren().add(activeGameImageView);
+        newGamePane.getChildren().add(activeGameImageView);
     }
 }
