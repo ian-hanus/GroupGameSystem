@@ -59,8 +59,8 @@ public class EntityManager {
     }
 
     public void move(int entityID) {
-        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
-        var basicComponent = (BasicComponent) getComponent(entityID, BasicComponent.class);
+        var motionComponent = getComponent(entityID, MotionComponent.class);
+        var basicComponent = getComponent(entityID, BasicComponent.class);
         if (motionComponent != null && basicComponent != null) {
             double newX = motionComponent.getNewX(basicComponent.getX());
             double newY = motionComponent.getNewY(basicComponent.getY());
@@ -70,31 +70,31 @@ public class EntityManager {
     }
 
     public void adjustDirection(int entityID, double delta) {
-        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        var motionComponent = getComponent(entityID, MotionComponent.class);
         if (motionComponent != null)
             motionComponent.adjustDirection(delta);
     }
 
     public void setDirection(int entityID, double angle){
-        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        var motionComponent = getComponent(entityID, MotionComponent.class);
         if (motionComponent != null)
             motionComponent.setDirection(angle);
     }
 
     public void setYVelocity(int entityID, double vel) {
-        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        var motionComponent = getComponent(entityID, MotionComponent.class);
         if (motionComponent != null)
             motionComponent.setYVelocity(vel);
     }
 
     public void setXVelocity(int entityID, double vel) {
-        var motionComponent = (MotionComponent) getComponent(entityID, MotionComponent.class);
+        var motionComponent = getComponent(entityID, MotionComponent.class);
         if (motionComponent != null)
             motionComponent.setXVelocity(vel);
     }
 
     public void adjustHealth(int entityID, int delta) {
-        var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
+        var healthComponent = getComponent(entityID, HealthComponent.class);
         if (healthComponent != null) {
             int currentHealth = healthComponent.getHealth();
             int maxHealth = healthComponent.getMaxHealth();
@@ -109,7 +109,7 @@ public class EntityManager {
     }
 
     public void setHealth(int entityID, int health) {
-        var healthComponent = (HealthComponent) getComponent(entityID, HealthComponent.class);
+        var healthComponent = getComponent(entityID, HealthComponent.class);
         if (healthComponent != null) {
             int maxHealth = healthComponent.getMaxHealth();
             if (health < maxHealth) {
@@ -182,8 +182,8 @@ public class EntityManager {
 
     //TODO remove duplication between setY and also in collision handler and detector
     private void setX(int obj, double newX){
-        Component basic = getComponent(obj, BasicComponent.class);
-        double currentX = ((BasicComponent) basic).getX();
+        BasicComponent basic = getComponent(obj, BasicComponent.class);
+        double currentX = basic.getX();
         double finalX = newX;
         CollisionDetector collisionDetector = new CollisionDetector(this);
         Integer[] impassableColliders = collisionDetector.getImpassableColliders(obj, myEntityMap.keySet());
@@ -193,13 +193,13 @@ public class EntityManager {
                 finalX = currentX;
             }
         }
-        ((BasicComponent) basic).setX(finalX);
+        basic.setX(finalX);
     }
 
     //TODO remove duplication between setY and also in collision handler and detector
     private void setY(int obj, double newY){
-        Component basic = getComponent(obj, BasicComponent.class);
-        double currentY = ((BasicComponent) basic).getY();
+        BasicComponent basic = getComponent(obj, BasicComponent.class);
+        double currentY = basic.getY();
         double finalY = newY;
         CollisionDetector collisionDetector = new CollisionDetector(this);
         Integer[] impassableColliders = collisionDetector.getImpassableColliders(obj, myEntityMap.keySet());
@@ -209,6 +209,6 @@ public class EntityManager {
                 finalY = currentY;
             }
         }
-        ((BasicComponent) basic).setY(finalY);
+        basic.setY(finalY);
     }
 }
