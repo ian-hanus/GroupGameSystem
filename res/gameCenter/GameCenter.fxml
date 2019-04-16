@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.fxml.FXML?>
 
-<AnchorPane id="parentPane" prefHeight="486.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameCenter.GameCenterController">
+<AnchorPane id="parentPane" prefHeight="486.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gameCenter.main.GameCenterController">
 
     <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
 

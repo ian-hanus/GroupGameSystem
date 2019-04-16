@@ -1,11 +1,11 @@
-package GameCenter;
+package gameCenter.main;
 
-import GameCenter.GameData.DataParser;
-import GameCenter.GameData.DataStruct;
+import gameCenter.gameData.DataParser;
+import gameCenter.gameData.DataStruct;
+import gameCenter.utilities.Thumbnail;
 import Player.src.PlayerMain.PlayerStage;
 import auth.RunAuth;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.GaussianBlur;
@@ -17,14 +17,18 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO: Write JavaDoc
+ * The Controller for the GameCenter. Works in conjunction with GameCenter.java and GameCenter.fxml, which can be found
+ * under the resources folder.
+ *
+ * This controller defines all actions that occur when a user interacts with the GUI. It also defines several parts of
+ * the GUI that cannot be done in fxml, such as placing images parsed from a .json file.
+ *
+ * TODO: Figure out why @FXML tag is not working---we do not want all these public variables/classes
  */
 public class GameCenterController {
-    private List<Thumbnail> thumbnails;
     private List<DataStruct> gameData;
     private int activeThumbnail;
     private int myIndex;
@@ -47,15 +51,13 @@ public class GameCenterController {
     }
 
     private void placeThumbnails() {
-        thumbnails = new ArrayList<Thumbnail>();
         activeThumbnail = -1;
         int counter = 0;
         try {
             gameData = DataParser.parseConfig("data/player_data.json");
             for(var game : gameData) {
                 final int index = counter;
-                var thumbnail = new Thumbnail(new Image(GCScreen.class.getResourceAsStream("/img/" + game.imagePath)), game.name);
-                thumbnails.add(thumbnail);
+                var thumbnail = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.imagePath)), game.name);
                 thumbPaneContent.getChildren().add(thumbnail.getView());
                 thumbnail.getView().setOnMouseClicked(e -> thumbnailClicked(index));
                 counter++;
@@ -96,7 +98,7 @@ public class GameCenterController {
     }
 
     private void loadGameImage() {
-        activeGameImageView = new ImageView(this.getClass().getResource("/img/"+gameData.get(myIndex).imagePath).toString());
+        activeGameImageView = new ImageView(this.getClass().getResource(gameData.get(myIndex).imagePath).toString());
         activeGameImageView.setFitWidth(newGamePane.getWidth());
         activeGameImageView.setFitHeight(newGamePane.getHeight());
         activeGameImageView.setEffect(new GaussianBlur(100));
