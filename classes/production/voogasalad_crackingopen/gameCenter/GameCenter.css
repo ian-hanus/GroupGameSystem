@@ -15,6 +15,11 @@
     -fx-font-size: 25;
 }
 
+.descText {
+    -fx-fill: #DDDDDD;
+    -fx-font-size: 15;
+}
+
 .permaPane {
     -fx-background-color: transparent;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
@@ -32,6 +37,13 @@
     -fx-background-color: transparent;
     -fx-border-radius: 15 15 15 15;
     -fx-background-radius: 15 15 15 15;
+    -fx-alignment: center;
+}
+
+.descriptionTextPane {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-alignment: center;
 }
 
