@@ -14,13 +14,12 @@ import static javafx.scene.paint.Color.WHITE;
 public class Thumbnail {
     private String myName;
     private Group myView;
-    private Image myImage;
+    private ImageView myImageView;
     private boolean selected;
 
     public Thumbnail(Image img, String name) {
         myView = new Group(); myView.setCursor(Cursor.HAND);
         myName = name;
-        myImage = img;
         selected = false;
 
         Rectangle clipRect = new Rectangle(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
@@ -30,7 +29,7 @@ public class Thumbnail {
         bgRect.setArcHeight(20.0);
         bgRect.setArcWidth(20.0);
         bgRect.setFill(WHITE);
-        ImageView myImageView = new ImageView(img);
+        myImageView = new ImageView(img);
         myImageView.setFitHeight(THUMBNAIL_WIDTH);
         myImageView.setFitWidth(THUMBNAIL_WIDTH);
         myImageView.setLayoutX(0); myImageView.setLayoutY(0);
@@ -42,7 +41,7 @@ public class Thumbnail {
         return myView;
     }
 
-    public Image getImage() { return myImage; }
+    public ImageView getImage() { return myImageView; }
 
     public String getName() {return myName; }
 
