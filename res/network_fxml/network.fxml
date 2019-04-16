@@ -26,19 +26,19 @@
 
             <padding><Insets left="15" right="15"/></padding>
 
-            <Label fx:id="Title" text="Welcome, Scroller!" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="welcomeLabel"/>
+            <Label fx:id="Title" text="WELCOME, SCROLLER!" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="welcomeLabel"/>
 
-            <Text fx:id="Prompt" text="Please enter account information." GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="prompt"/>
+            <Text fx:id="Prompt" text="PLEASE ENTER ACCOUNT INFORMATION" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="prompt"/>
 
-            <Label fx:id="UsernameLabel" text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="textfieldLabel"/>
+            <Label fx:id="UsernameLabel" text="USERNAME: " GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="textfieldLabel"/>
 
             <TextField fx:id="UsernameField" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="textfield"/>
 
-            <Label fx:id="PasswordLabel" text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="textfieldLabel"/>
+            <Label fx:id="PasswordLabel" text="PASSWORD: " GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="textfieldLabel"/>
 
             <PasswordField fx:id="PasswordField" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="textfield"/>
 
-            <Button fx:id="LoginButton" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="4" onKeyPressed="#loginPressed"/>
+            <Button fx:id="LoginButton" text="LOGIN" GridPane.columnIndex="0" GridPane.rowIndex="4" onKeyPressed="#loginPressed"/>
         </GridPane>
     </center>
 

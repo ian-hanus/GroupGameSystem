@@ -1,10 +1,10 @@
 .textfieldLabel {
     -fx-font-size: 20;
-    -fx-font-family: "Trebuchet MS";
+    -fx-font-family: Bebaskai;
     -fx-text-fill: white;
 }
 .textfield {
-    -fx-max-width: 125px;
+    -fx-max-width: 300;
     -fx-padding: 5 15 5 15;
     -fx-text-fill: white;
     -fx-background-radius: 100px;
@@ -16,27 +16,29 @@
 
 .gridPane{
     -fx-background-color: #333333;
-    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.4), 5, 0.0, 0, 1);*/
     -fx-background-radius: 18 18 18 18;
-
 }
 
 .button{
     -fx-pref-width: 100;
     -fx-pref-heigh: 20;
-    -fx-background-color: black;
-    -fx-text-fill: white;
+    -fx-background-color: GHOSTWHITE;
+    -fx-text-fill: black;
+    -fx-background-radius: 20 20 20 20;
+    -fx-font-family: Bebaskai;
+    -fx-effect: dropshadow( gaussian , GHOSTWHITE , 0,0,0,2 );
 }
+
 
 .welcomeLabel{
     -fx-text-fill: white;
-    -fx-font-family: "Trebuchet MS";
+    -fx-font-family: Bebaskai;
     -fx-font-size: 32;
 }
 
 .prompt{
     -fx-text-fill: white;
-    -fx-font-family: "Trebuchet MS";
+    -fx-font-family: Bebaskai;
     -fx-font-size: 20;
     -fx-fill: white;
 }
