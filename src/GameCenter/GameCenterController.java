@@ -31,11 +31,12 @@ public class GameCenterController {
     private ImageView activeGameImageView;
 
     public Pane socialPane;
-    public VBox thumbPaneContent;
     public Pane newGamePane;
     public Pane descriptionPane;
-    public Text titleText;
     public ScrollPane thumbPane;
+    public VBox thumbPaneContent;
+    public Text titleText;
+    public Text descriptionText;
     public Button newGameButton;
     public Button playButton;
     public Button editButton;
@@ -90,6 +91,7 @@ public class GameCenterController {
             newGamePane.getChildren().remove(activeGameImageView);
         }
         loadGameImage();
+        loadGameText();
         descriptionPane.setVisible(true);
     }
 
@@ -104,6 +106,10 @@ public class GameCenterController {
         clipRect.setArcWidth(25); clipRect.setArcHeight(25);
         activeGameImageView.setClip(clipRect);
         newGamePane.getChildren().add(activeGameImageView);
+    }
+
+    private void loadGameText() {
+        descriptionText.setText(gameData.get(myIndex).desc);
     }
 
     public void launchAuthEnv() {
