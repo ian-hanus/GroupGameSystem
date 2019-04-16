@@ -14,6 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.fxml.FXML?>
 
 <AnchorPane id="parentPane" prefHeight="486.0" prefWidth="963.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameCenter.GameCenterController">
 
@@ -66,13 +67,13 @@
       <children>
           <Pane fx:id="newGamePane" prefHeight="390" prefWidth="425" styleClass="centerPane">
             <children>
-                 <Button fx:id="newGameButton" layoutX="114.0" layoutY="173.0" styleClass="button" text="Create a new game" />
+                 <Button fx:id="newGameButton" onAction="#launchAuthEnv" layoutX="114.0" layoutY="173.0" styleClass="button" text="Create a new game" />
             </children>
           </Pane>
          <Pane fx:id="descriptionPane" prefHeight="200.0" prefWidth="200.0" styleClass="descriptionPane" visible="false">
             <children>
                  <Button fx:id="editButton" layoutX="85.0" layoutY="264.0" mnemonicParsing="false" text="Edit" />
-                 <Button fx:id="playButton" layoutX="181.0" layoutY="264.0" mnemonicParsing="false" text="Play" />
+                 <Button fx:id="playButton" onAction="#launchPlayer" layoutX="181.0" layoutY="264.0" mnemonicParsing="false" text="Play" />
                  <Button fx:id="rateButton" layoutX="277.0" layoutY="264.0" mnemonicParsing="false" text="Rate" />
             </children>
          </Pane>

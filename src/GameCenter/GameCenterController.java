@@ -2,6 +2,10 @@ package GameCenter;
 
 import GameCenter.GameData.DataParser;
 import GameCenter.GameData.DataStruct;
+import Player.src.PlayerMain.PlayerStage;
+import auth.RunAuth;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.GaussianBlur;
@@ -10,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -22,6 +27,7 @@ public class GameCenterController {
     private List<Thumbnail> thumbnails;
     private List<DataStruct> gameData;
     private int activeThumbnail;
+    private int myIndex;
     private ImageView activeGameImageView;
 
     public Pane socialPane;
@@ -59,18 +65,19 @@ public class GameCenterController {
     }
 
     private void thumbnailClicked(int index) {
-        if (activeThumbnail == index) {
+        this.myIndex = index;
+        if (activeThumbnail == myIndex) {
             activeThumbnail = -1;
             titleText.setText("Game Center");
             revertDescription();
             return; // we do not want to call loadGameDetails(), so we return if condition for this if statement is true
         }
         else {
-            titleText.setText(gameData.get(index).name);
-            activeThumbnail = index;
+            titleText.setText(gameData.get(myIndex).name);
+            activeThumbnail = myIndex;
         }
 
-        loadGameDetails(index);
+        loadGameDetails();
     }
 
     private void revertDescription() {
@@ -78,16 +85,16 @@ public class GameCenterController {
         descriptionPane.setVisible(false);
     }
 
-    private void loadGameDetails(int index) {
+    private void loadGameDetails() {
         if (activeGameImageView != null) {
             newGamePane.getChildren().remove(activeGameImageView);
         }
-        loadGameImage(index);
+        loadGameImage();
         descriptionPane.setVisible(true);
     }
 
-    private void loadGameImage(int index) {
-        activeGameImageView = new ImageView(this.getClass().getResource("/img/"+gameData.get(index).imagePath).toString());
+    private void loadGameImage() {
+        activeGameImageView = new ImageView(this.getClass().getResource("/img/"+gameData.get(myIndex).imagePath).toString());
         activeGameImageView.setFitWidth(newGamePane.getWidth());
         activeGameImageView.setFitHeight(newGamePane.getHeight());
         activeGameImageView.setEffect(new GaussianBlur(100));
@@ -97,5 +104,13 @@ public class GameCenterController {
         clipRect.setArcWidth(25); clipRect.setArcHeight(25);
         activeGameImageView.setClip(clipRect);
         newGamePane.getChildren().add(activeGameImageView);
+    }
+
+    public void launchAuthEnv() {
+        new RunAuth().start(new Stage());
+    }
+
+    public void launchPlayer() {
+        new PlayerStage().run(gameData.get(myIndex).name);
     }
 }
