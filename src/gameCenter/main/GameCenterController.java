@@ -119,6 +119,8 @@ public class GameCenterController {
     }
 
     public void launchPlayer() {
-        new PlayerStage().run(gameData.get(myIndex).getDescription());
+        new PlayerStage().run(gameData.get(myIndex).getSourcePath());
     }
+
+    public void rateGame() {}
 }
