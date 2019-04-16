@@ -1,4 +1,4 @@
-package GameCenter;
+package gameCenter.main;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -17,7 +17,6 @@ import javafx.fxml.FXMLLoader;
  * GameCenter.java, GameCenter.fxml & GameCenter.css, and GameCenterController.java are the model, view, and controller,
  * respectively. Keep this in mind when refactoring/writing new code.
  *
- * TODO: Finish refactoring code from GCScreen to GameCenter
  * TODO: Figure out how to use custom fonts in .fxml or .css
  * TODO: Implement Social Hub
  * TODO: Add login items/user picture in conjunction with the data team
@@ -44,7 +43,7 @@ public class GameCenter extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/GameCenter.fxml"));
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/gameCenter/GameCenter.fxml"));
 
         this.myRoot = loader.load();
         this.myGCC = loader.getController();
@@ -58,10 +57,10 @@ public class GameCenter extends Application {
 //            System.out.println("A problem occurred when loading resources.");
 //        }
 
+        myRoot.getStylesheets().add(this.getClass().getResource("/gameCenter/GameCenter.css").toString());
         myGCC.initGameCenter();
 
         Scene scene = new Scene(myRoot, 975, 500);
-        scene.getStylesheets().add("GameCenter.css");
 
         stage.setTitle("Game Center");
         stage.setResizable(false);

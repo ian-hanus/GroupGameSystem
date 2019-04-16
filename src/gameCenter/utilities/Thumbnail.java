@@ -1,14 +1,13 @@
-package GameCenter;
+package gameCenter.utilities;
 
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-import static GameCenter.Dimensions.*;
+import static gameCenter.utilities.Dimensions.*;
 import static javafx.scene.paint.Color.WHITE;
 
 public class Thumbnail {
