@@ -1,4 +1,4 @@
-package gamecenter;
+package GameCenter;
 
 import javafx.scene.paint.Color;
 
