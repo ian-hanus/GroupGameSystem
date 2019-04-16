@@ -57,7 +57,7 @@ public class GameCenterController {
             gameData = DataParser.parseConfig("data/player_data.json");
             for(var game : gameData) {
                 final int index = counter;
-                var thumbnail = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.imagePath)), game.name);
+                var thumbnail = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.getImagePath())), game.getName());
                 thumbPaneContent.getChildren().add(thumbnail.getView());
                 thumbnail.getView().setOnMouseClicked(e -> thumbnailClicked(index));
                 counter++;
@@ -76,7 +76,7 @@ public class GameCenterController {
             return; // we do not want to call loadGameDetails(), so we return if condition for this if statement is true
         }
         else {
-            titleText.setText(gameData.get(myIndex).name);
+            titleText.setText(gameData.get(myIndex).getName());
             activeThumbnail = myIndex;
         }
 
@@ -98,7 +98,7 @@ public class GameCenterController {
     }
 
     private void loadGameImage() {
-        activeGameImageView = new ImageView(this.getClass().getResource(gameData.get(myIndex).imagePath).toString());
+        activeGameImageView = new ImageView(this.getClass().getResource(gameData.get(myIndex).getImagePath()).toString());
         activeGameImageView.setFitWidth(newGamePane.getWidth());
         activeGameImageView.setFitHeight(newGamePane.getHeight());
         activeGameImageView.setEffect(new GaussianBlur(100));
@@ -111,7 +111,7 @@ public class GameCenterController {
     }
 
     private void loadGameText() {
-        descriptionText.setText(gameData.get(myIndex).desc);
+        descriptionText.setText(gameData.get(myIndex).getDescription());
     }
 
     public void launchAuthEnv() {
@@ -119,6 +119,6 @@ public class GameCenterController {
     }
 
     public void launchPlayer() {
-        new PlayerStage().run(gameData.get(myIndex).name);
+        new PlayerStage().run(gameData.get(myIndex).getDescription());
     }
 }
