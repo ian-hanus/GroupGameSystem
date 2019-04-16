@@ -178,7 +178,7 @@ public class CollisionHandler {
     private void activateEvents(Integer current, Integer other, String responses) {
             //FIXME delegate rest of method to ObjectEvent/GameEvent and uncomment code above
             Binding objectSetter = new Binding();
-            GroovyShell shell = new GroovyShell();
+            GroovyShell shell = new GroovyShell(objectSetter);
             objectSetter.setProperty("ID", current);
             objectSetter.setProperty("otherID", other);
             objectSetter.setProperty("entityManager", myEntityManager);
