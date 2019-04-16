@@ -120,6 +120,7 @@ public class Controller {
             Binding binding = new Binding();
             GroovyShell shell = new GroovyShell(binding);
             binding.setProperty("ID", myUserID);
+            binding.setProperty("entityManager", myEntityManager);
             Script script = shell.parse(event);
             script.run();
         }
