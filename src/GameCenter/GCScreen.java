@@ -89,19 +89,19 @@ public class GCScreen {
     }
 
     private void thumbnailClicked(int index) {
-        if (activeThumbnail == index) {
-            thumbnails.get(activeThumbnail).deselect();
-            activeThumbnail = -1;
-            resetPermaPane();
-            return;
-        }
-        if (activeThumbnail != -1) {
-            thumbnails.get(activeThumbnail).deselect();
-        }
-
-        thumbnails.get(index).select();
-        activeThumbnail = index;
-        loadGameDetails(index);
+//        if (activeThumbnail == index) {
+//            thumbnails.get(activeThumbnail).deselect();
+//            activeThumbnail = -1;
+//            resetPermaPane();
+//            return;
+//        }
+//        if (activeThumbnail != -1) {
+//            thumbnails.get(activeThumbnail).deselect();
+//        }
+//
+//        thumbnails.get(index).select();
+//        activeThumbnail = index;
+//        loadGameDetails(index);
     }
 
     private ImageView permaBgImage; private HBox actionsContainer;

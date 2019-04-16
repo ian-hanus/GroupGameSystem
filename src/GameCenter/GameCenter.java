@@ -1,7 +1,5 @@
 package GameCenter;
 
-import GameCenter.GameCenterController;
-
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -66,6 +64,7 @@ public class GameCenter extends Application {
         scene.getStylesheets().add("GameCenter.css");
 
         stage.setTitle("Game Center");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

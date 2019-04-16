@@ -13,11 +13,16 @@ import static javafx.scene.paint.Color.WHITE;
 
 public class Thumbnail {
     private String myName;
-    private Group view;
+    private Group myView;
+    private Image myImage;
     private boolean selected;
+
     public Thumbnail(Image img, String name) {
-        view = new Group(); view.setCursor(Cursor.HAND);
+        myView = new Group(); myView.setCursor(Cursor.HAND);
         myName = name;
+        myImage = img;
+        selected = false;
+
         Rectangle clipRect = new Rectangle(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
         Rectangle bgRect = new Rectangle(THUMBNAIL_WIDTH, THUMBNAIL_HEIGHT);
         clipRect.setArcHeight(20.0);
@@ -25,33 +30,29 @@ public class Thumbnail {
         bgRect.setArcHeight(20.0);
         bgRect.setArcWidth(20.0);
         bgRect.setFill(WHITE);
-        var imgView = new ImageView(img);
-        imgView.setFitHeight(THUMBNAIL_WIDTH);
-        imgView.setFitWidth(THUMBNAIL_WIDTH);
-        imgView.setLayoutX(0); imgView.setLayoutY(0);
-        imgView.setClip(clipRect);
-        view.getChildren().addAll(bgRect, imgView);
-    }
-
-    public void select() {
-        DropShadow d = new DropShadow();
-        d.setRadius(20);
-        d.setColor(WHITE);
-        view.setEffect(d);
-        selected = true;
-    }
-
-    public void deselect() {
-        DropShadow d = new DropShadow();
-        d.setRadius(0);
-        d.setColor(WHITE);
-        view.setEffect(d);
-        selected = false;
+        ImageView myImageView = new ImageView(img);
+        myImageView.setFitHeight(THUMBNAIL_WIDTH);
+        myImageView.setFitWidth(THUMBNAIL_WIDTH);
+        myImageView.setLayoutX(0); myImageView.setLayoutY(0);
+        myImageView.setClip(clipRect);
+        myView.getChildren().addAll(bgRect, myImageView);
     }
 
     public Node getView () {
-        return view;
+        return myView;
     }
 
+    public Image getImage() { return myImage; }
+
     public String getName() {return myName; }
+
+    public boolean isSelected() {return selected;}
+
+    public void deselect() {
+        selected = false;
+    }
+
+    public void select() {
+        selected = true;
+    }
 }

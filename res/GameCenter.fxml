@@ -29,10 +29,14 @@
     </HBox>
 
     <!-- Description Pane -->
-    <Pane   styleClass="centerPane"
+    <Pane   styleClass="descriptionPane"
             fx:id="descriptionPane"
             layoutX="250" layoutY="85"
             prefWidth="425" prefHeight="390">
+        <Button styleClass="button"
+                layoutX="110" layoutY="170"
+                text="Create a new game">
+        </Button>
     </Pane>
 
     <!-- Thumbnail Pane -->
@@ -44,7 +48,7 @@
                 layoutX="10" layoutY="10"
                 prefWidth="230" prefHeight="430">
             <VBox   fx:id="thumbPaneContent"
-                    spacing="20">
+                    spacing="25">
             </VBox>
         </ScrollPane>
     </Pane>
