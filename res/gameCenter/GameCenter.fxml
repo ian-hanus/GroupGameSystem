@@ -4,7 +4,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import org.controlsfx.control.Rating?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="parentPane" prefHeight="525.0" prefWidth="983.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gameCenter.main.GameCenterController">
+<AnchorPane id="parentPane" prefHeight="525.0" prefWidth="983.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="gameCenter.main.GameCenterController">
 
     <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
 
@@ -82,10 +81,8 @@
                 <Button fx:id="rateButton" layoutX="277.0" layoutY="264.0" mnemonicParsing="false" onAction="#rateGame" text="Rate" />
             </children>
          </Pane>
+          <!-- Where rating pane will go -->
          <Pane fx:id="ratingPane" prefHeight="390.0" prefWidth="425.0" styleClass="centerPane" visible="false">
-             <children >
-                 <Rating fx:id="ratingBar"/>
-             </children>
          </Pane>
       </children>
    </StackPane>

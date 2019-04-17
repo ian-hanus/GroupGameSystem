@@ -15,7 +15,6 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.controlsfx.control.Rating;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -47,7 +46,6 @@ public class GameCenterController {
     public Button playButton;
     public Button editButton;
     public Button rateButton;
-    public Rating ratingBar;
 
     void initGameCenter() {
         placeThumbnails();
