@@ -3,6 +3,7 @@ package Player.src.PlayerMain;
 import Engine.src.Components.BasicComponent;
 import Engine.src.Components.Component;
 import Engine.src.Controller.Controller;
+import Player.src.GameStats.PositionTracker;
 import Player.src.Regions.DescriptionRegion;
 import Player.src.Regions.GamesRegion;
 import Player.src.Regions.Thumbnail;
@@ -57,6 +58,9 @@ public class PlayerStage {
     private Map<Integer, Map<Class<? extends Component>, Component>> myGameEntityMap;
     private Map<Integer, ImageView> myImageViewMap;
 
+    private PositionTracker myXPosTracker;
+    private PositionTracker myYPosTracker;
+
     public PlayerStage() {
 
         myVisualRoot = buildRoot();
@@ -98,7 +102,9 @@ public class PlayerStage {
     public void run(String gameName) {
         Stage gameStage = new Stage();
         myGameRoot = new Group();
-        myImageViewMap = new HashMap<>();                   //FIXME go full screen
+        myImageViewMap = new HashMap<>(); //FIXME go full screen
+        myXPosTracker = new PositionTracker();
+        myYPosTracker = new PositionTracker();
         myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
 
@@ -140,7 +146,6 @@ public class PlayerStage {
         for (int id : myGameEntityMap.keySet()) {
             if (myImageViewMap.containsKey(id))
                 continue;
-
             var newImageView = new ImageView();
             myImageViewMap.put(id, newImageView);
             myGameRoot.getChildren().add(newImageView);
@@ -153,9 +158,20 @@ public class PlayerStage {
         if (basicComponent == null)
             return;
 
+        if (id == 0) {
+            storeHeroData(basicComponent);
+        }
+
         ImageView imageView = myImageViewMap.get(id);
         moveAndResize(imageView, basicComponent);
         setImageIfNecessary(imageView, basicComponent);
+    }
+
+    private void storeHeroData(BasicComponent basicComponent) {
+        // need to add element for tracking time
+        double time = 0.0;
+        myXPosTracker.storeData(time, basicComponent.getX());
+        myYPosTracker.storeData(time, basicComponent.getY());
     }
 
     private void moveAndResize(ImageView imageView, BasicComponent basicComponent) {
