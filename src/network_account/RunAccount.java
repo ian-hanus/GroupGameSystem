@@ -15,9 +15,18 @@ public class RunAccount extends Application {
     public static void main(String[] args){
         launch(args);
     }
-
+    public static Font sofiaPro, sofiaProSmall, bebasKai, bebasKaiMedium;
     @Override
     public void start(Stage primaryStage){
+        try {
+            sofiaPro = Font.loadFont(RunAccount.class.getResource("/fonts/sofiapro-light.otf").openStream(),30);
+            sofiaProSmall = Font.loadFont(RunAccount.class.getResource("/fonts/sofiapro-light.otf").openStream(),15);
+            bebasKai = Font.loadFont(RunAccount.class.getResource("/fonts/bebaskai.otf").openStream(),15);
+            bebasKaiMedium = Font.loadFont(RunAccount.class.getResource("/fonts/bebaskai.otf").openStream(),25);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Test identity fxml
         try{
             Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/identitypane.fxml"));
