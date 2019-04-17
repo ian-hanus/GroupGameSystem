@@ -40,6 +40,6 @@
         </GridPane>
     </center>
     <stylesheets>
-        <URL value="@styles/identitystyle.css" />
+        <URL value="@styles/networkstyle.css" />
     </stylesheets>
 </BorderPane>

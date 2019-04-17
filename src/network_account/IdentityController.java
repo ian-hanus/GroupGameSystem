@@ -29,9 +29,8 @@ public class IdentityController {
         usernameText.setText(userIdentity.getUsername());
         int scoreCounter = 0;
         for(Label score:myScores) {
-            score.setText(Integer.toString(userIdentity.getHighScores(gameName)[scoreCounter]));
+            score.setText(Integer.toString(userIdentity.getHighScores(gameName)));
             scoreCounter++;
         }
-        avatarImageView.setImage(userIdentity.getAvatar());
     }
 }
