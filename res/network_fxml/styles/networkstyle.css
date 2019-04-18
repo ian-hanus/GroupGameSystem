@@ -48,3 +48,9 @@
     -fx-padding: 30;
     -fx-spacing: 30;
 }
+
+.errorLabel{
+    -fx-font-size: 18;
+    -fx-text-fill: red;
+    -fx-font-style: italic;
+}

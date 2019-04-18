@@ -35,9 +35,10 @@ public class RunAccount extends Application {
             primaryStage.setResizable(false);
             primaryStage.show();
         } catch(IOException e){
-            System.out.println("Error in using identity fxml");
+            System.out.println("Error in using create account fxml");
         }
-//        // Test identity fxml
+
+//        Test identity fxml
 //        try{
 //            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/identitypane.fxml"));
 //            primaryStage.setTitle("Identity Pane");
@@ -47,9 +48,10 @@ public class RunAccount extends Application {
 //        } catch(IOException e){
 //            System.out.println("Error in using identity fxml");
 //        }
-        // Test login fxml
+
+//      Test login fxml
 //        try {
-//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/network.fxml"));
+//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/loginpane.fxml"));
 //            primaryStage.setTitle("User Login");
 //            primaryStage.setScene(new Scene(root));
 //            primaryStage.setResizable(false);

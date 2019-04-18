@@ -8,6 +8,7 @@
 
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="network_account.CreateAccountController"
@@ -24,15 +25,37 @@
                 <ColumnConstraints percentWidth="50" />
             </columnConstraints>
 
-            <Label fx:id="accountLabel" text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="welcomeLabel"/>
-            <Label fx:id="usernameLabel" text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="textfieldLabel"/>
-            <TextField fx:id="usernameTextField" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="textfield"/>
-            <Label fx:id="passwordLabel" text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="textfieldLabel"/>
-            <PasswordField fx:id="passwordField1" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="textfield"/>
-            <Label fx:id="confirmPasswordLabel" text="Confirm Password: " GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="textfieldLabel"/>
-            <PasswordField fx:id="passwordField2" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="textfield"/>
-            <Button fx:id="createAccountButton" text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="4"
-                    onKeyPressed="#createAccount" styleClass="button"/>
+            <Label fx:id="accountLabel" text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                   styleClass="welcomeLabel"/>
+
+            <Label fx:id="emailLabel" text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"
+                   styleClass="textfieldLabel"/>
+            <TextField fx:id="emailTextField" text="" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                       styleClass="textfield"/>
+
+            <Label fx:id="usernameLabel" text="Username: " GridPane.columnIndex="0" GridPane.rowIndex="2"
+                   styleClass="textfieldLabel"/>
+            <TextField fx:id="usernameTextField" text="" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                       styleClass="textfield"/>
+
+            <Label fx:id="displayNameLabel" text="Display Name: " GridPane.columnIndex="0" GridPane.rowIndex="3"
+                   styleClass="textfieldLabel"/>
+            <TextField fx:id="displayNameTextField" text="" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                       styleClass="textfield"/>
+
+            <Label fx:id="passwordLabel" text="Password: " GridPane.columnIndex="0" GridPane.rowIndex="4"
+                   styleClass="textfieldLabel"/>
+            <PasswordField fx:id="passwordField1" text="" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                           styleClass="textfield"/>
+
+            <Label fx:id="confirmPasswordLabel" text="Confirm Password: " GridPane.columnIndex="0" GridPane.rowIndex="5"
+                   styleClass="textfieldLabel"/>
+            <PasswordField fx:id="passwordField2" text="" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                           styleClass="textfield"/>
+
+            <Button fx:id="createAccountButton" text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="6"
+                    onMouseClicked="#createAccount" styleClass="button"/>
+            <Label fx:id="failLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="errorLabel"/>
         </GridPane>
     </center>
 
