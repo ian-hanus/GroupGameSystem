@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
 <?import java.net.URL?>
@@ -26,21 +22,25 @@
 
             <padding><Insets left="15" right="15"/></padding>
 
-            <Label fx:id="title" text="WELCOME, SCROLLER!" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="welcomeLabel"/>
+            <Label fx:id="title" text="WELCOME, SCROLLER!" GridPane.rowIndex="0" GridPane.columnIndex="0"
+                   styleClass="titleLabel"/>
 
-            <Text fx:id="prompt" text="PLEASE ENTER ACCOUNT INFORMATION" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="prompt"/>
+            <Text fx:id="prompt" text="PLEASE ENTER ACCOUNT INFORMATION" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                  styleClass="prompt"/>
 
-            <Label fx:id="usernameLabel" text="USERNAME: " GridPane.columnIndex="0" GridPane.rowIndex="2" styleClass="textfieldLabel"/>
-
+            <Label fx:id="usernameLabel" text="USERNAME: " GridPane.columnIndex="0" GridPane.rowIndex="2"
+                   styleClass="textfieldLabel"/>
             <TextField fx:id="usernameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" styleClass="textfield"/>
 
-            <Label fx:id="passwordLabel" text="PASSWORD: " GridPane.columnIndex="0" GridPane.rowIndex="3" styleClass="textfieldLabel"/>
+            <Label fx:id="passwordLabel" text="PASSWORD: " GridPane.columnIndex="0" GridPane.rowIndex="3"
+                   styleClass="textfieldLabel"/>
+            <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                           styleClass="textfield" onKeyPressed="#loginEnter"/>
 
-            <PasswordField fx:id="passwordTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" styleClass="textfield"/>
-
-            <Button fx:id="loginButton" text="LOGIN" GridPane.columnIndex="0" GridPane.rowIndex="4" onMouseClicked="#loginPressed"/>
-
-            <Label fx:id="loginFailLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="4" styleClass="errorLabel"/>
+            <Button fx:id="loginButton" text="LOGIN" GridPane.columnIndex="0" GridPane.rowIndex="4"
+                    onMouseClicked="#login"/>
+            <Label fx:id="loginFailLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                   styleClass="errorLabel"/>
         </GridPane>
     </center>
 

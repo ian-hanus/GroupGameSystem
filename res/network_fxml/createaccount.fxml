@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.text.Text?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="network_account.CreateAccountController"
@@ -26,7 +21,7 @@
             </columnConstraints>
 
             <Label fx:id="accountLabel" text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="0"
-                   styleClass="welcomeLabel"/>
+                   styleClass="titleLabel"/>
 
             <Label fx:id="emailLabel" text="Email: " GridPane.columnIndex="0" GridPane.rowIndex="1"
                    styleClass="textfieldLabel"/>
@@ -51,7 +46,7 @@
             <Label fx:id="confirmPasswordLabel" text="Confirm Password: " GridPane.columnIndex="0" GridPane.rowIndex="5"
                    styleClass="textfieldLabel"/>
             <PasswordField fx:id="passwordField2" text="" GridPane.columnIndex="1" GridPane.rowIndex="5"
-                           styleClass="textfield"/>
+                           styleClass="textfield" onKeyPressed="#createAccount"/>
 
             <Button fx:id="createAccountButton" text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="6"
                     onMouseClicked="#createAccount" styleClass="button"/>

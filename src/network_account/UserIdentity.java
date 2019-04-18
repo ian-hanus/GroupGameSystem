@@ -1,8 +1,5 @@
 package network_account;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.util.Map;
 
 /**

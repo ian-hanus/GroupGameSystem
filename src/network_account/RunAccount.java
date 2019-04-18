@@ -1,8 +1,6 @@
 package network_account;
 
-import auth.RunAuth;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,15 +26,15 @@ public class RunAccount extends Application {
         }
 
         // Test create account fxml
-        try{
-            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
-            primaryStage.setTitle("Identity Pane");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.show();
-        } catch(IOException e){
-            System.out.println("Error in using create account fxml");
-        }
+//        try{
+//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
+//            primaryStage.setTitle("Identity Pane");
+//            primaryStage.setScene(new Scene(root));
+//            primaryStage.setResizable(false);
+//            primaryStage.show();
+//        } catch(IOException e){
+//            System.out.println("Error in using create account fxml");
+//        }
 
 //        Test identity fxml
 //        try{
@@ -50,14 +48,14 @@ public class RunAccount extends Application {
 //        }
 
 //      Test login fxml
-//        try {
-//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/loginpane.fxml"));
-//            primaryStage.setTitle("User Login");
-//            primaryStage.setScene(new Scene(root));
-//            primaryStage.setResizable(false);
-//            primaryStage.show();
-//        } catch (IOException e) {
-//            System.out.println("Network FXML file not found");
-//        }
+        try {
+            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/loginpane.fxml"));
+            primaryStage.setTitle("User Login");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("Network FXML file not found");
+        }
     }
 }
