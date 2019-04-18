@@ -61,6 +61,9 @@ public class PlayerStage {
     private PositionTracker myXPosTracker;
     private PositionTracker myYPosTracker;
 
+    private double startTime;
+    private double currentTime;
+
     public PlayerStage() {
 
         myVisualRoot = buildRoot();
@@ -121,6 +124,7 @@ public class PlayerStage {
     }
 
     private void animate() {
+        startTime = (double)(java.lang.System.currentTimeMillis() / 1000);
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
@@ -129,6 +133,7 @@ public class PlayerStage {
     }
 
     private void step() {
+        currentTime = (double)(java.lang.System.currentTimeMillis() / 1000) - startTime;
         myGameController.updateScene();
         addNewImageViews();
         updateOrRemoveImageViews();
@@ -168,10 +173,8 @@ public class PlayerStage {
     }
 
     private void storeHeroData(BasicComponent basicComponent) {
-        // need to add element for tracking time
-        double time = 0.0;
-        myXPosTracker.storeData(time, basicComponent.getX());
-        myYPosTracker.storeData(time, basicComponent.getY());
+        myXPosTracker.storeData(currentTime, basicComponent.getX());
+        myYPosTracker.storeData(currentTime, basicComponent.getY());
     }
 
     private void moveAndResize(ImageView imageView, BasicComponent basicComponent) {
