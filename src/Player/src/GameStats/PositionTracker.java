@@ -10,9 +10,8 @@ public class PositionTracker extends DataTracker {
         myPositions = new HashMap<>();
     }
 
-    @Override
-    public void storeData(double time, double position, double lives) {
-        myPositions.put(time,position);
+    public void storeData(double time, double position) {
+            myPositions.put(time,position);
     }
 
     @Override

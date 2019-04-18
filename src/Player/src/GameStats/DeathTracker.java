@@ -12,7 +12,6 @@ public class DeathTracker extends DataTracker {
         myDeathPos = new HashMap<>();
     }
 
-    @Override
     public void storeData(double time, double position, double lives) {
         myDeathTime.put(time,lives);
         myDeathPos.put(position,lives);

@@ -3,6 +3,8 @@ package Player.src.PlayerMain;
 import Engine.src.Components.BasicComponent;
 import Engine.src.Components.Component;
 import Engine.src.Controller.Controller;
+import Player.src.GameStats.DeathTracker;
+import Player.src.GameStats.EnemyTracker;
 import Player.src.GameStats.PositionTracker;
 import Player.src.Regions.DescriptionRegion;
 import Player.src.Regions.GamesRegion;
@@ -60,6 +62,8 @@ public class PlayerStage {
 
     private PositionTracker myXPosTracker;
     private PositionTracker myYPosTracker;
+    private DeathTracker myDeathTracker;
+    private EnemyTracker myEnemyTracker;
 
     private double startTime;
     private double currentTime;
@@ -108,6 +112,8 @@ public class PlayerStage {
         myImageViewMap = new HashMap<>(); //FIXME go full screen
         myXPosTracker = new PositionTracker();
         myYPosTracker = new PositionTracker();
+        myDeathTracker = new DeathTracker();
+        myEnemyTracker = new EnemyTracker();
         myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
 
