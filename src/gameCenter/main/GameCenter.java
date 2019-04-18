@@ -3,6 +3,7 @@ package gameCenter.main;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 
@@ -25,6 +26,7 @@ import javafx.fxml.FXMLLoader;
  * 14 April 2019
  */
 public class GameCenter extends Application {
+    public static Font sofiaPro, sofiaProSmall, bebasKai, bebasKaiMedium;
     private Parent myRoot;
     private GameCenterController myGCC;
 
@@ -48,14 +50,14 @@ public class GameCenter extends Application {
         this.myRoot = loader.load();
         this.myGCC = loader.getController();
 
-//        try {
-//            sofiaPro = Font.loadFont(this.getClass().getResourceAsStream("/fonts/sofiapro-light.otf"),30);
-//            sofiaProSmall = Font.loadFont(this.getClass().getResourceAsStream("/fonts/sofiapro-light.otf"),15);
-//            bebasKai = Font.loadFont(this.getClass().getResourceAsStream("/fonts/bebaskai.otf"),15);
-//            bebasKaiMedium = Font.loadFont(this.getClass().getResourceAsStream("/fonts/bebaskai.otf"),25);
-//        } catch (Exception e) {
-//            System.out.println("A problem occurred when loading resources.");
-//        }
+        try {
+            sofiaPro = Font.loadFont(this.getClass().getResourceAsStream("/fonts/sofiapro-light.otf"),30);
+            sofiaProSmall = Font.loadFont(this.getClass().getResourceAsStream("/fonts/sofiapro-light.otf"),15);
+            bebasKai = Font.loadFont(this.getClass().getResourceAsStream("/fonts/bebaskai.otf"),15);
+            bebasKaiMedium = Font.loadFont(this.getClass().getResourceAsStream("/fonts/bebaskai.otf"),25);
+        } catch (Exception e) {
+            System.out.println("A problem occurred when loading resources.");
+        }
 
         myRoot.getStylesheets().add(this.getClass().getResource("/gameCenter/GameCenter.css").toString());
         myGCC.initGameCenter();
