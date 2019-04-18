@@ -11,7 +11,7 @@ public class PositionTracker extends DataTracker {
     }
 
     @Override
-    public void storeData(double time, double position) {
+    public void storeData(double time, double position, double lives) {
         myPositions.put(time,position);
     }
 

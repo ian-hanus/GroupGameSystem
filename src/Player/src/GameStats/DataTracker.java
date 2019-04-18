@@ -6,7 +6,7 @@ public abstract class DataTracker {
 
     }
 
-    abstract public void storeData(double time, double position);
+    abstract public void storeData(double time, double position, double lives);
 
     abstract protected void saveData();
 
