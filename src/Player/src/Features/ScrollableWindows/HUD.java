@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 /**
  * A Heads Up Display utility with customizable data.
@@ -22,14 +23,11 @@ public class HUD {
     private ScrollPane myScrollPane;
     private Label myLabel;
 
-    public HUD(String[] names, Object[] values) throws IncompatibleArgumentLengthException {
+    public HUD(double width, double height, String[] names, Object[] values) throws IncompatibleArgumentLengthException {
         myNames = names;
         myHBox = new HBox();
         myLabel = new Label();
-        myScrollPane = new ScrollPane(myLabel);
-        myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        myScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        myScrollPane.setDisable(false);
+        createScrollPane(width, height);
         myHBox.getChildren().add(myScrollPane);
         update(values);
     }
@@ -42,9 +40,24 @@ public class HUD {
         if (values.length != myNames.length)
             throw new IncompatibleArgumentLengthException();
         clearText();
-        for (Object value : values) {
-            addText(value.toString());
+        for (int k=0; k<myNames.length; k++) {
+            addText(myNames[k] + ": " + values[k].toString());
         }
+    }
+
+    private void createScrollPane(double width, double height) {
+        myScrollPane = new ScrollPane(myLabel);
+        setDimensions(myScrollPane, width, height);
+        myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        myScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        myScrollPane.setDisable(false);
+    }
+
+    private void setDimensions(Region region, double width, double height) {
+        region.setMaxHeight(height);
+        region.setMinHeight(height);
+        region.setMinWidth(width);
+        region.setMaxWidth(width);
     }
 
     private void clearText() {
