@@ -12,6 +12,9 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -63,6 +66,12 @@ public class PlayerStage {
     private double currentTime;
     private double mySidePanelWidth;
 
+    private XYChart.Series series1;
+    private ScatterChart<Number,Number> sc;
+    private NumberAxis xAxis;
+    private NumberAxis yAxis;
+
+
     public PlayerStage() {
         myVisualRoot = new GridPane();
         //mySidePanelWidth = ST_WIDTH / 3.0;
@@ -110,6 +119,13 @@ public class PlayerStage {
         myIntObjectY = 0;
         myHud = new HUD(getHUDNames(), getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
+        xAxis = new NumberAxis(0, 10, 1);
+        yAxis = new NumberAxis(0, 500, 100);
+        sc = new ScatterChart<Number,Number>(xAxis,yAxis);
+        xAxis.setLabel("Time");
+        yAxis.setLabel("X Position");
+        sc.setTitle("Position Tracker");
+        myLeftPanel.addRow(sc);
     }
 
     private void animate() {
