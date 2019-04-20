@@ -4,6 +4,8 @@ import Engine.src.Components.*;
 
 import java.util.Map;
 
+import static java.lang.Math.atan;
+
 public class EntityManager {
     private Map<Integer, Map<Class<? extends Component>, Component>> myEntityMap;
     private double myStepTime;
@@ -212,9 +214,23 @@ public class EntityManager {
         basic.setY(finalY);
     }
 
-    public void RotateAimClockwise(){
-
+    public void rotateAimClockwise(int obj){
+        rotateAim(obj, "CLOCKWISE");
     }
 
+    public void rotateAimCClockwise(int obj){
+        rotateAim(obj, "CCLOCKWISE");
+    }
+
+    private void rotateAim(int obj, String direction){
+        AimComponent aim = getComponent(obj, AimComponent.class);
+        double currentAngle = Math.atan(aim.getYAim()/aim.getXAim());
+        double newAngle;
+        if(direction.equals("CLOCKWISE")) newAngle = currentAngle + aim.getRotationRate();
+        else newAngle = currentAngle - aim.getRotationRate();
+        aim.setXDirection(Math.cos(newAngle));
+        aim.setYDirection(Math.sin(newAngle));
+
+    }
 
 }
