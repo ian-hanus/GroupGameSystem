@@ -4,20 +4,14 @@ import Engine.src.Components.BasicComponent;
 import Engine.src.Components.Component;
 import Engine.src.Controller.Controller;
 import Player.src.Features.ScrollableWindows.HUD;
-import Player.src.Features.ScrollableWindows.HUDItem;
 import Player.src.Features.SidePanel;
 import Player.src.GameStats.DeathTracker;
 import Player.src.GameStats.EnemyTracker;
 import Player.src.GameStats.PositionTracker;
-import Player.src.Regions.DescriptionRegion;
-import Player.src.Regions.GamesRegion;
-import Player.src.Regions.Thumbnail;
-import Player.src.Regions.TitleRegion;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -27,7 +21,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +45,9 @@ public class PlayerStage {
     private GridPane myVisualRoot;
     private BorderPane myBorderPane;
     private SidePanel myLeftPanel;
+    private HUD myHud;
+    private Integer myIntObjectX;  //FIXME remove
+    private Integer myIntObjectY; //FIXME remove
 
     private Controller myGameController;
     private Group myGameRoot;
@@ -110,10 +106,10 @@ public class PlayerStage {
     }
 
     private void addHud() {
-        var userBasic = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
-        HUDItem[] hudItems = {new HUDItem("X", userBasic.getX()), new HUDItem("Y", userBasic.getY())};
-        var myHud = new HUD(hudItems);
-        myLeftPanel.addRow(myHud.getMainComponent());
+        myIntObjectX = 0;
+        myIntObjectY = 0;
+        myHud = new HUD(getHUDNames(), getHUDValues());
+        myLeftPanel.addRow(myHud.getNode());
     }
 
     private void animate() {
@@ -130,6 +126,9 @@ public class PlayerStage {
         myGameController.updateScene();
         addNewImageViews();
         updateOrRemoveImageViews();
+        myIntObjectX += 1;
+        myIntObjectY -= 1;
+        myHud.update(getHUDValues());
     }
 
     private void updateOrRemoveImageViews() {
@@ -185,6 +184,16 @@ public class PlayerStage {
         Image newImage = new Image(newInputStream);
         if (!newImage.equals(imageView.getImage()))
             imageView.setImage(newImage);
+    }
+
+    //FIXME add legit HUD values
+    private String[] getHUDNames() {
+        return new String[] {"X", "Y"};
+    }
+
+    private Object[] getHUDValues() {
+        var userBasic = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
+        return new Object[] {userBasic.getX(), userBasic.getY()};
     }
 
     /**
