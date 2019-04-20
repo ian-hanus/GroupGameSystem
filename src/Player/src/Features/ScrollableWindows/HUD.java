@@ -1,49 +1,57 @@
 package Player.src.Features.ScrollableWindows;
 
 import javafx.scene.Node;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+/**
+ * A Heads Up Display utility with customizable data.
+ * Declare the name of each data type for display purposes,
+ * and provide an array of corresponding data Object to display next to each name.
+ * Update the HUD by providing another array of data Objects.
+ * In a game loop class, we recommend implementing a getHUDValues method and calling HUD.update(getHUDValues)
+ * at the end of each iteration.
+ *
+ * @author Hunter Gregory
+ * @author Carter Gay
+ */
 public class HUD {
-    private ArrayList<HUDItem> myItems;
+    private String[] myNames;
     private HBox myHBox;
     private ScrollPane myScrollPane;
-    protected Button myButton;
+    private Label myLabel;
 
-    public HUD(HUDItem[] hudItems) {
-        myItems = new ArrayList(Arrays.asList(hudItems));
+    public HUD(String[] names, Object[] values) throws IncompatibleArgumentLengthException {
+        myNames = names;
         myHBox = new HBox();
-        myButton = new Button();
-        //myButton.setEditable(false);
-        myScrollPane = new ScrollPane(myButton);
+        myLabel = new Label();
+        myScrollPane = new ScrollPane(myLabel);
         myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         myScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         myScrollPane.setDisable(false);
         myHBox.getChildren().add(myScrollPane);
-        update();
+        update(values);
     }
 
-    public Node getMainComponent() {
+    public Node getNode() {
         return myHBox;
     }
 
-    public void update() {
+    public void update(Object[] values) throws IncompatibleArgumentLengthException {
+        if (values.length != myNames.length)
+            throw new IncompatibleArgumentLengthException();
         clearText();
-        for (HUDItem item : myItems) {
-            addText(item.getCurrentString());
+        for (Object value : values) {
+            addText(value.toString());
         }
     }
 
     private void clearText() {
-        myButton.setText("");
+        myLabel.setText("");
     }
 
     private void addText(String newString) {
-        myButton.setText(newString);
+        myLabel.setText(myLabel.getText() + newString + "\n");
     }
 }
