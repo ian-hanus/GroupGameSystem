@@ -211,4 +211,10 @@ public class EntityManager {
         }
         basic.setY(finalY);
     }
+
+    public void RotateAimClockwise(){
+
+    }
+
+
 }
