@@ -26,6 +26,7 @@ import java.util.Map;
 
 public class PlayerStage {
     private final String STYLESHEET = "style.css";
+    private final double HUD_WIDTH = 200;
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
     public final double ST_WIDTH = 800;
@@ -61,7 +62,6 @@ public class PlayerStage {
 
     private double startTime;
     private double currentTime;
-    private double mySidePanelWidth;
 
     public PlayerStage() {
         myVisualRoot = new GridPane();
@@ -76,8 +76,7 @@ public class PlayerStage {
 
     public void run(String gameName) {
         Stage gameStage = new Stage();
-        mySidePanelWidth = GAME_WIDTH / 3.0;
-        myLeftPanel = new SidePanel(mySidePanelWidth);
+        myLeftPanel = new SidePanel(HUD_WIDTH);
         myBorderPane = new BorderPane();
         myBorderPane.setLeft(myLeftPanel.getPane());
         myGameRoot = new Group();
@@ -108,7 +107,7 @@ public class PlayerStage {
     private void addHud() {
         myIntObjectX = 0;
         myIntObjectY = 0;
-        myHud = new HUD(getHUDNames(), getHUDValues());
+        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, getHUDNames(), getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
     }
 
