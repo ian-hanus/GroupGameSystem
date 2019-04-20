@@ -8,7 +8,7 @@ public class HUD extends ScrollableWindow {
 
     public HUD(HUDItem[] hudItems) {
         super();
-        myItems = new ArrayList(Arrays.asList(myItems));
+        myItems = new ArrayList(Arrays.asList(hudItems));
         update();
     }
 
