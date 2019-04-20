@@ -3,6 +3,7 @@ package Player.src.PlayerMain;
 import Engine.src.Components.BasicComponent;
 import Engine.src.Components.Component;
 import Engine.src.Controller.Controller;
+import Player.src.Features.SidePanel;
 import Player.src.GameStats.DeathTracker;
 import Player.src.GameStats.EnemyTracker;
 import Player.src.GameStats.PositionTracker;
@@ -30,16 +31,11 @@ import java.util.Map;
 
 public class PlayerStage {
     private final String STYLESHEET = "style.css";
-    private final String GRIDPANE_STYLESHEET = "gridPane";
-    private final String GAMES_STYLESHEET = "gamesRegion";
-    private final String DESC_STYLESHEET = "descRegion";
-    private final String TITLE_STYLESHEET = "titleRegion";
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
     public final double ST_WIDTH = 800;
     public final double ST_HEIGHT = 600;
     public final Paint ST_COLOR = Color.web("284376");
-    public final double ST_SPACING = 20;
 
     public final double STEP_TIME = 5;
     public final double GAME_WIDTH = 1400;
@@ -52,8 +48,8 @@ public class PlayerStage {
 
     private Scene myScene;
     private GridPane myVisualRoot;
-    private ArrayList<String> myGames;
-    private ArrayList<String> myImageFiles;
+    private BorderPane myBorderPane;
+    private SidePanel myLeftPanel;
 
     private Controller myGameController;
     private Group myGameRoot;
@@ -67,27 +63,39 @@ public class PlayerStage {
 
     private double startTime;
     private double currentTime;
+    private double mySidePanelWidth;
 
     public PlayerStage() {
         myVisualRoot = new GridPane();
+        //mySidePanelWidth = ST_WIDTH / 3.0;
+        //myLeftPanel = new SidePanel(mySidePanelWidth);
+        //myBorderPane = new BorderPane();
+        //myBorderPane.setLeft(myLeftPanel.getPane());
         myScene = new Scene(myVisualRoot, ST_WIDTH, ST_HEIGHT, ST_COLOR);
+        //myScene = new Scene(myBorderPane, ST_WIDTH, ST_HEIGHT, ST_COLOR);
         myScene.getStylesheets().add(STYLESHEET);
     }
 
     public void run(String gameName) {
         Stage gameStage = new Stage();
+        mySidePanelWidth = GAME_WIDTH / 3.0;
+        myLeftPanel = new SidePanel(mySidePanelWidth);
+        myBorderPane = new BorderPane();
+        myBorderPane.setLeft(myLeftPanel.getPane());
         myGameRoot = new Group();
+        myBorderPane.setCenter(myGameRoot);
+
         myImageViewMap = new HashMap<>(); //FIXME go full screen
         myXPosTracker = new PositionTracker();
         myYPosTracker = new PositionTracker();
         myDeathTracker = new DeathTracker();
         myEnemyTracker = new EnemyTracker();
-        myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH, GAME_HEIGHT);
+        myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH / 3.0, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
 
         addNewImageViews();
 
-        Scene gameScene = new Scene(myGameRoot, GAME_BG);
+        Scene gameScene = new Scene(myBorderPane, GAME_BG);
         //gameScene.getStylesheets().add("style.css");
         gameStage.setScene(gameScene);
         gameStage.show();
