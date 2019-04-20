@@ -3,6 +3,8 @@ package Player.src.PlayerMain;
 import Engine.src.Components.BasicComponent;
 import Engine.src.Components.Component;
 import Engine.src.Controller.Controller;
+import Player.src.Features.ScrollableWindows.HUD;
+import Player.src.Features.ScrollableWindows.HUDItem;
 import Player.src.Features.SidePanel;
 import Player.src.GameStats.DeathTracker;
 import Player.src.GameStats.EnemyTracker;
@@ -102,7 +104,16 @@ public class PlayerStage {
 
         gameScene.setOnKeyPressed(e -> myGameController.processKey(e.getCode().toString()));
 
+        addHud();
+
         animate();
+    }
+
+    private void addHud() {
+        var userBasic = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
+        HUDItem[] hudItems = {new HUDItem("X", userBasic.getX()), new HUDItem("Y", userBasic.getY())};
+        var myHud = new HUD(hudItems);
+        myLeftPanel.addRow(myHud.getMainComponent());
     }
 
     private void animate() {
