@@ -46,7 +46,7 @@ public class GameStatusInfo extends ScrollableWindow {
     }
 
     @Override
-    protected void refreshWindow() {
+    protected void update() {
         gameStatus = "";
         addText(gameStatus);
     }
