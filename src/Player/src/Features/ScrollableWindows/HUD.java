@@ -49,7 +49,7 @@ public class HUD {
         myScrollPane = new ScrollPane(myLabel);
         setDimensions(myScrollPane, width, height);
         myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        myScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        myScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         myScrollPane.setDisable(false);
     }
 
