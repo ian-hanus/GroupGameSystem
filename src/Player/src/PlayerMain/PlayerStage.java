@@ -36,7 +36,7 @@ public class PlayerStage {
     private final String TITLE_STYLESHEET = "titleRegion";
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
-    public final double ST_WIDTH = 8000;
+    public final double ST_WIDTH = 800;
     public final double ST_HEIGHT = 600;
     public final Paint ST_COLOR = Color.web("284376");
     public final double ST_SPACING = 20;
@@ -69,41 +69,9 @@ public class PlayerStage {
     private double currentTime;
 
     public PlayerStage() {
-
-        myVisualRoot = buildRoot();
+        myVisualRoot = new GridPane();
         myScene = new Scene(myVisualRoot, ST_WIDTH, ST_HEIGHT, ST_COLOR);
         myScene.getStylesheets().add(STYLESHEET);
-
-    }
-
-    public GridPane buildRoot() {
-
-        GridPane base = new GridPane();
-        base.getStyleClass().add(GRIDPANE_STYLESHEET);
-        base.setVgap(ST_SPACING);
-        base.setHgap(ST_SPACING);
-
-        GamesRegion gamesRegion = new GamesRegion(GAMES_STYLESHEET);
-        DescriptionRegion descRegion = new DescriptionRegion(DESC_STYLESHEET, this);
-        TitleRegion titleRegion = new TitleRegion(TITLE_STYLESHEET);
-
-        ScrollPane gamesPane = gamesRegion.getPane();
-        setLambdas(gamesRegion.getThumbnails(), descRegion);
-        ScrollPane descPane = descRegion.getPane();
-        GridPane titlePane = titleRegion.getPane();
-
-        base.add(titlePane, 0, 0, 1, 1);
-        base.add(descPane, 0, 1, 1, 1);
-        base.add(gamesPane, 1, 0, 1, 2);
-
-        return base;
-    }
-
-    private void setLambdas(ArrayList<Thumbnail> thumbnails, DescriptionRegion descRegion) {
-        for (Thumbnail thumb : thumbnails) {
-            StackPane thumbPane = thumb.getPane();
-            thumbPane.setOnMouseClicked(e -> descRegion.updateRegion(thumb.getName()));
-        }
     }
 
     public void run(String gameName) {

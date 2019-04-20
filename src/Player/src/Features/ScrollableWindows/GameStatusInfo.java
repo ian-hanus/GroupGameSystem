@@ -21,10 +21,15 @@ public class GameStatusInfo extends ScrollableWindow {
         enemiesDead = 0;
         myX = 0.0;
         myY = 0.0;
-        myZ = 0.0;
         timeElapsed = 0.0;
         updateGameStatus();
     }
+
+//    public addFeature(String name, Object value) {
+//        addText(name + ": " + value.toString() + "\n");
+//    }
+
+
 
     protected void updateGameStatus() {
         gameStatus = "";
