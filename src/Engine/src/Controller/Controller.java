@@ -1,12 +1,9 @@
 package Engine.src.Controller;
 
+import Engine.src.Components.*;
 import Engine.src.Triggers.Conditionals.Conditional;
 import Engine.src.Triggers.Conditionals.HealthComparison;
 import Engine.src.ECS.CollisionDetector;
-import Engine.src.Components.BasicComponent;
-import Engine.src.Components.Component;
-import Engine.src.Components.HealthComponent;
-import Engine.src.Components.TagsComponent;
 import Engine.src.ECS.EntityManager;
 import Engine.src.ECS.Pair;
 import Engine.src.Triggers.Events.ObjectEvents.Jump;
@@ -56,6 +53,8 @@ public class Controller {
     private CollisionHandler myCollisionHandler;
     private EntityManager myEntityManager;
     private LevelManager myLevelManager;
+
+    private GroovyShell myGroovyShell;
 
     public Controller(double stepTime, double screenWidth, double screenHeight, double levelWidth, double levelHeight){
         myHotKeys = new HashMap<>();
@@ -131,10 +130,23 @@ public class Controller {
             GroovyShell shell = new GroovyShell();
             Script script = shell.parse(myTriggers);
             script.run();
+            executeEntityLogic();
         myLevelManager.updateTimers();
         myLevelManager.updateSequences();
         myCollisionHandler.handleCollisions(myActiveObjects.keySet(), myCollisionResponses);
         myOffset = updateOffset();
+    }
+
+    private void executeEntityLogic() {
+        Binding objectSetter = new Binding();
+        GroovyShell shell = new GroovyShell(objectSetter);
+        for(int entityID : myActiveObjects.keySet()){
+            LogicComponent logicComponent = myEntityManager.getComponent(entityID, LogicComponent.class);
+            String logic = logicComponent.getLogic();
+            objectSetter.setProperty("ID", entityID);
+            Script script = shell.parse(logic);
+            script.run();
+        }
     }
 
     private double[] updateOffset() {
