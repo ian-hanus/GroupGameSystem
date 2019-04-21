@@ -87,7 +87,7 @@ public class AI {
         return Math.pow(Math.pow(deltaX, 2) + Math.pow(deltaY, 2), .5);
     }
 
-    public void badAim(int shooterID, int targetID, double accuracy){
+    public void baseAim(int shooterID, int targetID, double accuracy){
         double[] distanceVec = findDistanceVector(shooterID, targetID);
         double angle = Math.atan(distanceVec[1] / distanceVec[0]);
         aim(shooterID, angle, accuracy);
@@ -95,7 +95,7 @@ public class AI {
 
     public void goodAim(int shooterID, int targetID, double accuracy){
         MotionComponent motion = myEntityManager.getComponent(targetID, MotionComponent.class);
-        if (motion == null) aimPoorly(shooterID, targetID, accuracy);
+        if (motion == null) baseAim(shooterID, targetID, accuracy);
         else {
             double xVel = motion.getXVelocity();
             double yVel = motion.getYVelocity();
