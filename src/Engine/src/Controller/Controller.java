@@ -135,6 +135,7 @@ public class Controller {
             LogicComponent logicComponent = myEntityManager.getComponent(entityID, LogicComponent.class);
             String logic = logicComponent.getLogic();
             objectSetter.setProperty("ID", entityID);
+            objectSetter.setProperty("entityManager", myEntityManager);
             Script script = shell.parse(logic);
             script.run();
         }
