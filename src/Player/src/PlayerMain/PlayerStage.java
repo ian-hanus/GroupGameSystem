@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class PlayerStage {
     private final String STYLESHEET = "style.css";
-    private final double HUD_WIDTH = 200;
+    private final double HUD_WIDTH = 300;
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
     public final double ST_WIDTH = 800;
@@ -110,7 +110,8 @@ public class PlayerStage {
     }
 
     private void addHud() {
-        myHud = new HUD(HUD_WIDTH, ST_HEIGHT / 4, "Level 1", getHUDNames());
+        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames());
+        myHud.setPlotter(new Plotter(getDataTrackers()));
         myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
     }
@@ -129,7 +130,6 @@ public class PlayerStage {
         myGameController.updateScene();
         addNewImageViews();
         updateOrRemoveImageViews();
-        myHud.setPlotter(new Plotter(getDataTrackers()));
         myHud.update(getHUDValues());
     }
 
@@ -173,7 +173,6 @@ public class PlayerStage {
         myXPosTracker.storeData(basicComponent.getX());
         myYPosTracker.storeData(basicComponent.getY());
         myYVelocityTracker.storeData(motionComponent.getYVelocity());
-        myHealthTracker.storeData(healthComponent.getHealth());
     }
 
     private void moveAndResize(ImageView imageView, BasicComponent basicComponent) {
