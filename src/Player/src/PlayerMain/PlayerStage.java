@@ -103,6 +103,7 @@ public class PlayerStage {
 
         Scene gameScene = new Scene(myBorderPane, GAME_BG);
         //gameScene.getStylesheets().add("style.css");
+        gameScene.getStylesheets().add("hud.css");
         gameStage.setScene(gameScene);
         gameStage.show();
 
@@ -116,7 +117,8 @@ public class PlayerStage {
     private void addHud() {
         myIntObjectX = 0;
         myIntObjectY = 0;
-        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, getHUDNames(), getHUDValues());
+        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames());
+        myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
         xAxis = new NumberAxis(0, 10, 1);
         yAxis = new NumberAxis(0, 500, 100);
