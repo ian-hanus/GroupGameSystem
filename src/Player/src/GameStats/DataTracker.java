@@ -1,24 +1,31 @@
 package Player.src.GameStats;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DataTracker {
 
-    private HashMap<Double,Double> myData;
+    private ArrayList<Double> myData;
+    private String dataName;
 
-    public DataTracker() {
-        myData = new HashMap<>();
+    public DataTracker(String name) {
+        dataName = name;
+        myData = new ArrayList<>();
     }
 
-    public void storeData(double x, double y) {
-            myData.put(x,y);
+    public void storeData(double x) {
+            myData.add(x);
     }
 
     protected void saveData() {
 
     }
 
-    public HashMap<Double,Double> getData() {
+    public String getDataName() {
+        return dataName;
+    }
+
+    public ArrayList<Double> getData() {
         return myData;
     }
 }

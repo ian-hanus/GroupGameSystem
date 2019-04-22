@@ -6,6 +6,7 @@ import Engine.src.Controller.Controller;
 import Player.src.Features.ScrollableWindows.HUD;
 import Player.src.Features.SidePanel;
 import Player.src.GameStats.DataTracker;
+import Player.src.GameStats.PlotBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,14 +60,13 @@ public class PlayerStage {
 
     private DataTracker myXPosTracker;
     private DataTracker myYPosTracker;
+    private DataTracker myTimeTracker;
 
     private double startTime;
     private double currentTime;
 
-    private XYChart.Series series1;
+    private PlotBuilder myPlot;
     private ScatterChart<Number,Number> sc;
-    private NumberAxis xAxis;
-    private NumberAxis yAxis;
 
 
     public PlayerStage() {
@@ -88,8 +89,9 @@ public class PlayerStage {
         myBorderPane.setCenter(myGameRoot);
 
         myImageViewMap = new HashMap<>(); //FIXME go full screen
-        myXPosTracker = new DataTracker();
-        myYPosTracker = new DataTracker();
+        myXPosTracker = new DataTracker("X Position");
+        myYPosTracker = new DataTracker("Y Position");
+        myTimeTracker = new DataTracker("Time");
         myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH / 3.0, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
 
@@ -111,20 +113,14 @@ public class PlayerStage {
     private void addHud() {
         myIntObjectX = 0;
         myIntObjectY = 0;
-        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames());
+        myHud = new HUD(HUD_WIDTH, ST_HEIGHT / 4, "Level 1", getHUDNames());
         myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
-        xAxis = new NumberAxis();
-        yAxis = new NumberAxis();
-        sc = new ScatterChart<Number,Number>(xAxis,yAxis);
-        xAxis.setLabel("Time");
-        yAxis.setLabel("Position");
-        sc.setTitle("Position Tracker");
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("X Position");
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("Y Position");
-        sc.getData().addAll(series1, series2);
+        ArrayList<DataTracker> myY = new ArrayList<>();
+        myY.add(myXPosTracker);
+        myY.add(myYPosTracker);
+        myPlot = new PlotBuilder(myTimeTracker, myY);
+        sc = myPlot.createPlot();
         myLeftPanel.addRow(sc);
     }
 
@@ -150,25 +146,11 @@ public class PlayerStage {
 
     private void updateGraph() {
         myLeftPanel.removeRow(1);
-        HashMap<Double,Double> myX = myXPosTracker.getData();
-        HashMap<Double,Double> myY = myYPosTracker.getData();
-        xAxis = new NumberAxis();
-        yAxis = new NumberAxis();
-        sc = new ScatterChart<Number,Number>(xAxis,yAxis);
-        xAxis.setLabel("Time");
-        yAxis.setLabel("Position");
-        sc.setTitle("Position Tracker");
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("X Position");
-        for (Double time : myX.keySet()) {
-            series1.getData().add(new XYChart.Data(time, myX.get(time)));
-        }
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("Y Position");
-        for (Double time : myY.keySet()) {
-            series2.getData().add(new XYChart.Data(time, myY.get(time)));
-        }
-        sc.getData().addAll(series1, series2);
+        ArrayList<DataTracker> myY = new ArrayList<>();
+        myY.add(myXPosTracker);
+        myY.add(myYPosTracker);
+        myPlot = new PlotBuilder(myTimeTracker, myY);
+        sc = myPlot.createPlot();
         myLeftPanel.addRow(sc);
     }
 
@@ -206,8 +188,9 @@ public class PlayerStage {
     }
 
     private void storeHeroData(BasicComponent basicComponent) {
-        myXPosTracker.storeData(currentTime, basicComponent.getX());
-        myYPosTracker.storeData(currentTime, basicComponent.getY());
+        myTimeTracker.storeData(currentTime);
+        myXPosTracker.storeData(basicComponent.getX());
+        myYPosTracker.storeData(basicComponent.getY());
     }
 
     private void moveAndResize(ImageView imageView, BasicComponent basicComponent) {
