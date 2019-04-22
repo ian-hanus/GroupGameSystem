@@ -1,5 +1,6 @@
-package Player.src.Features.ScrollableWindows;
+package Player.src.GameStats;
 
+import Player.src.Features.ScrollableWindows.IncompatibleArgumentLengthException;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
