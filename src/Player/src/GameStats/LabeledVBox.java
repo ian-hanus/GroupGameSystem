@@ -10,8 +10,6 @@ import javafx.scene.layout.VBox;
  * @author Hunter Gregory
  */
 public abstract class LabeledVBox {
-    private static final String LABEL_CLASS_CSS = "labeled-vbox";
-
     private VBox myVBox;
     private String myLabelText;
     protected DataTracker[] myTrackers;
