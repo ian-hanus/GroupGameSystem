@@ -25,7 +25,6 @@ public abstract class LabeledVBox {
     public VBox getVBox() {
         if (myVBox == null) {
             var label = new Label(myLabelText);
-            label.setStyle(LABEL_CLASS_CSS);
             myVBox = new VBox(label, getMainComponent());
         }
         return myVBox;
