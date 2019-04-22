@@ -1,14 +1,15 @@
 .label {
     -fx-font-family: "Trebuchet MS";
-    -fx-text-fill: red;
+    -fx-text-fill: white;
+    -fx-padding: 3;
 }
 
-.data-label.label {
-    -fx-text-fill: white !important;
+.data-label {
+    -fx-font-size: 10;
 }
 
-#hud-title.data-label.label {
-    -fx-font-size: 40;
+#hud-title {
+    -fx-font-size: 30;
 }
 
 .scroll-pane {

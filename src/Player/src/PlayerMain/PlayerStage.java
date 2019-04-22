@@ -194,7 +194,7 @@ public class PlayerStage {
     }
 
     private DataTracker[] getDataTrackers() {
-        return new DataTracker[] {myXPosTracker, myYPosTracker, myTimeTracker};
+        return new DataTracker[] {myXPosTracker, myYPosTracker, myYVelocityTracker, myTimeTracker};
     }
 
     private String[] getHUDNames() {
