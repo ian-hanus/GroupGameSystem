@@ -8,12 +8,10 @@ import Engine.src.Controller.Controller;
 import Player.src.GameStats.HUD;
 import Player.src.Features.SidePanel;
 import Player.src.GameStats.DataTracker;
-import Player.src.GameStats.PlotBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -23,13 +21,12 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PlayerStage {
     private final String STYLESHEET = "style.css";
-    private final double HUD_WIDTH = 300;
+    private final double HUD_WIDTH = 400;
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
     public final double ST_WIDTH = 800;
@@ -111,7 +108,7 @@ public class PlayerStage {
     }
 
     private void addHud() {
-        var plotter = new Plotter(getDataTrackers(), HUD_WIDTH, ST_HEIGHT);
+        var plotter = new Plotter(getDataTrackers(), HUD_WIDTH - 10, ST_HEIGHT);
         myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames(), plotter);
         myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());

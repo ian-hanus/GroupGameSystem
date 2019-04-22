@@ -4,8 +4,10 @@ import Player.src.GameStats.DataTracker;
 import Player.src.GameStats.PlotBuilder;
 import Player.src.GameStats.XAxisSelector;
 import Player.src.GameStats.YAxisSelector;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -15,6 +17,9 @@ import javafx.scene.layout.VBox;
  * @author Hunter Gregory
  */
 public class Plotter {
+    private static final double VERTICAL_SPACING = 20;
+    private static final double HORIZONTAL_SPACING = 25;
+
     private XAxisSelector myXAxisSelector;
     private YAxisSelector myYAxisSelector;
     private VBox myVBox;
@@ -32,7 +37,15 @@ public class Plotter {
         myHeight = height;
         myXAxisSelector = new XAxisSelector(dataTrackers);
         myYAxisSelector = new YAxisSelector(dataTrackers);
-        myVBox = new VBox(getCurrentGraph(), myYAxisSelector.getVBox(), myXAxisSelector.getVBox());
+        setupDisplay();
+    }
+
+    private void setupDisplay() {
+        var miniGUI = new HBox(myYAxisSelector.getVBox(), myXAxisSelector.getVBox());
+        miniGUI.setSpacing(HORIZONTAL_SPACING);
+        miniGUI.setAlignment(Pos.CENTER);
+        myVBox = new VBox(getCurrentGraph(), miniGUI);
+        myVBox.setSpacing(VERTICAL_SPACING);
     }
 
     private ScatterChart<Number, Number> getCurrentGraph() {
