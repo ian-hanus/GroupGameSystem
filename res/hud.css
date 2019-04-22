@@ -1,6 +1,6 @@
 .label {
     -fx-font-family: "Trebuchet MS";
-    -fx-text-fill: white;
+    -fx-text-fill: red;
 }
 
 #hud-title {

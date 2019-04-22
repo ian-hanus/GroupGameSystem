@@ -16,7 +16,6 @@ public class YAxisSelector extends LabeledNode {
 
     public YAxisSelector(DataTracker[] dataTrackers) {
         super(DESCRIPTION, dataTrackers);
-        mySelectedTrackers = new ArrayList<>();
         constructVBox();
     }
 
