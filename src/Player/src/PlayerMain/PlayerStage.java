@@ -129,8 +129,10 @@ public class PlayerStage {
         addNewImageViews();
         updateOrRemoveImageViews();
 
-        if (myCount % 30 == 0)
+        if (myCount % 10 == 0) {
             myHud.update(getHUDValues());
+            storeHeroData();
+        }
         myCount++;
     }
 
@@ -160,16 +162,14 @@ public class PlayerStage {
         if (basicComponent == null)
             return;
 
-        if (id == 0) {
-            storeHeroData(basicComponent,motionComponent, healthComponent);
-        }
-
         ImageView imageView = myImageViewMap.get(id);
         moveAndResize(imageView, basicComponent);
         setImageIfNecessary(imageView, basicComponent);
     }
 
-    private void storeHeroData(BasicComponent basicComponent, MotionComponent motionComponent, HealthComponent healthComponent) {
+    private void storeHeroData() {
+        BasicComponent basicComponent = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
+        MotionComponent motionComponent = (MotionComponent) myGameEntityMap.get(0).get(MotionComponent.class);
         myTimeTracker.storeData(currentTime);
         myXPosTracker.storeData(basicComponent.getX());
         myYPosTracker.storeData(basicComponent.getY());
@@ -198,12 +198,12 @@ public class PlayerStage {
     }
 
     private String[] getHUDNames() {
-        return new String[] {"X", "Y"};
+        return new String[] {"Lives", "X", "Y", "Powerup"};
     }
 
     private Object[] getHUDValues() {
         var userBasic = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
-        return new Object[] {userBasic.getX(), userBasic.getY()};
+        return new Object[] {3, userBasic.getX(), userBasic.getY(), "Flower"};//FIXME hardcoded
     }
 
     /**
