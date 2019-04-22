@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * This class is used to construct plots to dynamically display game variables
  * @author Carter Gay
  */
 public class PlotBuilder {
@@ -21,6 +21,13 @@ public class PlotBuilder {
     private double myWidth;
     private double myHeight;
 
+    /**
+     * PlotBuilder constructor that takes in an x feature and any number of y features
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
     public PlotBuilder(DataTracker x, List<DataTracker> y, double width, double height) {
         myX = x.getData();
         xName = x.getDataName();
@@ -34,6 +41,10 @@ public class PlotBuilder {
         }
     }
 
+    /**
+     * Creates the scatter plot of the passed in x and y features with appropriate titles/labels
+     * @return
+     */
     public ScatterChart<Number,Number> createPlot() {
         var xAxis = new NumberAxis();
         xAxis.setLabel(xName);
