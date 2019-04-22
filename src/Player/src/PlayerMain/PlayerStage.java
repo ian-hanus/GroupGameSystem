@@ -5,9 +5,7 @@ import Engine.src.Components.Component;
 import Engine.src.Controller.Controller;
 import Player.src.Features.ScrollableWindows.HUD;
 import Player.src.Features.SidePanel;
-import Player.src.GameStats.DeathTracker;
-import Player.src.GameStats.EnemyTracker;
-import Player.src.GameStats.PositionTracker;
+import Player.src.GameStats.DataTracker;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -58,10 +56,8 @@ public class PlayerStage {
     private Map<Integer, Map<Class<? extends Component>, Component>> myGameEntityMap;
     private Map<Integer, ImageView> myImageViewMap;
 
-    private PositionTracker myXPosTracker;
-    private PositionTracker myYPosTracker;
-    private DeathTracker myDeathTracker;
-    private EnemyTracker myEnemyTracker;
+    private DataTracker myXPosTracker;
+    private DataTracker myYPosTracker;
 
     private double startTime;
     private double currentTime;
@@ -85,17 +81,15 @@ public class PlayerStage {
 
     public void run(String gameName) {
         Stage gameStage = new Stage();
-        myLeftPanel = new SidePanel(HUD_WIDTH);
+        myLeftPanel = new SidePanel(HUD_WIDTH * 2);
         myBorderPane = new BorderPane();
         myBorderPane.setLeft(myLeftPanel.getPane());
         myGameRoot = new Group();
         myBorderPane.setCenter(myGameRoot);
 
         myImageViewMap = new HashMap<>(); //FIXME go full screen
-        myXPosTracker = new PositionTracker();
-        myYPosTracker = new PositionTracker();
-        myDeathTracker = new DeathTracker();
-        myEnemyTracker = new EnemyTracker();
+        myXPosTracker = new DataTracker();
+        myYPosTracker = new DataTracker();
         myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH / 3.0, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
 
@@ -116,14 +110,19 @@ public class PlayerStage {
     private void addHud() {
         myIntObjectX = 0;
         myIntObjectY = 0;
-        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, getHUDNames(), getHUDValues());
+        myHud = new HUD(HUD_WIDTH, ST_HEIGHT / 4, getHUDNames(), getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
-        xAxis = new NumberAxis(0, 10, 1);
-        yAxis = new NumberAxis(0, 500, 100);
+        xAxis = new NumberAxis();
+        yAxis = new NumberAxis();
         sc = new ScatterChart<Number,Number>(xAxis,yAxis);
         xAxis.setLabel("Time");
-        yAxis.setLabel("X Position");
+        yAxis.setLabel("Position");
         sc.setTitle("Position Tracker");
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("X Position");
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("Y Position");
+        sc.getData().addAll(series1, series2);
         myLeftPanel.addRow(sc);
     }
 
@@ -144,6 +143,31 @@ public class PlayerStage {
         myIntObjectX += 1;
         myIntObjectY -= 1;
         myHud.update(getHUDValues());
+        updateGraph();
+    }
+
+    private void updateGraph() {
+        myLeftPanel.removeRow(1);
+        HashMap<Double,Double> myX = myXPosTracker.getData();
+        HashMap<Double,Double> myY = myYPosTracker.getData();
+        xAxis = new NumberAxis();
+        yAxis = new NumberAxis();
+        sc = new ScatterChart<Number,Number>(xAxis,yAxis);
+        xAxis.setLabel("Time");
+        yAxis.setLabel("Position");
+        sc.setTitle("Position Tracker");
+        XYChart.Series series1 = new XYChart.Series();
+        series1.setName("X Position");
+        for (Double time : myX.keySet()) {
+            series1.getData().add(new XYChart.Data(time, myX.get(time)));
+        }
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("Y Position");
+        for (Double time : myY.keySet()) {
+            series2.getData().add(new XYChart.Data(time, myY.get(time)));
+        }
+        sc.getData().addAll(series1, series2);
+        myLeftPanel.addRow(sc);
     }
 
     private void updateOrRemoveImageViews() {
