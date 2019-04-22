@@ -1,6 +1,5 @@
 package Player.src.GameStats;
 
-import Player.src.GameStats.DataTracker;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -9,18 +8,21 @@ public abstract class LabeledNode {
     private static final String LABEL_CLASS_CSS = "description";
 
     private VBox myVBox;
+    private String myLabelText;
     protected DataTracker[] myTrackers;
 
     public LabeledNode(String labelText, DataTracker[] dataTrackers) {
         myVBox = new VBox();
         myTrackers = dataTrackers;
-        var label = new Label(labelText);
-        label.setStyle(LABEL_CLASS_CSS);
-        myVBox.getChildren().add(label);
-        myVBox.getChildren().add(getMainComponent());
+        myLabelText = labelText;
     }
 
     public VBox getVBox() {
+        if (myVBox == null) {
+            var label = new Label(myLabelText);
+            label.setStyle(LABEL_CLASS_CSS);
+            myVBox = new VBox(label, getMainComponent());
+        }
         return myVBox;
     }
 

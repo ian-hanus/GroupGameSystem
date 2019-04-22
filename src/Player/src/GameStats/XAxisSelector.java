@@ -18,6 +18,7 @@ public class XAxisSelector extends LabeledNode {
     public XAxisSelector(DataTracker[] dataTrackers) {
         super(DESCRIPTION, dataTrackers);
         constructDropBox();
+        mySelectedTracker = dataTrackers[0];
     }
 
     private void constructDropBox() {

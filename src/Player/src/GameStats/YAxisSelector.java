@@ -5,6 +5,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class YAxisSelector extends LabeledNode {
     private static final String DESCRIPTION = "Select 1 or more Y data";
@@ -28,13 +29,13 @@ public class YAxisSelector extends LabeledNode {
         }
     }
 
-    public DataTracker[] getSelectedDataTrackers() {
-        ArrayList<DataTracker> selectedTrackers = new ArrayList<>();
+    public List<DataTracker> getSelectedDataTrackers() {
+        List<DataTracker> selectedTrackers = new ArrayList<>();
         for (int k=0; k<myTrackers.length; k++) {
             if (myCheckBoxes.get(k).isSelected())
                 selectedTrackers.add(myTrackers[k]);
         }
-        return selectedTrackers.toArray(new DataTracker[0]);
+        return selectedTrackers;
     }
 
     @Override
