@@ -10,7 +10,6 @@ public class UserIdentity {
     private String myUsername;
     private Map<String, Integer> myHighScores;
     private String myName;
-    //    private Image myAvatar;
 
     /**
      * Constructor for the UserIdentity object that contains all of the information unique to the current user after
@@ -24,7 +23,6 @@ public class UserIdentity {
         myUsername = username;
         myHighScores = highScores;
         myName = name;
-//        myAvatar = avatar;
     }
 
     /**
@@ -55,8 +53,4 @@ public class UserIdentity {
      * @return String representing the user's display name
      */
     public String getName(){return myName;}
-
-//    public Image getAvatar(){
-//        return myAvatar;
-//    }
 }

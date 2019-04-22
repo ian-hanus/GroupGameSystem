@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+//TODO: Reformat Login class to reflect only users top score, along with universal top scores
+
 /**
  * FXML Controller for the user login pane (res/network_fxml/loginpane.fxml), allowing user's to connect with the
  * Google App Engine backend to login and load information such as display name and personal high scores
