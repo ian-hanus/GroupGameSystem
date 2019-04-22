@@ -60,8 +60,11 @@ public class PlotBuilder {
     }
 
     private void plotData(NumberAxis yAxis, ScatterChart<Number, Number> sc) {
-        yAxis.setLabel(yName[0]);
-        sc.setTitle(xName + " vs " + yName[0]);
+        String yString = yName[0];
+        for (int k=1; k<yName.length; k++)
+            yString += ", " + yName[k];
+        yAxis.setLabel(yString);
+        sc.setTitle(yString + " vs " + xName);
         for (int i = 0; i < myY.length; i++) {
             mySeries = new XYChart.Series();
             mySeries.setName(yName[i]);
