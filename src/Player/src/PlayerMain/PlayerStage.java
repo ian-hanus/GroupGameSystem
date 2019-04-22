@@ -97,6 +97,7 @@ public class PlayerStage {
 
         Scene gameScene = new Scene(myBorderPane, GAME_BG);
         //gameScene.getStylesheets().add("style.css");
+        gameScene.getStylesheets().add("hud.css");
         gameStage.setScene(gameScene);
         gameStage.show();
 
@@ -110,7 +111,8 @@ public class PlayerStage {
     private void addHud() {
         myIntObjectX = 0;
         myIntObjectY = 0;
-        myHud = new HUD(HUD_WIDTH, ST_HEIGHT / 4, getHUDNames(), getHUDValues());
+        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames());
+        myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
         xAxis = new NumberAxis();
         yAxis = new NumberAxis();
@@ -225,7 +227,6 @@ public class PlayerStage {
             imageView.setImage(newImage);
     }
 
-    //FIXME add legit HUD values
     private String[] getHUDNames() {
         return new String[] {"X", "Y"};
     }

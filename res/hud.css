@@ -1,0 +1,25 @@
+.label {
+    -fx-font-family: "Trebuchet MS";
+    -fx-text-fill: white;
+}
+
+#hud-title {
+    -fx-font-size: 40;
+}
+
+.data-label {
+    -fx-font-size: 20;
+}
+
+.vbox {
+
+}
+
+.scroll-pane {
+    -fx-padding: 5 5 5 5;
+    -fx-background: #333333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
+    -fx-background-radius: 5;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}
