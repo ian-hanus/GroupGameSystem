@@ -13,7 +13,7 @@ import java.util.List;
  * @author Hunter Gregory
  */
 public class YAxisSelector extends LabeledVBox {
-    private static final String DESCRIPTION = "Select 1 or more Y data";
+    private static final String DESCRIPTION = "Y data";
 
     private VBox myVBox;
     private ArrayList<CheckBox> myCheckBoxes;
