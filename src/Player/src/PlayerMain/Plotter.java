@@ -1,9 +1,9 @@
 package Player.src.PlayerMain;
 
-import plotter_hud_utility.DataTracker;
-import plotter_hud_utility.PlotBuilder;
-import plotter_hud_utility.XAxisSelector;
-import plotter_hud_utility.YAxisSelector;
+import plotter_hud_utility.plotting.DataTracker;
+import plotter_hud_utility.plotting.PlotBuilder;
+import plotter_hud_utility.plotting.XAxisSelector;
+import plotter_hud_utility.plotting.YAxisSelector;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;

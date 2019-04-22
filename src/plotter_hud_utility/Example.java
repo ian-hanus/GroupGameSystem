@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import plotter_hud_utility.plotting.DataTracker;
 
 /**
  * An example application that runs a game using a game loop and:
@@ -23,7 +24,7 @@ import javafx.util.Duration;
  * @author Hunter Gregory
  */
 public class Example extends Application {
-    private static final String STYLESHEET = "hud.css";
+    private static final String STYLESHEET = "plotter-hud.css";
     private static final Paint BACKGROUND = Color.BLACK;
     private static final double HUD_WIDTH = 400;
     private static final double SCREEN_WIDTH = 800;

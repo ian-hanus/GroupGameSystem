@@ -1,4 +1,4 @@
-package plotter_hud_utility;
+package plotter_hud_utility.plotting;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

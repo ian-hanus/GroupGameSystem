@@ -6,7 +6,7 @@ import Engine.src.Components.HealthComponent;
 import Engine.src.Components.MotionComponent;
 import Engine.src.Controller.Controller;
 import plotter_hud_utility.HUD;
-import plotter_hud_utility.DataTracker;
+import plotter_hud_utility.plotting.DataTracker;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -41,7 +41,7 @@ public class PlayerStage {
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private static final int HUD_UPDATE_DELAY = 10;
-    private static final boolean HUD_INCLUDES_PLOTTER = false;
+    private static final boolean HUD_INCLUDES_PLOTTER = true;
 
     private Scene myScene;
     private GridPane myVisualRoot;
@@ -91,7 +91,7 @@ public class PlayerStage {
 
         Scene gameScene = new Scene(myBorderPane, GAME_BG);
         //gameScene.getStylesheets().add("style.css");
-        gameScene.getStylesheets().add("hud.css");
+        gameScene.getStylesheets().add("plotter-hud.css");
         gameStage.setScene(gameScene);
         gameStage.show();
 
