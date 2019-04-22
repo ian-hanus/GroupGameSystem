@@ -4,31 +4,40 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 
+import java.util.ArrayList;
+
 public class PlotBuilder {
 
-    private XYChart.Series series1;
+    private XYChart.Series mySeries;
     private ScatterChart<Number,Number> sc;
     private NumberAxis xAxis;
     private NumberAxis yAxis;
+    private ArrayList<Double> myX;
+    private ArrayList<Double> myY;
+    private String xName;
+    private String yName;
 
-    public PlotBuilder() {
-
+    public PlotBuilder(DataTracker x, DataTracker y) {
+        myX = x.getData();
+        xName = x.getDataName();
+        myY= y.getData();
+        yName = y.getDataName();
     }
 
-    private void createPlot() {
+    public ScatterChart<Number,Number> createPlot() {
         xAxis = new NumberAxis();
+        xAxis.setLabel(xName);
         yAxis = new NumberAxis();
+        yAxis.setLabel(yName);
         sc = new ScatterChart<Number,Number>(xAxis,yAxis);
-        xAxis.setLabel("Time");
-        yAxis.setLabel("Position");
-        sc.setTitle("Position Tracker");
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("X Position");
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("Y Position");
-        sc.getData().addAll(series1, series2);
-        myLeftPanel.addRow(sc);
+        sc.setTitle(xName + " vs " + yName);
+        mySeries = new XYChart.Series();
+        mySeries.setName(yName);
+        for (int j = 0; j < myX.size(); j++) {
+            mySeries.getData().add(new XYChart.Data(myX.get(j), myY.get(j)));
+        }
+        sc.getData().addAll(mySeries);
+        return sc;
     }
-
 
 }
