@@ -5,6 +5,7 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlotBuilder {
 
@@ -17,7 +18,7 @@ public class PlotBuilder {
     private String xName;
     private String yName[];
 
-    public PlotBuilder(DataTracker x, ArrayList<DataTracker> y) {
+    public PlotBuilder(DataTracker x, List<DataTracker> y) {
         myX = x.getData();
         xName = x.getDataName();
         myY = new ArrayList[y.size()];
