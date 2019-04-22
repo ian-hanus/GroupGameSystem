@@ -32,19 +32,25 @@ public class PlotBuilder {
         xAxis = new NumberAxis();
         xAxis.setLabel(xName);
         yAxis = new NumberAxis();
-        yAxis.setLabel(yName[0]);
-        sc = new ScatterChart<Number,Number>(xAxis,yAxis);
-        sc.setTitle(xName + " vs " + yName[0]);
-        for (int i = 0; i < myY.length; i++) {
-            mySeries = new XYChart.Series();
-            mySeries.setName(yName[i]);
-            for (int j = 0; j < myX.size(); j++) {
-                mySeries.getData().add(new XYChart.Data(myX.get(j), myY[i].get(j)));
+        if (myY.length != 0) {
+            yAxis.setLabel(yName[0]);
+            sc = new ScatterChart<Number,Number>(xAxis,yAxis);
+            sc.setTitle(xName + " vs " + yName[0]);
+            for (int i = 0; i < myY.length; i++) {
+                mySeries = new XYChart.Series();
+                mySeries.setName(yName[i]);
+                for (int j = 0; j < myX.size(); j++) {
+                    mySeries.getData().add(new XYChart.Data(myX.get(j), myY[i].get(j)));
+                }
+                sc.getData().addAll(mySeries);
             }
-            sc.getData().addAll(mySeries);
+            sc.setMaxWidth(400);
+            sc.setMaxHeight(300 );
         }
-        sc.setMaxWidth(400);
-        sc.setMaxHeight(300 );
+        else {
+            sc = new ScatterChart<Number,Number>(xAxis,yAxis);
+            sc.setTitle("Please select y");
+        }
         return sc;
     }
 

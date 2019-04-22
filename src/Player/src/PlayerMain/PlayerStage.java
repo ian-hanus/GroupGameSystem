@@ -2,6 +2,8 @@ package Player.src.PlayerMain;
 
 import Engine.src.Components.BasicComponent;
 import Engine.src.Components.Component;
+import Engine.src.Components.HealthComponent;
+import Engine.src.Components.MotionComponent;
 import Engine.src.Controller.Controller;
 import Player.src.GameStats.HUD;
 import Player.src.Features.SidePanel;
@@ -59,6 +61,8 @@ public class PlayerStage {
     private DataTracker myXPosTracker;
     private DataTracker myYPosTracker;
     private DataTracker myTimeTracker;
+    private DataTracker myYVelocityTracker;
+    private DataTracker myHealthTracker;
 
     private double startTime;
     private double currentTime;
@@ -90,6 +94,8 @@ public class PlayerStage {
         myXPosTracker = new DataTracker("X Position");
         myYPosTracker = new DataTracker("Y Position");
         myTimeTracker = new DataTracker("Time");
+        myYVelocityTracker = new DataTracker("Y Velocity");
+        myHealthTracker = new DataTracker("Health");
         myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH / 3.0, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
 
@@ -173,11 +179,13 @@ public class PlayerStage {
 
     private void updateImageView(int id) {
         BasicComponent basicComponent = (BasicComponent) myGameEntityMap.get(id).get(BasicComponent.class);
+        MotionComponent motionComponent = (MotionComponent) myGameEntityMap.get(id).get(MotionComponent.class);
+        HealthComponent healthComponent = (HealthComponent) myGameEntityMap.get(id).get(HealthComponent.class);
         if (basicComponent == null)
             return;
 
         if (id == 0) {
-            storeHeroData(basicComponent);
+            storeHeroData(basicComponent,motionComponent, healthComponent);
         }
 
         ImageView imageView = myImageViewMap.get(id);
@@ -185,10 +193,12 @@ public class PlayerStage {
         setImageIfNecessary(imageView, basicComponent);
     }
 
-    private void storeHeroData(BasicComponent basicComponent) {
+    private void storeHeroData(BasicComponent basicComponent, MotionComponent motionComponent, HealthComponent healthComponent) {
         myTimeTracker.storeData(currentTime);
         myXPosTracker.storeData(basicComponent.getX());
         myYPosTracker.storeData(basicComponent.getY());
+        myYVelocityTracker.storeData(motionComponent.getYVelocity());
+        myHealthTracker.storeData(healthComponent.getHealth());
     }
 
     private void moveAndResize(ImageView imageView, BasicComponent basicComponent) {
