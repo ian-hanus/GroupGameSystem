@@ -1,6 +1,5 @@
-package Player.src.Features.ScrollableWindows;
+package Player.src.GameStats;
 
-import Player.src.GameStats.DataTracker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;

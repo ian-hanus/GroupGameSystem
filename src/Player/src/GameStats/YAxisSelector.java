@@ -1,12 +1,10 @@
-package Player.src.Features.ScrollableWindows;
+package Player.src.GameStats;
 
-import Player.src.GameStats.DataTracker;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class YAxisSelector extends LabeledNode {
     private static final String DESCRIPTION = "Select 1 or more Y data";
@@ -16,7 +14,6 @@ public class YAxisSelector extends LabeledNode {
 
     public YAxisSelector(DataTracker[] dataTrackers) {
         super(DESCRIPTION, dataTrackers);
-        mySelectedTrackers = new ArrayList<>();
         constructVBox();
     }
 
