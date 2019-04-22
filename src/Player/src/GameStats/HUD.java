@@ -58,7 +58,7 @@ public class HUD {
             myPlotter.updateGraph();
     }
 
-    public void setTitle(String title) {
+    public void setNewTitle(String title) {
         myTitle.setText(title);
     }
 
