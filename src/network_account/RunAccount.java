@@ -17,26 +17,26 @@ public class RunAccount extends Application {
     @Override
     public void start(Stage primaryStage){
         // Test create account fxml
+        try{
+            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
+            primaryStage.setTitle("Create New Account");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch(IOException e){
+            System.out.println("Error in using create account fxml");
+        }
+
+//        Test identity fxml
 //        try{
-//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
+//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/identitypane.fxml"));
 //            primaryStage.setTitle("Identity Pane");
 //            primaryStage.setScene(new Scene(root));
 //            primaryStage.setResizable(false);
 //            primaryStage.show();
 //        } catch(IOException e){
-//            System.out.println("Error in using create account fxml");
+//            System.out.println("Error in using identity fxml");
 //        }
-
-//        Test identity fxml
-        try{
-            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/identitypane.fxml"));
-            primaryStage.setTitle("Identity Pane");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.show();
-        } catch(IOException e){
-            System.out.println("Error in using identity fxml");
-        }
 
 //      Test login fxml
 //        try {

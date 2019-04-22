@@ -1,11 +1,22 @@
 package network_account;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import com.google.gson.Gson;
 
 /**
  * FXML controller for the pane that allows users to create their own account. Links with the Google App Engine backend
@@ -28,6 +39,20 @@ public class CreateAccountController {
             tf.setText("");
         }
         failLabel.setText("Invalid account info");
+//        try {
+//            URL url = new URL("http://black-abode-xxxx.appspot.com/login?username=xxx&password=xxx");
+//            URLConnection request = url.openConnection();
+//            request.connect();
+//
+//            JsonParser jp = new JsonParser(); //from gson
+//            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+//            JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
+//            System.out.println(rootobj);
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     /**

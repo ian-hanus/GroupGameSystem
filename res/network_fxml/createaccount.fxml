@@ -46,7 +46,7 @@
             <Label fx:id="confirmPasswordLabel" text="Confirm Password: " GridPane.columnIndex="0" GridPane.rowIndex="5"
                    styleClass="textfieldLabel"/>
             <PasswordField fx:id="passwordField2" text="" GridPane.columnIndex="1" GridPane.rowIndex="5"
-                           styleClass="textfield" onKeyPressed="#createAccount"/>
+                           styleClass="textfield" onKeyPressed="#createAccountEnter"/>
 
             <Button fx:id="createAccountButton" text="Create Account" GridPane.columnIndex="0" GridPane.rowIndex="6"
                     onMouseClicked="#createAccount" styleClass="button"/>
