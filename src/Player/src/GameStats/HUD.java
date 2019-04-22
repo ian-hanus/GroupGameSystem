@@ -96,6 +96,7 @@ public class HUD {
 
     private void createTitle(String title) {
         myTitle = new Label(title);
+        myTitle.setStyle(DATA_LABEL_CLASS_CSS);
         myTitle.setId(TITLE_ID_CSS);
     }
 
