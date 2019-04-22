@@ -38,6 +38,7 @@ public class Plotter {
         myXAxisSelector = new XAxisSelector(dataTrackers);
         myYAxisSelector = new YAxisSelector(dataTrackers);
         setupDisplay();
+        updateGraph();
     }
 
     private void setupDisplay() {

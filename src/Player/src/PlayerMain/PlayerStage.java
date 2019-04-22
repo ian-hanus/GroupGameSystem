@@ -6,12 +6,11 @@ import Engine.src.Components.HealthComponent;
 import Engine.src.Components.MotionComponent;
 import Engine.src.Controller.Controller;
 import hud_utility.HUD;
-import Player.src.Features.SidePanel;
 import hud_utility.DataTracker;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -26,7 +25,7 @@ import java.util.Map;
 
 public class PlayerStage {
     private final String STYLESHEET = "style.css";
-    private final double HUD_WIDTH = 400;
+    private final double HUD_WIDTH = 300;
 
     public final String ST_TITLE = "Cracking Open a Scrolled One with the Boys";
     public final double ST_WIDTH = 800;
@@ -42,18 +41,19 @@ public class PlayerStage {
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     private static final int HUD_UPDATE_DELAY = 10;
+    private static final boolean HUD_INCLUDES_PLOTTER = false;
 
     private Scene myScene;
     private GridPane myVisualRoot;
     private BorderPane myBorderPane;
-    private GridPane myLeftPanel;
     private HUD myHud;
 
     private Controller myGameController;
-    private Group myGameRoot;
+    private Pane myGameRoot;
     private Map<Integer, Map<Class<? extends Component>, Component>> myGameEntityMap;
     private Map<Integer, ImageView> myImageViewMap;
 
+    private Plotter myPlotter;
     private DataTracker myXPosTracker;
     private DataTracker myYPosTracker;
     private DataTracker myTimeTracker;
@@ -78,20 +78,14 @@ public class PlayerStage {
 
     public void run(String gameName) {
         Stage gameStage = new Stage();
-        myLeftPanel = new GridPane();
-        myBorderPane = new BorderPane();
-        myBorderPane.setLeft(myLeftPanel);
-        myGameRoot = new Group();
-        myBorderPane.setCenter(myGameRoot);
 
         myImageViewMap = new HashMap<>(); //FIXME go full screen
-        myXPosTracker = new DataTracker("X Position");
-        myYPosTracker = new DataTracker("Y Position");
-        myTimeTracker = new DataTracker("Time");
-        myYVelocityTracker = new DataTracker("Y Velocity");
-        myHealthTracker = new DataTracker("Health");
         myGameController = new Controller(STEP_TIME, myScene.getWidth(), myScene.getHeight(), GAME_WIDTH / 3.0, GAME_HEIGHT);
         myGameEntityMap = myGameController.getEntities();
+
+        initDataTrackers();
+        myPlotter = new Plotter(getDataTrackers(), HUD_WIDTH - 10, ST_HEIGHT);
+        initBorderPane();
 
         addNewImageViews();
 
@@ -103,16 +97,25 @@ public class PlayerStage {
 
         gameScene.setOnKeyPressed(e -> myGameController.processKey(e.getCode().toString()));
 
-        addHud();
-
         animate();
     }
 
-    private void addHud() {
-        var plotter = new Plotter(getDataTrackers(), HUD_WIDTH - 10, ST_HEIGHT);
-        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames(), plotter);
+    private void setHud() {
+        if (HUD_INCLUDES_PLOTTER)
+            myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames(), myPlotter);
+        else
+            myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames());
         myHud.update(getHUDValues());
-        myLeftPanel.getChildren().add(myHud.getNode());
+    }
+
+    private void initBorderPane() {
+        myBorderPane = new BorderPane();
+        myGameRoot = new Pane();
+        myBorderPane.setCenter(myGameRoot);
+        setHud();
+        myBorderPane.setLeft(myHud.getNode());
+        if (!HUD_INCLUDES_PLOTTER)
+            myBorderPane.setRight(new ScrollPane(myPlotter.getNode()));
     }
 
     private void animate() {
@@ -133,6 +136,8 @@ public class PlayerStage {
         if (myCount % HUD_UPDATE_DELAY == 0) {
             storeHeroData();
             myHud.update(getHUDValues());
+            if (!HUD_INCLUDES_PLOTTER)
+                myPlotter.updateGraph();
         }
         myCount++;
     }
@@ -192,6 +197,14 @@ public class PlayerStage {
         Image newImage = new Image(newInputStream);
         if (!newImage.equals(imageView.getImage()))
             imageView.setImage(newImage);
+    }
+
+    private void initDataTrackers() {
+        myXPosTracker = new DataTracker("X Position");
+        myYPosTracker = new DataTracker("Y Position");
+        myTimeTracker = new DataTracker("Time");
+        myYVelocityTracker = new DataTracker("Y Velocity");
+        myHealthTracker = new DataTracker("Health");
     }
 
     private DataTracker[] getDataTrackers() {

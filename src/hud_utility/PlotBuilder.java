@@ -50,6 +50,7 @@ public class PlotBuilder {
         xAxis.setLabel(xName);
         var yAxis = new NumberAxis();
         var sc = new ScatterChart<>(xAxis,yAxis);
+        sc.setAnimated(false);
         sc.setMaxWidth(myWidth);
         sc.setMaxHeight(myHeight);
         if (myY.length != 0)
