@@ -8,22 +8,34 @@ import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.layout.VBox;
 
+/**
+ * A tool for displaying a plot with axes specified by a mini GUI.
+ * Combines the functionality of XAxisSelector, YAxisSelector, and PlotBuilder into one displayable entity.
+ *
+ * @author Hunter Gregory
+ */
 public class Plotter {
     private XAxisSelector myXAxisSelector;
     private YAxisSelector myYAxisSelector;
-    private ScatterChart<Number, Number> myScatterChart;
     private VBox myVBox;
+    private double myWidth;
+    private double myHeight;
 
-    public Plotter(DataTracker[] dataTrackers) {
+    public Plotter(DataTracker[] dataTrackers, double width, double height) {
+        myWidth = width;
+        myHeight = height;
         myXAxisSelector = new XAxisSelector(dataTrackers);
         myYAxisSelector = new YAxisSelector(dataTrackers);
-        updateGraph();
-        myVBox = new VBox(myScatterChart, myYAxisSelector.getVBox(), myXAxisSelector.getVBox());
+        myVBox = new VBox(getCurrentGraph(), myYAxisSelector.getVBox(), myXAxisSelector.getVBox());
+    }
+
+    private ScatterChart<Number, Number> getCurrentGraph() {
+        var plotBuilder = new PlotBuilder(myXAxisSelector.getSelectedTracker(), myYAxisSelector.getSelectedDataTrackers(), myWidth, myHeight);
+        return plotBuilder.createPlot();
     }
 
     public void updateGraph() {
-        var plotBuilder = new PlotBuilder(myXAxisSelector.getSelectedTracker(), myYAxisSelector.getSelectedDataTrackers());
-        myScatterChart = plotBuilder.createPlot();
+        myVBox.getChildren().set(0, getCurrentGraph());
     }
 
     public Node getNode() {

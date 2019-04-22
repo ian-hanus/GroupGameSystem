@@ -64,6 +64,7 @@ public class PlayerStage {
 
     private double startTime;
     private double currentTime;
+    private int myCount;
 
 
     public PlayerStage() {
@@ -79,7 +80,7 @@ public class PlayerStage {
 
     public void run(String gameName) {
         Stage gameStage = new Stage();
-        myLeftPanel = new SidePanel(HUD_WIDTH * 2);
+        myLeftPanel = new SidePanel(HUD_WIDTH);
         myBorderPane = new BorderPane();
         myBorderPane.setLeft(myLeftPanel.getPane());
         myGameRoot = new Group();
@@ -110,8 +111,8 @@ public class PlayerStage {
     }
 
     private void addHud() {
-        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames());
-        myHud.setPlotter(new Plotter(getDataTrackers()));
+        var plotter = new Plotter(getDataTrackers(), HUD_WIDTH, ST_HEIGHT);
+        myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames(), plotter);
         myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
     }
@@ -130,7 +131,10 @@ public class PlayerStage {
         myGameController.updateScene();
         addNewImageViews();
         updateOrRemoveImageViews();
-        myHud.update(getHUDValues());
+
+        if (myCount % 30 == 0)
+            myHud.update(getHUDValues());
+        myCount++;
     }
 
     private void updateOrRemoveImageViews() {

@@ -7,22 +7,27 @@ import javafx.scene.chart.XYChart;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Carter Gay
+ */
 public class PlotBuilder {
 
     private XYChart.Series mySeries;
-    private ScatterChart<Number,Number> sc;
-    private NumberAxis xAxis;
-    private NumberAxis yAxis;
     private ArrayList<Double> myX;
     private ArrayList<Double> myY[];
     private String xName;
     private String yName[];
+    private double myWidth;
+    private double myHeight;
 
-    public PlotBuilder(DataTracker x, List<DataTracker> y) {
+    public PlotBuilder(DataTracker x, List<DataTracker> y, double width, double height) {
         myX = x.getData();
         xName = x.getDataName();
         myY = new ArrayList[y.size()];
         yName = new String[y.size()];
+        myWidth = width;
+        myHeight = height;
         for (int i = 0; i < y.size(); i++) {
             myY[i]= y.get(i).getData();
             yName[i] = y.get(i).getDataName();
@@ -30,29 +35,30 @@ public class PlotBuilder {
     }
 
     public ScatterChart<Number,Number> createPlot() {
-        xAxis = new NumberAxis();
+        var xAxis = new NumberAxis();
         xAxis.setLabel(xName);
-        yAxis = new NumberAxis();
-        if (myY.length != 0) {
-            yAxis.setLabel(yName[0]);
-            sc = new ScatterChart<Number,Number>(xAxis,yAxis);
-            sc.setTitle(xName + " vs " + yName[0]);
-            for (int i = 0; i < myY.length; i++) {
-                mySeries = new XYChart.Series();
-                mySeries.setName(yName[i]);
-                for (int j = 0; j < myX.size(); j++) {
-                    mySeries.getData().add(new XYChart.Data(myX.get(j), myY[i].get(j)));
-                }
-                sc.getData().addAll(mySeries);
-            }
-            sc.setMaxWidth(400);
-            sc.setMaxHeight(300 );
-        }
-        else {
-            sc = new ScatterChart<Number,Number>(xAxis,yAxis);
+        var yAxis = new NumberAxis();
+        var sc = new ScatterChart<>(xAxis,yAxis);
+        sc.setMaxWidth(myWidth);
+        sc.setMaxHeight(myHeight);
+        if (myY.length != 0)
+            plotData(yAxis, sc);
+        else
             sc.setTitle("Please select y");
-        }
         return sc;
+    }
+
+    private void plotData(NumberAxis yAxis, ScatterChart<Number, Number> sc) {
+        yAxis.setLabel(yName[0]);
+        sc.setTitle(xName + " vs " + yName[0]);
+        for (int i = 0; i < myY.length; i++) {
+            mySeries = new XYChart.Series();
+            mySeries.setName(yName[i]);
+            for (int j = 0; j < myX.size(); j++) {
+                mySeries.getData().add(new XYChart.Data(myX.get(j), myY[i].get(j)));
+            }
+            sc.getData().addAll(mySeries);
+        }
     }
 
 }

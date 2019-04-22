@@ -12,12 +12,12 @@ import javafx.scene.layout.VBox;
 import java.util.Arrays;
 
 /**
- * A Heads Up Display utility with customizable data.
+ * A Heads Up Display utility with customizable data and an optional Plotter for visualizing data.
  * Declare the name of each data type for display purposes,
  * and provide an array of corresponding data Object to display next to each name.
  * Update the HUD by providing another array of data Objects.
- * In a game loop class, we recommend implementing a getHUDValues method and calling HUD.update(getHUDValues)
- * at the end of each iteration.
+ * In a game loop, we recommend implementing a getHUDValues method and calling HUD.update(getHUDValues)
+ * at the end of each iteration (or every so often).
  *
  * @author Hunter Gregory
  * @author Carter Gay
@@ -34,6 +34,13 @@ public class HUD {
     private Label myTitle;
     private Plotter myPlotter = null;
 
+    /**
+     * Create a basic HUD with the names of data to display
+     * @param width
+     * @param height
+     * @param title
+     * @param dataNames
+     */
     public HUD(double width, double height, String title, String[] dataNames) {
         createTitle(title);
         myNames = dataNames;
@@ -43,10 +50,32 @@ public class HUD {
         createScrollPane(width, height);
     }
 
+    /**
+     * Create a HUD with plotting capabilities
+     * @param width
+     * @param height
+     * @param title
+     * @param dataNames
+     * @param plotter
+     */
+    public HUD(double width, double height, String title, String[] dataNames, Plotter plotter) {
+        this(width, height, title, dataNames);
+        myPlotter = plotter;
+        myVBox.getChildren().add(myPlotter.getNode());
+    }
+
+    /**
+     * @return the HUD display
+     */
     public Node getNode() {
         return myScrollPane;
     }
 
+    /**
+     * Updates the values displayed in the HUD and updates any plots if applicable.
+     * @param values
+     * @throws IncompatibleArgumentLengthException if the number of values does not equal the number of data labels
+     */
     public void update(Object[] values) throws IncompatibleArgumentLengthException {
         if (values.length != myNames.length)
             throw new IncompatibleArgumentLengthException();
@@ -58,16 +87,12 @@ public class HUD {
             myPlotter.updateGraph();
     }
 
+    /**
+     * Update the title of the HUD
+     * @param title
+     */
     public void setNewTitle(String title) {
         myTitle.setText(title);
-    }
-
-    public void setPlotter(Plotter plotter) {
-        if (myPlotter != null) {
-            myVBox.getChildren().remove(myDataLabels.length + 1);
-        }
-        myPlotter = plotter;
-        myVBox.getChildren().add(myPlotter.getNode());
     }
 
     private void createTitle(String title) {
@@ -94,7 +119,7 @@ public class HUD {
         myScrollPane.setStyle(SCROLL_PANE_CLASS_CSS);
         setDimensions(myScrollPane, width, height);
         myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        myScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        myScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         myScrollPane.setDisable(false);
     }
 
