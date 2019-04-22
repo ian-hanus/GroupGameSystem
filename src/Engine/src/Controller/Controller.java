@@ -94,7 +94,7 @@ public class Controller {
     private void setDefaultKeys() {
         myHotKeys.put("A", new MoveLeft(myUserID));
         myHotKeys.put("D", new MoveRight(myUserID));
-        myHotKeys.put("SPACE", new Jump(myUserID));
+        myHotKeys.put("J", new Jump(myUserID));
     }
 
     private void setDefaultTriggers(){
