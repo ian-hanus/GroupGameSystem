@@ -1,4 +1,4 @@
-package Player.src.GameStats;
+package hud_utility;
 
 import Player.src.Features.ScrollableWindows.IncompatibleArgumentLengthException;
 import Player.src.PlayerMain.Plotter;

@@ -1,4 +1,4 @@
-package Player.src.GameStats;
+package hud_utility;
 
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;

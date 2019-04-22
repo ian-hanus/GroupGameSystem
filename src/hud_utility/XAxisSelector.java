@@ -1,4 +1,4 @@
-package Player.src.GameStats;
+package hud_utility;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

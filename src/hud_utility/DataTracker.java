@@ -1,4 +1,4 @@
-package Player.src.GameStats;
+package hud_utility;
 
 import java.util.ArrayList;
 

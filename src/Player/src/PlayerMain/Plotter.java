@@ -1,9 +1,9 @@
 package Player.src.PlayerMain;
 
-import Player.src.GameStats.DataTracker;
-import Player.src.GameStats.PlotBuilder;
-import Player.src.GameStats.XAxisSelector;
-import Player.src.GameStats.YAxisSelector;
+import hud_utility.DataTracker;
+import hud_utility.PlotBuilder;
+import hud_utility.XAxisSelector;
+import hud_utility.YAxisSelector;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
