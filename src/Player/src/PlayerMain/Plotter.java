@@ -18,7 +18,7 @@ public class Plotter {
         myXAxisSelector = new XAxisSelector(dataTrackers);
         myYAxisSelector = new YAxisSelector(dataTrackers);
         updateGraph();
-        myVBox = new VBox(myScatterChart);
+        myVBox = new VBox(myScatterChart, myYAxisSelector.getVBox(), myXAxisSelector.getVBox());
     }
 
     public void updateGraph() {

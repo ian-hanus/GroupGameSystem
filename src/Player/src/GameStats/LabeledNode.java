@@ -12,7 +12,6 @@ public abstract class LabeledNode {
     protected DataTracker[] myTrackers;
 
     public LabeledNode(String labelText, DataTracker[] dataTrackers) {
-        myVBox = new VBox();
         myTrackers = dataTrackers;
         myLabelText = labelText;
     }
