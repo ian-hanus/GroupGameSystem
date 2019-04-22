@@ -1,6 +1,7 @@
 package Player.src.GameStats;
 
 import Player.src.Features.ScrollableWindows.IncompatibleArgumentLengthException;
+import Player.src.PlayerMain.Plotter;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -24,25 +25,22 @@ import java.util.Arrays;
 public class HUD {
     private static final String TITLE_ID_CSS = "hud-title";
     private static final String DATA_LABEL_CLASS_CSS = "data-label";
-    private static final String VBOX_CLASS_CSS = "vbox";
     private static final String SCROLL_PANE_CLASS_CSS = "scroll-pane";
 
     private String[] myNames;
-    private HBox myContainer;
     private ScrollPane myScrollPane;
     private VBox myVBox;
     private Label[] myDataLabels;
     private Label myTitle;
+    private Plotter myPlotter = null;
 
     public HUD(double width, double height, String title, String[] dataNames) {
         createTitle(title);
         myNames = dataNames;
-        createVBox();
+        myVBox = new VBox();
         createBlankLabels();
         addLabelsToVBox();
         createScrollPane(width, height);
-        myContainer = new HBox();
-        myContainer.getChildren().add(myScrollPane);
     }
 
     public Node getNode() {
@@ -55,20 +53,26 @@ public class HUD {
         clearText();
         for (int k=0; k<myNames.length; k++)
             myDataLabels[k].setText(myNames[k] + ": " + values[k].toString());
+
+        if (myPlotter != null)
+            myPlotter.updateGraph();
     }
 
     public void setTitle(String title) {
         myTitle.setText(title);
     }
 
+    public void setPlotter(Plotter plotter) {
+        if (myPlotter != null) {
+            myVBox.getChildren().remove(myDataLabels.length + 1);
+        }
+        myPlotter = plotter;
+        myVBox.getChildren().add(myPlotter.getNode());
+    }
+
     private void createTitle(String title) {
         myTitle = new Label(title);
         myTitle.setId(TITLE_ID_CSS);
-    }
-
-    private void createVBox() {
-        myVBox = new VBox();
-        myVBox.setStyle(VBOX_CLASS_CSS);
     }
 
     private void addLabelsToVBox() {

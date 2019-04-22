@@ -48,8 +48,6 @@ public class PlayerStage {
     private BorderPane myBorderPane;
     private SidePanel myLeftPanel;
     private HUD myHud;
-    private Integer myIntObjectX;  //FIXME remove
-    private Integer myIntObjectY; //FIXME remove
 
     private Controller myGameController;
     private Group myGameRoot;
@@ -62,9 +60,6 @@ public class PlayerStage {
 
     private double startTime;
     private double currentTime;
-
-    private PlotBuilder myPlot;
-    private ScatterChart<Number,Number> sc;
 
 
     public PlayerStage() {
@@ -109,17 +104,9 @@ public class PlayerStage {
     }
 
     private void addHud() {
-        myIntObjectX = 0;
-        myIntObjectY = 0;
         myHud = new HUD(HUD_WIDTH, ST_HEIGHT / 4, "Level 1", getHUDNames());
         myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
-        ArrayList<DataTracker> myY = new ArrayList<>();
-        myY.add(myXPosTracker);
-        myY.add(myYPosTracker);
-        myPlot = new PlotBuilder(myTimeTracker, myY);
-        sc = myPlot.createPlot();
-        myLeftPanel.addRow(sc);
     }
 
     private void animate() {
@@ -136,20 +123,8 @@ public class PlayerStage {
         myGameController.updateScene();
         addNewImageViews();
         updateOrRemoveImageViews();
-        myIntObjectX += 1;
-        myIntObjectY -= 1;
+        myHud.setPlotter(new Plotter(getDataTrackers()));
         myHud.update(getHUDValues());
-        updateGraph();
-    }
-
-    private void updateGraph() {
-        myLeftPanel.removeRow(1);
-        ArrayList<DataTracker> myY = new ArrayList<>();
-        myY.add(myXPosTracker);
-        myY.add(myYPosTracker);
-        myPlot = new PlotBuilder(myTimeTracker, myY);
-        sc = myPlot.createPlot();
-        myLeftPanel.addRow(sc);
     }
 
     private void updateOrRemoveImageViews() {
@@ -206,6 +181,10 @@ public class PlayerStage {
         Image newImage = new Image(newInputStream);
         if (!newImage.equals(imageView.getImage()))
             imageView.setImage(newImage);
+    }
+
+    private DataTracker[] getDataTrackers() {
+        return new DataTracker[] {myXPosTracker, myYPosTracker, myTimeTracker};
     }
 
     private String[] getHUDNames() {

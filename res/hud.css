@@ -3,16 +3,12 @@
     -fx-text-fill: white;
 }
 
-#hud-title {
+#hud-title.label {
     -fx-font-size: 40;
 }
 
-.data-label {
+.data-label.label {
     -fx-font-size: 20;
-}
-
-.vbox {
-
 }
 
 .scroll-pane {
