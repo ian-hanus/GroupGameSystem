@@ -43,6 +43,8 @@ public class PlotBuilder {
             }
             sc.getData().addAll(mySeries);
         }
+        sc.setMaxWidth(400);
+        sc.setMaxHeight(300 );
         return sc;
     }
 
