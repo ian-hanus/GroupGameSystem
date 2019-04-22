@@ -4,18 +4,26 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public abstract class LabeledNode {
-    private static final String LABEL_CLASS_CSS = "description";
+/**
+ * A VBox with a label above a Node (label text and Node specified in subclass).
+ *
+ * @author Hunter Gregory
+ */
+public abstract class LabeledVBox {
+    private static final String LABEL_CLASS_CSS = "labeled-vbox";
 
     private VBox myVBox;
     private String myLabelText;
     protected DataTracker[] myTrackers;
 
-    public LabeledNode(String labelText, DataTracker[] dataTrackers) {
+    public LabeledVBox(String labelText, DataTracker[] dataTrackers) {
         myTrackers = dataTrackers;
         myLabelText = labelText;
     }
 
+    /**
+     * @return VBox with label and node
+     */
     public VBox getVBox() {
         if (myVBox == null) {
             var label = new Label(myLabelText);
@@ -25,6 +33,10 @@ public abstract class LabeledNode {
         return myVBox;
     }
 
+    /**
+     * @param dataName
+     * @return DataTracker with given name
+     */
     protected DataTracker getTracker(String dataName) {
         for (DataTracker tracker : myTrackers) {
             if (tracker.getDataName().equals(dataName))
@@ -33,5 +45,8 @@ public abstract class LabeledNode {
         return null;
     }
 
+    /**
+     * @return Node to be displayed under label
+     */
     abstract protected Node getMainComponent();
 }

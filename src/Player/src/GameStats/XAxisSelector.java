@@ -8,13 +8,22 @@ import javafx.scene.control.ComboBox;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class XAxisSelector extends LabeledNode {
-    private static final String DESCRIPTION = "Select an X data";
+/**
+ * A LabeledVBox that contains a dropdown selector listing all possible DataTrackers.
+ *
+ * @author Hunter Gregory
+ */
+public class XAxisSelector extends LabeledVBox {
+    private static final String DESCRIPTION = "Select X data";
     private static final int NUM_OPTIONS_SHOWN = 4;
 
     private ComboBox<String> myDropBox;
     private DataTracker mySelectedTracker;
 
+    /**
+     * Create an XAxisSelector
+     * @param dataTrackers
+     */
     public XAxisSelector(DataTracker[] dataTrackers) {
         super(DESCRIPTION, dataTrackers);
         constructDropBox();
@@ -36,6 +45,9 @@ public class XAxisSelector extends LabeledNode {
         return FXCollections.observableArrayList(itemList);
     }
 
+    /**
+     * @return the currently selected DataTracker
+     */
     public DataTracker getSelectedTracker() {
         return mySelectedTracker;
     }

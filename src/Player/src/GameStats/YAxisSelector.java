@@ -7,12 +7,21 @@ import javafx.scene.layout.VBox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YAxisSelector extends LabeledNode {
+/**
+ * A LabeledVBox that contains a checkbox associated with each DataTracker.
+ *
+ * @author Hunter Gregory
+ */
+public class YAxisSelector extends LabeledVBox {
     private static final String DESCRIPTION = "Select 1 or more Y data";
 
     private VBox myVBox;
     private ArrayList<CheckBox> myCheckBoxes;
 
+    /**
+     * Create a YAxisSelector
+     * @param dataTrackers
+     */
     public YAxisSelector(DataTracker[] dataTrackers) {
         super(DESCRIPTION, dataTrackers);
         constructVBox();
@@ -29,7 +38,10 @@ public class YAxisSelector extends LabeledNode {
         }
     }
 
-    public List<DataTracker> getSelectedDataTrackers() {
+    /**
+     * @return list of DataTrackers currently selected
+     */
+    public List<DataTracker> getSelectedTrackers() {
         List<DataTracker> selectedTrackers = new ArrayList<>();
         for (int k=0; k<myTrackers.length; k++) {
             if (myCheckBoxes.get(k).isSelected())

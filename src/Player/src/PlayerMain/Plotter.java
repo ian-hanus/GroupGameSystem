@@ -21,6 +21,12 @@ public class Plotter {
     private double myWidth;
     private double myHeight;
 
+    /**
+     * Create a Plotter with a given array of possible data to plot.
+     * @param dataTrackers
+     * @param width
+     * @param height
+     */
     public Plotter(DataTracker[] dataTrackers, double width, double height) {
         myWidth = width;
         myHeight = height;
@@ -30,14 +36,20 @@ public class Plotter {
     }
 
     private ScatterChart<Number, Number> getCurrentGraph() {
-        var plotBuilder = new PlotBuilder(myXAxisSelector.getSelectedTracker(), myYAxisSelector.getSelectedDataTrackers(), myWidth, myHeight);
+        var plotBuilder = new PlotBuilder(myXAxisSelector.getSelectedTracker(), myYAxisSelector.getSelectedTrackers(), myWidth, myHeight);
         return plotBuilder.createPlot();
     }
 
+    /**
+     * Update graph with new data tracker values
+     */
     public void updateGraph() {
         myVBox.getChildren().set(0, getCurrentGraph());
     }
 
+    /**
+     * @return display including plot and mini GUI
+     */
     public Node getNode() {
         return myVBox;
     }
