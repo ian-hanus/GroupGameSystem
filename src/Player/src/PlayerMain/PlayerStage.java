@@ -41,11 +41,12 @@ public class PlayerStage {
     public static final int FRAMES_PER_SECOND = 15;
     public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    private static final int HUD_UPDATE_DELAY = 10;
 
     private Scene myScene;
     private GridPane myVisualRoot;
     private BorderPane myBorderPane;
-    private SidePanel myLeftPanel;
+    private GridPane myLeftPanel;
     private HUD myHud;
 
     private Controller myGameController;
@@ -71,15 +72,15 @@ public class PlayerStage {
         //myBorderPane = new BorderPane();
         //myBorderPane.setLeft(myLeftPanel.getPane());
         myScene = new Scene(myVisualRoot, ST_WIDTH, ST_HEIGHT, ST_COLOR);
-        //myScene = new Scene(myBorderPane, ST_WIDTH, ST_HEIGHT, ST_COLOR);
+        //myScene = new Scene(myBorderPane, ST_WIDTH, SCREEN_HEIGHT, ST_COLOR);
         myScene.getStylesheets().add(STYLESHEET);
     }
 
     public void run(String gameName) {
         Stage gameStage = new Stage();
-        myLeftPanel = new SidePanel(HUD_WIDTH);
+        myLeftPanel = new GridPane();
         myBorderPane = new BorderPane();
-        myBorderPane.setLeft(myLeftPanel.getPane());
+        myBorderPane.setLeft(myLeftPanel);
         myGameRoot = new Group();
         myBorderPane.setCenter(myGameRoot);
 
@@ -111,7 +112,7 @@ public class PlayerStage {
         var plotter = new Plotter(getDataTrackers(), HUD_WIDTH - 10, ST_HEIGHT);
         myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames(), plotter);
         myHud.update(getHUDValues());
-        myLeftPanel.addRow(myHud.getNode());
+        myLeftPanel.getChildren().add(myHud.getNode());
     }
 
     private void animate() {
@@ -129,9 +130,9 @@ public class PlayerStage {
         addNewImageViews();
         updateOrRemoveImageViews();
 
-        if (myCount % 10 == 0) {
-            myHud.update(getHUDValues());
+        if (myCount % HUD_UPDATE_DELAY == 0) {
             storeHeroData();
+            myHud.update(getHUDValues());
         }
         myCount++;
     }
