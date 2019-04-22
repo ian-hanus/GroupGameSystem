@@ -25,12 +25,15 @@ public class HUD {
     private static final String TITLE_ID_CSS = "hud-title";
     private static final String DATA_LABEL_CLASS_CSS = "data-label";
     private static final String SCROLL_PANE_CLASS_CSS = "scroll-pane";
+    private static final double INTER_VALUES_SPACING = 2;
+    private static final double PLOT_VALUES_SPACING = 20;
 
-    private String[] myNames;
-    private ScrollPane myScrollPane;
-    private VBox myVBox;
+    private String[] myDataNames;
     private Label[] myDataLabels;
     private Label myTitle;
+    private ScrollPane myScrollPane;
+    private VBox myHudValuesBox;
+    private VBox myPlotAndValuesBox;
     private Plotter myPlotter = null;
 
     /**
@@ -42,8 +45,11 @@ public class HUD {
      */
     public HUD(double width, double height, String title, String[] dataNames) {
         createTitle(title);
-        myNames = dataNames;
-        myVBox = new VBox();
+        myDataNames = dataNames;
+        myHudValuesBox = new VBox();
+        myHudValuesBox.setSpacing(INTER_VALUES_SPACING);
+        myPlotAndValuesBox = new VBox(myHudValuesBox);
+        myPlotAndValuesBox.setSpacing(PLOT_VALUES_SPACING);
         createBlankLabels();
         addLabelsToVBox();
         createScrollPane(width, height);
@@ -60,7 +66,7 @@ public class HUD {
     public HUD(double width, double height, String title, String[] dataNames, Plotter plotter) {
         this(width, height, title, dataNames);
         myPlotter = plotter;
-        myVBox.getChildren().add(myPlotter.getNode());
+        myPlotAndValuesBox.getChildren().add(myPlotter.getNode());
     }
 
     /**
@@ -76,11 +82,11 @@ public class HUD {
      * @throws IncompatibleArgumentLengthException if the number of values does not equal the number of data labels
      */
     public void update(Object[] values) throws IncompatibleArgumentLengthException {
-        if (values.length != myNames.length)
+        if (values.length != myDataNames.length)
             throw new IncompatibleArgumentLengthException();
         clearText();
-        for (int k=0; k<myNames.length; k++)
-            myDataLabels[k].setText(myNames[k] + ": " + values[k].toString());
+        for (int k = 0; k< myDataNames.length; k++)
+            myDataLabels[k].setText(myDataNames[k] + ": " + values[k].toString());
 
         if (myPlotter != null)
             myPlotter.updateGraph();
@@ -101,13 +107,13 @@ public class HUD {
     }
 
     private void addLabelsToVBox() {
-        myVBox.getChildren().add(myTitle);
+        myHudValuesBox.getChildren().add(myTitle);
         for (Label label : myDataLabels)
-            myVBox.getChildren().add(label);
+            myHudValuesBox.getChildren().add(label);
     }
 
     private void createBlankLabels() {
-        myDataLabels = new Label[myNames.length];
+        myDataLabels = new Label[myDataNames.length];
         for (int k = 0; k< myDataLabels.length; k++) {
             myDataLabels[k] = new Label();
             myDataLabels[k].setStyle(DATA_LABEL_CLASS_CSS);
@@ -115,7 +121,7 @@ public class HUD {
     }
 
     private void createScrollPane(double width, double height) {
-        myScrollPane = new ScrollPane(myVBox);
+        myScrollPane = new ScrollPane(myPlotAndValuesBox);
         myScrollPane.setStyle(SCROLL_PANE_CLASS_CSS);
         setDimensions(myScrollPane, width, height);
         myScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
