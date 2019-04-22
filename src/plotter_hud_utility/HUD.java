@@ -1,4 +1,4 @@
-package hud_utility;
+package plotter_hud_utility;
 
 import Player.src.Features.ScrollableWindows.IncompatibleArgumentLengthException;
 import Player.src.PlayerMain.Plotter;

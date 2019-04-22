@@ -1,4 +1,4 @@
-package hud_utility;
+package plotter_hud_utility;
 
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
