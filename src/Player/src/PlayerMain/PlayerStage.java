@@ -116,7 +116,10 @@ public class PlayerStage {
         myHud = new HUD(HUD_WIDTH, ST_HEIGHT / 4, "Level 1", getHUDNames());
         myHud.update(getHUDValues());
         myLeftPanel.addRow(myHud.getNode());
-        myPlot = new PlotBuilder(myTimeTracker, myXPosTracker);
+        ArrayList<DataTracker> myY = new ArrayList<>();
+        myY.add(myXPosTracker);
+        myY.add(myYPosTracker);
+        myPlot = new PlotBuilder(myTimeTracker, myY);
         sc = myPlot.createPlot();
         myLeftPanel.addRow(sc);
     }
@@ -143,7 +146,10 @@ public class PlayerStage {
 
     private void updateGraph() {
         myLeftPanel.removeRow(1);
-        myPlot = new PlotBuilder(myTimeTracker, myXPosTracker);
+        ArrayList<DataTracker> myY = new ArrayList<>();
+        myY.add(myXPosTracker);
+        myY.add(myYPosTracker);
+        myPlot = new PlotBuilder(myTimeTracker, myY);
         sc = myPlot.createPlot();
         myLeftPanel.addRow(sc);
     }
