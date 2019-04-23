@@ -17,15 +17,15 @@ public class RunAccount extends Application {
     @Override
     public void start(Stage primaryStage){
         // Test create account fxml
-        try{
-            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
-            primaryStage.setTitle("Create New Account");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.show();
-        } catch(IOException e){
-            System.out.println("Error in using create account fxml");
-        }
+//        try{
+//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
+//            primaryStage.setTitle("Create New Account");
+//            primaryStage.setScene(new Scene(root));
+//            primaryStage.setResizable(false);
+//            primaryStage.show();
+//        } catch(IOException e){
+//            System.out.println("Error in using create account fxml");
+//        }
 
 //        Test identity fxml
 //        try{
@@ -39,14 +39,14 @@ public class RunAccount extends Application {
 //        }
 
 //      Test login fxml
-//        try {
-//            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/loginpane.fxml"));
-//            primaryStage.setTitle("User Login");
-//            primaryStage.setScene(new Scene(root));
-//            primaryStage.setResizable(false);
-//            primaryStage.show();
-//        } catch (IOException e) {
-//            System.out.println("Network FXML file not found");
-//        }
+        try {
+            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/loginpane.fxml"));
+            primaryStage.setTitle("User Login");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("Network FXML file not found");
+        }
     }
 }

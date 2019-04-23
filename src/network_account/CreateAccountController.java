@@ -39,20 +39,23 @@ public class CreateAccountController {
             tf.setText("");
         }
         failLabel.setText("Invalid account info");
-//        try {
-//            URL url = new URL("http://black-abode-xxxx.appspot.com/login?username=xxx&password=xxx");
-//            URLConnection request = url.openConnection();
-//            request.connect();
-//
-//            JsonParser jp = new JsonParser(); //from gson
-//            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
-//            JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
-//            System.out.println(rootobj);
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            String webRequest = "http://black-abode-xxxx.appspot.com/login?username=" + usernameTextField.getText() +
+                    "&name=" + displayNameTextField.getText() + "&password=" + passwordField1.getText() + "&email=" +
+                    emailTextField.getText();
+            URL url = new URL(webRequest);
+            URLConnection request = url.openConnection();
+            request.connect();
+
+            JsonParser jParser = new JsonParser();
+            JsonElement jElement = jParser.parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonObject jObject = jElement.getAsJsonObject();
+            System.out.println(jObject);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
