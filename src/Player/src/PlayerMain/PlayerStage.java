@@ -13,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -93,6 +94,10 @@ public class PlayerStage {
         gameStage.show();
 
         gameScene.setOnKeyPressed(e -> myGameController.processKey(e.getCode().toString()));
+        gameScene.setOnKeyPressed(e -> {
+            if (e.getCode().equals(KeyCode.T))
+                myHud.togglePlotsIncluded();
+        });
 
         animate();
     }
@@ -188,7 +193,7 @@ public class PlayerStage {
         myTimeTracker = new NumericalDataTracker<>("Time");
         myYVelocity = new NumericalDataTracker<>("Y Velocity");
         myLivesTracker = new NumericalDataTracker<>("Lives");
-        myPowerupTracker = new DataTracker<>("Health");
+        myPowerupTracker = new DataTracker<>("Powerup");
     }
 
     private void updateDataTrackers() {
