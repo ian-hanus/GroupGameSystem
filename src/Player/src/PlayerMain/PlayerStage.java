@@ -93,11 +93,7 @@ public class PlayerStage {
         gameStage.setScene(gameScene);
         gameStage.show();
 
-        gameScene.setOnKeyPressed(e -> {
-            myGameController.processKey(e.getCode().toString());
-            if (e.getCode().equals(KeyCode.T))
-                myHud.togglePlotsIncluded();
-        });
+        gameScene.setOnKeyPressed(e -> myGameController.processKey(e.getCode().toString()));
 
         animate();
     }
