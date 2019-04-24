@@ -7,6 +7,7 @@ import Engine.src.Components.MotionComponent;
 import Engine.src.Controller.Controller;
 import hud.HUDView;
 import hud.plotting.DataTracker;
+import hud.plotting.NumericalDataTracker;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -52,10 +53,11 @@ public class PlayerStage {
     private Map<Integer, Map<Class<? extends Component>, Component>> myGameEntityMap;
     private Map<Integer, ImageView> myImageViewMap;
 
-    private DataTracker<Double> myXPosTracker;
-    private DataTracker<Double> myYPosTracker;
-    private DataTracker<Double> myTimeTracker;
-    private DataTracker<Integer> myLivesTracker;
+    private NumericalDataTracker<Double> myXPosTracker;
+    private NumericalDataTracker<Double> myYPosTracker;
+    private NumericalDataTracker<Double> myYVelocity;
+    private NumericalDataTracker<Double> myTimeTracker;
+    private NumericalDataTracker<Integer> myLivesTracker;
     private DataTracker<String> myPowerupTracker;
 
     private int myCount;
@@ -98,6 +100,7 @@ public class PlayerStage {
     private void setHud() {
         myHud = new HUDView(HUD_WIDTH, ST_HEIGHT, "Level 1", HUD_INCLUDES_PLOTTER, myXPosTracker,
                                                                                         myYPosTracker,
+                                                                                        myYVelocity,
                                                                                         myTimeTracker,
                                                                                         myLivesTracker,
                                                                                         myPowerupTracker);
@@ -180,10 +183,11 @@ public class PlayerStage {
     }
 
     private void initDataTrackers() {
-        myXPosTracker = new DataTracker<>("X Position");
-        myYPosTracker = new DataTracker<>("Y Position");
-        myTimeTracker = new DataTracker<>("Time");
-        myLivesTracker = new DataTracker<>("Y Velocity");
+        myXPosTracker = new NumericalDataTracker<>("X Position");
+        myYPosTracker = new NumericalDataTracker<>("Y Position");
+        myTimeTracker = new NumericalDataTracker<>("Time");
+        myYVelocity = new NumericalDataTracker<>("Y Velocity");
+        myLivesTracker = new NumericalDataTracker<>("Lives");
         myPowerupTracker = new DataTracker<>("Health");
     }
 
@@ -193,6 +197,7 @@ public class PlayerStage {
         myTimeTracker.storeData(myCount * 1.0); //TODO get actual time
         myXPosTracker.storeData(basicComponent.getX());
         myYPosTracker.storeData(basicComponent.getY());
+        myYVelocity.storeData(motionComponent.getYVelocity());
         myLivesTracker.storeData(0); //FIXME
         myPowerupTracker.storeData("Flower"); //FIXME
     }
