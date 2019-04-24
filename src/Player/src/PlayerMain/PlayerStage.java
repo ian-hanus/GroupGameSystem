@@ -5,13 +5,11 @@ import Engine.src.Components.Component;
 import Engine.src.Components.HealthComponent;
 import Engine.src.Components.MotionComponent;
 import Engine.src.Controller.Controller;
-import hud.HUD;
+import hud.HUDView;
 import hud.plotting.DataTracker;
-import hud.plotting.Plotter;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -47,22 +45,19 @@ public class PlayerStage {
     private Scene myScene;
     private GridPane myVisualRoot;
     private BorderPane myBorderPane;
-    private HUD myHud;
+    private HUDView myHud;
 
     private Controller myGameController;
     private Pane myGameRoot;
     private Map<Integer, Map<Class<? extends Component>, Component>> myGameEntityMap;
     private Map<Integer, ImageView> myImageViewMap;
 
-    private Plotter myPlotter;
-    private DataTracker myXPosTracker;
-    private DataTracker myYPosTracker;
-    private DataTracker myTimeTracker;
-    private DataTracker myYVelocityTracker;
-    private DataTracker myHealthTracker;
+    private DataTracker<Double> myXPosTracker;
+    private DataTracker<Double> myYPosTracker;
+    private DataTracker<Double> myTimeTracker;
+    private DataTracker<Integer> myLivesTracker;
+    private DataTracker<String> myPowerupTracker;
 
-    private double startTime;
-    private double currentTime;
     private int myCount;
 
 
@@ -85,7 +80,6 @@ public class PlayerStage {
         myGameEntityMap = myGameController.getEntities();
 
         initDataTrackers();
-        myPlotter = new Plotter(getDataTrackers(), HUD_WIDTH - 10, ST_HEIGHT);
         initBorderPane();
 
         addNewImageViews();
@@ -102,11 +96,11 @@ public class PlayerStage {
     }
 
     private void setHud() {
-        if (HUD_INCLUDES_PLOTTER)
-            myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames(), myPlotter);
-        else
-            myHud = new HUD(HUD_WIDTH, ST_HEIGHT, "Level 1", getHUDNames());
-        myHud.update(getHUDValues());
+        myHud = new HUDView(HUD_WIDTH, ST_HEIGHT, "Level 1", HUD_INCLUDES_PLOTTER, myXPosTracker,
+                                                                                        myYPosTracker,
+                                                                                        myTimeTracker,
+                                                                                        myLivesTracker,
+                                                                                        myPowerupTracker);
     }
 
     private void initBorderPane() {
@@ -115,12 +109,9 @@ public class PlayerStage {
         myBorderPane.setCenter(myGameRoot);
         setHud();
         myBorderPane.setLeft(myHud.getNode());
-        if (!HUD_INCLUDES_PLOTTER)
-            myBorderPane.setRight(new ScrollPane(myPlotter.getNode()));
     }
 
     private void animate() {
-        startTime = (double)(java.lang.System.currentTimeMillis() / 1000);
         var frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step());
         var animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
@@ -129,16 +120,13 @@ public class PlayerStage {
     }
 
     private void step() {
-        currentTime = (double)(java.lang.System.currentTimeMillis() / 1000) - startTime;
         myGameController.updateScene();
         addNewImageViews();
         updateOrRemoveImageViews();
 
         if (myCount % HUD_UPDATE_DELAY == 0) {
-            storeHeroData();
-            myHud.update(getHUDValues());
-            if (!HUD_INCLUDES_PLOTTER)
-                myPlotter.updateGraph();
+            updateDataTrackers();
+            myHud.update();
         }
         myCount++;
     }
@@ -174,15 +162,6 @@ public class PlayerStage {
         setImageIfNecessary(imageView, basicComponent);
     }
 
-    private void storeHeroData() {
-        BasicComponent basicComponent = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
-        MotionComponent motionComponent = (MotionComponent) myGameEntityMap.get(0).get(MotionComponent.class);
-        myTimeTracker.storeData(currentTime);
-        myXPosTracker.storeData(basicComponent.getX());
-        myYPosTracker.storeData(basicComponent.getY());
-        myYVelocityTracker.storeData(motionComponent.getYVelocity());
-    }
-
     private void moveAndResize(ImageView imageView, BasicComponent basicComponent) {
         imageView.setX(basicComponent.getX() - myGameController.getOffset()[0]);
         imageView.setY(basicComponent.getY() - myGameController.getOffset()[1]);
@@ -201,24 +180,21 @@ public class PlayerStage {
     }
 
     private void initDataTrackers() {
-        myXPosTracker = new DataTracker("X Position");
-        myYPosTracker = new DataTracker("Y Position");
-        myTimeTracker = new DataTracker("Time");
-        myYVelocityTracker = new DataTracker("Y Velocity");
-        myHealthTracker = new DataTracker("Health");
+        myXPosTracker = new DataTracker<>("X Position");
+        myYPosTracker = new DataTracker<>("Y Position");
+        myTimeTracker = new DataTracker<>("Time");
+        myLivesTracker = new DataTracker<>("Y Velocity");
+        myPowerupTracker = new DataTracker<>("Health");
     }
 
-    private DataTracker[] getDataTrackers() {
-        return new DataTracker[] {myXPosTracker, myYPosTracker, myYVelocityTracker, myTimeTracker};
-    }
-
-    private String[] getHUDNames() {
-        return new String[] {"Lives", "X", "Y", "Powerup"};
-    }
-
-    private Object[] getHUDValues() {
-        var userBasic = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
-        return new Object[] {3, userBasic.getX(), userBasic.getY(), "Flower"};//FIXME hardcoded
+    private void updateDataTrackers() {
+        BasicComponent basicComponent = (BasicComponent) myGameEntityMap.get(0).get(BasicComponent.class);
+        MotionComponent motionComponent = (MotionComponent) myGameEntityMap.get(0).get(MotionComponent.class);
+        myTimeTracker.storeData(myCount * 1.0); //TODO get actual time
+        myXPosTracker.storeData(basicComponent.getX());
+        myYPosTracker.storeData(basicComponent.getY());
+        myLivesTracker.storeData(0); //FIXME
+        myPowerupTracker.storeData("Flower"); //FIXME
     }
 
     /**
