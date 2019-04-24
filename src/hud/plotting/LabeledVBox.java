@@ -1,4 +1,4 @@
-package plotter_hud_utility.plotting;
+package hud.plotting;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -12,10 +12,8 @@ import javafx.scene.layout.VBox;
 public abstract class LabeledVBox {
     private VBox myVBox;
     private String myLabelText;
-    protected DataTracker[] myTrackers;
 
-    public LabeledVBox(String labelText, DataTracker[] dataTrackers) {
-        myTrackers = dataTrackers;
+    public LabeledVBox(String labelText) {
         myLabelText = labelText;
     }
 
@@ -28,18 +26,6 @@ public abstract class LabeledVBox {
             myVBox = new VBox(label, getMainComponent());
         }
         return myVBox;
-    }
-
-    /**
-     * @param dataName
-     * @return DataTracker with given name
-     */
-    protected DataTracker getTracker(String dataName) {
-        for (DataTracker tracker : myTrackers) {
-            if (tracker.getDataName().equals(dataName))
-                return tracker;
-        }
-        return null;
     }
 
     /**

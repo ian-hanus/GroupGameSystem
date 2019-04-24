@@ -1,4 +1,4 @@
-package plotter_hud_utility.plotting;
+package hud.plotting;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,16 +18,16 @@ public class XAxisSelector extends LabeledVBox {
     private static final int NUM_OPTIONS_SHOWN = 4;
 
     private ComboBox<String> myDropBox;
-    private DataTracker mySelectedTracker;
+    private DataTracker[] myTrackers;
 
     /**
      * Create an XAxisSelector
-     * @param dataTrackers
+     * @param trackers
      */
-    public XAxisSelector(DataTracker[] dataTrackers) {
-        super(DESCRIPTION, dataTrackers);
+    public XAxisSelector(DataTracker ... trackers) {
+        super(DESCRIPTION);
+        myTrackers = trackers;
         constructDropBox();
-        mySelectedTracker = dataTrackers[0];
     }
 
     private void constructDropBox() {
@@ -36,7 +36,6 @@ public class XAxisSelector extends LabeledVBox {
         myDropBox.itemsProperty().set(getItemList());
         myDropBox.setVisibleRowCount(NUM_OPTIONS_SHOWN);
         myDropBox.getSelectionModel().selectFirst();
-        myDropBox.valueProperty().addListener((o, oldVal, newVal) -> mySelectedTracker = getTracker(newVal));
     }
 
     private ObservableList<String> getItemList() {
@@ -49,7 +48,8 @@ public class XAxisSelector extends LabeledVBox {
      * @return the currently selected DataTracker
      */
     public DataTracker getSelectedTracker() {
-        return mySelectedTracker;
+        int index = myDropBox.getSelectionModel().getSelectedIndex();
+        return myTrackers[index];
     }
 
     @Override

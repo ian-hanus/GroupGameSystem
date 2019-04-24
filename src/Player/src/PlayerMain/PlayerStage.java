@@ -5,8 +5,9 @@ import Engine.src.Components.Component;
 import Engine.src.Components.HealthComponent;
 import Engine.src.Components.MotionComponent;
 import Engine.src.Controller.Controller;
-import plotter_hud_utility.HUD;
-import plotter_hud_utility.plotting.DataTracker;
+import hud.HUD;
+import hud.plotting.DataTracker;
+import hud.plotting.Plotter;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -91,7 +92,7 @@ public class PlayerStage {
 
         Scene gameScene = new Scene(myBorderPane, GAME_BG);
         //gameScene.getStylesheets().add("style.css");
-        gameScene.getStylesheets().add("plotter-hud.css");
+        gameScene.getStylesheets().add("hud.css");
         gameStage.setScene(gameScene);
         gameStage.show();
 

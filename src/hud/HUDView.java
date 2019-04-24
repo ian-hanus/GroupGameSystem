@@ -1,7 +1,7 @@
-package plotter_hud_utility;
+package hud;
 
-import Player.src.Features.ScrollableWindows.IncompatibleArgumentLengthException;
-import Player.src.PlayerMain.Plotter;
+import hud.plotting.Plotter;
+import hud.plotting.DataTracker;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -21,14 +21,14 @@ import java.util.Arrays;
  * @author Hunter Gregory
  * @author Carter Gay
  */
-public class HUD {
+public class HUDView {
     private static final String TITLE_ID_CSS = "hud-title";
     private static final String DATA_LABEL_CLASS_CSS = "data-label";
     private static final String SCROLL_PANE_CLASS_CSS = "scroll-pane";
     private static final double INTER_VALUES_SPACING = 2;
     private static final double PLOT_VALUES_SPACING = 20;
 
-    private String[] myDataNames;
+    private DataTracker[] myTrackers;
     private Label[] myDataLabels;
     private Label myTitle;
     private ScrollPane myScrollPane;
@@ -37,36 +37,31 @@ public class HUD {
     private Plotter myPlotter = null;
 
     /**
-     * Create a basic HUD with the names of data to display
+     * Create a HUDView
      * @param width
      * @param height
      * @param title
-     * @param dataNames
+     * @param includePlots
+     * @param trackers
      */
-    public HUD(double width, double height, String title, String[] dataNames) {
+    public HUDView(double width, double height, String title, boolean includePlots, DataTracker ... trackers) {
         createTitle(title);
-        myDataNames = dataNames;
+        myTrackers = trackers;
+        if (includePlots) {
+            myPlotter = new Plotter(width, height, myTrackers);
+            myPlotAndValuesBox.getChildren().add(myPlotter.getNode());
+        }
+        createVBoxes();
+        addLabels();
+        createScrollPane(width, height);
+        update();
+    }
+
+    private void createVBoxes() {
         myHudValuesBox = new VBox();
         myHudValuesBox.setSpacing(INTER_VALUES_SPACING);
         myPlotAndValuesBox = new VBox(myHudValuesBox);
         myPlotAndValuesBox.setSpacing(PLOT_VALUES_SPACING);
-        createBlankLabels();
-        addLabelsToVBox();
-        createScrollPane(width, height);
-    }
-
-    /**
-     * Create a HUD with plotting capabilities
-     * @param width
-     * @param height
-     * @param title
-     * @param dataNames
-     * @param plotter
-     */
-    public HUD(double width, double height, String title, String[] dataNames, Plotter plotter) {
-        this(width, height, title, dataNames);
-        myPlotter = plotter;
-        myPlotAndValuesBox.getChildren().add(myPlotter.getNode());
     }
 
     /**
@@ -78,15 +73,13 @@ public class HUD {
 
     /**
      * Updates the values displayed in the HUD and updates any plots if applicable.
-     * @param values
-     * @throws IncompatibleArgumentLengthException if the number of values does not equal the number of data labels
      */
-    public void update(Object[] values) throws IncompatibleArgumentLengthException {
-        if (values.length != myDataNames.length)
-            throw new IncompatibleArgumentLengthException();
+    public void update() {
         clearText();
-        for (int k = 0; k< myDataNames.length; k++)
-            myDataLabels[k].setText(myDataNames[k] + ": " + values[k].toString());
+        for (int k = 0; k< myTrackers.length; k++) {
+            var tracker = myTrackers[k];
+            myDataLabels[k].setText(tracker.getDataName() + ": " + tracker.getLatestValue().toString());
+        }
 
         if (myPlotter != null)
             myPlotter.updateGraph();
@@ -106,17 +99,15 @@ public class HUD {
         myTitle.setId(TITLE_ID_CSS);
     }
 
-    private void addLabelsToVBox() {
+    private void addLabels() {
         myHudValuesBox.getChildren().add(myTitle);
-        for (Label label : myDataLabels)
-            myHudValuesBox.getChildren().add(label);
-    }
 
-    private void createBlankLabels() {
-        myDataLabels = new Label[myDataNames.length];
+        myDataLabels = new Label[myTrackers.length];
         for (int k = 0; k< myDataLabels.length; k++) {
-            myDataLabels[k] = new Label();
-            myDataLabels[k].setStyle(DATA_LABEL_CLASS_CSS);
+            var label = new Label();
+            label.setStyle(DATA_LABEL_CLASS_CSS);
+            myHudValuesBox.getChildren().add(label);
+            myDataLabels[k] = label;
         }
     }
 

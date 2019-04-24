@@ -1,4 +1,4 @@
-package plotter_hud_utility.plotting;
+package hud.plotting;
 
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
@@ -15,9 +15,9 @@ public class PlotBuilder {
 
     private XYChart.Series mySeries;
     private ArrayList<Double> myX;
-    private ArrayList<Double> myY[];
+    private ArrayList<Double>[] myY;
     private String xName;
-    private String yName[];
+    private String[] yName;
     private double myWidth;
     private double myHeight;
 

@@ -1,6 +1,5 @@
-package plotter_hud_utility;
+package hud;
 
-import Player.src.PlayerMain.Plotter;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -11,7 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import plotter_hud_utility.plotting.DataTracker;
+import hud.plotting.Plotter;
+import hud.plotting.DataTracker;
 
 /**
  * An example application that runs a game using a game loop and:
@@ -24,11 +24,12 @@ import plotter_hud_utility.plotting.DataTracker;
  * @author Hunter Gregory
  */
 public class Example extends Application {
-    private static final String STYLESHEET = "plotter-hud.css";
+    private static final String STYLESHEET = "hud.css";
     private static final Paint BACKGROUND = Color.BLACK;
     private static final double HUD_WIDTH = 400;
     private static final double SCREEN_WIDTH = 800;
     private static final double SCREEN_HEIGHT = 600;
+    private static final boolean INCLUDE_PLOTTER = true;
 
     private static final int FRAMES_PER_SECOND = 15;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -36,32 +37,24 @@ public class Example extends Application {
 
 
     private BorderPane myBorderPane;
-    private HUD myHud;
+    private HUDView myHud;
     //add private instance variable of engine
     private Pane myGameRoot;
 
     private Plotter myPlotter;
-    private DataTracker myXPosTracker;
-    private DataTracker myYPosTracker;
-    private DataTracker myTimeTracker;
+    private DataTracker<Double> myXPosTracker;
+    private DataTracker<Double> myYPosTracker;
+    private DataTracker<Double> myTimeTracker;
+    private DataTracker<Integer> myLivesTracker;
+    private DataTracker<String> myPowerupTracker;
     //etc...
     private int myGameLoopCount;
-    private boolean myHudIncludesPlotter;
-
-    /**
-     * Create an Example application
-     * @param hudIncludesPlotter
-     */
-    public Example(boolean hudIncludesPlotter) {
-        myHudIncludesPlotter = hudIncludesPlotter;
-    }
 
     @Override
     public void start(Stage stage) {
         //initialize game engine
 
         initDataTrackers();
-        myPlotter = new Plotter(getDataTrackers(), HUD_WIDTH - 10, SCREEN_HEIGHT);
         initBorderPane();
 
         //add all image views to myGameRoot
@@ -77,11 +70,11 @@ public class Example extends Application {
     }
 
     private void setHud() {
-        if (myHudIncludesPlotter)
-            myHud = new HUD(HUD_WIDTH, SCREEN_HEIGHT, getHudTitle(), getHUDNames(), myPlotter);
-        else
-            myHud = new HUD(HUD_WIDTH, SCREEN_HEIGHT, getHudTitle(), getHUDNames());
-        myHud.update(getHUDValues());
+        myHud = new HUDView(HUD_WIDTH, SCREEN_HEIGHT, getHudTitle(), INCLUDE_PLOTTER, myXPosTracker,
+                                                                                      myYPosTracker,
+                                                                                      myTimeTracker,
+                                                                                      myLivesTracker,
+                                                                                      myPowerupTracker);
     }
 
     private void initBorderPane() {
@@ -90,8 +83,6 @@ public class Example extends Application {
         myBorderPane.setCenter(myGameRoot);
         setHud();
         myBorderPane.setLeft(myHud.getNode());
-        if (!myHudIncludesPlotter)
-            myBorderPane.setRight(myPlotter.getNode());
     }
 
     private void animate() {
@@ -107,10 +98,9 @@ public class Example extends Application {
 
         if (myGameLoopCount % HUD_UPDATE_DELAY == 0) {
             updateDataTrackers();
-            myHud.update(getHUDValues());
-            if (!myHudIncludesPlotter)
-                myPlotter.updateGraph();
+            myHud.update();
         }
+
         myGameLoopCount++;
     }
 
@@ -119,29 +109,18 @@ public class Example extends Application {
         myXPosTracker = new DataTracker("X Position");
         myYPosTracker = new DataTracker("Y Position");
         myTimeTracker = new DataTracker("Time");
+        myLivesTracker = new DataTracker("Lives");
+        myPowerupTracker = new DataTracker("Powerup");
     }
 
     //TODO include your own trackers and update data trackers with real values
     private void updateDataTrackers() {
-        myTimeTracker.storeData(myGameLoopCount); //TODO convert to actual time with millisecond delay/fps
-        myXPosTracker.storeData(getXPosition()); //TODO include your own data
-        myYPosTracker.storeData(getYPosition()); //TODO include your own data
+        myTimeTracker.storeData(myGameLoopCount * 1.0); //TODO convert to actual time with millisecond delay/fps
+        myXPosTracker.storeData(getXPosition());
+        myYPosTracker.storeData(getYPosition());
+        myLivesTracker.storeData(getNumLives());
+        myPowerupTracker.storeData(getCurrentPowerup());
         //...store other data
-    }
-
-    //TODO include your own trackers
-    private DataTracker[] getDataTrackers() {
-        return new DataTracker[] {myXPosTracker, myYPosTracker, myTimeTracker};
-    }
-
-    //TODO include your own HUD data names and associated values
-    private String[] getHUDNames() {
-        return new String[] {"Lives", "X", "Y", "Powerup"};
-    }
-
-    //TODO include your own HUD data names and associated values
-    private Object[] getHUDValues() {
-        return new Object[] {getNumLives(), getXPosition(), getYPosition(), getCurrentPowerup()};
     }
 
     //low level, example data getters

@@ -1,4 +1,4 @@
-package plotter_hud_utility.plotting;
+package hud.plotting;
 
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
@@ -17,13 +17,15 @@ public class YAxisSelector extends LabeledVBox {
 
     private VBox myVBox;
     private ArrayList<CheckBox> myCheckBoxes;
+    private DataTracker[] myTrackers;
 
     /**
      * Create a YAxisSelector
-     * @param dataTrackers
+     * @param trackers
      */
-    public YAxisSelector(DataTracker[] dataTrackers) {
-        super(DESCRIPTION, dataTrackers);
+    public YAxisSelector(DataTracker ... trackers) {
+        super(DESCRIPTION);
+        myTrackers = trackers;
         constructVBox();
     }
 
@@ -41,13 +43,13 @@ public class YAxisSelector extends LabeledVBox {
     /**
      * @return list of DataTrackers currently selected
      */
-    public List<DataTracker> getSelectedTrackers() {
+    public DataTracker[] getSelectedTrackers() {
         List<DataTracker> selectedTrackers = new ArrayList<>();
         for (int k=0; k<myTrackers.length; k++) {
             if (myCheckBoxes.get(k).isSelected())
                 selectedTrackers.add(myTrackers[k]);
         }
-        return selectedTrackers;
+        return selectedTrackers.toArray(new DataTracker[0]);
     }
 
     @Override
