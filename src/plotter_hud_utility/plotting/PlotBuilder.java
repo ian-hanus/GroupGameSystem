@@ -20,6 +20,9 @@ public class PlotBuilder {
     private String yName[];
     private double myWidth;
     private double myHeight;
+    private NumberAxis xAxis;
+    private NumberAxis yAxis;
+
 
     /**
      * PlotBuilder constructor that takes in an x feature and any number of y features
@@ -39,40 +42,41 @@ public class PlotBuilder {
             myY[i]= y.get(i).getData();
             yName[i] = y.get(i).getDataName();
         }
+        xAxis = new NumberAxis();
+        xAxis.setLabel(xName);
+        yAxis = new NumberAxis();
     }
 
     /**
      * Creates the scatter plot of the passed in x and y features with appropriate titles/labels
      * @return
      */
-    public ScatterChart<Number,Number> createPlot() {
-        var xAxis = new NumberAxis();
-        xAxis.setLabel(xName);
-        var yAxis = new NumberAxis();
-        var sc = new ScatterChart<>(xAxis,yAxis);
-        sc.setAnimated(false);
-        sc.setMaxWidth(myWidth);
-        sc.setMaxHeight(myHeight);
+    public XYChart<Number,Number> createPlot() {
+        XYChart myPlot = new ScatterChart<>(xAxis,yAxis);
+        myPlot.setAnimated(false);
+        myPlot.setMaxWidth(myWidth);
+        myPlot.setMaxHeight(myHeight);
         if (myY.length != 0)
-            plotData(yAxis, sc);
+            plotData(yAxis, myPlot);
         else
-            sc.setTitle("Please select y");
-        return sc;
+            myPlot.setTitle("Please select y");
+        return myPlot;
     }
 
-    private void plotData(NumberAxis yAxis, ScatterChart<Number, Number> sc) {
+    private void plotData(NumberAxis yAxis, XYChart<Number, Number> myPlot) {
         String yString = yName[0];
-        for (int k=1; k<yName.length; k++)
+        for (int k = 1; k < yName.length; k++) {
             yString += ", " + yName[k];
+        }
         yAxis.setLabel(yString);
-        sc.setTitle(yString + " vs " + xName);
+        myPlot.setTitle(yString + " vs " + xName);
         for (int i = 0; i < myY.length; i++) {
             mySeries = new XYChart.Series();
             mySeries.setName(yName[i]);
             for (int j = 0; j < myX.size(); j++) {
                 mySeries.getData().add(new XYChart.Data(myX.get(j), myY[i].get(j)));
             }
-            sc.getData().addAll(mySeries);
+            myPlot.getData().addAll(mySeries);
         }
     }
 

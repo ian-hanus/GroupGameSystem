@@ -1,12 +1,12 @@
 package Player.src.PlayerMain;
 
+import javafx.scene.chart.XYChart;
 import plotter_hud_utility.plotting.DataTracker;
 import plotter_hud_utility.plotting.PlotBuilder;
 import plotter_hud_utility.plotting.XAxisSelector;
 import plotter_hud_utility.plotting.YAxisSelector;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -49,7 +49,7 @@ public class Plotter {
         myVBox.setSpacing(VERTICAL_SPACING);
     }
 
-    private ScatterChart<Number, Number> getCurrentGraph() {
+    private XYChart<Number, Number> getCurrentGraph() {
         var plotBuilder = new PlotBuilder(myXAxisSelector.getSelectedTracker(), myYAxisSelector.getSelectedTrackers(), myWidth, myHeight);
         return plotBuilder.createPlot();
     }
