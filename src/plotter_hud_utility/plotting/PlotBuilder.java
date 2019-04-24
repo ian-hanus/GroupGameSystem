@@ -1,8 +1,6 @@
 package plotter_hud_utility.plotting;
 
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.ScatterChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +49,17 @@ public class PlotBuilder {
      * Creates the scatter plot of the passed in x and y features with appropriate titles/labels
      * @return
      */
-    public XYChart<Number,Number> createPlot() {
-        XYChart myPlot = new ScatterChart<>(xAxis,yAxis);
-        myPlot.setAnimated(false);
-        myPlot.setMaxWidth(myWidth);
-        myPlot.setMaxHeight(myHeight);
+    public XYChart<Number,Number> createPlot(String plotType) {
+        XYChart myPlot;
+        if (plotType == "Scatter") {
+            myPlot = new ScatterChart<>(xAxis,yAxis);
+        }
+        else if (plotType == "Line") {
+            myPlot = new LineChart<>(xAxis,yAxis);
+        }
+        else  {
+            myPlot = new AreaChart<>(xAxis,yAxis);
+        }
         if (myY.length != 0)
             plotData(yAxis, myPlot);
         else

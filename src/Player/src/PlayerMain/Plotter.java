@@ -51,7 +51,7 @@ public class Plotter {
 
     private XYChart<Number, Number> getCurrentGraph() {
         var plotBuilder = new PlotBuilder(myXAxisSelector.getSelectedTracker(), myYAxisSelector.getSelectedTrackers(), myWidth, myHeight);
-        return plotBuilder.createPlot();
+        return plotBuilder.createPlot("Area");
     }
 
     /**
