@@ -27,6 +27,12 @@ public class UserIdentity {
         myName = name;
     }
 
+    public UserIdentity(){
+        myUsername = "";
+        myHighScores = null;
+        myName = "Not logged in";
+    }
+
     /**
      * Gets the username associated with this user identity
      * @return

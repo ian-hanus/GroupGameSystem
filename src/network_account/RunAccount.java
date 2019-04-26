@@ -30,7 +30,7 @@ public class RunAccount extends Application {
 //        Test identity fxml
 //        try{
 //            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/identitypane.fxml"));
-//            primaryStage.setTitle("Identity Pane");
+//            primaryStage.setTitle("IdentityManager Pane");
 //            primaryStage.setScene(new Scene(root));
 //            primaryStage.setResizable(false);
 //            primaryStage.show();
@@ -38,15 +38,23 @@ public class RunAccount extends Application {
 //            System.out.println("Error in using identity fxml");
 //        }
 
-//      Test login fxml
-        try {
-            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/loginpane.fxml"));
-            primaryStage.setTitle("User Login");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.show();
-        } catch (IOException e) {
-            System.out.println("Network FXML file not found");
-        }
+////      Test login fxml
+//        try {
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(RunAccount.class.getResource("/network_fxml/login.fxml"));
+//            Parent root = loader.load();
+////            Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/login.fxml"));
+//            primaryStage.setTitle("User Login");
+//            primaryStage.setScene(new Scene(root));
+//            primaryStage.setResizable(false);
+//            primaryStage.show();
+//        } catch (IOException e) {
+//            System.out.println("Network FXML file not found");
+//        }
+
+        IdentityManager identityManager = new IdentityManager();
+        identityManager.setStageLogin(primaryStage);
+        UserIdentity testIdentity = identityManager.getIdentity();
+        System.out.println(testIdentity.getName());
     }
 }

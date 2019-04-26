@@ -11,20 +11,26 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import uiutils.panes.Pane;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 
 /**
- * FXML Controller for the user login pane (res/network_fxml/loginpane.fxml), allowing user's to connect with the
+ * FXML Controller for the user login pane (res/network_fxml/login.fxml), allowing user's to connect with the
  * Google App Engine backend to login and load information such as display name and personal high scores
  */
 public class LoginController {
+    private UserIdentity myIdentity;
+
     @FXML
     public TextField usernameTextField, passwordTextField;
     public Label loginFailLabel;
     public Button loginButton;
+
 
     /**
      * Check to see if login information is valid: if it is not tell the user that the information they provided was
@@ -32,9 +38,16 @@ public class LoginController {
      */
     public void login(){
         try {
-            String webRequest = "http://tmtp-spec.appspot.com/login?username=" + usernameTextField.getText() +
+            String nameRequest = "http://tmtp-spec.appspot.com/login?username=" + usernameTextField.getText() +
                    "&password=" + passwordTextField.getText();
-            getJsonReponse(webRequest);
+            JsonObject names = getJsonReponse(nameRequest);
+            String username = names.getAsJsonObject("user").get("username").toString().replaceAll("^\"|\"$", "");
+            String displayName = names.getAsJsonObject("user").get("name").toString().replaceAll("^\"|\"$", "");
+
+//            String scoreRequest = "http://black-abode-xxxx.appspot.com/highScores";
+//            JsonObject scores = getJsonReponse(scoreRequest);
+            myIdentity = new UserIdentity(username, displayName, new HashMap<>());
+
             resetFields();
         } catch (MalformedURLException e) {
             loginFailLabel.setText("Couldn't connect to server");
@@ -85,14 +98,19 @@ public class LoginController {
         }
     }
 
+    public UserIdentity getMyIdentity(){
+        return myIdentity;
+    }
+
     private void resetFields(){
         usernameTextField.setText("");
         passwordTextField.setText("");
     }
 
-    private void getJsonReponse(String request) throws IOException {
+    private JsonObject getJsonReponse(String request) throws IOException {
         CreateAccountController testController = new CreateAccountController();
         JsonObject jObject = testController.createResponse(request);
         loginFailLabel.setText(jObject.get("resultDesc").toString().replaceAll("^\"|\"$", ""));
+        return jObject;
     }
 }
