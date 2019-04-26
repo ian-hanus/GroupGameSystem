@@ -14,10 +14,17 @@ public class IdentityManager {
     private UserIdentity myIdentity;
     private FXMLLoader myLoginLoader;
 
+    /**
+     * Constructor setting the UserIdentity to a default
+     */
     public IdentityManager(){
         myIdentity = new UserIdentity();
     }
 
+    /**
+     * Set the input stage to the login screen
+     * @param primaryStage is the stage that will display the login screen
+     */
     public void setStageLogin(Stage primaryStage){
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -29,6 +36,10 @@ public class IdentityManager {
         }
     }
 
+    /**
+     * Set the input stage to the create account screen
+     * @param primaryStage is the stage that will display the create account screen
+     */
     public void setStageCreate(Stage primaryStage){
         try {
             myLoginLoader = new FXMLLoader();
@@ -47,11 +58,11 @@ public class IdentityManager {
     public UserIdentity getIdentity(){
         try {
             LoginController loginController = myLoginLoader.getController();
-            return loginController.getMyIdentity();
+            myIdentity = loginController.getMyIdentity();
         } catch(NullPointerException e){
-            UserIdentity userIdentity = new UserIdentity();
-            return userIdentity;
+            myIdentity = new UserIdentity();
         }
+        return myIdentity;
     }
 
     private void setStage(Stage primaryStage, Parent root){
