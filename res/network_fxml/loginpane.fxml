@@ -41,6 +41,11 @@
                     onMouseClicked="#login"/>
             <Label fx:id="loginFailLabel" text="" GridPane.columnIndex="1" GridPane.rowIndex="4"
                    styleClass="errorLabel"/>
+
+            <Button fx:id="creatAccountButton" text="CREATE ACCOUNT" GridPane.columnIndex="0" GridPane.rowIndex="5"
+                    onKeyPressed="#openCreateAccount"/>
+            <Button fx:id="forgotPasswordButton" text="FORGOT PASSWORD" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                    onMouseClicked="#sendResetEmail"/>
         </GridPane>
     </center>
 

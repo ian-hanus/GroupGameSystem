@@ -1,5 +1,6 @@
 package network_account;
 
+import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,10 +11,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-
-//TODO: Reformat Login class to reflect only users top score, along with universal top scores
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * FXML Controller for the user login pane (res/network_fxml/loginpane.fxml), allowing user's to connect with the
@@ -30,9 +31,16 @@ public class LoginController {
      * invalid and prompt again
      */
     public void login(){
-        loginFailLabel.setText("Login Information Invalid");
-        usernameTextField.setText("");
-        passwordTextField.setText("");
+        try {
+            String webRequest = "http://tmtp-spec.appspot.com/login?username=" + usernameTextField.getText() +
+                   "&password=" + passwordTextField.getText();
+            getJsonReponse(webRequest);
+            resetFields();
+        } catch (MalformedURLException e) {
+            loginFailLabel.setText("Couldn't connect to server");
+        } catch (IOException e) {
+            loginFailLabel.setText("Couldn't connect to internet");
+        }
     }
 
     /**
@@ -45,6 +53,25 @@ public class LoginController {
         }
     }
 
+    /**
+     * Send a password reset email to the username of choice
+     */
+    public void sendResetEmail(){
+        try{
+            String emailRequest = "http://tmtp-spec.appspot.com/reset?username=" + usernameTextField.getText();
+            URL url = new URL(emailRequest);
+            URLConnection request = url.openConnection();
+            request.connect();
+            loginFailLabel.setText("Password reset email sent");
+            resetFields();
+        } catch (IOException e) {
+            loginFailLabel.setText("Could not send email");
+        }
+    }
+
+    /**
+     * Open the create account tab if the user clicks the "Create Account" button
+     */
     public void openCreateAccount(){
         try{
             Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
@@ -56,5 +83,16 @@ public class LoginController {
         } catch(IOException e){
             System.out.println("Error in using create account fxml");
         }
+    }
+
+    private void resetFields(){
+        usernameTextField.setText("");
+        passwordTextField.setText("");
+    }
+
+    private void getJsonReponse(String request) throws IOException {
+        CreateAccountController testController = new CreateAccountController();
+        JsonObject jObject = testController.createResponse(request);
+        loginFailLabel.setText(jObject.get("resultDesc").toString().replaceAll("^\"|\"$", ""));
     }
 }

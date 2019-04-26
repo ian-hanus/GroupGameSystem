@@ -16,7 +16,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import com.google.gson.Gson;
 
 /**
  * FXML controller for the pane that allows users to create their own account. Links with the Google App Engine backend
@@ -33,29 +32,48 @@ public class CreateAccountController {
      * information is valid; else clears all TextFields and informs the user that their information was invalid.
      */
     public void createAccount(){
-        TextField[] allTextFields = new TextField[]{emailTextField, usernameTextField, displayNameTextField,
-                passwordField1, passwordField2};
-        for(TextField tf:allTextFields){
-            tf.setText("");
-        }
         failLabel.setText("Invalid account info");
         try {
-            String webRequest = "http://black-abode-xxxx.appspot.com/login?username=" + usernameTextField.getText() +
+            if(!passwordField1.getText().equals(passwordField2.getText())){
+                throw new RuntimeException("Password error");
+            }
+            String createRequest = "http://tmtp-spec.appspot.com/register?username=" + usernameTextField.getText() +
                     "&name=" + displayNameTextField.getText() + "&password=" + passwordField1.getText() + "&email=" +
                     emailTextField.getText();
-            URL url = new URL(webRequest);
-            URLConnection request = url.openConnection();
-            request.connect();
+            JsonObject jObject = createResponse(createRequest);
+            failLabel.setText(jObject.get("resultDesc").toString().replaceAll("^\"|\"$", ""));
 
-            JsonParser jParser = new JsonParser();
-            JsonElement jElement = jParser.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject jObject = jElement.getAsJsonObject();
-            System.out.println(jObject);
+            TextField[] allTextFields = new TextField[]{emailTextField, usernameTextField, displayNameTextField,
+                    passwordField1, passwordField2};
+            for(TextField tf:allTextFields){
+                tf.setText("");
+            }
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            failLabel.setText("Server unavailable");
         } catch (IOException e) {
-            e.printStackTrace();
+            failLabel.setText("Couldn't connect");
+        } catch(RuntimeException e){
+            failLabel.setText("Passwords must match");
         }
+
+    }
+
+    /**
+     * Gets the Json object that signifies the response to a web request for the account
+     * @param createRequest is the String that signifies the address for the web request
+     * @return a Json object telling whether the request was successful or not
+     * @throws IOException
+     */
+    public JsonObject createResponse(String createRequest) throws IOException {
+        URL url = new URL(createRequest);
+        URLConnection request = url.openConnection();
+        request.connect();
+
+        JsonParser jParser = new JsonParser();
+        JsonElement jElement = jParser.parse(new InputStreamReader((InputStream) request.getContent()));
+        JsonObject jObject = jElement.getAsJsonObject();
+
+        return jObject;
     }
 
     /**
