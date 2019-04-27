@@ -122,7 +122,7 @@ public class PlayerStage {
     }
 
     private void step() {
-        getGamePaused();
+        setGamePaused();
         if (gamePaused == 0) {
             myGameController.updateScene();
             addNewImageViews();
