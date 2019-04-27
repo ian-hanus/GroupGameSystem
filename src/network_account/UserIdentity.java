@@ -12,6 +12,7 @@ public class UserIdentity {
     private String myUsername;
     private Map<String, List<String>> myHighScores;
     private String myName;
+    private List<String> myFriends;
 
     //TODO: Reformat UserIdentity class to reflect only users top score, along with universal top scores
 
@@ -23,16 +24,18 @@ public class UserIdentity {
      * @param highScores is a Map of Strings to Integers, with the key being the name of the game and the value being
      *                   the user's highest score for the game
      */
-    public UserIdentity(String username, String name, Map<String, List<String>> highScores){
+    public UserIdentity(String username, String name, Map<String, List<String>> highScores, List<String> friends){
         myUsername = username;
         myHighScores = highScores;
         myName = name;
+        myFriends = friends;
     }
 
     public UserIdentity(){
         myUsername = "";
         myHighScores = null;
         myName = "Not logged in";
+        myFriends = null;
     }
 
     /**
@@ -63,4 +66,12 @@ public class UserIdentity {
      * @return String representing the user's display name
      */
     public String getName(){return myName;}
+
+    /**
+     * Getter for the list of friends: specifically made mutable to add friends
+     * @return list of Strings representing the usernames of the user's friends
+     */
+    public List<String> getFriends(){
+        return myFriends;
+    }
 }

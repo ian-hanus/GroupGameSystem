@@ -41,7 +41,10 @@
 
         <Label fx:id="nameLabel" text="Hello Test" styleClass="socialLabel" GridPane.rowIndex="0"/>
         <Label fx:id="friendsLabel" text="Friends: " styleClass="socialLabel" GridPane.rowIndex="1"/>
-        <ScrollPane fx:id="friendsPane" GridPane.rowIndex="2" styleClass="socialScrollPane"></ScrollPane>
+        <ScrollPane fx:id="friendsHolder" GridPane.rowIndex="2" styleClass="socialScrollPane">
+            <GridPane fx:id="friendPane" styleClass="centerPane">
+            </GridPane>
+        </ScrollPane>
         <Button fx:id="addFriendButton" text="Add Friends" GridPane.rowIndex="3" styleClass="socialButton" GridPane.halignment="CENTER"/>
         <Label fx:id="highScoreLabel" text="High Scores: " styleClass="socialLabel" GridPane.rowIndex="4"/>
         <GridPane fx:id="highScorePane" GridPane.rowIndex="5">

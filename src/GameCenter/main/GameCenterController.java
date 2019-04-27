@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
@@ -19,6 +20,7 @@ import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import network_account.UserIdentity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -37,21 +39,15 @@ public class GameCenterController {
     private Number ratingVal;
     private ImageView activeGameImageView;
 
-    public Pane socialPane;
-    public Pane newGamePane;
-    public Pane descriptionPane;
-    public Pane ratingPane;
+    @FXML
+    public Pane socialPane, newGamePane, descriptionPane, ratingPane;
     public ScrollPane thumbPane;
+    public GridPane friendPane;
     public Slider ratingSlider;
     public VBox thumbPaneContent;
-    public Text titleText;
-    public Text descriptionText;
-    public Text ratingText;
-    public Button newGameButton;
-    public Button playButton;
-    public Button editButton;
-    public Button rateButton;
-    public Button returnButton;
+    public Text titleText, descriptionText, ratingText;
+    public Button newGameButton, playButton, editButton, rateButton, returnButton;
+    public Label nameLabel, score1, score2, score3;
 
     void initGameCenter() {
         initListeners();
@@ -134,6 +130,18 @@ public class GameCenterController {
 
     private void loadGameText() {
         descriptionText.setText(gameData.get(myIndex).getDescription());
+    }
+
+    private void updateIdentity(UserIdentity userIdentity, String gameName){
+        nameLabel.setText("Hello" + userIdentity.getName());
+        for(String s:userIdentity.getFriends()){
+            Label friendName = new Label(s);
+            friendName.getStyleClass().add("socialScoreLabel");
+            friendPane.getChildren().add(friendName);
+        }
+        score1.setText(userIdentity.getHighScores(gameName).get(0));
+        score2.setText(userIdentity.getHighScores(gameName).get(1));
+        score3.setText(userIdentity.getHighScores(gameName).get(2));
     }
 
     @FXML

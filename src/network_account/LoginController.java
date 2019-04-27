@@ -77,7 +77,8 @@ public class LoginController {
                 myHighScores.putIfAbsent(game, new ArrayList<>());
                 myHighScores.get(game).add(highScore);
             }
-            myIdentity = new UserIdentity(username, displayName, myHighScores);
+            //TODO: Include friends list instead of empty arraylist
+            myIdentity = new UserIdentity(username, displayName, myHighScores, new ArrayList<>());
 
             resetFields();
         } catch (MalformedURLException e) {
