@@ -10,10 +10,6 @@ public class LivesSlider extends PlayerSlider {
 
     private static final String TITLE = "Lives";
 
-    public LivesSlider() {
-
-    }
-
     @Override
     protected void handleItemSelected(Number item) {
         double myLives = item.doubleValue();
