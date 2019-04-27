@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
@@ -20,7 +21,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +35,7 @@ import java.util.List;
  */
 public class GameCenterController {
     private List<DataStruct> gameData;
+    private ArrayList<Integer> favoriteGames;
     private int activeThumbnail;
     private int myIndex;
     private Number ratingVal;
@@ -55,6 +59,7 @@ public class GameCenterController {
 
     void initGameCenter() {
         initListeners();
+        favoriteGames = new ArrayList<Integer>();
         placeThumbnails();
     }
 
@@ -69,19 +74,52 @@ public class GameCenterController {
     }
 
     private void placeThumbnails() {
-        activeThumbnail = -1;
-        int counter = 0;
         try {
             gameData = DataParser.parseConfig("data/player_data.json");
-            for(var game : gameData) {
-                final int index = counter;
-                var thumbnail = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.getImagePath())), game.getName());
-                thumbPaneContent.getChildren().add(thumbnail.getView());
-                thumbnail.getView().setOnMouseClicked(e -> thumbnailClicked(index));
-                counter++;
-            }
         } catch (FileNotFoundException e) {
-            System.out.println("Error occurred when placing thumbnails");
+            System.out.println("Error occurred when reading in thumbnails");
+        }
+        // this sets favoriteGames int list
+        for (int i = 0; i < gameData.size(); i ++) {
+            DataStruct game = gameData.get(i);
+            if (!favoriteGames.contains(i) && game.getFavorite()) {
+                favoriteGames.add(i);
+            } else if (favoriteGames.contains(i) && !game.getFavorite()) {
+                favoriteGames.remove(i);
+            }
+        }
+        // make labels
+        int favCounter = favoriteGames.size();
+        Label favLabel = new Label("Favorites (" + favCounter + ")");
+        int gameCounter = gameData.size();
+        Label gameLabel = new Label("All Games (" + gameCounter + ")");
+        // TODO: set style of labels
+        // place thumbnails of each favorite in favoriteGames
+        thumbPaneContent.getChildren().add(favLabel);
+        for (int fav : favoriteGames) {
+            final int index = fav;
+            DataStruct game = gameData.get(fav);
+            var thumbnailView = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.getImagePath())), game.getName()).getView();
+            thumbPaneContent.getChildren().add(thumbnailView);
+            thumbnailView.setOnMouseClicked(e -> thumbnailClicked(index));
+        }
+        // place thumbnails of every game
+        thumbPaneContent.getChildren().add(gameLabel);
+        int counter = 0;
+        for (var game : gameData) {
+            final int index = counter;
+            var thumbnailView = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.getImagePath())), game.getName()).getView();
+            thumbPaneContent.getChildren().add(thumbnailView);
+            counter ++;
+            thumbnailView.setOnMouseClicked(e -> thumbnailClicked(index));
+        }
+    }
+
+    public void editFavorites(int gameInt) {
+        if (favoriteGames.contains(gameInt)) {
+            favoriteGames.remove(gameInt);
+        } else {
+            favoriteGames.add(gameInt);
         }
     }
 
