@@ -1,4 +1,5 @@
 package GameCenter.gameData;
+
 import org.json.*;
 
 import java.io.File;
@@ -17,7 +18,8 @@ public class DataParser {
             var gameStruct = new DataStruct(game.getString("name"),
                     game.getString("img"),
                     game.getString("desc"),
-                    game.getString("game_source"));
+                    game.getString("game_source"),
+                    game.getString("rating"));
             gamesList.add(gameStruct);
         }
         return gamesList;

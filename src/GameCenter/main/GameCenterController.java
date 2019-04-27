@@ -6,8 +6,12 @@ import GameCenter.utilities.Thumbnail;
 import Player.src.PlayerMain.PlayerStage;
 import auth.RunAuth;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,13 +29,12 @@ import java.util.List;
  *
  * This controller defines all actions that occur when a user interacts with the GUI. It also defines several parts of
  * the GUI that cannot be done in fxml, such as placing images parsed from a .json file.
- *
- * TODO: Figure out why @FXML tag is not working---we do not want all these public variables/classes
  */
 public class GameCenterController {
     private List<DataStruct> gameData;
     private int activeThumbnail;
     private int myIndex;
+    private Number ratingVal;
     private ImageView activeGameImageView;
 
     public Pane socialPane;
@@ -39,16 +42,30 @@ public class GameCenterController {
     public Pane descriptionPane;
     public Pane ratingPane;
     public ScrollPane thumbPane;
+    public Slider ratingSlider;
     public VBox thumbPaneContent;
     public Text titleText;
     public Text descriptionText;
+    public Text ratingText;
     public Button newGameButton;
     public Button playButton;
     public Button editButton;
     public Button rateButton;
+    public Button returnButton;
 
     void initGameCenter() {
+        initListeners();
         placeThumbnails();
+    }
+
+    private void initListeners() {
+        ratingSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                ratingVal = new_val;
+                ratingText.setText(String.format("%.2f", ratingVal));
+            }
+        });
     }
 
     private void placeThumbnails() {
@@ -70,6 +87,8 @@ public class GameCenterController {
 
     private void thumbnailClicked(int index) {
         this.myIndex = index;
+//        writeRatingToJSON();
+
         if (activeThumbnail == myIndex) {
             activeThumbnail = -1;
             titleText.setText("Game Center");
@@ -87,6 +106,7 @@ public class GameCenterController {
     private void revertDescription() {
         newGamePane.getChildren().remove(activeGameImageView);
         descriptionPane.setVisible(false);
+        ratingPane.setVisible(false);
     }
 
     private void loadGameDetails() {
@@ -96,6 +116,7 @@ public class GameCenterController {
         loadGameImage();
         loadGameText();
         descriptionPane.setVisible(true);
+        ratingPane.setVisible(false);
     }
 
     private void loadGameImage() {
@@ -115,15 +136,36 @@ public class GameCenterController {
         descriptionText.setText(gameData.get(myIndex).getDescription());
     }
 
-    public void launchAuthEnv() {
+    @FXML
+    private void launchAuthEnv() {
         new RunAuth().start(new Stage());
     }
 
-    public void launchPlayer() {
+    @FXML
+    private void launchPlayer() {
         new PlayerStage().run(gameData.get(myIndex).getSourcePath());
     }
 
-    public void rateGame() {
+    @FXML
+    private void rateGame() {
         ratingPane.setVisible(true);
+        descriptionPane.setVisible(false);
     }
+
+    @FXML
+    private void login() {
+        // TODO: integrate with Ian's login
+    }
+
+    @FXML
+    private void returnToDescription() {
+        ratingPane.setVisible(false);
+        descriptionPane.setVisible(true);
+        writeRatingToJSON();
+    }
+    
+    private void writeRatingToJSON() {
+        gameData.get(myIndex).setRating(ratingVal.doubleValue());
+    }
+
 }
