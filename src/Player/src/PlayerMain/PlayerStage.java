@@ -58,6 +58,7 @@ public class PlayerStage {
     private NumericalDataTracker<Double> myYVelocity;
     private NumericalDataTracker<Double> myTimeTracker;
     private NumericalDataTracker<Integer> myLivesTracker;
+    private NumericalDataTracker<Integer> myScoreTracker;
     private DataTracker<String> myPowerupTracker;
 
     private int myCount;
@@ -188,6 +189,7 @@ public class PlayerStage {
         myTimeTracker = new NumericalDataTracker<>("Time");
         myYVelocity = new NumericalDataTracker<>("Y Velocity");
         myLivesTracker = new NumericalDataTracker<>("Lives");
+        myScoreTracker = new NumericalDataTracker<>("Score");
         myPowerupTracker = new DataTracker<>("Powerup");
     }
 
@@ -199,6 +201,7 @@ public class PlayerStage {
         myYPosTracker.storeData(basicComponent.getY());
         myYVelocity.storeData(motionComponent.getYVelocity());
         myLivesTracker.storeData(0); //FIXME
+        myScoreTracker.storeData(0); //FIXME
         myPowerupTracker.storeData("Flower"); //FIXME
     }
 
