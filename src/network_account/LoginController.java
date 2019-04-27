@@ -4,6 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +17,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,7 +43,9 @@ public class LoginController {
     @FXML
     public TextField usernameTextField, passwordTextField;
     public Label loginFailLabel;
-    public Button loginButton;
+    public Button loginButton, createAccountButton;
+    public StackPane parentContainer;
+    public GridPane gridPane;
 
 
     /**
@@ -110,11 +119,17 @@ public class LoginController {
     public void openCreateAccount(){
         try{
             Parent root = FXMLLoader.load(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
-            Stage primaryStage = new Stage();
-            primaryStage.setTitle("Create New Account");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.show();
+            Scene scene = createAccountButton.getScene();
+
+            root.translateYProperty().set(scene.getHeight());
+            parentContainer.getChildren().add(root);
+
+            Timeline timeline = new Timeline();
+            KeyValue keyValue = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), keyValue);
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.setOnFinished(e->parentContainer.getChildren().remove(gridPane));
+            timeline.play();
         } catch(IOException e){
             System.out.println("Error in using create account fxml");
         }
