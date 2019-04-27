@@ -63,7 +63,6 @@ public class PlayerStage {
 
     private int myCount;
 
-
     public PlayerStage() {
         myVisualRoot = new GridPane();
         //mySidePanelWidth = ST_WIDTH / 3.0;
@@ -92,9 +91,7 @@ public class PlayerStage {
         gameScene.getStylesheets().add("hud.css");
         gameStage.setScene(gameScene);
         gameStage.show();
-
         gameScene.setOnKeyPressed(e -> myGameController.processKey(e.getCode().toString()));
-
         animate();
     }
 
@@ -124,15 +121,17 @@ public class PlayerStage {
     }
 
     private void step() {
-        myGameController.updateScene();
-        addNewImageViews();
-        updateOrRemoveImageViews();
+        if (myHud.getGamePaused() == 0) {
+            myGameController.updateScene();
+            addNewImageViews();
+            updateOrRemoveImageViews();
 
-        if (myCount % HUD_UPDATE_DELAY == 0) {
-            updateDataTrackers();
-            myHud.update();
+            if (myCount % HUD_UPDATE_DELAY == 0) {
+                updateDataTrackers();
+                myHud.update();
+            }
+            myCount++;
         }
-        myCount++;
     }
 
     private void updateOrRemoveImageViews() {
@@ -222,4 +221,5 @@ public class PlayerStage {
         ret.setScene(myScene);
         return ret;
     }
+
 }
