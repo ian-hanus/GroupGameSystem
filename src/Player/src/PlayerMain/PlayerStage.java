@@ -200,7 +200,7 @@ public class PlayerStage {
         myXPosTracker.storeData(basicComponent.getX());
         myYPosTracker.storeData(basicComponent.getY());
         myYVelocity.storeData(motionComponent.getYVelocity());
-        myLivesTracker.storeData(0); //FIXME
+        myLivesTracker.storeData(2); //FIXME
         myScoreTracker.storeData(0); //FIXME
         myPowerupTracker.storeData("Flower"); //FIXME
     }
