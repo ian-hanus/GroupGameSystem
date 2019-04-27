@@ -106,6 +106,10 @@ public class PlayerStage {
         }
     }
 
+    public void runDebug(String gameName) {
+        // TODO: make debug mode with console
+    }
+
     public void run(String gameName) {
         Stage gameStage = new Stage();
         myGameRoot = new Group();

@@ -21,7 +21,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +37,7 @@ public class GameCenterController {
     private ArrayList<Integer> favoriteGames;
     private int activeThumbnail;
     private int myIndex;
+    private boolean debugMode = false;
     private Number ratingVal;
     private ImageView activeGameImageView;
 
@@ -181,7 +181,8 @@ public class GameCenterController {
 
     @FXML
     private void launchPlayer() {
-        new PlayerStage().run(gameData.get(myIndex).getSourcePath());
+        if (debugMode) new PlayerStage().runDebug(gameData.get(myIndex).getSourcePath());
+        else new PlayerStage().run(gameData.get(myIndex).getSourcePath());
     }
 
     @FXML
