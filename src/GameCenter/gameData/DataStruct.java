@@ -37,10 +37,10 @@ public class DataStruct {
 
     public boolean getFavorite() { return Boolean.parseBoolean(favorite);}
 
-    public void setRating(double value) {
+    public void setRating(double value, int gameIndex) {
         rating = String.valueOf(value);
         try {
-            dataWriter.writeRating(rating);
+            dataWriter.writeRating(rating, gameIndex);
         } catch (FileNotFoundException e) {
             // This should never happen
         }
