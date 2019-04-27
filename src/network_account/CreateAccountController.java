@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.regex.Pattern;
 
 /**
  * FXML controller for the pane that allows users to create their own account. Links with the Google App Engine backend
@@ -35,7 +36,10 @@ public class CreateAccountController {
         failLabel.setText("Invalid account info");
         try {
             if(!passwordField1.getText().equals(passwordField2.getText())){
-                throw new RuntimeException("Password error");
+                throw new AccountException("Passwords must match");
+            }
+            else if(!isValidEmail(emailTextField.getText())){
+                throw new AccountException("Not a valid email");
             }
             String createRequest = "http://tmtp-spec.appspot.com/register?username=" + usernameTextField.getText() +
                     "&name=" + displayNameTextField.getText() + "&password=" + passwordField1.getText() + "&email=" +
@@ -52,8 +56,8 @@ public class CreateAccountController {
             failLabel.setText("Server unavailable");
         } catch (IOException e) {
             failLabel.setText("Couldn't connect");
-        } catch(RuntimeException e){
-            failLabel.setText("Passwords must match");
+        } catch(AccountException e){
+            failLabel.setText(e.getMessage());
         }
 
     }
@@ -84,5 +88,17 @@ public class CreateAccountController {
         if(e.getCode() == KeyCode.ENTER){
             createAccount();
         }
+    }
+
+    private boolean isValidEmail(String email){
+        String possibleEmails = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+        Pattern pat = Pattern.compile(possibleEmails);
+        if(email == null){
+            return false;
+        }
+        return pat.matcher(email).matches();
     }
 }

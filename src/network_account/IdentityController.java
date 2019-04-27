@@ -3,7 +3,6 @@ package network_account;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import network_account.UserIdentity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +27,5 @@ public class IdentityController {
 
     public void updateSocial(){
 
-    }
-
-    private void updateIdentity(UserIdentity userIdentity, String gameName){
-        usernameText.setText(userIdentity.getUsername());
-        int scoreCounter = 0;
     }
 }

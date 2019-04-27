@@ -69,7 +69,6 @@ public class LoginController {
                 myHighScores.get(game).add(highScore);
             }
             myIdentity = new UserIdentity(username, displayName, myHighScores);
-            System.out.println("UserIdentity changed to " + getMyIdentity().getName());
 
             resetFields();
         } catch (MalformedURLException e) {
