@@ -6,6 +6,7 @@ import GameCenter.utilities.Thumbnail;
 import Player.src.PlayerMain.PlayerStage;
 import auth.RunAuth;
 
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.GaussianBlur;
@@ -25,8 +26,6 @@ import java.util.List;
  *
  * This controller defines all actions that occur when a user interacts with the GUI. It also defines several parts of
  * the GUI that cannot be done in fxml, such as placing images parsed from a .json file.
- *
- * TODO: Figure out why @FXML tag is not working---we do not want all these public variables/classes
  */
 public class GameCenterController {
     private List<DataStruct> gameData;
@@ -115,15 +114,21 @@ public class GameCenterController {
         descriptionText.setText(gameData.get(myIndex).getDescription());
     }
 
-    public void launchAuthEnv() {
+    @FXML
+    private void launchAuthEnv() {
         new RunAuth().start(new Stage());
     }
 
-    public void launchPlayer() {
+    @FXML
+    private void launchPlayer() {
         new PlayerStage().run(gameData.get(myIndex).getSourcePath());
     }
 
-    public void rateGame() {
+    @FXML
+    private void rateGame() {
         ratingPane.setVisible(true);
     }
+
+    @FXML
+    private void login() {}
 }
