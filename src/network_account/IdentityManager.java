@@ -19,18 +19,17 @@ public class IdentityManager {
      */
     public IdentityManager(){
         myIdentity = new UserIdentity();
+        myLoginLoader = new FXMLLoader();
     }
 
     /**
      * Set the input stage to the login screen
-     * @param primaryStage is the stage that will display the login screen
      */
-    public void setStageLogin(Stage primaryStage){
+    public void setStageLogin(){
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(RunAccount.class.getResource("/network_fxml/login.fxml"));
-            Parent root = loader.load();
-            setStage(primaryStage, root);
+            myLoginLoader.setLocation(RunAccount.class.getResource("/network_fxml/login.fxml"));
+            Parent root = myLoginLoader.load();
+            setStage(root);
         } catch (IOException e) {
             System.out.println("Login FXML file not found");
         }
@@ -38,14 +37,13 @@ public class IdentityManager {
 
     /**
      * Set the input stage to the create account screen
-     * @param primaryStage is the stage that will display the create account screen
      */
-    public void setStageCreate(Stage primaryStage){
+    public void setStageCreate(){
         try {
-            myLoginLoader = new FXMLLoader();
-            myLoginLoader.setLocation(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
-            Parent root = myLoginLoader.load();
-            setStage(primaryStage, root);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
+            Parent root = loader.load();
+            setStage(root);
         } catch (IOException e) {
             System.out.println("Create Account FXML file not found");
         }
@@ -65,10 +63,11 @@ public class IdentityManager {
         return myIdentity;
     }
 
-    private void setStage(Stage primaryStage, Parent root){
-            primaryStage.setTitle("User Login");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.setResizable(false);
-            primaryStage.show();
+    private void setStage(Parent root){
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("User Login");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.showAndWait();
     }
 }

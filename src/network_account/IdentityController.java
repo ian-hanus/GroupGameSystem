@@ -33,9 +33,5 @@ public class IdentityController {
     private void updateIdentity(UserIdentity userIdentity, String gameName){
         usernameText.setText(userIdentity.getUsername());
         int scoreCounter = 0;
-        for(Label score:myScores) {
-            score.setText(Integer.toString(userIdentity.getHighScores(gameName)));
-            scoreCounter++;
-        }
     }
 }

@@ -8,6 +8,8 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class RunAccount extends Application {
     public static void main(String[] args){
@@ -53,8 +55,23 @@ public class RunAccount extends Application {
 //        }
 
         IdentityManager identityManager = new IdentityManager();
-        identityManager.setStageLogin(primaryStage);
+        identityManager.setStageLogin();
         UserIdentity testIdentity = identityManager.getIdentity();
         System.out.println(testIdentity.getName());
+
+        String[] gameNames = new String[]{"NotMario", "Overcooked", "Sonic"};
+        Integer[] highScores = new Integer[]{100, 200, 300};
+        String[] userNames = new String[]{"Me", "Myself", "I"};
+        for(int k = 0; k < 3; k++){
+            String highScore = "http://tmtp-spec.appspot.com/newHighScore?username=" + userNames[k] + "&gameID="
+                    + gameNames[k] + "&score=" + highScores[k];
+            try {
+                URL url = new URL(highScore);
+                URLConnection request = url.openConnection();
+                request.connect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

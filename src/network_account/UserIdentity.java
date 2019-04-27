@@ -1,5 +1,7 @@
 package network_account;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Map;
  */
 public class UserIdentity {
     private String myUsername;
-    private Map<String, Integer> myHighScores;
+    private Map<String, List<String>> myHighScores;
     private String myName;
 
     //TODO: Reformat UserIdentity class to reflect only users top score, along with universal top scores
@@ -21,7 +23,7 @@ public class UserIdentity {
      * @param highScores is a Map of Strings to Integers, with the key being the name of the game and the value being
      *                   the user's highest score for the game
      */
-    public UserIdentity(String username, String name, Map<String, Integer> highScores){
+    public UserIdentity(String username, String name, Map<String, List<String>> highScores){
         myUsername = username;
         myHighScores = highScores;
         myName = name;
@@ -48,11 +50,11 @@ public class UserIdentity {
      *                 score of
      * @return Integer representing the user's highest score for the input game
      */
-    public Integer getHighScores(String gameName){
+    public List<String> getHighScores(String gameName){
         try {
             return myHighScores.get(gameName);
         } catch(RuntimeException e){
-            return 0;
+            return new ArrayList<>();
         }
     }
 

@@ -1,6 +1,9 @@
 package network_account;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,13 +14,16 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import uiutils.panes.Pane;
-
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * FXML Controller for the user login pane (res/network_fxml/login.fxml), allowing user's to connect with the
@@ -25,6 +31,7 @@ import java.util.HashMap;
  */
 public class LoginController {
     private UserIdentity myIdentity;
+    private Map<String, List<String>> myHighScores;
 
     @FXML
     public TextField usernameTextField, passwordTextField;
@@ -44,9 +51,25 @@ public class LoginController {
             String username = names.getAsJsonObject("user").get("username").toString().replaceAll("^\"|\"$", "");
             String displayName = names.getAsJsonObject("user").get("name").toString().replaceAll("^\"|\"$", "");
 
-//            String scoreRequest = "http://black-abode-xxxx.appspot.com/highScores";
-//            JsonObject scores = getJsonReponse(scoreRequest);
-            myIdentity = new UserIdentity(username, displayName, new HashMap<>());
+            myHighScores = new HashMap<>();
+            String scoreRequest = "http://tmtp-spec.appspot.com/highScores";
+            URL url = new URL(scoreRequest);
+            URLConnection request = url.openConnection();
+            url.openConnection().connect();
+            JsonParser jParser = new JsonParser();
+            JsonElement jElement = jParser.parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonArray jScores = jElement.getAsJsonArray();
+            for(int k = 0; k < jScores.size(); k++){
+                JsonElement scoreElement = jScores.get(k);
+                JsonObject scoreObject = scoreElement.getAsJsonObject();
+                String game = scoreObject.get("gameID").toString().replaceAll("^\"|\"$", "");
+                String highScore = scoreObject.get("username").toString().replaceAll("^\"|\"$", "") +
+                        ": " + scoreObject.get("score").toString().replaceAll("^\"|\"$", "");
+                myHighScores.putIfAbsent(game, new ArrayList<>());
+                myHighScores.get(game).add(highScore);
+            }
+            myIdentity = new UserIdentity(username, displayName, myHighScores);
+            System.out.println("UserIdentity changed to " + getMyIdentity().getName());
 
             resetFields();
         } catch (MalformedURLException e) {
@@ -98,6 +121,10 @@ public class LoginController {
         }
     }
 
+    /**
+     * Returns the current identity chosen by the user, or the default if no identity has been chosen
+     * @return the UserIdentity signifying the current user
+     */
     public UserIdentity getMyIdentity(){
         return myIdentity;
     }
