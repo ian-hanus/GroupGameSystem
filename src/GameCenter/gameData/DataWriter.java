@@ -49,6 +49,16 @@ public class DataWriter {
             System.out.println("Unable to save game to JSON file.");
         }
     }
+
+    public void writeFavorite (String favorite) throws FileNotFoundException {
+        JSONObject obj = new JSONObject(new Scanner(new File(filePath)).useDelimiter("\\Z").next());
+        var games = obj.getJSONArray("games");
+        for (Object o : games) {
+            var game = (JSONObject) o;
+            game.put("favorite", favorite);
+        }
+    }
+
 }
 
 
