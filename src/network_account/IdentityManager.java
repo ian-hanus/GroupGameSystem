@@ -3,11 +3,16 @@ package network_account;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
+// TODO: add game cycling functionality for the identity pane
 
 /**
  * Class made to manage the identity of the user and hold all of the information of the player
@@ -15,6 +20,8 @@ import java.net.URLConnection;
 public class IdentityManager {
     private UserIdentity myIdentity;
     private FXMLLoader myLoginLoader;
+    private FXMLLoader myIdentityLoader;
+    private List<Label> myScores;
 
     /**
      * Constructor setting the UserIdentity to a default
@@ -22,6 +29,8 @@ public class IdentityManager {
     public IdentityManager(){
         myIdentity = new UserIdentity();
         myLoginLoader = new FXMLLoader();
+        myIdentityLoader = new FXMLLoader();
+        myScores = new ArrayList<>();
     }
 
     /**
@@ -29,7 +38,7 @@ public class IdentityManager {
      */
     public void setStageLogin(){
         try {
-            myLoginLoader.setLocation(RunAccount.class.getResource("/network_fxml/login.fxml"));
+            myLoginLoader.setLocation(IdentityManager.class.getResource("/network_fxml/login.fxml"));
             Parent root = myLoginLoader.load();
             setStage(root);
         } catch (IOException e) {
@@ -43,11 +52,27 @@ public class IdentityManager {
     public void setStageCreate(){
         try {
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(RunAccount.class.getResource("/network_fxml/createaccount.fxml"));
+            loader.setLocation(IdentityManager.class.getResource("/network_fxml/createaccount.fxml"));
             Parent root = loader.load();
             setStage(root);
         } catch (IOException e) {
             System.out.println("Create Account FXML file not found");
+        }
+    }
+
+    public void setStageIdentity(String gameName){
+        try {
+            myIdentityLoader.setLocation(IdentityManager.class.getResource("/network_fxml/identitypane.fxml"));
+//            IdentityController identityController = myIdentityLoader.getController();
+////            myScores.add(identityController.score1);
+////            myScores.add(identityController.score2);
+////            myScores.add(identityController.score3);
+////            identityController.usernameText.setText(myIdentity.getName());
+////            updateIdentity(gameName);
+            Parent root = myIdentityLoader.load();
+            setStage(root);
+        } catch (IOException e) {
+            System.out.println("Identity Pane FXML file not found");
         }
     }
 
@@ -87,9 +112,19 @@ public class IdentityManager {
 
     private void setStage(Parent root){
         Stage primaryStage = new Stage();
-        primaryStage.setTitle("User Login");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.showAndWait();
+    }
+
+    private void updateIdentity(String gameName){
+        List<String> highScores = myIdentity.getHighScores(gameName);
+        for(int k = 0; k < 3; k++) {
+            try {
+                myScores.get(k).setText(highScores.get(k));
+            } catch (NullPointerException e){
+                myScores.get(k).setText("");
+            }
+        }
     }
 }
