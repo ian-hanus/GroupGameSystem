@@ -22,14 +22,7 @@ public class RunAccount extends Application {
 //                    + gameNames[k] + "&score=" + highScores[k];
 //
 //        }
-        String highScore = "http://tmtp-spec.appspot.com/newHighScore?username=ianhanus&gameID=TestGame&score=100";
-        try {
-            URL url = new URL(highScore);
-            URLConnection request = url.openConnection();
-            request.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
 
         IdentityManager identityManager = new IdentityManager();
         identityManager.setStageLogin();
