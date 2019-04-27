@@ -37,7 +37,6 @@ public class GameCenterController {
     private ArrayList<Integer> favoriteGames;
     private int activeThumbnail;
     private int myIndex;
-    private boolean debugMode = false;
     private Number ratingVal;
     private ImageView activeGameImageView;
 
@@ -181,8 +180,7 @@ public class GameCenterController {
 
     @FXML
     private void launchPlayer() {
-        if (debugMode) new PlayerStage().runDebug(gameData.get(myIndex).getSourcePath());
-        else new PlayerStage().run(gameData.get(myIndex).getSourcePath());
+        new PlayerStage().run(gameData.get(myIndex).getSourcePath());
     }
 
     @FXML

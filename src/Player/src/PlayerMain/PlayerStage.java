@@ -10,6 +10,7 @@ import Player.src.Regions.DescriptionRegion;
 import Player.src.Regions.GamesRegion;
 import Player.src.Regions.Thumbnail;
 import Player.src.Regions.TitleRegion;
+import gamedata.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -106,8 +107,10 @@ public class PlayerStage {
         }
     }
 
-    public void runDebug(String gameName) {
-        // TODO: make debug mode with console
+    public void run(Game game, Boolean debug) {
+        if (debug) {
+            // TODO: make method, adding console for debug mode
+        }
     }
 
     public void run(String gameName) {
