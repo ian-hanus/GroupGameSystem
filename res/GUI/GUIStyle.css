@@ -114,3 +114,30 @@
 .smallButton:hover{
     -fx-background-color: #d3d3da;
 }
+
+.socialLabel{
+    -fx-font-family: Impact;
+    -fx-font-size: 18;
+    -fx-text-fill: white;
+    -fx-padding: 5;
+}
+
+.socialScrollPane{
+    -fx-background: #333333;
+    -fx-background-color: #333333;
+    -fx-pref-height: 100;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+.socialButton{
+    -fx-alignment: center;
+    -fx-background-color: ghostwhite;
+}
+
+.socialScoreLabel{
+    -fx-font-family: Impact;
+    -fx-font-size: 14;
+    -fx-text-fill: white;
+    -fx-padding: 3;
+}
