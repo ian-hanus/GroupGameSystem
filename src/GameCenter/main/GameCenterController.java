@@ -165,7 +165,7 @@ public class GameCenterController {
     }
     
     private void writeRatingToJSON() {
-        gameData.get(myIndex).setRating(ratingVal.doubleValue());
+        gameData.get(myIndex).setRating(ratingVal.doubleValue(), myIndex);
     }
 
 }
