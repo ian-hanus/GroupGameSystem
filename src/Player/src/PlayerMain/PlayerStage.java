@@ -62,6 +62,7 @@ public class PlayerStage {
     private DataTracker<String> myPowerupTracker;
 
     private int myCount;
+    private int gamePaused;
 
     public PlayerStage() {
         myVisualRoot = new GridPane();
@@ -121,7 +122,8 @@ public class PlayerStage {
     }
 
     private void step() {
-        if (myHud.getGamePaused() == 0) {
+        getGamePaused();
+        if (gamePaused == 0) {
             myGameController.updateScene();
             addNewImageViews();
             updateOrRemoveImageViews();
@@ -220,6 +222,14 @@ public class PlayerStage {
         ret.setTitle(ST_TITLE);
         ret.setScene(myScene);
         return ret;
+    }
+
+    private void setGamePaused() {
+        gamePaused = myHud.getGamePaused();
+    }
+
+    public int getGamePaused() {
+        return gamePaused;
     }
 
 }
