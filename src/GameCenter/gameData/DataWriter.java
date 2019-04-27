@@ -2,13 +2,14 @@ package GameCenter.gameData;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.json.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -17,6 +18,7 @@ import java.util.Scanner;
 public class DataWriter {
     private Gson myGson;
     private final String filePath = "data/player_data.json";
+    private File jsonFile = new File(filePath);
 
     public DataWriter(){
         try {
@@ -28,7 +30,6 @@ public class DataWriter {
 
     public void writeRating (String rating, int gameIndex) throws FileNotFoundException {
         JSONObject obj = new JSONObject(new Scanner(new File(filePath)).useDelimiter("\\Z").next());
-        var gamesList = new ArrayList<DataStruct>();
 
         var games = obj.getJSONArray("games");
         int counter = 0;
@@ -40,13 +41,21 @@ public class DataWriter {
             counter++;
         }
 
-        String gameString = games.toString();
+        JsonParser parser = new JsonParser();
+        JsonElement je = parser.parse(obj.toString());
+        String gameString = myGson.toJson(je);
         System.out.println(gameString);
 
-        try {
-            myGson.toJson(gameString, new FileWriter(filePath));
-        } catch (IOException e) {
-            System.out.println("Unable to save game to JSON file.");
+        if(jsonFile.exists()){
+            jsonFile.delete();
+            try {
+                jsonFile.createNewFile();
+                FileWriter writer = new FileWriter(filePath);
+                writer.write(gameString);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
