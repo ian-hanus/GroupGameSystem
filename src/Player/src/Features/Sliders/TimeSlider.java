@@ -1,16 +1,16 @@
 package Player.src.Features.Sliders;
 
 /**
- * This class is used to set the number of lives during a game.
+ * This class is used to set the time limit during a game.
  * @author Carter Gay
  */
-public class LivesSlider extends PlayerSlider {
+public class TimeSlider extends PlayerSlider {
 
-    private static final String TITLE = "Lives";
+    private static final String TITLE = "Time";
 
     @Override
     protected void handleItemSelected(Number item) {
-        double myLives = item.doubleValue();
+        double myLevelTime = item.doubleValue();
     }
 
     @Override
