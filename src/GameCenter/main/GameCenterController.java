@@ -6,9 +6,12 @@ import GameCenter.utilities.Thumbnail;
 import Player.src.PlayerMain.PlayerStage;
 import auth.RunAuth;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -38,15 +41,25 @@ public class GameCenterController {
     public Pane descriptionPane;
     public Pane ratingPane;
     public ScrollPane thumbPane;
+    public Slider ratingSlider;
     public VBox thumbPaneContent;
     public Text titleText;
     public Text descriptionText;
+    public Text ratingText;
     public Button newGameButton;
     public Button playButton;
     public Button editButton;
     public Button rateButton;
+    public Button returnButton;
 
     void initGameCenter() {
+        ratingSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                                Number old_val, Number new_val) {
+                ratingText.setText(String.format("%.2f", new_val));
+            }
+        });
+
         placeThumbnails();
     }
 
@@ -127,8 +140,15 @@ public class GameCenterController {
     @FXML
     private void rateGame() {
         ratingPane.setVisible(true);
+        descriptionPane.setVisible(false);
     }
 
     @FXML
     private void login() {}
+
+    @FXML
+    private void returnToDescription() {
+        ratingPane.setVisible(false);
+        descriptionPane.setVisible(true);
+    }
 }
