@@ -87,7 +87,7 @@ public class GameCenterController {
 
     private void thumbnailClicked(int index) {
         this.myIndex = index;
-        writeRatingToJSON();
+//        writeRatingToJSON();
 
         if (activeThumbnail == myIndex) {
             activeThumbnail = -1;
@@ -165,7 +165,7 @@ public class GameCenterController {
     }
     
     private void writeRatingToJSON() {
-        // TODO: write rating for this game to player_data.json
+        gameData.get(myIndex).setRating(ratingVal.doubleValue());
     }
 
 }

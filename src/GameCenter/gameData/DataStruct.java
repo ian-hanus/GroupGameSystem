@@ -1,11 +1,10 @@
 package GameCenter.gameData;
 
-import org.json.JSONObject;
-
-import java.io.File;
+import java.io.FileNotFoundException;
 
 public class DataStruct {
     private String name, imagePath, description, sourcePath, rating;
+    private DataWriter dataWriter = new DataWriter();
 
     DataStruct(String n, String i, String d, String s, String r) {
         name = n;
@@ -37,5 +36,10 @@ public class DataStruct {
 
     public void setRating(double value) {
         rating = String.valueOf(value);
+        try {
+            dataWriter.writeRating(rating);
+        } catch (FileNotFoundException e) {
+            // This should never happen
+        }
     }
 }
