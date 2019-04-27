@@ -67,7 +67,7 @@
             </children>
          </Pane>
           <!-- Rating Pane -->
-         <Pane fx:id="ratingPane" prefHeight="390.0" prefWidth="425.0" styleClass="centerPane">
+         <Pane fx:id="ratingPane" prefHeight="390.0" prefWidth="425.0" styleClass="centerPane" visible="false">
             <children>
                <Slider fx:id="ratingSlider" blockIncrement="1.0" layoutX="25.0" layoutY="195.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" prefHeight="50.0" prefWidth="375.0" showTickMarks="true" snapToTicks="true" />
                <Button fx:id="returnButton" layoutX="163.0" layoutY="261.0" mnemonicParsing="false" onAction="#returnToDescription" styleClass="largeButton" text="Return" />

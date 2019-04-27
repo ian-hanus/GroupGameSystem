@@ -34,6 +34,7 @@ public class GameCenterController {
     private List<DataStruct> gameData;
     private int activeThumbnail;
     private int myIndex;
+    private Number ratingVal;
     private ImageView activeGameImageView;
 
     public Pane socialPane;
@@ -53,14 +54,18 @@ public class GameCenterController {
     public Button returnButton;
 
     void initGameCenter() {
+        initListeners();
+        placeThumbnails();
+    }
+
+    private void initListeners() {
         ratingSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
-                ratingText.setText(String.format("%.2f", new_val));
+                ratingVal = new_val;
+                ratingText.setText(String.format("%.2f", ratingVal));
             }
         });
-
-        placeThumbnails();
     }
 
     private void placeThumbnails() {
@@ -82,6 +87,8 @@ public class GameCenterController {
 
     private void thumbnailClicked(int index) {
         this.myIndex = index;
+        writeRatingToJSON();
+
         if (activeThumbnail == myIndex) {
             activeThumbnail = -1;
             titleText.setText("Game Center");
@@ -99,6 +106,7 @@ public class GameCenterController {
     private void revertDescription() {
         newGamePane.getChildren().remove(activeGameImageView);
         descriptionPane.setVisible(false);
+        ratingPane.setVisible(false);
     }
 
     private void loadGameDetails() {
@@ -108,6 +116,7 @@ public class GameCenterController {
         loadGameImage();
         loadGameText();
         descriptionPane.setVisible(true);
+        ratingPane.setVisible(false);
     }
 
     private void loadGameImage() {
@@ -144,11 +153,19 @@ public class GameCenterController {
     }
 
     @FXML
-    private void login() {}
+    private void login() {
+        // TODO: integrate with Ian's login
+    }
 
     @FXML
     private void returnToDescription() {
         ratingPane.setVisible(false);
         descriptionPane.setVisible(true);
+        writeRatingToJSON();
     }
+    
+    private void writeRatingToJSON() {
+        // TODO: write rating for this game to player_data.json
+    }
+
 }
