@@ -17,13 +17,13 @@
 
 <AnchorPane id="parentPane" prefHeight="525.0" prefWidth="975.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameCenter.main.GameCenterController">
 
-    <padding><Insets bottom="25" left="25" right="25" top="25" /></padding>
+    <padding><Insets bottom="25.0" left="25.0" top="25.0" /></padding>
 
     <stylesheets><URL value="@GUIStyle.css" /></stylesheets>
 
     <!-- Thumbnail Pane -->
-    <Pane layoutX="700" layoutY="25" prefHeight="450" prefWidth="250" styleClass="centerPane">
-        <ScrollPane fx:id="thumbPane" layoutX="10" layoutY="10" prefHeight="430" prefWidth="230" styleClass="thumbPane">
+    <Pane layoutX="700" layoutY="20.0" prefHeight="455.0" prefWidth="250.0" styleClass="centerPane">
+        <ScrollPane fx:id="thumbPane" layoutX="10" layoutY="10" prefHeight="435.0" prefWidth="230" styleClass="thumbPane">
             <VBox fx:id="thumbPaneContent" spacing="25">
             </VBox>
         </ScrollPane>
@@ -32,28 +32,8 @@
     <!-- Social Pane -->
     <Pane fx:id="socialPane" layoutX="25" layoutY="85.0" prefHeight="390.0" prefWidth="200" styleClass="centerPane" />
 
-    <!-- Username Box -->
-    <HBox alignment="CENTER_LEFT" layoutX="25.0" layoutY="25.0" prefHeight="44.0" prefWidth="200.0" styleClass="centerPane">
-      <children>
-         <Circle radius="22.0" stroke="BLACK" strokeType="INSIDE">
-            <fill>
-               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-                  <stops>
-                     <Stop color="BLACK" />
-                     <Stop color="WHITE" offset="1.0" />
-                  </stops>
-               </RadialGradient>
-            </fill>
-         </Circle>
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="paneText" text="username" textAlignment="CENTER" wrappingWidth="150.0">
-            <font>
-               <Font size="25.0" />
-            </font>
-         </Text>
-      </children></HBox>
-
     <!-- Title pane -->
-    <HBox alignment="CENTER" layoutX="250.0" layoutY="25.0" prefHeight="45.0" prefWidth="50.0" styleClass="centerPane">
+    <HBox alignment="CENTER" layoutX="250.0" layoutY="20.0" prefHeight="50.0" prefWidth="137.0" styleClass="centerPane">
         <padding>
          <Insets bottom="5" left="5" right="5" top="5" />
       </padding>
@@ -61,7 +41,7 @@
     </HBox>
 
     <!-- Favorite Pane -->
-   <Pane layoutX="631.0" layoutY="25.0" prefHeight="44.0" prefWidth="44.0" styleClass="centerPane" />
+   <Pane layoutX="625.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" styleClass="centerPane" />
 
     <!-- Description Pane -->
    <StackPane layoutX="250.0" layoutY="85.0" prefHeight="390.0" prefWidth="425.0" styleClass="centerPane">
@@ -89,5 +69,25 @@
          </Pane>
       </children>
    </StackPane>
+   <Pane layoutX="25.0" layoutY="20.0" prefHeight="55.0" prefWidth="200.0" styleClass="centerPane" visible="false">
+      <children>
+         <Text layoutX="50.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="paneText" text="username" textAlignment="CENTER" wrappingWidth="150.0">
+            <font>
+               <Font size="25.0" />
+            </font>
+         </Text>
+         <Circle layoutX="40.0" layoutY="28.0" radius="22.0" stroke="BLACK" strokeType="INSIDE">
+            <fill>
+               <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                  <stops>
+                     <Stop color="BLACK" />
+                     <Stop color="WHITE" offset="1.0" />
+                  </stops>
+               </RadialGradient>
+            </fill>
+         </Circle>
+      </children>
+   </Pane>
+   <Button fx:id="loginButton" layoutX="25.0" layoutY="20.0" mnemonicParsing="false" onAction="#login" prefHeight="50.0" prefWidth="200.0" styleClass="largeButton" text="Log In" />
 
 </AnchorPane>
