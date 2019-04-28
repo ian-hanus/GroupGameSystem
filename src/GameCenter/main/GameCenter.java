@@ -62,7 +62,6 @@ public class GameCenter extends Application {
             friendName.getStyleClass().add("socialScoreLabel");
             myGCC.friendPane.getChildren().add(friendName);
         }
-
         Label[] scores = new Label[]{myGCC.score1, myGCC.score2, myGCC.score3};
         for(int k = 0; k < 3; k++){
             try {
@@ -72,7 +71,6 @@ public class GameCenter extends Application {
                 scores[k].setText("No High Score");
             }
         }
-
         Scene scene = new Scene(myRoot, 975, 500);
         stage.setTitle("Game Center");
         stage.setResizable(false);
