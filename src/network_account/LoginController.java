@@ -94,8 +94,10 @@ public class LoginController {
             loginFailLabel.setText("Couldn't connect to server");
         } catch (IOException e) {
             loginFailLabel.setText("Couldn't connect to internet");
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

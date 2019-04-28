@@ -4,11 +4,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
+
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +31,7 @@ public class CreateAccountController {
     @FXML
     public TextField emailTextField, usernameTextField, displayNameTextField, passwordField1, passwordField2;
     public Label failLabel;
-    public Button createAccountButton;
+    public Button createAccountButton, loginButton;
 
     /**
      * Creates an account with all of the information requisite to form a user identity if all of the entered
@@ -87,6 +92,20 @@ public class CreateAccountController {
     public void createAccountEnter(KeyEvent e){
         if(e.getCode() == KeyCode.ENTER){
             createAccount();
+        }
+    }
+
+    public void returnToLogin(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(IdentityManager.class.getResource("/network_fxml/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Login FXML file not found");
         }
     }
 
