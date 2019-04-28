@@ -15,7 +15,7 @@
 
  <Label fx:id="accountLabel" layoutX="38.0" layoutY="50.0" styleClass="titleLabel" text="Create Account" />
 
- <Button fx:id="loginButton" layoutX="342.0" layoutY="350.0" onMouseClicked="#returnToLogin" styleClass="smallButton" text="RETURN" />
+ <Button fx:id="loginButton" layoutX="342.0" layoutY="350.0" onAction="#returnToLogin" styleClass="smallButton" text="RETURN" />
  <TextField fx:id="emailTextField" layoutX="38.0" layoutY="100.0" prefHeight="33.0" prefWidth="375.0" promptText="EMAIL" text="">
       <font>
          <Font name="Impact" size="16.0" />
