@@ -12,9 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * To add new Data, instead of modifying the string, we just write a new .json file
- */
 public class DataWriter {
     private Gson myGson;
     private final String filePath = "data/player_data.json";
@@ -28,23 +25,10 @@ public class DataWriter {
         }
     }
 
-    public void writeRating (String rating, int gameIndex) throws FileNotFoundException {
-        JSONObject obj = new JSONObject(new Scanner(new File(filePath)).useDelimiter("\\Z").next());
-
-        var games = obj.getJSONArray("games");
-        int counter = 0;
-        for(Object o : games) {
-            var game = (JSONObject) o;
-            if (counter == gameIndex) {
-                game.put("rating", rating);
-            }
-            counter++;
-        }
-
+    private void writeToFile(JSONObject jo) {
         JsonParser parser = new JsonParser();
-        JsonElement je = parser.parse(obj.toString());
+        JsonElement je = parser.parse(jo.toString());
         String gameString = myGson.toJson(je);
-        System.out.println(gameString);
 
         if(jsonFile.exists()){
             jsonFile.delete();
@@ -57,15 +41,31 @@ public class DataWriter {
                 e.printStackTrace();
             }
         }
+
     }
 
-    public void writeFavorite (String favorite) throws FileNotFoundException {
-        JSONObject obj = new JSONObject(new Scanner(new File(filePath)).useDelimiter("\\Z").next());
-        var games = obj.getJSONArray("games");
-        for (Object o : games) {
+    private JSONObject writeValue(String key, String value, int gameIndex) throws FileNotFoundException {
+        var jo = new JSONObject(new Scanner(new File(filePath)).useDelimiter("\\Z").next());
+
+        var games = jo.getJSONArray("games");
+        int counter = 0;
+        for(Object o : games) {
             var game = (JSONObject) o;
-            game.put("favorite", favorite);
+            if (counter == gameIndex) {
+                game.put(key, value);
+            }
+            counter++;
         }
+
+        return jo;
+    }
+
+    public void writeRating (String rating, int gameIndex) throws FileNotFoundException {
+        writeToFile(writeValue("rating", rating, gameIndex));
+    }
+
+    public void writeFavorite (String favorite, int gameIndex) throws FileNotFoundException {
+        writeToFile(writeValue("favorite", favorite, gameIndex));
     }
 
 }

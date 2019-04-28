@@ -46,10 +46,10 @@ public class DataStruct {
         }
     }
 
-    public void setFavorite(boolean value) {
+    public void setFavorite(boolean value, int gameIndex) {
         favorite = String.valueOf(value);
         try {
-            dataWriter.writeFavorite(favorite);
+            dataWriter.writeFavorite(favorite, gameIndex);
         } catch (FileNotFoundException e) {
             // this should never happen
         }
