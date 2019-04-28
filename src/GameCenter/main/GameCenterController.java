@@ -230,5 +230,6 @@ public class GameCenterController {
     private void returnToDescription() {
         ratingPane.setVisible(false);
         descriptionPane.setVisible(true);
+        gameData.get(myIndex).setRating(ratingVal.doubleValue(), myIndex);
     }
 }
