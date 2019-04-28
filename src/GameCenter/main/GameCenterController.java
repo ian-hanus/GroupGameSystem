@@ -22,7 +22,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import network_account.UserIdentity;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -225,11 +224,6 @@ public class GameCenterController {
         ratingText.setText(String.valueOf(gameData.get(myIndex).getRating()));
         ratingSlider.setValue(gameData.get(myIndex).getRating());
         descriptionPane.setVisible(false);
-    }
-
-    @FXML
-    private void login() {
-        // TODO: integrate with Ian's login
     }
 
     @FXML
