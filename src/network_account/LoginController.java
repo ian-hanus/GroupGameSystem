@@ -20,8 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -48,8 +48,9 @@ public class LoginController {
     public TextField usernameTextField, passwordTextField;
     public Label loginFailLabel;
     public Button loginButton, createAccountButton;
-    public StackPane parentContainer;
-    public GridPane gridPane;
+    public AnchorPane parentContainer;
+    public Pane mainPane;
+
 
 
     /**
@@ -142,7 +143,7 @@ public class LoginController {
             KeyValue keyValue = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
             KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), keyValue);
             timeline.getKeyFrames().add(keyFrame);
-            timeline.setOnFinished(e->parentContainer.getChildren().remove(gridPane));
+            timeline.setOnFinished(e->parentContainer.getChildren().remove(mainPane));
             timeline.play();
         } catch(IOException e){
             System.out.println("Error in using create account fxml");
