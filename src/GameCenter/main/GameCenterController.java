@@ -169,11 +169,6 @@ public class GameCenterController {
     private void returnToDescription() {
         ratingPane.setVisible(false);
         descriptionPane.setVisible(true);
-        writeRatingToJSON();
-    }
-    
-    private void writeRatingToJSON() {
-        gameData.get(myIndex).setRating(ratingVal.doubleValue());
     }
 
 }
