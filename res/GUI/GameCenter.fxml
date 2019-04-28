@@ -49,12 +49,12 @@
         <Label fx:id="highScoreLabel" text="High Scores: " styleClass="socialLabel" GridPane.rowIndex="4"/>
         <GridPane fx:id="highScorePane" GridPane.rowIndex="5">
             <columnConstraints>
-                <ColumnConstraints percentWidth="33" />
-                <ColumnConstraints percentWidth="66" />
+                <ColumnConstraints percentWidth="20" />
+                <ColumnConstraints percentWidth="80" />
             </columnConstraints>
-            <Label fx:id="scoreLabel1" text="1st: " GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="socialScoreLabel"/>
-            <Label fx:id="scoreLabel2" text="2nd: " GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="socialScoreLabel"/>
-            <Label fx:id="scoreLabel3" text="3rd: " GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="socialScoreLabel"/>
+            <Label fx:id="scoreLabel1" text="1st" GridPane.rowIndex="0" GridPane.columnIndex="0" styleClass="socialScoreLabel"/>
+            <Label fx:id="scoreLabel2" text="2nd" GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="socialScoreLabel"/>
+            <Label fx:id="scoreLabel3" text="3rd" GridPane.rowIndex="2" GridPane.columnIndex="0" styleClass="socialScoreLabel"/>
 
             <Label fx:id="score1" GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="socialScoreLabel"/>
             <Label fx:id="score2" GridPane.rowIndex="1" GridPane.columnIndex="1" styleClass="socialScoreLabel"/>

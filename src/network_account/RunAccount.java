@@ -12,8 +12,8 @@ public class RunAccount extends Application {
     public void start(Stage primaryStage){
         IdentityManager identityManager = new IdentityManager();
         identityManager.setStageLogin();
-        System.out.println(identityManager.getIdentity().getName());
-        identityManager.setStageIdentity("mygame1");
-        System.out.println("Past identity stage");
+//        System.out.println(identityManager.getIdentity().getName());
+//        identityManager.setStageIdentity("mygame1");
+//        System.out.println("Past identity stage");
     }
 }

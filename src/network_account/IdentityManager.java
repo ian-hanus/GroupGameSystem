@@ -22,6 +22,7 @@ public class IdentityManager {
     private FXMLLoader myLoginLoader;
     private FXMLLoader myIdentityLoader;
     private List<Label> myScores;
+    private Stage myPrimaryStage = new Stage();
 
     /**
      * Constructor setting the UserIdentity to a default
@@ -40,39 +41,11 @@ public class IdentityManager {
         try {
             myLoginLoader.setLocation(IdentityManager.class.getResource("/network_fxml/login.fxml"));
             Parent root = myLoginLoader.load();
-            setStage(root);
+            myPrimaryStage.setScene(new Scene(root));
+            myPrimaryStage.setResizable(false);
+            myPrimaryStage.show();
         } catch (IOException e) {
             System.out.println("Login FXML file not found");
-        }
-    }
-
-    /**
-     * Set the input stage to the create account screen
-     */
-    public void setStageCreate(){
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(IdentityManager.class.getResource("/network_fxml/createaccount.fxml"));
-            Parent root = loader.load();
-            setStage(root);
-        } catch (IOException e) {
-            System.out.println("Create Account FXML file not found");
-        }
-    }
-
-    public void setStageIdentity(String gameName){
-        try {
-            myIdentityLoader.setLocation(IdentityManager.class.getResource("/network_fxml/identitypane.fxml"));
-//            IdentityController identityController = myIdentityLoader.getController();
-////            myScores.add(identityController.score1);
-////            myScores.add(identityController.score2);
-////            myScores.add(identityController.score3);
-////            identityController.usernameText.setText(myIdentity.getName());
-////            updateIdentity(gameName);
-            Parent root = myIdentityLoader.load();
-            setStage(root);
-        } catch (IOException e) {
-            System.out.println("Identity Pane FXML file not found");
         }
     }
 
@@ -114,7 +87,7 @@ public class IdentityManager {
         Stage primaryStage = new Stage();
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
-        primaryStage.showAndWait();
+        primaryStage.show();
     }
 
     private void updateIdentity(String gameName){

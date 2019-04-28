@@ -1,5 +1,6 @@
 package network_account;
 
+import GameCenter.main.GameCenter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,8 +9,10 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +22,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -52,7 +56,7 @@ public class LoginController {
      * Check to see if login information is valid: if it is not tell the user that the information they provided was
      * invalid and prompt again
      */
-    public void login(){
+    public void login(ActionEvent event){
         try {
             String nameRequest = "http://tmtp-spec.appspot.com/login?username=" + usernameTextField.getText() +
                    "&password=" + passwordTextField.getText();
@@ -79,12 +83,19 @@ public class LoginController {
             }
             //TODO: Include friends list instead of empty arraylist
             myIdentity = new UserIdentity(username, displayName, myHighScores, new ArrayList<>());
-
+            String possibleSuccess= names.get("resultDesc").toString().replaceAll("^\"|\"$", "");
+            if(possibleSuccess.equals("Success")){
+                GameCenter gameCenter = new GameCenter();
+                gameCenter.setIdentity(myIdentity);
+                gameCenter.start(new Stage());
+            }
             resetFields();
         } catch (MalformedURLException e) {
             loginFailLabel.setText("Couldn't connect to server");
         } catch (IOException e) {
             loginFailLabel.setText("Couldn't connect to internet");
+        } catch (Exception e) {
+            ((Stage) ((Node)event.getSource()).getScene().getWindow()).close();
         }
     }
 
@@ -94,7 +105,7 @@ public class LoginController {
      */
     public void loginEnter(KeyEvent e){
         if(e.getCode() == KeyCode.ENTER){
-            login();
+            login(new ActionEvent());
         }
     }
 
