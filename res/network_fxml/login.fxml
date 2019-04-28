@@ -26,7 +26,7 @@
                <Font name="Impact" size="16.0" />
             </font></PasswordField>
    
-               <Button fx:id="loginButton" layoutX="38.0" layoutY="226.0" onMouseClicked="#login" styleClass="smallButton" text="LOGIN" />
+               <Button fx:id="loginButton" layoutX="38.0" layoutY="226.0" onAction="#login" styleClass="smallButton" text="LOGIN" />
                <Label fx:id="loginFailLabel" layoutX="267.0" layoutY="273.0" prefHeight="17.0" prefWidth="63.0" styleClass="errorLabel" text="" textFill="#ff0404">
             <font>
                <Font name="Impact" size="16.0" />
