@@ -5,9 +5,14 @@ import Engine.src.Components.Component;
 import Engine.src.Components.HealthComponent;
 import Engine.src.Components.MotionComponent;
 import Engine.src.Controller.Controller;
-import hud.HUDView;
-import hud.DataTracker;
-import hud.NumericalDataTracker;
+import Player.src.GameStats.DeathTracker;
+import Player.src.GameStats.EnemyTracker;
+import Player.src.GameStats.PositionTracker;
+import Player.src.Regions.DescriptionRegion;
+import Player.src.Regions.GamesRegion;
+import Player.src.Regions.Thumbnail;
+import Player.src.Regions.TitleRegion;
+import gamedata.Game;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
@@ -73,6 +78,12 @@ public class PlayerStage {
         myScene = new Scene(myVisualRoot, ST_WIDTH, ST_HEIGHT, ST_COLOR);
         //myScene = new Scene(myBorderPane, ST_WIDTH, SCREEN_HEIGHT, ST_COLOR);
         myScene.getStylesheets().add(STYLESHEET);
+    }
+
+    public void run(Game game, Boolean debug) {
+        if (debug) {
+            // TODO: make method, adding console for debug mode
+        }
     }
 
     public void run(String gameName) {

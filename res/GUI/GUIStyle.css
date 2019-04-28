@@ -6,8 +6,23 @@
     -fx-background-color: #808080;
 }
 
-.thumbnail {
+.slider .track {
+    -fx-pref-height:20;
+}
 
+.slider {
+    -fx-accent: ghostwhite;
+    -fx-border: black;
+}
+
+.slider:vertical .track {
+    -fx-pref-width:20;
+}
+
+.slider .thumb {
+    -fx-pref-height: 30;
+    -fx-pref-width: 30;
+    -fx-background-color: black;
 }
 
 .paneText {
@@ -74,6 +89,10 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 0);
     -fx-border-radius: 15 15 0 0;
     -fx-background-radius: 15 15 0 0;
+}
+
+.favoriteButton {
+    -fx-background-color: transparent;
 }
 
 .largeButton {

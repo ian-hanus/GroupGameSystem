@@ -17,7 +17,6 @@ import javafx.fxml.FXMLLoader;
  * GameCenter.java, GameCenter.fxml & GUIStyle.css, and GameCenterController.java are the model, view, and controller,
  * respectively. Keep this in mind when refactoring/writing new code.
  *
- * TODO: Figure out how to use custom fonts in .fxml or .css
  * TODO: Implement Social Hub
  * TODO: Add login items/user picture in conjunction with the data team
  *
