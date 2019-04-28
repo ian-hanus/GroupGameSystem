@@ -21,7 +21,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -51,6 +50,7 @@ public class LoginController {
     public Button loginButton, createAccountButton;
     public AnchorPane parentContainer;
     public Pane mainPane;
+
 
 
     /**
