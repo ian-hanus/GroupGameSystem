@@ -3,7 +3,7 @@ package GameCenter.main;
 import GameCenter.gameData.DataParser;
 import GameCenter.gameData.DataStruct;
 import GameCenter.utilities.Thumbnail;
-import Player.src.PlayerMain.PlayerStage;
+import Player.PlayerMain.PlayerStage;
 import auth.RunAuth;
 
 import javafx.beans.value.ChangeListener;
@@ -22,7 +22,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import network_account.UserIdentity;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -228,13 +227,9 @@ public class GameCenterController {
     }
 
     @FXML
-    private void login() {
-        // TODO: integrate with Ian's login
-    }
-
-    @FXML
     private void returnToDescription() {
         ratingPane.setVisible(false);
         descriptionPane.setVisible(true);
+        gameData.get(myIndex).setRating(ratingVal.doubleValue(), myIndex);
     }
 }
