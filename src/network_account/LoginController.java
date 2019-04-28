@@ -88,7 +88,12 @@ public class LoginController {
             if(possibleSuccess.equals("Success")){
                 GameCenter gameCenter = new GameCenter();
                 gameCenter.setIdentity(myIdentity);
-                gameCenter.start(new Stage());
+                try {
+                    gameCenter.start(new Stage());
+                    ((Node) event.getSource()).getScene().getWindow().hide();
+                } catch(Exception e) {
+                    System.out.println("Could not open GameCenter");
+                }
             }
             resetFields();
         } catch (MalformedURLException e) {

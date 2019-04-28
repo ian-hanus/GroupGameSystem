@@ -49,9 +49,9 @@ public class GameCenterController {
     public GridPane friendPane;
     public Slider ratingSlider;
     public VBox thumbPaneContent;
-    public Text titleText, descriptionText, ratingText;
-    public Button newGameButton, playButton, editButton, rateButton, returnButton, loginButton, favoriteButton;
-    public Label nameLabel, score1, score2, score3;
+    public Text titleText, descriptionText, ratingText, username;
+    public Button newGameButton, playButton, editButton, rateButton, returnButton, favoriteButton;
+    public Label score1, score2, score3;
 
     void initGameCenter() {
         initListeners();
@@ -193,7 +193,7 @@ public class GameCenterController {
     }
 
     private void updateIdentity(UserIdentity userIdentity, String gameName) {
-        nameLabel.setText("Hello" + userIdentity.getName());
+        username.setText(userIdentity.getName());
         for (String s : userIdentity.getFriends()) {
             Label friendName = new Label(s);
             friendName.getStyleClass().add("socialScoreLabel");

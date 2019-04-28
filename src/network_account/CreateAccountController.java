@@ -103,7 +103,7 @@ public class CreateAccountController {
             new RunAccount().start(new Stage());
             ((Node) event.getSource()).getScene().getWindow().hide();
         } catch(Exception e) {
-            System.out.println("Could not open GameCenter");
+            System.out.println("Could not open Login");
         }
     }
 

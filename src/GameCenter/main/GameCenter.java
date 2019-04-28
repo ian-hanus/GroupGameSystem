@@ -54,7 +54,7 @@ public class GameCenter extends Application {
 
         myRoot.getStylesheets().add(this.getClass().getResource("/GUI/GUIStyle.css").toString());
         myGCC.initGameCenter();
-        myGCC.nameLabel.setText("Hello " + myIdentity.getName() + "!");
+        myGCC.username.setText(myIdentity.getName());
 
         for(String s:myIdentity.getFriends()){
             Label friendName = new Label(s);
