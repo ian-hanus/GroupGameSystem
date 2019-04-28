@@ -124,7 +124,6 @@ public class GameCenterController {
 
     private void thumbnailClicked(int index) {
         this.myIndex = index;
-//        writeRatingToJSON();
 
         if (activeThumbnail == myIndex) {
             activeThumbnail = -1;
@@ -186,6 +185,8 @@ public class GameCenterController {
     @FXML
     private void rateGame() {
         ratingPane.setVisible(true);
+        ratingText.setText(String.valueOf(gameData.get(myIndex).getRating()));
+        ratingSlider.setValue(gameData.get(myIndex).getRating());
         descriptionPane.setVisible(false);
     }
 
