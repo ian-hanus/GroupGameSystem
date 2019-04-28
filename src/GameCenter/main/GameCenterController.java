@@ -22,7 +22,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import network_account.UserIdentity;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +36,7 @@ import java.util.List;
  */
 public class GameCenterController {
     private List<DataStruct> gameData;
+    private ArrayList<Integer> favoriteGames;
     private int activeThumbnail;
     private int myIndex;
     private Number ratingVal;
@@ -41,16 +44,18 @@ public class GameCenterController {
 
     @FXML
     public Pane socialPane, newGamePane, descriptionPane, ratingPane;
+    public Pane favoritePane;
     public ScrollPane thumbPane;
     public GridPane friendPane;
     public Slider ratingSlider;
     public VBox thumbPaneContent;
     public Text titleText, descriptionText, ratingText;
-    public Button newGameButton, playButton, editButton, rateButton, returnButton;
+    public Button newGameButton, playButton, editButton, rateButton, returnButton, loginButton, favoriteButton;
     public Label nameLabel, score1, score2, score3;
 
     void initGameCenter() {
         initListeners();
+        favoriteGames = new ArrayList<>();
         placeThumbnails();
     }
 
@@ -65,25 +70,78 @@ public class GameCenterController {
     }
 
     private void placeThumbnails() {
-        activeThumbnail = -1;
-        int counter = 0;
         try {
             gameData = DataParser.parseConfig("data/player_data.json");
-            for(var game : gameData) {
-                final int index = counter;
-                var thumbnail = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.getImagePath())), game.getName());
-                thumbPaneContent.getChildren().add(thumbnail.getView());
-                thumbnail.getView().setOnMouseClicked(e -> thumbnailClicked(index));
-                counter++;
-            }
         } catch (FileNotFoundException e) {
-            System.out.println("Error occurred when placing thumbnails");
+            System.out.println("Error occurred when reading in thumbnails");
+        }
+        // this sets favoriteGames int list
+        for (int i = 0; i < gameData.size(); i ++) {
+            DataStruct game = gameData.get(i);
+            if (!favoriteGames.contains(i) && game.getFavorite()) {
+                favoriteGames.add(i);
+            } else if (favoriteGames.contains(i) && !game.getFavorite()) {
+                favoriteGames.remove(i);
+            }
+        }
+        // make labels
+        int favCounter = favoriteGames.size();
+        Label favLabel = new Label("Favorites (" + favCounter + ")");
+        int gameCounter = gameData.size();
+        Label gameLabel = new Label("All Games (" + gameCounter + ")");
+        // TODO: set style of labels
+        // place thumbnails of each favorite in favoriteGames
+        thumbPaneContent.getChildren().add(favLabel);
+        for (int fav : favoriteGames) {
+            final int index = fav;
+            DataStruct game = gameData.get(fav);
+            var thumbnailView = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.getImagePath())), game.getName()).getView();
+            thumbPaneContent.getChildren().add(thumbnailView);
+            thumbnailView.setOnMouseClicked(e -> thumbnailClicked(index));
+        }
+        // place thumbnails of every game
+        thumbPaneContent.getChildren().add(gameLabel);
+        int counter = 0;
+        for (var game : gameData) {
+            final int index = counter;
+            var thumbnailView = new Thumbnail(new Image(this.getClass().getResourceAsStream(game.getImagePath())), game.getName()).getView();
+            thumbPaneContent.getChildren().add(thumbnailView);
+            counter ++;
+            thumbnailView.setOnMouseClicked(e -> thumbnailClicked(index));
+        }
+    }
+
+    private void setFavoriteImage(boolean favorite) {
+        ImageView heart;
+        if (favorite) heart = new ImageView(new Image(this.getClass().getResourceAsStream("/icons/heartFill.png")));
+        else heart = new ImageView(new Image(this.getClass().getResourceAsStream("/icons/heartOutline.png")));
+        heart.setFitHeight(40);
+        heart.setFitWidth(40);
+        favoriteButton.setGraphic(heart);
+    }
+
+    public void editFavorites(int gameInt) {
+        if (favoriteGames.contains(gameInt)) {
+            favoriteGames.remove(gameInt);
+        } else {
+            favoriteGames.add(gameInt);
+        }
+    }
+
+    @FXML
+    private void favoriteGame() {
+        if (gameData.get(myIndex).getFavorite()) {
+            gameData.get(myIndex).setFavorite(false, myIndex);
+            setFavoriteImage(false);
+        }
+        else {
+            gameData.get(myIndex).setFavorite(true, myIndex);
+            setFavoriteImage(true);
         }
     }
 
     private void thumbnailClicked(int index) {
         this.myIndex = index;
-//        writeRatingToJSON();
 
         if (activeThumbnail == myIndex) {
             activeThumbnail = -1;
@@ -103,6 +161,7 @@ public class GameCenterController {
         newGamePane.getChildren().remove(activeGameImageView);
         descriptionPane.setVisible(false);
         ratingPane.setVisible(false);
+        favoritePane.setVisible(false);
     }
 
     private void loadGameDetails() {
@@ -111,6 +170,7 @@ public class GameCenterController {
         }
         loadGameImage();
         loadGameText();
+        loadGameFavorite();
         descriptionPane.setVisible(true);
         ratingPane.setVisible(false);
     }
@@ -132,9 +192,9 @@ public class GameCenterController {
         descriptionText.setText(gameData.get(myIndex).getDescription());
     }
 
-    private void updateIdentity(UserIdentity userIdentity, String gameName){
+    private void updateIdentity(UserIdentity userIdentity, String gameName) {
         nameLabel.setText("Hello" + userIdentity.getName());
-        for(String s:userIdentity.getFriends()){
+        for (String s : userIdentity.getFriends()) {
             Label friendName = new Label(s);
             friendName.getStyleClass().add("socialScoreLabel");
             friendPane.getChildren().add(friendName);
@@ -142,6 +202,11 @@ public class GameCenterController {
         score1.setText(userIdentity.getHighScores(gameName).get(0));
         score2.setText(userIdentity.getHighScores(gameName).get(1));
         score3.setText(userIdentity.getHighScores(gameName).get(2));
+    }
+
+    private void loadGameFavorite(){
+        favoritePane.setVisible(true);
+        setFavoriteImage(gameData.get(myIndex).getFavorite());
     }
 
     @FXML
@@ -157,6 +222,8 @@ public class GameCenterController {
     @FXML
     private void rateGame() {
         ratingPane.setVisible(true);
+        ratingText.setText(String.valueOf(gameData.get(myIndex).getRating()));
+        ratingSlider.setValue(gameData.get(myIndex).getRating());
         descriptionPane.setVisible(false);
     }
 
@@ -170,5 +237,4 @@ public class GameCenterController {
         ratingPane.setVisible(false);
         descriptionPane.setVisible(true);
     }
-
 }

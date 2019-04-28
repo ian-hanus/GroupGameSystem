@@ -91,6 +91,10 @@
     -fx-background-radius: 15 15 0 0;
 }
 
+.favoriteButton {
+    -fx-background-color: transparent;
+}
+
 .largeButton {
     -fx-background-color: ghostwhite;
     -fx-font-family: Impact;
