@@ -42,7 +42,11 @@
     </HBox>
 
     <!-- Favorite Pane -->
-   <Pane layoutX="625.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" styleClass="centerPane" />
+   <Pane fx:id="favoritePane" layoutX="625.0" layoutY="20.0" prefHeight="50.0" prefWidth="50.0" styleClass="centerPane" visible="false">
+       <children>
+           <Button fx:id="favoriteButton" prefHeight="40" prefWidth="40" onAction="#favoriteGame" styleClass="favoriteButton"/>
+       </children>
+   </Pane>
 
     <!-- Description Box StackPane -->
    <StackPane layoutX="250.0" layoutY="85.0" prefHeight="390.0" prefWidth="425.0" styleClass="centerPane">

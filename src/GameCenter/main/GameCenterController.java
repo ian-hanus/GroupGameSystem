@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class GameCenterController {
     public Pane newGamePane;
     public Pane descriptionPane;
     public Pane ratingPane;
+    public Pane favoritePane;
     public ScrollPane thumbPane;
     public Slider ratingSlider;
     public VBox thumbPaneContent;
@@ -55,10 +57,12 @@ public class GameCenterController {
     public Button editButton;
     public Button rateButton;
     public Button returnButton;
+    public Button loginButton;
+    public Button favoriteButton;
 
     void initGameCenter() {
         initListeners();
-        favoriteGames = new ArrayList<Integer>();
+        favoriteGames = new ArrayList<>();
         placeThumbnails();
     }
 
@@ -114,11 +118,32 @@ public class GameCenterController {
         }
     }
 
+    private void setFavoriteImage(boolean favorite) {
+        ImageView heart;
+        if (favorite) heart = new ImageView(new Image(this.getClass().getResourceAsStream("/icons/heartFill.png")));
+        else heart = new ImageView(new Image(this.getClass().getResourceAsStream("/icons/heartOutline.png")));
+        heart.setFitHeight(40);
+        heart.setFitWidth(40);
+        favoriteButton.setGraphic(heart);
+    }
+
     public void editFavorites(int gameInt) {
         if (favoriteGames.contains(gameInt)) {
             favoriteGames.remove(gameInt);
         } else {
             favoriteGames.add(gameInt);
+        }
+    }
+
+    @FXML
+    private void favoriteGame() {
+        if (gameData.get(myIndex).getFavorite()) {
+            gameData.get(myIndex).setFavorite(false, myIndex);
+            setFavoriteImage(false);
+        }
+        else {
+            gameData.get(myIndex).setFavorite(true, myIndex);
+            setFavoriteImage(true);
         }
     }
 
@@ -143,6 +168,7 @@ public class GameCenterController {
         newGamePane.getChildren().remove(activeGameImageView);
         descriptionPane.setVisible(false);
         ratingPane.setVisible(false);
+        favoritePane.setVisible(false);
     }
 
     private void loadGameDetails() {
@@ -151,6 +177,7 @@ public class GameCenterController {
         }
         loadGameImage();
         loadGameText();
+        loadGameFavorite();
         descriptionPane.setVisible(true);
         ratingPane.setVisible(false);
     }
@@ -170,6 +197,11 @@ public class GameCenterController {
 
     private void loadGameText() {
         descriptionText.setText(gameData.get(myIndex).getDescription());
+    }
+
+    private void loadGameFavorite() {
+        favoritePane.setVisible(true);
+        setFavoriteImage(gameData.get(myIndex).getFavorite());
     }
 
     @FXML
@@ -199,11 +231,6 @@ public class GameCenterController {
     private void returnToDescription() {
         ratingPane.setVisible(false);
         descriptionPane.setVisible(true);
-        writeRatingToJSON();
-    }
-    
-    private void writeRatingToJSON() {
         gameData.get(myIndex).setRating(ratingVal.doubleValue(), myIndex);
     }
-
 }
