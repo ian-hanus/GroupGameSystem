@@ -9,8 +9,9 @@ module voogasalad.crackingopen {
     requires javafx.fxml;
     requires org.json;
     requires gson;
+    requires org.codehaus.groovy;
+    requires java.desktop;
 
-    opens Launcher to javafx.fxml;
     opens GameCenter.main to javafx.fxml, javafx.graphics;
     opens GameCenter.gameData to gson;
 
